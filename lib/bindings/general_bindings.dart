@@ -1,4 +1,4 @@
-import 'package:food_delivery_h2d/bingdings/network_manager.dart';
+import 'package:food_delivery_h2d/bindings/network_manager.dart';
 import 'package:get/get.dart';
 
 class GeneralBindings extends Bindings {
