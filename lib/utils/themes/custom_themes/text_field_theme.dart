@@ -8,7 +8,7 @@ class MyTextFieldTheme {
     prefixIconColor: MyColors.primaryTextColor.withOpacity(0.8),
     suffixIconColor: MyColors.primaryTextColor.withOpacity(0.8),
     hintStyle: const TextStyle()
-        .copyWith(fontSize: MySizes.fontSizeSm, color: MyColors.accentColor),
+        .copyWith(fontSize: MySizes.fontSizeSm, color: MyColors.primaryTextColor),
     border: const OutlineInputBorder().copyWith(
         borderRadius: BorderRadius.circular(MySizes.borderRadiusLg),
         borderSide: const BorderSide(width: 1, color: Colors.grey)),
