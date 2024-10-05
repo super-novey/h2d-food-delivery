@@ -6,6 +6,11 @@ class MyVerticalImageText extends StatelessWidget {
   final String image, title;
   final Color textColor;
   final Color? backgroundColor;
+  final double? width;
+  final double? height;
+  final double? widthImage;
+  final double? heightImage;
+  final TextStyle? textStyle;
   final void Function()? onTap;
 
   const MyVerticalImageText({
@@ -14,6 +19,11 @@ class MyVerticalImageText extends StatelessWidget {
     required this.title,
     this.textColor = MyColors.primaryTextColor,
     this.backgroundColor = Colors.white,
+    this.width,
+    this.height,
+    this.widthImage,
+    this.heightImage,
+    this.textStyle,
     required this.onTap,
   });
 
@@ -27,16 +37,16 @@ class MyVerticalImageText extends StatelessWidget {
           children: [
             // circular icon
             Container(
-              width: 50,
-              height: 55,
+              width: width ?? 50,
+              height: height ?? 55,
               padding: const EdgeInsets.all(MySizes.sm),
               decoration: BoxDecoration(
                   color: backgroundColor,
                   borderRadius: BorderRadius.circular(100)),
               child: Center(
                 child: Image(
-                  width: 32,
-                  height: 32,
+                  width: widthImage ?? 32,
+                  height: heightImage ?? 32,
                   image: AssetImage(image),
                   fit: BoxFit.cover,
                   // color: Colors.white,
@@ -53,7 +63,7 @@ class MyVerticalImageText extends StatelessWidget {
               title,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.labelMedium!.apply(
+              style: textStyle ?? Theme.of(context).textTheme.labelMedium!.apply(
                     color: textColor,
                   ),
             )
