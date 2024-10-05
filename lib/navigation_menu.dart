@@ -21,25 +21,25 @@ class NavigationMenu extends StatelessWidget {
             destinations: const [
               NavigationDestination(
                   icon: Icon(
-                    Icons.home,
+                    Icons.home_outlined,
                     color: MyColors.darkPrimaryColor,
                   ),
                   label: 'Trang chủ'),
               NavigationDestination(
                   icon: Icon(
-                    Icons.checklist,
+                    Icons.inventory_outlined,
                     color: MyColors.darkPrimaryColor,
                   ),
                   label: 'Đơn hàng'),
               NavigationDestination(
                   icon: Icon(
-                    Icons.notifications,
+                    Icons.notifications_none,
                     color: MyColors.darkPrimaryColor,
                   ),
                   label: 'Thông báo'),
               NavigationDestination(
                   icon: Icon(
-                    Icons.person,
+                    Icons.person_outline,
                     color: MyColors.darkPrimaryColor,
                   ),
                   label: 'Tài khoản'),

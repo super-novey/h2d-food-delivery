@@ -20,4 +20,8 @@ class MyColors {
   static const Color errorColor = Color(0xFFD32F2F); // Error Color
   static const Color successColor = Color(0xFF3f794e); // Success Color
   static const Color warningColor = Color(0xFFFF9800); // Warning Color
+  static const Color openColor = Color(0xFF5AF784); // Success Color
+  static const Color closeColor = Color(0xFF9E9C9C);
+  static const Color darkPrimaryTextColor = Color.fromARGB(255, 120, 32, 32); // Dark Primary Color
+
 }

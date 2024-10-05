@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_h2d/common/widgets/header/wave_header.dart';
 import '../../../../../common/widgets/header/primary_header.dart';
 import '../../../../../utils/constants/sizes.dart';
 
@@ -9,7 +10,7 @@ class LoginHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MyPrimaryHeaderContainer(
+    return WaveHeader(
       child: Align(
         alignment: Alignment.centerLeft,
         child: Padding(
