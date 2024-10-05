@@ -60,8 +60,8 @@ class RestaurantNavigationMenu extends StatelessWidget {
     final controller = Get.put(NavigationController());
     return Scaffold(
       body: Obx(() => controller.screens[controller.selectedIndex.value]),
-      bottomNavigationBar: Obx(
-        () => Container(
+      bottomNavigationBar:
+         Container(
           color: MyColors.darkPrimaryColor,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4, vertical:8),
@@ -101,7 +101,6 @@ class RestaurantNavigationMenu extends StatelessWidget {
             ),
           ),
         ),
-      ),
     );
   }
 }
