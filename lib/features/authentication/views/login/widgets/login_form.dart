@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/restaurants/restaurant_navigation_menu.dart';
+import 'package:food_delivery_h2d/features/shippers/shipper_navigation_menu.dart';
 import 'package:get/get.dart';
 import '../../../../../utils/constants/sizes.dart';
 import '../../../controllers/auth_controller.dart';
@@ -58,7 +59,9 @@ class LoginForm extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           child: ElevatedButton(
-            onPressed: () {Get.to(const RestaurantNavigationMenu());},
+            onPressed: () {
+              Get.to(const ShipperNavigationMenu());
+            },
             child: const Text("Đăng nhập"),
           ),
         ),

@@ -15,4 +15,7 @@ class MyImagePaths {
     static const String iconSwitch = "assets/icons/switch.png";
 
   //Placeholder
+
+    //Icons
+  static const String incomeIcon = "assets/icons/income-icon.png";
 }
