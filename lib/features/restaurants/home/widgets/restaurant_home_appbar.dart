@@ -34,7 +34,7 @@ class MyHomeAppBar extends StatelessWidget {
                     color: MyColors.openColor
                   )),
               Text(
-                "Đang hoạt động",
+                "Đang mở cửa",
                 style: Theme.of(context)
                     .textTheme
                     .labelMedium!

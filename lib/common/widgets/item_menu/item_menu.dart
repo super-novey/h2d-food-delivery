@@ -9,12 +9,12 @@ class ItemMenu extends StatelessWidget {
   final VoidCallback? onTap;
 
   const ItemMenu({
-    Key? key,
+    super.key,
     required this.title,
     required this.image,
     this.textColor = MyColors.darkPrimaryTextColor,
     this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
