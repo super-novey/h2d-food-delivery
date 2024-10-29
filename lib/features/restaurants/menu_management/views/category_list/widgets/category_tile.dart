@@ -8,7 +8,7 @@ class CategoryTile extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
 
   CategoryTile({super.key, required this.category}) {
-    _controller.text = category.categoryName; // Khởi tạo giá trị cho controller
+    _controller.text = category.categoryName; 
   }
 
   @override

@@ -4,8 +4,8 @@ import 'package:food_delivery_h2d/common/widgets/appbar/notification_icon.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 
-class MyHomeAppBar extends StatelessWidget {
-  const MyHomeAppBar({
+class RestaurantHomeAppbar extends StatelessWidget {
+  const RestaurantHomeAppbar({
     super.key,
   });
 

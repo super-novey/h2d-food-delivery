@@ -56,12 +56,12 @@ class HistoryOrderTile extends StatelessWidget {
                   height: MySizes.xs,
                 ),
                 Text(
-                      order.orderId.toString(),
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall!
-                          .apply(color: MyColors.darkPrimaryTextColor),
-                    ),
+                  order.orderId.toString(),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall!
+                      .apply(color: MyColors.darkPrimaryTextColor),
+                ),
                 const SizedBox(
                   height: MySizes.xs,
                 ),
@@ -74,11 +74,8 @@ class HistoryOrderTile extends StatelessWidget {
                           .bodySmall!
                           .apply(color: MyColors.primaryTextColor),
                     ),
-                    
-                    
                   ],
                 ),
-                
                 const Divider(
                   color: MyColors.dividerColor,
                 ),

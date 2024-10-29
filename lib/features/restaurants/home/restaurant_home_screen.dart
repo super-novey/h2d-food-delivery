@@ -25,7 +25,7 @@ class RestaurantHomeScreen extends StatelessWidget {
               child: WaveHeader(
                   child: Column(
                 children: [
-                  MyHomeAppBar(),
+                  RestaurantHomeAppbar(),
                 ],
               )),
             ),
@@ -60,8 +60,8 @@ class RestaurantHomeScreen extends StatelessWidget {
                               Get.to(const StatisticScreen());
                             }),
                         ItemMenu(
-                            image: MyImagePaths.iconSwitch,
-                            title: "Mở/Đóng cửa",
+                            image: MyImagePaths.iconLogout,
+                            title: "Đăng xuất",
                             onTap: () {
                               Get.to(const LoginScreen());
                             }),

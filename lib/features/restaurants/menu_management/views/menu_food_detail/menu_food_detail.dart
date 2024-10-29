@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/custom_app_bar.dart';
+import 'package:food_delivery_h2d/common/widgets/text_field/my_text_filed.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/controllers/menu_food_controller.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/controllers/update_menu_food_controller.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/category_model.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/item_model.dart';
-import 'package:food_delivery_h2d/features/restaurants/menu_management/views/menu_food_detail/widgets/menu_text_field.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:get/get.dart';
@@ -119,7 +119,7 @@ class MenuFoodDetailScreen extends StatelessWidget {
                         ),
                         SizedBox(
                           width: 280,
-                          child: MenuTextField(
+                          child: MyTextFiled(
                               textController:
                                   updateMenuFoodController.nameController,
                               label: "Nhập tên món ăn"),
@@ -141,7 +141,7 @@ class MenuFoodDetailScreen extends StatelessWidget {
                         ),
                         SizedBox(
                           width: 280,
-                          child: MenuTextField(
+                          child: MyTextFiled(
                               textController:
                                   updateMenuFoodController.priceController,
                               label: "Nhập giá món ăn (VNĐ)"),
@@ -260,7 +260,7 @@ class MenuFoodDetailScreen extends StatelessWidget {
                   const SizedBox(
                     height: MySizes.spaceBtwItems,
                   ),
-                  MenuTextField(
+                  MyTextFiled(
                     textAlign: TextAlign.left,
                     textController:
                         updateMenuFoodController.descriptionController,

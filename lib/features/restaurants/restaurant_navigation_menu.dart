@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/restaurants/home/restaurant_home_screen.dart';
+import 'package:food_delivery_h2d/features/restaurants/notification_restaurant/views/notification_restaurant_screen.dart';
+import 'package:food_delivery_h2d/features/restaurants/profile/views/profile_restaurant_screen.dart';
 import 'package:food_delivery_h2d/features/restaurants/rating_management/views/rating_list/rating_list_screen.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
@@ -33,13 +35,13 @@ class RestaurantNavigationMenu extends StatelessWidget {
                 text: 'Trang chủ',
               ),
               GButton(
-                icon: Icons.rate_review_outlined,
+                icon: Icons.comment_outlined,
                 //icon: Icons.feed_outlined,
                 text: 'Đánh giá',
                 iconColor: Colors.white,
               ),
               GButton(
-                icon: Icons.notifications_none,
+                icon: Icons.notifications_outlined,
                 iconColor: Colors.white,
                 text: 'Thông báo',
               ),
@@ -76,11 +78,7 @@ class NavigationController extends GetxController {
   final screens = [
     const RestaurantHomeScreen(),
     const RatingListScreen(),
-    Container(
-      color: Colors.pink,
-    ),
-    Container(
-      color: Colors.deepPurpleAccent,
-    ),
+    const NotificationRestaurantScreen(),
+    const ProfileRestaurantScreen()
   ];
 }

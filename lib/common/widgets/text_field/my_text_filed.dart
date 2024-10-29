@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 
-class MenuTextField extends StatelessWidget {
-  const MenuTextField({
+class MyTextFiled extends StatelessWidget {
+  const MyTextFiled({
     super.key,
     required this.textController,
     required this.label,
     this.maxLines = 1,
     this.textAlign,
+    this.readOnly = false
   });
 
   final String label;
   final TextEditingController textController;
   final int maxLines;
   final TextAlign? textAlign;
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class MenuTextField extends StatelessWidget {
                   height: 2,
                 ),
             controller: textController,
+            readOnly: readOnly,
             maxLines: maxLines,
             decoration: InputDecoration(
               enabledBorder: InputBorder.none,

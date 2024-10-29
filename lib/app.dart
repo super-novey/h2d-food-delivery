@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/bindings/general_bindings.dart';
 import 'package:food_delivery_h2d/features/authentication/views/login/login_screen.dart';
+import 'package:food_delivery_h2d/routes/app_routes.dart';
 import 'package:food_delivery_h2d/utils/themes/theme.dart';
 import 'package:get/get.dart';
 
@@ -15,6 +17,8 @@ class App extends StatelessWidget {
       darkTheme: MyTheme.lightTheme,
       debugShowCheckedModeBanner: false,
       home: const LoginScreen(),
+      getPages: kIsWeb ? AppRoutes.pages : [],
+      title: "H2D Delivery",
     );
   }
 }

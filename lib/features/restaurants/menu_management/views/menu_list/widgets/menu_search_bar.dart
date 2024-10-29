@@ -25,6 +25,9 @@ class MenuSearchBar extends StatelessWidget {
             },
           ),
           hintText: "Nhập tên món ăn",
+          hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            color: MyColors.secondaryTextColor,
+                            fontStyle: FontStyle.italic, fontWeight: FontWeight.w500,),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(MySizes.borderRadiusLg),
             borderSide: const BorderSide(
