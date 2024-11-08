@@ -48,3 +48,4 @@ class CircleImage extends StatelessWidget {
     );
   }
 }
+

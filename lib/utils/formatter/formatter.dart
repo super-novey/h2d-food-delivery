@@ -26,6 +26,7 @@ class MyFormatter {
       return number.toString();
     }
   }
+
   static String formatTime(String time) {
   try {
     final DateTime parsedTime = DateTime.parse(time).toLocal();
@@ -35,5 +36,4 @@ class MyFormatter {
     return 'Invalid time'; 
   }
 }
-
 }

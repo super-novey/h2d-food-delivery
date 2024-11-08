@@ -29,4 +29,7 @@ class MyImagePaths {
   static const String iconLogo = "assets/icons/logo.png";
 
   //Placeholder
+
+    //Icons
+  static const String incomeIcon = "assets/icons/income-icon.png";
 }
