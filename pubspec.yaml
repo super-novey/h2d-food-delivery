@@ -20,6 +20,11 @@ dependencies:
   shimmer: ^3.0.0
   lottie: ^3.1.2
   connectivity_plus: ^6.0.5
+  google_nav_bar: ^5.0.6
+  flutter_slidable: ^3.1.1
+  flutter_rating_stars: ^1.1.0
+  animated_background: ^2.0.0
+  url_strategy: ^0.2.0
 
 dev_dependencies:
   flutter_test:
@@ -32,3 +37,5 @@ flutter:
 
   assets:
     - assets/animations/
+    - assets/icons/
+    

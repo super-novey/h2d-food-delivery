@@ -1,4 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery_h2d/features/admin/dashboard/admin_dashboard.dart';
+import 'package:food_delivery_h2d/features/customers/customer_navigation_menu.dart';
+import 'package:food_delivery_h2d/routes/routes.dart';
+import 'package:food_delivery_h2d/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 import '../../../../../utils/constants/sizes.dart';
 import '../../../controllers/auth_controller.dart';
@@ -57,7 +62,14 @@ class LoginForm extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           child: ElevatedButton(
-            onPressed: () {},
+            //onPressed: () {Get.to(const CustomerNavigationMenu());},
+            onPressed: () {
+              if (kIsWeb) {
+                Get.toNamed(Routes.dashboard);
+              } else {
+                Loaders.customToast(message: 'Chỉ đăng nhập bằng website!');
+              }
+            },
             child: const Text("Đăng nhập"),
           ),
         ),
