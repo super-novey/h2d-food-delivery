@@ -12,7 +12,21 @@ class MyImagePaths {
   static const String iconMenu = "assets/icons/menu.png";
   static const String iconOrder = "assets/icons/order.png";
   static const String iconStatistic = "assets/icons/statistics.png";
-    static const String iconSwitch = "assets/icons/switch.png";
+  static const String iconSwitch = "assets/icons/switch.png";
+  static const String iconLogout = "assets/icons/logout.png";
+
+  //Home Customer
+  static const String iconRice = "assets/icons/rice.png";
+  static const String iconVermicelli = "assets/icons/vermicelli.png";
+  static const String iconPho = "assets/icons/pho.png";
+  static const String iconNoodle = "assets/icons/noodle.png";
+  static const String iconSnack = "assets/icons/snack.png";
+  static const String iconDrink = "assets/icons/drink.png";
+
+  static const String iconImage = "assets/icons/img.png";
+  static const String imgBunBo = "assets/icons/bunbo.png";
+
+  static const String iconLogo = "assets/icons/logo.png";
 
   //Placeholder
 

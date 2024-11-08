@@ -12,6 +12,7 @@ class MyVerticalImageText extends StatelessWidget {
   final double? heightImage;
   final TextStyle? textStyle;
   final void Function()? onTap;
+  final EdgeInsets? padding;
 
   const MyVerticalImageText({
     super.key,
@@ -25,6 +26,7 @@ class MyVerticalImageText extends StatelessWidget {
     this.heightImage,
     this.textStyle,
     required this.onTap,
+    this.padding
   });
 
   @override
@@ -39,7 +41,7 @@ class MyVerticalImageText extends StatelessWidget {
             Container(
               width: width ?? 50,
               height: height ?? 55,
-              padding: const EdgeInsets.all(MySizes.sm),
+              padding: padding ?? const EdgeInsets.all(MySizes.sm),
               decoration: BoxDecoration(
                   color: backgroundColor,
                   borderRadius: BorderRadius.circular(100)),

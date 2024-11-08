@@ -9,7 +9,7 @@ class MyElevatedButtonTheme {
       style: ElevatedButton.styleFrom(
           elevation: 0,
           foregroundColor: Colors.white,
-          backgroundColor: MyColors.primaryColor,
+          backgroundColor: MyColors.darkPrimaryColor,
           disabledForegroundColor: Colors.grey,
           disabledBackgroundColor: Colors.grey,
           side: BorderSide.none,

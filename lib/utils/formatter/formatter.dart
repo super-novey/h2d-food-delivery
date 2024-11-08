@@ -26,4 +26,14 @@ class MyFormatter {
       return number.toString();
     }
   }
+
+  static String formatTime(String time) {
+  try {
+    final DateTime parsedTime = DateTime.parse(time).toLocal();
+    final DateFormat formatter = DateFormat('HH:mm'); 
+    return formatter.format(parsedTime);
+  } catch (e) {
+    return 'Invalid time'; 
+  }
+}
 }
