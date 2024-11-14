@@ -30,6 +30,10 @@ class MyImagePaths {
 
   //Placeholder
 
-    //Icons
+  //Icons
   static const String incomeIcon = "assets/icons/income-icon.png";
+
+  // Logos
+  static const String appWhite = "assets/logos/app_white.png";
+  static const String appRed = "assets/logos/app_red.png";
 }

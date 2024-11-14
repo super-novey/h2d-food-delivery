@@ -22,6 +22,7 @@ class LoginForm extends StatelessWidget {
         child: Column(
       children: [
         TextFormField(
+          controller: authController.userNameController,
           obscureText: false,
           decoration: const InputDecoration(
             hintText: "Tên đăng nhập",
@@ -35,6 +36,7 @@ class LoginForm extends StatelessWidget {
         ),
         Obx(
           () => TextFormField(
+            controller: authController.passwordController,
             obscureText: !authController.isShowPassword.value,
             decoration: InputDecoration(
                 hintText: "Mật khẩu",
@@ -64,14 +66,18 @@ class LoginForm extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           child: ElevatedButton(
-            //onPressed: () {Get.to(const CustomerNavigationMenu());},
-            onPressed: () {
-              if (kIsWeb) {
-                Get.toNamed(Routes.dashboard);
-              } else {
-                Loaders.customToast(message: 'Chỉ đăng nhập bằng website!');
-              }
-            },
+            onPressed: authController.login,
+            // () {
+            //   // Get.to(const ShipperNavigationMenu());
+
+            // },
+            // onPressed: () {
+            //   if (kIsWeb) {
+            //     Get.toNamed(Routes.dashboard);
+            //   } else {
+            //     Loaders.customToast(message: 'Chỉ đăng nhập bằng website!');
+            //   }
+            // },
             child: const Text("Đăng nhập"),
           ),
         ),

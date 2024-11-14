@@ -1,11 +1,23 @@
 class Category {
-  int categoryId;
-  int restaurantId;
+  String categoryId;
+  String restaurantId;
   String categoryName;
 
   Category({
-    this.categoryId = 0,
-    this.restaurantId = 0,
+    this.categoryId = '',
+    this.restaurantId = '',
     this.categoryName = '',
   });
+
+  factory Category.fromJson(Map<String, dynamic> json) {
+    return Category(
+        categoryId: json['_id'],
+        restaurantId: json['partnerId'],
+        categoryName: json['name']);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'name': categoryName, 'partnerId': restaurantId};
+  }
+
 }

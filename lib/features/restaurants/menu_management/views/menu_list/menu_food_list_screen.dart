@@ -20,6 +20,7 @@ class MenuFoodListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final menuFoodController = Get.put(MenuFoodController());
     final updateMenuFoodController = Get.put(UpdateMenuFoodController());
+
     return Scaffold(
       appBar: const CustomAppBar(
         title: Text('Thực đơn'),
@@ -67,11 +68,12 @@ class MenuFoodListScreen extends StatelessWidget {
               ),
               TextButton(
                   onPressed: () {
-                    updateMenuFoodController.isAdd.value = true;
-                    updateMenuFoodController.isEditting.value = false;
-                    Get.to(MenuFoodDetailScreen(
-                      selectedItem: Item(),
-                    ));
+                    // updateMenuFoodController.isAdd.value = true;
+                    // updateMenuFoodController.isEditting.value = false;
+                    // Get.to(MenuFoodDetailScreen(
+                    //   selectedItem: Item(),
+                    // ));
+                    menuFoodController.addCategory();
                   },
                   child: const Text("Thêm món mới")),
             ],
