@@ -5,11 +5,14 @@ class MyColors {
 
   // App Basic Color
   static const Color primaryColor = Color(0xFFC43433); // Primary Color
+  // static const Color accentColor = Color(0xFFFFF7B7); // Primary Color
+
   static const Color lightPrimaryColor =
       Color(0xFFE16E6E); // Light Primary Color
   static const Color darkPrimaryColor = Color(0xFF8F2626); // Dark Primary Color
   static const Color accentColor = Color(0xFFF3A536); // Accent Color
-  static const Color backgroundColor = Color(0xFFF5F5F5); // Background Color
+  static const Color backgroundColor =
+      Color.fromARGB(255, 76, 49, 49); // Background Color
   static const Color cardBackgroundColor =
       Color(0xFFFFFFFF); // Card Background Color
   static const Color primaryTextColor = Color(0xFF333333); // Primary Text Color

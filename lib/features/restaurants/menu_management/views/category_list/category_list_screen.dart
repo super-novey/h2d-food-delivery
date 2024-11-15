@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/custom_app_bar.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/controllers/menu_food_controller.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/views/category_list/widgets/category_tile.dart';
+import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:get/get.dart';
 
@@ -34,7 +35,16 @@ class CategoryListScreen extends StatelessWidget {
           },
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          menuFoodController.addEmptyCategory();
+        },
+        backgroundColor: MyColors.darkPrimaryColor,
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+      ),
     );
   }
 }
-

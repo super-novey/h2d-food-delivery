@@ -113,12 +113,10 @@ class MenuFoodController extends GetxController {
         confirm: ElevatedButton(
             onPressed: () async {
               try {
-                await _categoryRepository.removeCategory(categoryId);
+                // await _categoryRepository.removeCategory(categoryId);
                 allCategories
                     .removeWhere((item) => item.categoryId == categoryId);
-                // fetchBussinessDate(false);
                 Navigator.of(Get.overlayContext!).pop();
-                //bussinessDateList.removeWhere((item) => item.id == id);
                 Loaders.successSnackBar(
                     title: "Thành công!", message: "Xóa danh mục");
               } catch (err) {
@@ -153,5 +151,10 @@ class MenuFoodController extends GetxController {
     allCategories.insert(newIndex, category);
 
     allCategories.map((item) => print(item.categoryId));
+  }
+
+  void addEmptyCategory() {
+    final cat = Category();
+    allCategories.add(cat);
   }
 }
