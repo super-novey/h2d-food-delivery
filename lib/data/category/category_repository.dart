@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 class CategoryRepository extends GetxController {
   static CategoryRepository get instance => Get.find();
 
+  
+
   Future<List<Category>> getCategoriesInRestaurant(String partnerId) async {
     try {
       final res = await HttpHelper.get("category/${partnerId.toString()}");
@@ -13,6 +15,14 @@ class CategoryRepository extends GetxController {
           .toList();
 
       return list;
+    } on Exception catch (_) {
+      rethrow;
+    }
+  }
+
+  Future<void> removeCategory(String categoryId) async {
+    try {
+      await HttpHelper.delete("category/${categoryId.toString()}");
     } on Exception catch (_) {
       rethrow;
     }

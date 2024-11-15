@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/category_model.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
+import 'package:food_delivery_h2d/utils/popups/loaders.dart';
+
+import '../../../controllers/menu_food_controller.dart';
 
 class CategoryTile extends StatelessWidget {
   final Category category;
   final TextEditingController _controller = TextEditingController();
 
   CategoryTile({super.key, required this.category}) {
-    _controller.text = category.categoryName; 
+    _controller.text = category.categoryName;
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Padding(
       padding: const EdgeInsets.only(
           top: MySizes.sm, right: MySizes.sm, left: MySizes.sm),
@@ -46,7 +48,11 @@ class CategoryTile extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // Loaders.successSnackBar(title: "${category.categoryId.toString()}");
+                    MenuFoodController.instance
+                        .removeCategory(category.categoryId.toString());
+                  },
                   icon: const Icon(Icons.clear_rounded),
                 ),
               ],

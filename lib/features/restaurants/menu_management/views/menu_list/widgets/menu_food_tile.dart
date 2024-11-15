@@ -16,8 +16,10 @@ class MenuFoodTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     final menuFoodController = Get.put(MenuFoodController());
     final updateMenuFoodController = Get.put(UpdateMenuFoodController());
+
     return Padding(
       padding: const EdgeInsets.only(
           top: MySizes.sm, right: MySizes.sm, left: MySizes.sm),

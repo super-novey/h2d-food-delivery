@@ -6,20 +6,22 @@ import 'package:get/get.dart';
 class AuthRepository extends GetxController {
   static AuthRepository get instance => Get.find();
 
-  Future<Map<String, dynamic>> login(String email, String password) async {
-    final data = {'email': email, 'password': password};
-    try {
-      final res = await HttpHelper.post("auth/login", data);
-      return res;
-    } on Exception catch (_) {
-      rethrow;
-    }
-  }
+  static const String _loginApi = "auth/login";
 
-  Future<LoginResponse> login1(String email, String password) async {
+  // Future<Map<String, dynamic>> login(String email, String password) async {
+  //   final data = {'email': email, 'password': password};
+  //   try {
+  //     final res = await HttpHelper.post(_loginApi, data);
+  //     return res;
+  //   } on Exception catch (_) {
+  //     rethrow;
+  //   }
+  // }
+
+  Future<LoginResponse> login(String email, String password) async {
     final data = {'email': email, 'password': password};
     try {
-      final res = await HttpHelper.post("auth/login", data);
+      final res = await HttpHelper.post(_loginApi, data);
       final loginResponse = LoginResponse.fromJson(res["data"]);
       return loginResponse;
     } on Exception catch (_) {
