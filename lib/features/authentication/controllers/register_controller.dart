@@ -15,12 +15,12 @@ class RegisterController extends GetxController {
   final passwordController = TextEditingController();
   final roleController = "customer".obs;
 
+  late UserModel registeredUser;
+
   void register() async {
     final newUser = getUserFromForm();
-    // newUser.printInfo();
     try {
-      final res = await AuthRepository.instance.register(newUser);
-      res.printInfo();
+      registeredUser = await AuthRepository.instance.register(newUser);
     } catch (error) {
       print("ERRO ${error.toString()}");
     } finally {}

@@ -36,4 +36,10 @@ class MyImagePaths {
   // Logos
   static const String appWhite = "assets/logos/app_white.png";
   static const String appRed = "assets/logos/app_red.png";
+
+  // Sign up Screen
+  static const String adminIcon = "assets/icons/admin.png";
+  static const String partnerIcon = "assets/icons/restaurant.png";
+  static const String driverIcon = "assets/icons/driver.png";
+  static const String customerIcon = "assets/icons/customer.png";
 }

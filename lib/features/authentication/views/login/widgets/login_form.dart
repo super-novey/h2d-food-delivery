@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:food_delivery_h2d/features/authentication/views/register/register_screen.dart';
+import 'package:food_delivery_h2d/features/authentication/views/register/customer_register_screen.dart';
+import 'package:food_delivery_h2d/features/authentication/views/register/register_navigation_menu.dart';
 import 'package:food_delivery_h2d/features/restaurants/restaurant_navigation_menu.dart';
 import 'package:food_delivery_h2d/features/shippers/shipper_navigation_menu.dart';
 import 'package:food_delivery_h2d/features/admin/dashboard/admin_dashboard.dart';
@@ -89,7 +90,7 @@ class LoginForm extends StatelessWidget {
           width: double.infinity,
           child: OutlinedButton(
             onPressed: () {
-              Get.to(() => RegisterScreen());
+              Get.to(() => RegisterNavigationMenu());
             },
             child: const Text("Đăng ký"),
           ),
