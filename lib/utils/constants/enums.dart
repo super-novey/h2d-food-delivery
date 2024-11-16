@@ -1,0 +1,2 @@
+enum UserStatus {active, inactive}
+

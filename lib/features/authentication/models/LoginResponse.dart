@@ -1,7 +1,7 @@
 import 'package:food_delivery_h2d/features/authentication/models/User.dart';
 
 class LoginResponse {
-  final User user;
+  final UserModel user;
   final String token;
 
   LoginResponse({
@@ -11,7 +11,7 @@ class LoginResponse {
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
     return LoginResponse(
-      user: User.fromJson(json['user']),
+      user: UserModel.fromJson(json['user']),
       token: json['token'],
     );
   }

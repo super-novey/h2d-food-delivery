@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/appbar.dart';
+import 'package:food_delivery_h2d/features/authentication/controllers/register_controller.dart';
 import 'package:food_delivery_h2d/features/authentication/views/login/login_screen.dart';
 import 'package:food_delivery_h2d/features/authentication/views/login/widgets/login_header.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
@@ -12,6 +13,7 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final RegisterController controller = RegisterController();
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -52,6 +54,7 @@ class RegisterScreen extends StatelessWidget {
                     child: Column(
                   children: [
                     TextFormField(
+                      controller: controller.emailController,
                       decoration: const InputDecoration(
                           labelText: "Email", hintText: "Email"),
                     ),
@@ -59,6 +62,15 @@ class RegisterScreen extends StatelessWidget {
                       height: MySizes.spaceBtwInputFields,
                     ),
                     TextFormField(
+                      controller: controller.nameController,
+                      decoration: const InputDecoration(
+                          labelText: "Họ và tên", hintText: "Nhập họ và tên"),
+                    ),
+                    const SizedBox(
+                      height: MySizes.spaceBtwInputFields,
+                    ),
+                    TextFormField(
+                      controller: controller.phoneNumbController,
                       decoration: const InputDecoration(
                           labelText: "Số điện thoại",
                           hintText: "Nhập số điện thoại"),
@@ -67,6 +79,7 @@ class RegisterScreen extends StatelessWidget {
                       height: MySizes.spaceBtwInputFields,
                     ),
                     TextFormField(
+                      controller: controller.passwordController,
                       decoration: const InputDecoration(
                           labelText: "Mật khẩu", hintText: "Nhập mật khẩu"),
                     ),
@@ -75,7 +88,7 @@ class RegisterScreen extends StatelessWidget {
                     ),
                     DropdownButtonFormField(
                         decoration: const InputDecoration(labelText: "Vai trò"),
-                        value: "customer",
+                        value: controller.roleController.value,
                         items: const [
                           DropdownMenuItem(
                               value: "customer", child: Text("Khách hàng")),
@@ -84,7 +97,9 @@ class RegisterScreen extends StatelessWidget {
                           DropdownMenuItem(
                               value: "driver", child: Text("Tài xế")),
                         ],
-                        onChanged: (value) {})
+                        onChanged: (value) {
+                          controller.roleController.value = value.toString();
+                        })
                   ],
                 )),
                 const SizedBox(
@@ -94,7 +109,7 @@ class RegisterScreen extends StatelessWidget {
                   alignment: Alignment.centerRight,
                   child: TextButton(
                     child: const Text("Tiếp tục"),
-                    onPressed: () {},
+                    onPressed: controller.register,
                   ),
                 )
               ]),

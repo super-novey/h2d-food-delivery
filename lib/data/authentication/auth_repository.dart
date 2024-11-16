@@ -7,6 +7,7 @@ class AuthRepository extends GetxController {
   static AuthRepository get instance => Get.find();
 
   static const String _loginApi = "auth/login";
+  static const String _registerApi = "auth/register";
 
   // Future<Map<String, dynamic>> login(String email, String password) async {
   //   final data = {'email': email, 'password': password};
@@ -24,6 +25,17 @@ class AuthRepository extends GetxController {
       final res = await HttpHelper.post(_loginApi, data);
       final loginResponse = LoginResponse.fromJson(res["data"]);
       return loginResponse;
+    } on Exception catch (_) {
+      rethrow;
+    }
+  }
+
+  Future<UserModel> register(UserModel newUser) async {
+    final data = newUser.toJson();
+    try {
+      final res = await HttpHelper.post(_registerApi, data);
+      final newUser = UserModel.fromJson(res["data"]["user"]);
+      return newUser;
     } on Exception catch (_) {
       rethrow;
     }

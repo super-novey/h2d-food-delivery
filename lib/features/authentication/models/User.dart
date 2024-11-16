@@ -1,32 +1,33 @@
-class User {
+import 'package:food_delivery_h2d/utils/constants/enums.dart';
+
+class UserModel {
   final String id;
   final String name;
   final String email;
-  final String hashedPassword;
+  final String password;
   final bool status;
   final String role;
   final String phone;
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  User({
-    required this.id,
-    required this.name,
-    required this.email,
-    required this.hashedPassword,
-    required this.status,
-    required this.role,
-    required this.phone,
-    required this.createdAt,
-    required this.updatedAt,
-  });
+  UserModel(
+      {required this.id,
+      required this.name,
+      required this.email,
+      required this.password,
+      required this.status,
+      required this.role,
+      required this.phone,
+      required this.createdAt,
+      required this.updatedAt});
 
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
       id: json['_id'],
       name: json['name'],
       email: json['email'],
-      hashedPassword: json['hashedPassword'],
+      password: json['password'],
       status: json['status'],
       role: json['role'],
       phone: json['phone'],
@@ -41,7 +42,7 @@ class User {
       '_id': id,
       'name': name,
       'email': email,
-      'hashedPassword': hashedPassword,
+      'password': password,
       'status': status,
       'role': role,
       'phone': phone,
