@@ -8,6 +8,7 @@ class AuthRepository extends GetxController {
 
   static const String _loginApi = "auth/login";
   static const String _registerApi = "auth/register";
+  // static const String _sendOTPApi = "auth/sendOTP";
 
   // Future<Map<String, dynamic>> login(String email, String password) async {
   //   final data = {'email': email, 'password': password};
@@ -40,4 +41,13 @@ class AuthRepository extends GetxController {
       rethrow;
     }
   }
+
+  // void sendOTP(String email) async {
+  //   final data = {"email": email};
+  //   try {
+  //     await HttpHelper.post(_sendOTPApi, data);
+  //   } on Exception catch (_) {
+  //     rethrow;
+  //   }
+  // }
 }

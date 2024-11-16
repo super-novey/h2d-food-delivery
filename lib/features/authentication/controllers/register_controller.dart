@@ -26,6 +26,10 @@ class RegisterController extends GetxController {
     } finally {}
   }
 
+  // void sendOTP(String email) async {
+  //   AuthRepository.instance.sendOTP(email);
+  // }
+
   UserModel getUserFromForm() {
     return UserModel(
         id: "",

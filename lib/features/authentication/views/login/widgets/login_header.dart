@@ -7,9 +7,9 @@ import 'package:food_delivery_h2d/utils/devices/devices_utils.dart';
 import '../../../../../common/widgets/header/primary_header.dart';
 import '../../../../../utils/constants/sizes.dart';
 
-class LoginHeader extends StatelessWidget {
+class PrimaryHeader extends StatelessWidget {
   final Widget child;
-  const LoginHeader({
+  const PrimaryHeader({
     super.key,
     required this.child,
   });

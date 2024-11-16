@@ -21,7 +21,7 @@ class LoginScreen extends StatelessWidget {
               if (kIsWeb)
                 const LoginFormWeb()
               else ...[
-                LoginHeader(
+                PrimaryHeader(
                   child: Text(
                     "Dang nhap",
                     style: Theme.of(context).textTheme.headlineLarge,

@@ -5,22 +5,24 @@ import 'package:food_delivery_h2d/common/widgets/keyboard/keyboard_hider.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/register_controller.dart';
 import 'package:food_delivery_h2d/features/authentication/views/login/login_screen.dart';
 import 'package:food_delivery_h2d/features/authentication/views/login/widgets/login_header.dart';
+import 'package:food_delivery_h2d/features/authentication/views/register/OTP_verification_screen.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:get/get.dart';
 
 class CustomerRegisterScreen extends StatelessWidget {
-  const CustomerRegisterScreen({super.key});
+  CustomerRegisterScreen({super.key});
+
+  final RegisterController controller = Get.put(RegisterController());
 
   @override
   Widget build(BuildContext context) {
-    final RegisterController controller = RegisterController();
     return Scaffold(
       body: SingleChildScrollView(
         child: KeyboardHider(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              LoginHeader(
+              PrimaryHeader(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -110,8 +112,13 @@ class CustomerRegisterScreen extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
-                      onPressed: controller.register,
-                      child: const Text("Tiếp tục"),
+                      onPressed: () {
+                        controller.register();
+                        // Get.to(() => OtpVerificationScreen(
+                        //       emailAddress: "nganhduy2101003@gmail.com",
+                        //     ));
+                      },
+                      child: const Text("Đăng ký"),
                     ),
                   )
                 ]),
