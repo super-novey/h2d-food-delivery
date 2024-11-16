@@ -40,27 +40,30 @@ class LoginController extends GetxController {
       final res = await _authRepository.login(userName, password);
       // res.user.printInfo();
       if (res.user.role == "driver") {
+        Loaders.successSnackBar(
+            title: "Thành công!", message: "Đăng nhập thành công");
         Get.offAll(() => const ShipperNavigationMenu());
       } else if (res.user.role == "partner") {
+        Loaders.successSnackBar(
+            title: "Thành công!", message: "Đăng nhập thành công");
         Get.offAll(() => const RestaurantNavigationMenu());
       } else if (res.user.role == "customer") {
+        Loaders.successSnackBar(
+            title: "Thành công!", message: "Đăng nhập thành công");
         Get.offAll(() => const CustomerNavigationMenu());
       } else {
-        // Loaders.successSnackBar(title: "Admin!", message: "Admin");
+        Loaders.successSnackBar(
+            title: "Thành công!", message: "Đăng nhập thành công");
+
         if (kIsWeb) {
           Get.toNamed(Routes.dashboard);
         } else {
           Loaders.customToast(message: 'Chỉ đăng nhập bằng website!');
         }
-        // Get.offAll(() => const CustomerNavigationMenu());
       }
-      // Loaders.successSnackBar(
-      //     title: "Thành công!", message: "Đăng nhập thành công");
     } catch (err) {
       Loaders.errorSnackBar(
-          title: "Thất bại!",
-          message: "Sai Tên đăng nhập hoặc mật khẩu ${err}");
-      print(err);
+          title: "Thất bại!", message: "Sai Tên đăng nhập hoặc mật khẩu");
     } finally {
       isLoading.value = false;
     }

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery_h2d/features/authentication/views/register/register_screen.dart';
 import 'package:food_delivery_h2d/features/restaurants/restaurant_navigation_menu.dart';
 import 'package:food_delivery_h2d/features/shippers/shipper_navigation_menu.dart';
 import 'package:food_delivery_h2d/features/admin/dashboard/admin_dashboard.dart';
@@ -8,7 +9,7 @@ import 'package:food_delivery_h2d/routes/routes.dart';
 import 'package:food_delivery_h2d/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 import '../../../../../utils/constants/sizes.dart';
-import '../../../controllers/auth_controller.dart';
+import '../../../controllers/login_controller.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({
@@ -87,7 +88,9 @@ class LoginForm extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           child: OutlinedButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.to(() => RegisterScreen());
+            },
             child: const Text("Đăng ký"),
           ),
         )

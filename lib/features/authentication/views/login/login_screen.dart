@@ -19,7 +19,12 @@ class LoginScreen extends StatelessWidget {
             if (kIsWeb)
               const LoginFormWeb()
             else ...[
-              const LoginHeader(),
+              LoginHeader(
+                child: Text(
+                  "Dang nhap",
+                  style: Theme.of(context).textTheme.headlineLarge,
+                ),
+              ),
               Center(
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(MySizes.borderRadiusMd),
@@ -35,9 +40,7 @@ class LoginScreen extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.all(MySizes.defaultSpace),
                 child: Column(
-                  children: [
-                    
-                    LoginForm()],
+                  children: [LoginForm()],
                 ),
               ),
             ],
