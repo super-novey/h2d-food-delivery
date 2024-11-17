@@ -6,6 +6,6 @@ import 'package:get/get_navigation/src/routes/get_route.dart';
 class AppRoutes {
   static final List<GetPage> pages = [
     GetPage(name: Routes.dashboard, page: () => const AdminDashboard()),
-    GetPage(name: Routes.userManagerment, page: () => const UserManagement())
+    GetPage(name: Routes.userManagerment, page: () => UserManagementScreen())
   ];
 }

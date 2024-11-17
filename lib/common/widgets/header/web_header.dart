@@ -16,7 +16,7 @@ class WebHeader extends StatelessWidget implements PreferredSizeWidget {
     return Container(
       height: 60,
       decoration: const BoxDecoration(
-        color: MyColors.darkPrimaryColor,
+        color: Colors.white,
         border:
             Border(bottom: BorderSide(color: MyColors.dividerColor, width: 1)),
       ),
@@ -32,7 +32,7 @@ class WebHeader extends StatelessWidget implements PreferredSizeWidget {
               scaffoldKey?.currentState?.openDrawer();
             }
           },
-          icon: const Icon(Icons.more_vert, size: MySizes.iconMd),
+          icon: const Icon(Icons.more_vert, size: MySizes.iconMd, color: MyColors.darkPrimaryColor,),
         ),
         actions: [
           IconButton(
@@ -40,6 +40,7 @@ class WebHeader extends StatelessWidget implements PreferredSizeWidget {
               icon: const Icon(
                 Icons.notifications_outlined,
                 size: MySizes.iconMs,
+                color: MyColors.darkPrimaryColor,
               )),
           const SizedBox(
             width: MySizes.spaceBtwItems / 2,
@@ -48,9 +49,9 @@ class WebHeader extends StatelessWidget implements PreferredSizeWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const CircleImage(
-                imageUrl: MyImagePaths.iconLogo,
-                width: 30,
-                height: 30,
+                imageUrl: MyImagePaths.appRed,
+                width: 80,
+                height: 80,
               ),
               const SizedBox(
                 width: MySizes.sm,
@@ -64,14 +65,14 @@ class WebHeader extends StatelessWidget implements PreferredSizeWidget {
                     style: Theme.of(context)
                         .textTheme
                         .titleLarge!
-                        .apply(color: Colors.white),
+                        .apply(color: MyColors.darkPrimaryColor),
                   ),
                   Text(
                     "Admin",
                     style: Theme.of(context)
                         .textTheme
                         .bodyLarge!
-                        .apply(color: Colors.white),
+                        .apply(color: MyColors.darkPrimaryColor),
                   ),
                 ],
               )

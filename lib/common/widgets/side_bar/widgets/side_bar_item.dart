@@ -30,7 +30,7 @@ class SideBarItem extends StatelessWidget {
             decoration: BoxDecoration(
                 color: sideBarController.isHovering(route) ||
                         sideBarController.isActive(route)
-                    ? Colors.white
+                    ? MyColors.darkPrimaryColor
                     : Colors.transparent,
                 borderRadius: BorderRadius.circular(MySizes.borderRadiusMd)),
             child: Row(
@@ -46,8 +46,8 @@ class SideBarItem extends StatelessWidget {
                     icon,
                     color: sideBarController.isHovering(route) ||
                             sideBarController.isActive(route)
-                        ? MyColors.darkPrimaryColor
-                        : Colors.white,
+                        ? Colors.white
+                        : MyColors.darkPrimaryColor,
                   ),
                 ),
                 Text(
@@ -55,8 +55,8 @@ class SideBarItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyLarge!.apply(
                       color: sideBarController.isHovering(route) ||
                               sideBarController.isActive(route)
-                          ? MyColors.darkPrimaryColor
-                          : Colors.white),
+                          ? Colors.white
+                          : MyColors.darkPrimaryColor),
                 ),
               ],
             ),
