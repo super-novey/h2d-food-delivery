@@ -43,7 +43,7 @@ class ConvertEnumRole {
       case UserRole.partner:
         Get.to(() => const PartnerRegisterScreen());
       case UserRole.driver:
-        Get.to(() => const DriverRegisterScreen());
+        Get.to(() => DriverRegisterScreen());
       // TODO: Handle this case.
       case UserRole.customer:
         Get.to(() => CustomerRegisterScreen());
