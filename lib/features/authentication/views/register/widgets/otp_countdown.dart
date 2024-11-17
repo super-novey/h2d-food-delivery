@@ -5,7 +5,7 @@ class OtpCountdown {
   late Duration _time;
   // late Duration _fullTime;
 
-  int expiredTime = 1;
+  int expiredTime = 5;
 
   void init() {
     _time = Duration(minutes: expiredTime, seconds: 0);

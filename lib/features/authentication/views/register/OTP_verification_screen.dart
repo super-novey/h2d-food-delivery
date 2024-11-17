@@ -4,7 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/appbar.dart';
-import 'package:food_delivery_h2d/features/authentication/controllers/register_controller.dart';
+import 'package:food_delivery_h2d/features/authentication/controllers/otp_controller.dart';
+import 'package:food_delivery_h2d/features/authentication/controllers/customer_register_controller.dart';
 import 'package:food_delivery_h2d/features/authentication/views/login/widgets/login_header.dart';
 import 'package:food_delivery_h2d/features/authentication/views/register/widgets/otp_countdown.dart';
 import 'package:food_delivery_h2d/features/authentication/views/register/widgets/otp_widget.dart';
@@ -15,11 +16,11 @@ import 'package:get/get_core/src/get_main.dart';
 
 class OtpVerificationScreen extends StatelessWidget {
   OtpVerificationScreen({super.key, this.emailAddress});
-
   final emailAddress;
   final OtpCountdown timer = OtpCountdown();
-  final List<TextEditingController> _controllers =
-      List.generate(4, (_) => TextEditingController());
+  final OtpController otpController = OtpController();
+  // final List<TextEditingController> _controllers =
+  //     List.generate(4, (_) => TextEditingController());
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +86,7 @@ class OtpVerificationScreen extends StatelessWidget {
                     children: List.generate(
                       4,
                       (index) => OTPTextField(
-                        controller: _controllers[index],
+                        controller: otpController.controllers[index],
                       ),
                     )),
               ),
@@ -103,19 +104,17 @@ class OtpVerificationScreen extends StatelessWidget {
                         );
                       }),
                   TextButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        await otpController.resendOTP(emailAddress);
                         timer.init();
                         timer.startTimer();
                       },
-                      child: Text("Gửi lại"))
+                      child: const Text("Gửi lại"))
                 ],
               ),
               ElevatedButton(
                   onPressed: () {
-                    String otp = _controllers
-                        .map((controller) => controller.text)
-                        .join('');
-                    print(otp);
+                    otpController.verifyOTP(emailAddress);
                   },
                   child: const Text("Xác thực"))
             ],

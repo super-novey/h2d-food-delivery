@@ -1,9 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:food_delivery_h2d/common/widgets/keyboard/keyboard_hider.dart';
-import 'package:food_delivery_h2d/features/authentication/controllers/register_controller.dart';
-import 'package:food_delivery_h2d/features/authentication/views/login/login_screen.dart';
+import 'package:food_delivery_h2d/features/authentication/controllers/customer_register_controller.dart';
 import 'package:food_delivery_h2d/features/authentication/views/login/widgets/login_header.dart';
 import 'package:food_delivery_h2d/features/authentication/views/register/OTP_verification_screen.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
@@ -86,24 +83,6 @@ class CustomerRegisterScreen extends StatelessWidget {
                         decoration: const InputDecoration(
                             labelText: "Mật khẩu", hintText: "Nhập mật khẩu"),
                       ),
-                      const SizedBox(
-                        height: MySizes.spaceBtwInputFields,
-                      ),
-                      DropdownButtonFormField(
-                          decoration:
-                              const InputDecoration(labelText: "Vai trò"),
-                          value: controller.roleController.value,
-                          items: const [
-                            DropdownMenuItem(
-                                value: "customer", child: Text("Khách hàng")),
-                            DropdownMenuItem(
-                                value: "partner", child: Text("Đối tác")),
-                            DropdownMenuItem(
-                                value: "driver", child: Text("Tài xế")),
-                          ],
-                          onChanged: (value) {
-                            controller.roleController.value = value.toString();
-                          })
                     ],
                   )),
                   const SizedBox(
@@ -112,11 +91,11 @@ class CustomerRegisterScreen extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
-                      onPressed: () {
-                        controller.register();
-                        // Get.to(() => OtpVerificationScreen(
-                        //       emailAddress: "nganhduy2101003@gmail.com",
-                        //     ));
+                      onPressed: () async {
+                        await controller.register();
+                        Get.to(() => OtpVerificationScreen(
+                              emailAddress: controller.registeredUser.email,
+                            ));
                       },
                       child: const Text("Đăng ký"),
                     ),
