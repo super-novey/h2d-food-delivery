@@ -3,13 +3,16 @@ import 'package:food_delivery_h2d/common/widgets/keyboard/keyboard_hider.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/customer_register_controller.dart';
 import 'package:food_delivery_h2d/features/authentication/views/login/widgets/login_header.dart';
 import 'package:food_delivery_h2d/features/authentication/views/register/OTP_verification_screen.dart';
+import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
+import 'package:food_delivery_h2d/utils/popups/full_screen_loader.dart';
 import 'package:get/get.dart';
 
 class CustomerRegisterScreen extends StatelessWidget {
   CustomerRegisterScreen({super.key});
 
-  final RegisterController controller = Get.put(RegisterController());
+  final CustomerRegisterController controller =
+      Get.put(CustomerRegisterController());
 
   @override
   Widget build(BuildContext context) {
@@ -92,10 +95,14 @@ class CustomerRegisterScreen extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: TextButton(
                       onPressed: () async {
-                        await controller.register();
-                        Get.to(() => OtpVerificationScreen(
-                              emailAddress: controller.registeredUser.email,
-                            ));
+                        try {
+                          await controller.register();
+                          Get.to(() => OtpVerificationScreen(
+                                emailAddress: controller.registeredUser.email,
+                              ));
+                        } catch (e) {
+                          print(e);
+                        }
                       },
                       child: const Text("Đăng ký"),
                     ),

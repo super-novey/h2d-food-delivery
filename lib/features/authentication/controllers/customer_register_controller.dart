@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/data/authentication/auth_repository.dart';
 import 'package:food_delivery_h2d/features/authentication/models/User.dart';
 import 'package:food_delivery_h2d/utils/constants/enums.dart';
+import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
+import 'package:food_delivery_h2d/utils/popups/full_screen_loader.dart';
 import 'package:food_delivery_h2d/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 
-class RegisterController extends GetxController {
-  static RegisterController get instance => Get.find();
+class CustomerRegisterController extends GetxController {
+  static CustomerRegisterController get instance => Get.find();
 
   // TextEdit Controllers
   final emailController = TextEditingController();
@@ -19,12 +21,15 @@ class RegisterController extends GetxController {
   Future<void> register() async {
     final newUser = getUserFromForm();
     try {
+      FullScreenLoader.openDialog("Đang xử lý", MyImagePaths.spoonAnimation);
       registeredUser = await AuthRepository.instance.register(newUser);
       registeredUser.printInfo();
       Loaders.successSnackBar(title: "Đăng ký thành công!");
     } catch (error) {
       print("ERRO ${error.toString()}");
-    } finally {}
+    } finally {
+      FullScreenLoader.stopLoading();
+    }
   }
 
   UserModel getUserFromForm() {
