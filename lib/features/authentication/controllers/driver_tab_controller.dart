@@ -16,6 +16,10 @@ class DriverTabController extends GetxController
     ),
   ];
 
+  final myTabViews = <TabBarView>[
+    
+  ];
+
   @override
   void onInit() {
     controller = TabController(length: myTabs.length, vsync: this);

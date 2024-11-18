@@ -37,7 +37,7 @@ class LoginController extends GetxController {
       isLoading.value = true;
       // final res = await _authRepository.login(userName, password);
       // final user = User.fromJson(res["data"]["user"]);
-      final res = await _authRepository.login(userName, password);
+      final res = await _authRepository.login(userName.trim(), password.trim());
       // res.user.printInfo();
       if (res.user.role == "driver") {
         Loaders.successSnackBar(

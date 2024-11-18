@@ -29,6 +29,8 @@ dependencies:
   flutter_rating_stars: ^1.1.0
   animated_background: ^2.0.0
   url_strategy: ^0.2.0
+  image_picker: ^1.1.2
+  dotted_border: ^2.1.0
 
 dev_dependencies:
   flutter_test:
@@ -43,4 +45,3 @@ flutter:
     - assets/animations/
     - assets/icons/
     - assets/logos/
-    

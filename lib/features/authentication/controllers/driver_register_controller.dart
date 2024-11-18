@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/data/address/address_repository.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class DriverRegisterController extends GetxController {
   static DriverRegisterController get instance => Get.find();
@@ -14,8 +17,9 @@ class DriverRegisterController extends GetxController {
   final phoneNumbController = TextEditingController();
   final passwordController = TextEditingController();
   final detailAddressController = TextEditingController();
+  final licensePlateController = TextEditingController();
 
-  // Adress
+  // Address
   var provinces = [].obs;
   var districts = [].obs;
   var communes = [].obs;
@@ -25,6 +29,10 @@ class DriverRegisterController extends GetxController {
   var selectedCommuneId = "".obs;
 
   var lenghtDetailAddress = RxInt(0);
+
+  // Images
+  var licenseFrontPlateImage = Rx<File?>(null);
+  var licenseBackPlateImage = Rx<File?>(null);
 
   //Loading
   final isLoading = false.obs;
@@ -98,6 +106,18 @@ class DriverRegisterController extends GetxController {
       communes.assignAll(await _addressRepository.getCommunes(idDistrict));
     } catch (e) {
       print(e);
+    }
+  }
+
+  Future pickImage(Rx<File?> imageFile) async {
+    final picker = ImagePicker();
+    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedImage != null) {
+      imageFile.value = File(pickedImage.path);
+      print(imageFile.value);
+    } else {
+      print("No image");
     }
   }
 }
