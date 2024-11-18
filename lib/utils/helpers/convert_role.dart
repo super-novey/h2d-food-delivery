@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/authentication/views/register/customer_register_screen.dart';
 import 'package:food_delivery_h2d/features/authentication/views/register/driver_register_screen.dart';
 import 'package:food_delivery_h2d/features/authentication/views/register/partner_register_screen.dart';
+import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/enums.dart';
 import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
 import 'package:get/get.dart';
@@ -43,10 +45,14 @@ class ConvertEnumRole {
       case UserRole.partner:
         Get.to(() => const PartnerRegisterScreen());
       case UserRole.driver:
-        Get.to(() => const DriverRegisterScreen());
+        Get.to(() => DriverRegisterScreen());
       // TODO: Handle this case.
       case UserRole.customer:
         Get.to(() => CustomerRegisterScreen());
     }
   }
+  static Color getStatusColor(bool status) {
+  return status ? MyColors.successColor : MyColors.primaryColor; 
+}
+
 }

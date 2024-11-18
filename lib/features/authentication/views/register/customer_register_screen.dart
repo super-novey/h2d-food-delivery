@@ -3,6 +3,7 @@ import 'package:food_delivery_h2d/common/widgets/keyboard/keyboard_hider.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/customer_register_controller.dart';
 import 'package:food_delivery_h2d/features/authentication/views/login/widgets/login_header.dart';
 import 'package:food_delivery_h2d/features/authentication/views/register/OTP_verification_screen.dart';
+import 'package:food_delivery_h2d/features/authentication/views/register/widgets/user_register_form.dart';
 import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:food_delivery_h2d/utils/popups/full_screen_loader.dart';
@@ -53,41 +54,12 @@ class CustomerRegisterScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(MySizes.defaultSpace),
                 child: Column(children: [
                   // register form
-                  Form(
-                      child: Column(
-                    children: [
-                      TextFormField(
-                        controller: controller.emailController,
-                        decoration: const InputDecoration(
-                            labelText: "Email", hintText: "Email"),
-                      ),
-                      const SizedBox(
-                        height: MySizes.spaceBtwInputFields,
-                      ),
-                      TextFormField(
-                        controller: controller.nameController,
-                        decoration: const InputDecoration(
-                            labelText: "Họ và tên", hintText: "Nhập họ và tên"),
-                      ),
-                      const SizedBox(
-                        height: MySizes.spaceBtwInputFields,
-                      ),
-                      TextFormField(
-                        controller: controller.phoneNumbController,
-                        decoration: const InputDecoration(
-                            labelText: "Số điện thoại",
-                            hintText: "Nhập số điện thoại"),
-                      ),
-                      const SizedBox(
-                        height: MySizes.spaceBtwInputFields,
-                      ),
-                      TextFormField(
-                        controller: controller.passwordController,
-                        decoration: const InputDecoration(
-                            labelText: "Mật khẩu", hintText: "Nhập mật khẩu"),
-                      ),
-                    ],
-                  )),
+                  UserRegisterForm(
+                    emailController: controller.emailController,
+                    nameController: controller.nameController,
+                    passwordController: controller.passwordController,
+                    phoneNumbController: controller.phoneNumbController,
+                  ),
                   const SizedBox(
                     height: MySizes.spaceBtwItems,
                   ),
@@ -97,9 +69,11 @@ class CustomerRegisterScreen extends StatelessWidget {
                       onPressed: () async {
                         try {
                           await controller.register();
-                          Get.to(() => OtpVerificationScreen(
-                                emailAddress: controller.registeredUser.email,
-                              ));
+                          if (controller.registeredUser.email.isNotEmpty) {
+                            Get.to(() => OtpVerificationScreen(
+                                  emailAddress: controller.registeredUser.email,
+                                ));
+                          }
                         } catch (e) {
                           print(e);
                         }

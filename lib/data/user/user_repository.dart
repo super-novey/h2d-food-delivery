@@ -17,6 +17,22 @@ class UserRepository extends GetxController {
       rethrow;
     }
   }
+Future<List<UserModel>> fetchUserByRole({String? role}) async {
+  try {
+    String url = "user/filter";  
+    if (role != null) {
+      url += "?role=$role";  
+    }
+    
+    final response = await HttpHelper.get(url);  
+    List<dynamic> data = response['data'] as List<dynamic>;
+    
+    return data.map((item) => UserModel.fromJson(item)).toList();  
+  } on Exception catch (e) {
+    print("Error fetching users by role: $e");
+    rethrow;
+  }
+}
 
 
 

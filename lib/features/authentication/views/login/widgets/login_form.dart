@@ -69,17 +69,8 @@ class LoginForm extends StatelessWidget {
           width: double.infinity,
           child: ElevatedButton(
             onPressed: authController.login,
-            // () {
-            //   // Get.to(const ShipperNavigationMenu());
 
-            // },
-            // onPressed: () {
-            //   if (kIsWeb) {
-            //     Get.toNamed(Routes.dashboard);
-            //   } else {
-            //     Loaders.customToast(message: 'Chỉ đăng nhập bằng website!');
-            //   }
-            // },
+            // onPressed: () => Get.offAll(() => const ShipperNavigationMenu()),
             child: const Text("Đăng nhập"),
           ),
         ),
@@ -90,7 +81,7 @@ class LoginForm extends StatelessWidget {
           width: double.infinity,
           child: OutlinedButton(
             onPressed: () {
-              Get.to(() => RegisterNavigationMenu());
+              Get.to(() => const RegisterNavigationMenu());
             },
             child: const Text("Đăng ký"),
           ),

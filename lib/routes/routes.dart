@@ -6,5 +6,6 @@ class Routes {
   static List sideBarItems = [
     dashboard,
     userManagerment,
+    approveRequest
   ];
 }

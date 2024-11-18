@@ -1,13 +1,16 @@
+import 'package:food_delivery_h2d/features/authentication/models/DriverModel.dart';
 import 'package:food_delivery_h2d/features/authentication/models/LoginResponse.dart';
 import 'package:food_delivery_h2d/features/authentication/models/User.dart';
 import 'package:food_delivery_h2d/utils/http/http_client.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 class AuthRepository extends GetxController {
   static AuthRepository get instance => Get.find();
 
   static const String _loginApi = "auth/login";
   static const String _registerApi = "auth/register";
+  static const String _driverRegisterApi = "auth/driverRegister";
   static const String _verifyOTPApi = "auth/verifyOTP";
   static const String _resendOTPApi = "auth/resendOTP";
 
@@ -38,6 +41,27 @@ class AuthRepository extends GetxController {
       final res = await HttpHelper.post(_registerApi, data);
       final newUser = UserModel.fromJson(res["data"]["user"]);
       return newUser;
+    } on Exception catch (_) {
+      rethrow;
+    }
+  }
+
+  Future<void> registerDriver(DriverModel newDriver) async {
+    final data = newDriver.toJson();
+    try {
+      final res = await HttpHelper.post(_driverRegisterApi, data);
+      print(res["message"]);
+    } on Exception catch (_) {
+      rethrow;
+    }
+  }
+
+  Future<void> registerDriver1(
+      DriverModel newDriver, List<http.MultipartFile> files) async {
+    try {
+      final res = await HttpHelper.postWithFiles(
+          _driverRegisterApi, newDriver.toJson(), files);
+      //print(res);
     } on Exception catch (_) {
       rethrow;
     }

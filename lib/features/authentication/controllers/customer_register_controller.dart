@@ -34,7 +34,7 @@ class CustomerRegisterController extends GetxController {
 
   UserModel getUserFromForm() {
     return UserModel(
-        id: "",
+        userId: "",
         name: nameController.text,
         email: emailController.text,
         password: passwordController.text,
