@@ -1,18 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_h2d/data/address/address_repository.dart';
 import 'package:get/get.dart';
 
 class DriverRegisterController extends GetxController {
   static DriverRegisterController get instance => Get.find();
+
+  // Repository
+  final _addressRepository = Get.put(AddressRepository());
 
   // TextEdit Controllers
   final emailController = TextEditingController();
   final nameController = TextEditingController();
   final phoneNumbController = TextEditingController();
   final passwordController = TextEditingController();
+  final detailAddressController = TextEditingController();
+
+  // Adress
+  var provinces = [].obs;
+  var districts = [].obs;
+  var communes = [].obs;
+
+  var selectedProvinceId = "".obs;
+  var selectedDistrictId = "".obs;
+  var selectedCommuneId = "".obs;
+
+  var lenghtDetailAddress = RxInt(0);
+
+  //Loading
+  final isLoading = false.obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     // TODO: implement onInit
+    try {
+      isLoading.value = true;
+      await fetchProvinces();
+    } catch (e) {
+      print(e);
+    } finally {
+      isLoading.value = false;
+    }
     super.onInit();
   }
 
@@ -22,6 +49,55 @@ class DriverRegisterController extends GetxController {
     nameController.dispose();
     phoneNumbController.dispose();
     passwordController.dispose();
+    detailAddressController.dispose();
+    provinces.clear();
+    districts.clear();
+    communes.clear();
     super.onClose();
+  }
+
+  void updateSelectedProvinceId(String value) {
+    selectedProvinceId.value = value;
+    fetchDistricts(value);
+    selectedDistrictId.value = "";
+    selectedCommuneId.value = "";
+  }
+
+  void updateSelectedDistrictId(String value) {
+    selectedDistrictId.value = value;
+    fetchCommunes(value);
+    selectedCommuneId.value = "";
+  }
+
+  void updateSelectedCommuneId(String value) {
+    selectedCommuneId.value = value;
+  }
+
+  void handleDetailAddressChange(String value) {
+    lenghtDetailAddress.value = value.length;
+  }
+
+  Future<void> fetchProvinces() async {
+    try {
+      provinces.assignAll(await _addressRepository.getProvinces());
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> fetchDistricts(String idProvince) async {
+    try {
+      districts.assignAll(await _addressRepository.getDistrict(idProvince));
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> fetchCommunes(String idDistrict) async {
+    try {
+      communes.assignAll(await _addressRepository.getCommunes(idDistrict));
+    } catch (e) {
+      print(e);
+    }
   }
 }
