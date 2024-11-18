@@ -69,9 +69,11 @@ class CustomerRegisterScreen extends StatelessWidget {
                       onPressed: () async {
                         try {
                           await controller.register();
-                          Get.to(() => OtpVerificationScreen(
-                                emailAddress: controller.registeredUser.email,
-                              ));
+                          if (controller.registeredUser.email.isNotEmpty) {
+                            Get.to(() => OtpVerificationScreen(
+                                  emailAddress: controller.registeredUser.email,
+                                ));
+                          }
                         } catch (e) {
                           print(e);
                         }
@@ -88,5 +90,3 @@ class CustomerRegisterScreen extends StatelessWidget {
     );
   }
 }
-
-

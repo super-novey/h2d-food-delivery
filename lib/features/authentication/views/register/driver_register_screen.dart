@@ -93,7 +93,7 @@ class DriverRegisterScreen extends StatelessWidget {
                                     .map((province) {
                                   return DropdownMenuItem<String>(
                                       value: province.id,
-                                      child: Text(province.name));
+                                      child: Text(province.fullName));
                                 }).toList(),
                                 onChanged: (value) {
                                   _driverRegisterController
@@ -116,7 +116,7 @@ class DriverRegisterScreen extends StatelessWidget {
                                       .map((district) {
                                     return DropdownMenuItem<String>(
                                         value: district.id,
-                                        child: Text(district.name));
+                                        child: Text(district.fullName));
                                   }).toList(),
                                   onChanged: (value) {
                                     _driverRegisterController
@@ -140,7 +140,7 @@ class DriverRegisterScreen extends StatelessWidget {
                                       .map((commune) {
                                     return DropdownMenuItem<String>(
                                         value: commune.id,
-                                        child: Text(commune.name));
+                                        child: Text(commune.fullName));
                                   }).toList(),
                                   onChanged: (value) {
                                     _driverRegisterController
