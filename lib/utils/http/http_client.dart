@@ -7,7 +7,7 @@ class HttpHelper {
   //     "https://backend-fooddelivery-1.onrender.com/api/v1/"; // change URL
 
   static const String _baseUrl =
-      "https://ab27-14-169-7-78.ngrok-free.app/api/v1";
+      "https://da40-14-169-76-55.ngrok-free.app/api/v1";
 
   // GET method
   static Future<Map<String, dynamic>> get(String endpoint) async {
@@ -42,11 +42,40 @@ class HttpHelper {
     return _handleResponse(response);
   }
 
+  // Post with File
+  static Future<Map<String, dynamic>> postWithFiles(
+      String endpoint, dynamic fields, List<http.MultipartFile> files) async {
+    var request =
+        http.MultipartRequest('POST', Uri.parse('$_baseUrl/$endpoint'));
+    fields.forEach((key, value) {
+      request.fields[key] = value;
+    });
+
+    request.files.addAll(files);
+
+    var response = await request.send();
+
+    return await _handleMultipartResponse(response);
+  }
+
   static Map<String, dynamic> _handleResponse(http.Response response) {
     if (response.statusCode == 200 || response.statusCode == 201) {
       return json.decode(response.body);
     } else {
       throw Exception('${response.body}');
+    }
+  }
+
+  // Handle response for multipart request
+  static Future<Map<String, dynamic>> _handleMultipartResponse(
+      http.StreamedResponse response) async {
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      final responseBody = await response.stream.bytesToString();
+      return json.decode(responseBody);
+    } else {
+      final errorBody = await response.stream.bytesToString();
+      print('Error Response: $errorBody'); // Print the error response body
+      throw Exception('Error: ${response.statusCode}, $errorBody');
     }
   }
 }

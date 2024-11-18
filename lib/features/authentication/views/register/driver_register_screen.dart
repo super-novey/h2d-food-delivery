@@ -231,7 +231,8 @@ class DriverRegisterScreen extends StatelessWidget {
                               height: MySizes.spaceBtwSections,
                             ),
                             ElevatedButton(
-                                onPressed: () {}, child: const Text("Đăng ký"))
+                                onPressed: _driverRegisterController.register,
+                                child: const Text("Đăng ký"))
                           ],
                         ),
                       ),

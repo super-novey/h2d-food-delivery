@@ -1,7 +1,7 @@
 import 'package:food_delivery_h2d/utils/constants/enums.dart';
 
 class UserModel {
-  final String id;
+  final String userId;
   final String name;
   final String email;
   final String password;
@@ -12,7 +12,7 @@ class UserModel {
   final DateTime updatedAt;
 
   UserModel(
-      {required this.id,
+      {required this.userId,
       required this.name,
       required this.email,
       required this.password,
@@ -24,7 +24,7 @@ class UserModel {
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      id: json['_id'],
+      userId: json['_id'],
       name: json['name'],
       email: json['email'],
       password: json['password'],
@@ -39,11 +39,11 @@ class UserModel {
   // Method to convert a User instance to a JSON map
   Map<String, dynamic> toJson() {
     return {
-      '_id': id,
+      '_id': userId,
       'name': name,
       'email': email,
       'password': password,
-      'status': status,
+      'status': status.toString(),
       'role': role,
       'phone': phone,
       'createdAt': createdAt.toIso8601String(),
@@ -53,7 +53,7 @@ class UserModel {
 
   void printInfo() {
     print("User Info:");
-    print("ID: $id");
+    print("ID: $userId");
     print("Name: $name");
     print("Email: $email");
     print("Status: $status");

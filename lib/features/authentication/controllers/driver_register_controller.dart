@@ -2,8 +2,18 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/data/address/address_repository.dart';
+import 'package:food_delivery_h2d/data/authentication/auth_repository.dart';
+import 'package:food_delivery_h2d/features/authentication/models/DriverModel.dart';
+import 'package:food_delivery_h2d/utils/constants/enums.dart';
+import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
+import 'package:food_delivery_h2d/utils/popups/full_screen_loader.dart';
+import 'package:food_delivery_h2d/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+
+import 'package:path/path.dart' as path;
+
+import 'package:http/http.dart' as http;
 
 class DriverRegisterController extends GetxController {
   static DriverRegisterController get instance => Get.find();
@@ -61,6 +71,9 @@ class DriverRegisterController extends GetxController {
     provinces.clear();
     districts.clear();
     communes.clear();
+
+    Get.delete<DriverRegisterController>();
+
     super.onClose();
   }
 
@@ -115,9 +128,88 @@ class DriverRegisterController extends GetxController {
 
     if (pickedImage != null) {
       imageFile.value = File(pickedImage.path);
-      print(imageFile.value);
+      var extension = path.extension(licenseFrontPlateImage.value!.path);
+      print(extension);
+
+      print(imageFile.value!.path);
+      // print(imageFile.value!.path);
     } else {
       print("No image");
     }
+  }
+
+  Future register() async {
+    final newDriver = getDriverFromForm();
+    try {
+      FullScreenLoader.openDialog("Đang xử lý", MyImagePaths.spoonAnimation);
+
+      List<http.MultipartFile> files = [];
+
+      if (licenseFrontPlateImage.value != null) {
+        var profileFile = await http.MultipartFile.fromPath(
+          'profileUrl',
+          licenseFrontPlateImage.value!.path,
+          filename: path.basename(licenseFrontPlateImage.value!.path),
+        );
+        files.add(profileFile);
+      }
+
+      if (licenseFrontPlateImage.value != null) {
+        var licenseFrontFile = await http.MultipartFile.fromPath(
+          'licenseFrontUrl',
+          licenseFrontPlateImage.value!.path,
+          filename: path.basename(licenseFrontPlateImage.value!.path),
+        );
+        files.add(licenseFrontFile);
+      }
+
+      if (licenseBackPlateImage.value != null) {
+        var licenseBackFile = await http.MultipartFile.fromPath(
+          'licenseBackUrl',
+          licenseBackPlateImage.value!.path,
+          filename: path.basename(licenseBackPlateImage.value!.path),
+        );
+        files.add(licenseBackFile);
+      }
+
+      // Print details of the files
+      files.forEach((file) {
+        print('File Field Name: ${file.field}');
+        print('File Path: ${file.filename}');
+        print('File Size: ${file.length} bytes');
+      });
+
+      // await AuthRepository.instance.registerDriver(newDriver);
+      await AuthRepository.instance.registerDriver1(newDriver, files);
+
+      // registeredUser.printInfo();
+      Loaders.successSnackBar(title: "Đăng ký thành công!");
+    } catch (error) {
+      print("ERRO ${error.toString()}");
+    } finally {
+      FullScreenLoader.stopLoading();
+    }
+  }
+
+  DriverModel getDriverFromForm() {
+    return DriverModel(
+        driverId: '',
+        licensePlate: licensePlateController.text,
+        profileUrl: '',
+        licenseFrontUrl: '',
+        licenseBackUrl: '',
+        provinceId: selectedProvinceId.value,
+        districtId: selectedDistrictId.value,
+        communeId: selectedCommuneId.value,
+        detailAddress: detailAddressController.text,
+        userId: '',
+        name: nameController.text,
+        email: emailController.text,
+        password: passwordController.text,
+        status: false,
+        role: UserRole.driver.name,
+        phone: phoneNumbController.text,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now());
   }
 }
