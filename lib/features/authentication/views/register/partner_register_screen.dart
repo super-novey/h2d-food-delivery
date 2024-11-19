@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:food_delivery_h2d/common/widgets/images/image_picker.dart';
 import 'package:food_delivery_h2d/common/widgets/keyboard/keyboard_hider.dart';
-import 'package:food_delivery_h2d/features/authentication/controllers/driver_register_controller.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/driver_tab_controller.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/partner_register_controller.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/partner_tab_controller.dart';
@@ -287,7 +286,8 @@ class PartnerRegisterScreen extends StatelessWidget {
                               height: MySizes.spaceBtwSections,
                             ),
                             ElevatedButton(
-                                onPressed: _partnerRegisterController.register,
+                                onPressed: _partnerRegisterController.register
+                                ,
                                 child: const Text("Đăng ký"))
                           ],
                         ),

@@ -5,6 +5,7 @@ import 'package:food_delivery_h2d/data/address/address_repository.dart';
 import 'package:food_delivery_h2d/data/authentication/auth_repository.dart';
 import 'package:food_delivery_h2d/features/authentication/models/DriverModel.dart';
 import 'package:food_delivery_h2d/features/authentication/models/PartnerModel.dart';
+import 'package:food_delivery_h2d/features/authentication/views/register/OTP_verification_screen.dart';
 import 'package:food_delivery_h2d/utils/constants/enums.dart';
 import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
 import 'package:food_delivery_h2d/utils/helpers/multiple_part_file.dart';
@@ -76,7 +77,7 @@ class PartnerRegisterController extends GetxController {
     districts.clear();
     communes.clear();
 
-    Get.delete<PartnerRegisterController>();
+    // Get.delete<PartnerRegisterController>();
 
     super.onClose();
   }
@@ -174,6 +175,9 @@ class PartnerRegisterController extends GetxController {
       Loaders.errorSnackBar(title: "Lỗi!", message: error.toString());
     } finally {
       FullScreenLoader.stopLoading();
+      Get.to(() => OtpVerificationScreen(
+            emailAddress: emailController.text,
+          ));
     }
   }
 
