@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/appbar.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/notification_icon.dart';
+import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 
@@ -16,7 +17,7 @@ class RestaurantHomeAppbar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Quán ăn A",
+            LoginController.instance.currentUser!.name,
             style: Theme.of(context)
                 .textTheme
                 .headlineSmall!

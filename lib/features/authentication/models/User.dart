@@ -51,7 +51,7 @@ class UserModel {
     };
   }
 
-  void printInfo() {
+  void getInfo() {
     print("User Info:");
     print("ID: $userId");
     print("Name: $name");
