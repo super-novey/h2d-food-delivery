@@ -29,7 +29,7 @@ class Loaders {
         )));
   }
 
-  static successSnackBar({required title, message = '', duration = 3}) {
+  static successSnackBar({required title, message = '', duration = 1}) {
     Get.snackbar(title, message,
         isDismissible: true,
         shouldIconPulse: true,
@@ -44,7 +44,7 @@ class Loaders {
         ));
   }
 
-  static waringSnackBar({required title, message = '', duration = 3}) {
+  static waringSnackBar({required title, message = '', duration = 1}) {
     Get.snackbar(title, message,
         isDismissible: true,
         shouldIconPulse: true,
@@ -59,7 +59,7 @@ class Loaders {
         ));
   }
 
-  static errorSnackBar({required title, message = '', duration = 3}) {
+  static errorSnackBar({required title, message = '', duration = 1}) {
     Get.snackbar(title, message,
         isDismissible: true,
         shouldIconPulse: true,

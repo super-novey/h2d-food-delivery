@@ -159,7 +159,7 @@ class MenuFoodController extends GetxController {
     allCategories.map((item) => print(item.categoryId));
   }
 
-  void addEmptyCategory() {
+  void addCategory() {
     Get.defaultDialog(
       contentPadding: const EdgeInsets.all(MySizes.md),
       title: "Thêm danh mục",
@@ -180,8 +180,10 @@ class MenuFoodController extends GetxController {
                 restaurantId: LoginController.instance.currentUser.partnerId));
 
             allCategories.add(newCategory);
+            _newCategoryController.text = "";
 
             Navigator.of(Get.overlayContext!).pop();
+
             Loaders.successSnackBar(
               title: "Thành công!",
               message: "Thêm danh mục thành công",

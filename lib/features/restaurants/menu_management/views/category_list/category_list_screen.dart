@@ -45,7 +45,7 @@ class CategoryListScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          menuFoodController.addEmptyCategory();
+          menuFoodController.addCategory();
         },
         backgroundColor: MyColors.darkPrimaryColor,
         child: const Icon(
