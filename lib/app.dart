@@ -2,12 +2,17 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/bindings/general_bindings.dart';
 import 'package:food_delivery_h2d/features/authentication/views/login/login_screen.dart';
+import 'package:food_delivery_h2d/features/customers/customer_navigation_menu.dart';
+import 'package:food_delivery_h2d/features/restaurants/restaurant_navigation_menu.dart';
+import 'package:food_delivery_h2d/features/shippers/shipper_navigation_menu.dart';
 import 'package:food_delivery_h2d/routes/app_routes.dart';
 import 'package:food_delivery_h2d/utils/themes/theme.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(

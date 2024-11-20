@@ -163,7 +163,7 @@ class DriverRegisterController extends GetxController {
       });
 
       // await AuthRepository.instance.registerDriver(newDriver);
-      await AuthRepository.instance.registerDriver1(newDriver, files);
+      await AuthRepository.instance.registerDriver(newDriver, files);
 
       // registeredUser.printInfo();
       Loaders.successSnackBar(title: "Đăng ký thành công!");

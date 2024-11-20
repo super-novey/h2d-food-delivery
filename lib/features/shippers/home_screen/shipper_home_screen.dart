@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/images/circle_image.dart';
+import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/home_screen/widgets/map.dart';
 import 'package:food_delivery_h2d/features/shippers/home_screen/widgets/oders_list.dart';
 import 'package:food_delivery_h2d/features/shippers/notification/views/notification_screen.dart';
@@ -49,12 +50,12 @@ class ShipperHomeScreen extends StatelessWidget {
                 const SizedBox(
                   width: 20,
                 ),
-                const Column(
+                Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Nguyễn Văn A',
+                      LoginController.instance.currentUser.licensePlate,
                       style: TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 14,

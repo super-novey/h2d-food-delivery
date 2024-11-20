@@ -17,7 +17,6 @@ class Category {
   }
 
   Map<String, dynamic> toJson() {
-    return {'name': categoryName, 'partnerId': restaurantId};
+    return {'_id': categoryId, 'name': categoryName, 'partnerId': restaurantId};
   }
-
 }

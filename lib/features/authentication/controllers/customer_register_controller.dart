@@ -23,7 +23,7 @@ class CustomerRegisterController extends GetxController {
     try {
       FullScreenLoader.openDialog("Đang xử lý", MyImagePaths.spoonAnimation);
       registeredUser = await AuthRepository.instance.register(newUser);
-      registeredUser.printInfo();
+      registeredUser.getInfo();
       Loaders.successSnackBar(title: "Đăng ký thành công!");
     } catch (error) {
       print("ERRO ${error.toString()}");

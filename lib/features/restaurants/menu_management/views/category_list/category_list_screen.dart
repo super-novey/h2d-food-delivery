@@ -22,22 +22,30 @@ class CategoryListScreen extends StatelessWidget {
                 Icons.done,
                 size: MySizes.iconMd,
               ),
-              onPressed: () {}),
+              onPressed: () {
+                menuFoodController.save();
+              }),
         ],
       ),
       body: Obx(
-        () => ListView.builder(
-          itemCount: menuFoodController.allCategories.length,
-          itemBuilder: (context, index) {
-            return CategoryTile(
-              category: menuFoodController.allCategories[index],
-            );
-          },
-        ),
+        () => menuFoodController.isLoading.value
+            ? const Center(child: CircularProgressIndicator())
+            : ListView.builder(
+                itemCount: menuFoodController.allCategories.length,
+                itemBuilder: (context, index) {
+                  return CategoryTile(
+                    category: menuFoodController.allCategories[index],
+                    handleDelete: () {
+                      menuFoodController.removeCategory(
+                          menuFoodController.allCategories[index].categoryId);
+                    },
+                  );
+                },
+              ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          menuFoodController.addEmptyCategory();
+          menuFoodController.addCategory();
         },
         backgroundColor: MyColors.darkPrimaryColor,
         child: const Icon(

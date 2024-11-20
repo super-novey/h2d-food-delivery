@@ -34,7 +34,9 @@ class PartnerModel extends UserModel {
   final String CCCDBackUrl;
 
   factory PartnerModel.fromJson(Map<String, dynamic> json) {
-    final user = UserModel.fromJson(json);
+    final user = json["userId"] is Map<String, dynamic>
+        ? UserModel.fromJson(json["userId"])
+        : UserModel.fromJson(json);
     return PartnerModel(
       partnerId: json["_id"],
       description: json["description"],
@@ -71,8 +73,8 @@ class PartnerModel extends UserModel {
       'detailAddress': detailAddress,
       'avatarUrl': avatarUrl,
       'storeFront': storeFront,
-      'CCCDFrontUrl' : CCCDFrontUrl,
-      'CCCDBackUrl' : CCCDBackUrl
+      'CCCDFrontUrl': CCCDFrontUrl,
+      'CCCDBackUrl': CCCDBackUrl
     };
   }
 }

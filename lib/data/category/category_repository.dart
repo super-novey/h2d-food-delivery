@@ -5,8 +5,6 @@ import 'package:get/get.dart';
 class CategoryRepository extends GetxController {
   static CategoryRepository get instance => Get.find();
 
-  
-
   Future<List<Category>> getCategoriesInRestaurant(String partnerId) async {
     try {
       final res = await HttpHelper.get("category/${partnerId.toString()}");
@@ -32,10 +30,18 @@ class CategoryRepository extends GetxController {
     final reqBody = newCategory.toJson();
     try {
       final res = await HttpHelper.post("category", reqBody);
-      print(res);
-      final categoryData = res["data"]["newCategory"];
 
-      return Category.fromJson(categoryData);
+      return Category.fromJson(res["data"]);
+    } on Exception catch (_) {
+      rethrow;
+    }
+  }
+
+  Future<Category> updateCategory(Category oldCategory) async {
+    try {
+      final res = await HttpHelper.put(
+          "category/${oldCategory.categoryId}", oldCategory);
+      return Category.fromJson(res["data"]);
     } on Exception catch (_) {
       rethrow;
     }

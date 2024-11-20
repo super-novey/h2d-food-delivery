@@ -28,7 +28,8 @@ class UserModel {
       name: json['name'],
       email: json['email'],
       password: json['password'],
-      status: json['status'],
+      status:
+          json['status'] is bool ? json['status'] : json['status'] == 'true',
       role: json['role'],
       phone: json['phone'],
       createdAt: DateTime.parse(json['createdAt']),
@@ -51,7 +52,7 @@ class UserModel {
     };
   }
 
-  void printInfo() {
+  void getInfo() {
     print("User Info:");
     print("ID: $userId");
     print("Name: $name");

@@ -10,7 +10,10 @@ class CategoryTile extends StatelessWidget {
   final Category category;
   final TextEditingController _controller = TextEditingController();
 
-  CategoryTile({super.key, required this.category}) {
+  final VoidCallback handleDelete;
+
+  CategoryTile(
+      {super.key, required this.category, required this.handleDelete}) {
     _controller.text = category.categoryName;
   }
 
@@ -48,11 +51,7 @@ class CategoryTile extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {
-                    // Loaders.successSnackBar(title: "${category.categoryId.toString()}");
-                    MenuFoodController.instance
-                        .removeCategory(category.categoryId.toString());
-                  },
+                  onPressed: handleDelete,
                   icon: const Icon(Icons.clear_rounded),
                 ),
               ],

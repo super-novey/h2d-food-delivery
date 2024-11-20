@@ -32,7 +32,10 @@ class DriverModel extends UserModel {
   final String detailAddress;
 
   factory DriverModel.fromJson(Map<String, dynamic> json) {
-    final user = UserModel.fromJson(json);
+    // final user = UserModel.fromJson(json["userId"]);
+    final user = json["userId"] is Map<String, dynamic>
+        ? UserModel.fromJson(json["userId"])
+        : UserModel.fromJson(json);
     return DriverModel(
       driverId: json["_id"],
       licensePlate: json['licensePlate'] ?? '',
@@ -58,6 +61,7 @@ class DriverModel extends UserModel {
   @override
   Map<String, dynamic> toJson() {
     final userJson = super.toJson();
+
     return {
       ...userJson,
       '_id': driverId,

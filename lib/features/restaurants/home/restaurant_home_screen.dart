@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/header/wave_header.dart';
 import 'package:food_delivery_h2d/common/widgets/item_menu/item_menu.dart';
+import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
 import 'package:food_delivery_h2d/features/authentication/views/login/login_screen.dart';
 import 'package:food_delivery_h2d/features/restaurants/home/widgets/restaurant_home_appbar.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/views/menu_list/menu_food_list_screen.dart';
@@ -41,31 +42,32 @@ class RestaurantHomeScreen extends StatelessWidget {
                   mainAxisSpacing: MySizes.spaceBtwItems,
                   children: [
                     ItemMenu(
-                          image: MyImagePaths.iconOrder,
-                          title: "Đơn hàng",
-                          onTap: () {
-                            Get.to(const OrderListScreen());
-                          }),
-                        ItemMenu(
-                          title: "Thực đơn",
-                          image: MyImagePaths.iconMenu,
-                          onTap: () {
-                            Get.to(const MenuFoodListScreen());
-                          },
-                        ),
-                        ItemMenu(
-                            image: MyImagePaths.iconStatistic,
-                            title: "Thống kê",
-                            onTap: () {
-                              Get.to(const StatisticScreen());
-                            }),
-                        ItemMenu(
-                            image: MyImagePaths.iconLogout,
-                            title: "Đăng xuất",
-                            onTap: () {
-                              Get.to(const LoginScreen());
-                            }),
-                  ],))
+                        image: MyImagePaths.iconOrder,
+                        title: "Đơn hàng",
+                        onTap: () {
+                          Get.to(const OrderListScreen());
+                        }),
+                    ItemMenu(
+                      title: "Thực đơn",
+                      image: MyImagePaths.iconMenu,
+                      onTap: () {
+                        Get.to(const MenuFoodListScreen());
+                      },
+                    ),
+                    ItemMenu(
+                        image: MyImagePaths.iconStatistic,
+                        title: "Thống kê",
+                        onTap: () {
+                          Get.to(const StatisticScreen());
+                        }),
+                    ItemMenu(
+                        image: MyImagePaths.iconLogout,
+                        title: "Đăng xuất",
+                        onTap: () {
+                          LoginController.instance.logout();
+                        }),
+                  ],
+                ))
           ],
         ),
       ),
