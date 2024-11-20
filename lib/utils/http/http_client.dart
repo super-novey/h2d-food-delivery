@@ -7,6 +7,7 @@ class HttpHelper {
   //     "https://backend-fooddelivery-1.onrender.com/api/v1/"; // change URL
 
   static const String _baseUrl =
+     //"http://localhost:8081/api/v1"; // change URL
       "https://f98f-14-169-7-78.ngrok-free.app/api/v1";
 
   // GET method
@@ -27,11 +28,13 @@ class HttpHelper {
   }
 
   // PUT method
-  static Future<Map<String, dynamic>> put(String endpoint, dynamic data) async {
+  static Future<Map<String, dynamic>> put(String endpoint,
+      [dynamic data]) async {
     final response = await http.put(
       Uri.parse('$_baseUrl/$endpoint'),
       headers: {'Content-Type': 'application/json'},
-      body: json.encode(data),
+      body:
+          data != null ? json.encode(data) : null, // Chỉ mã hóa nếu có dữ liệu
     );
     return _handleResponse(response);
   }

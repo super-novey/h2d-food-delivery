@@ -32,10 +32,13 @@ class AddressController extends GetxController {
   }
 
   Future<void> fetchProvinces() async {
-    try {
-      provinces.assignAll(await _addressRepository.getProvinces());
-    } catch (e) {
-      print(e);
-    }
+  try {
+    var provinceList = await _addressRepository.getProvinces();
+    provinces.assignAll(provinceList);
+    print("Dữ liệu các tỉnh: $provinces"); 
+  } catch (e) {
+    print(e);
   }
+}
+
 }

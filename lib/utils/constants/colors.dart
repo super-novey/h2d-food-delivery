@@ -28,4 +28,5 @@ class MyColors {
   static const Color darkPrimaryTextColor = Color(0xFF782020);
   static const Color starOffColor = Color(0xffe7e8ea);
   static const Color starColor = Color(0xFFFFC107);
+  static const Color primaryBackgroundColor = Color(0xFFF5F5F5);
 }

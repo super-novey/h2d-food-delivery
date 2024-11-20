@@ -31,7 +31,7 @@ class _DesktopLayoutState extends State<DesktopLayout> {
             child: Column(
               children: [
                 WebHeader(toggleDrawer: toggleSidebar), 
-                widget.body ?? const SizedBox(),
+                Expanded(child: widget.body ?? const SizedBox()),
               ],
             ),
           ),

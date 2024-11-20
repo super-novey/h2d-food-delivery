@@ -15,7 +15,7 @@ class SideBar extends StatelessWidget {
       shape: const BeveledRectangleBorder(),
       child: Container(
         decoration: const BoxDecoration(
-            color: MyColors.darkPrimaryColor,
+            color: Colors.white,
             border: Border(
                 right: BorderSide(color: MyColors.dividerColor, width: 1))),
         child: SingleChildScrollView(
@@ -28,15 +28,13 @@ class SideBar extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(MySizes.borderRadiusMd),
                   child: const CircleImage(
-                    imageUrl: MyImagePaths.iconLogo,
-                    width: 70,
-                    height: 70,
+                    imageUrl: MyImagePaths.appRed,
+                    width: 160,
+                    height: 160,
                   ),
                 ),
               ),
-              const SizedBox(
-                height: MySizes.spaceBtwInputFields,
-              ),
+
               const Column(
                 children: [
                   SideBarItem(
@@ -45,14 +43,14 @@ class SideBar extends StatelessWidget {
                     itemName: "Trang chủ",
                   ),
                   SideBarItem(
+                    route: Routes.approveRequest,
+                    icon: Icons.file_copy_outlined,
+                    itemName: "Duyệt hồ sơ",
+                  ),
+                  SideBarItem(
                     route: Routes.userManagerment,
                     icon: Icons.manage_accounts_outlined,
                     itemName: "Quản lý tài khoản",
-                  ),
-                  SideBarItem(
-                    route: Routes.statistics,
-                    icon: Icons.view_timeline_outlined,
-                    itemName: "Thống kê",
                   ),
                   SideBarItem(
                     route: Routes.revenueReport,
