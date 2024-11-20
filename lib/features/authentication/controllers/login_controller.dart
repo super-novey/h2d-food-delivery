@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/bindings/network_manager.dart';
 import 'package:food_delivery_h2d/data/authentication/auth_repository.dart';
 import 'package:food_delivery_h2d/data/driver/driver_repository.dart';
+import 'package:food_delivery_h2d/data/partner/partner_repository.dart';
 import 'package:food_delivery_h2d/features/authentication/models/DriverModel.dart';
 import 'package:food_delivery_h2d/features/authentication/models/PartnerModel.dart';
 import 'package:food_delivery_h2d/features/authentication/models/User.dart';
@@ -34,6 +35,7 @@ class LoginController extends GetxController {
   // Repository
   final AuthRepository _authRepository = Get.put(AuthRepository());
   final DriverRepository _driverRepository = Get.put(DriverRepository());
+  final PartnerRepository _partnerRepository = Get.put(PartnerRepository());
 
   void saveUser(dynamic user) {
     _localStorage.write("currentUser", user);
@@ -42,14 +44,6 @@ class LoginController extends GetxController {
   dynamic get currentUser {
     return _localStorage.read<UserModel>("currentUser");
   }
-
-  // DriverModel? get currentDriver {
-  //   return _localStorage.read<DriverModel>("currentUser");
-  // }
-
-  // PartnerModel? get currentPartner {
-  //   return _localStorage.read<PartnerModel>("currentUser");
-  // }
 
   void togglePasswordVisibility() {
     isShowPassword.value = !isShowPassword.value;
@@ -81,6 +75,9 @@ class LoginController extends GetxController {
             title: "Thành công!", message: "Đăng nhập thành công");
         Get.offAll(() => const ShipperNavigationMenu());
       } else if (res.user.role == "partner") {
+        final currentPartner =
+            await _partnerRepository.getCurrentPartner(res.user.userId);
+        saveUser(currentPartner);
         Loaders.successSnackBar(
             title: "Thành công!", message: "Đăng nhập thành công");
         Get.offAll(() => const RestaurantNavigationMenu());

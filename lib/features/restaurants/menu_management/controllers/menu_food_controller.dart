@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:food_delivery_h2d/data/category/category_repository.dart';
+import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
@@ -89,25 +90,26 @@ class MenuFoodController extends GetxController {
     try {
       isLoading.value = true;
       allCategories.clear();
-      allCategories.assignAll(await _categoryRepository
-          .getCategoriesInRestaurant("673c3ace54ad5ddb807f5033"));
+      allCategories.assignAll(
+          await _categoryRepository.getCategoriesInRestaurant(
+              LoginController.instance.currentUser.partnerId));
     } finally {
       isLoading.value = false;
     }
   }
 
-  Future<void> addCategory() async {
-    try {
-      isLoading.value = true;
-      // final newCategory = await _categoryRepository.addCategory(Category(
-      //     categoryName: "Duy100", restaurantId: "6734bf1020d35f486f7f320b"));
-      final newCategory = Category(
-          categoryName: "D10", restaurantId: "6734bf1020d35f486f7f320b");
-      allCategories.add(newCategory);
-    } finally {
-      isLoading.value = false;
-    }
-  }
+  // Future<void> addCategory() async {
+  //   try {
+  //     isLoading.value = true;
+  //     // final newCategory = await _categoryRepository.addCategory(Category(
+  //     //     categoryName: "Duy100", restaurantId: "6734bf1020d35f486f7f320b"));
+  //     final newCategory = Category(
+  //         categoryName: "D10", restaurantId: "6734bf1020d35f486f7f320b");
+  //     allCategories.add(newCategory);
+  //   } finally {
+  //     isLoading.value = false;
+  //   }
+  // }
 
   void removeCategory(String categoryId) async {
     Get.defaultDialog(
@@ -175,7 +177,7 @@ class MenuFoodController extends GetxController {
 
             final newCategory = await _categoryRepository.addCategory(Category(
                 categoryName: categoryName,
-                restaurantId: "673c3ace54ad5ddb807f5033"));
+                restaurantId: LoginController.instance.currentUser.partnerId));
 
             allCategories.add(newCategory);
 

@@ -23,17 +23,17 @@ class RestaurantHomeAppbar extends StatelessWidget {
                 .headlineSmall!
                 .apply(color: Colors.white),
           ),
-          const SizedBox(height: MySizes.xs,),
+          const SizedBox(
+            height: MySizes.xs,
+          ),
           Row(
             children: [
               Container(
-                margin: const EdgeInsets.only(right: MySizes.xs),
+                  margin: const EdgeInsets.only(right: MySizes.xs),
                   height: 12,
                   width: 12,
                   decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: MyColors.openColor
-                  )),
+                      shape: BoxShape.circle, color: MyColors.openColor)),
               Text(
                 "Đang mở cửa",
                 style: Theme.of(context)
@@ -42,13 +42,12 @@ class RestaurantHomeAppbar extends StatelessWidget {
                     .apply(color: MyColors.openColor),
               ),
             ],
-          ),          
+          ),
         ],
       ),
       actions: [
         MyNotificationIcon(
-          onPressed: () {
-          },
+          onPressed: () {},
         ),
       ],
     );
