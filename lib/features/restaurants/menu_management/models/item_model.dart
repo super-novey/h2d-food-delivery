@@ -1,8 +1,8 @@
 import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
 import 'package:get/get.dart';
 class Item {
-  int itemId;
-  int categoryId;
+  String itemId;
+  String categoryId;
   String itemName;
   int price;
   String description;
@@ -10,8 +10,8 @@ class Item {
   String itemImage;
 
   Item({
-    this.itemId = 0,
-    this.categoryId = 0,
+    this.itemId = '',
+    this.categoryId = '',
     this.itemName = '',
     this.price = 0,
     this.description = '',
