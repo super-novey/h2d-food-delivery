@@ -1,3 +1,4 @@
+import 'package:food_delivery_h2d/data/driver/driver_repository.dart';
 import 'package:food_delivery_h2d/features/authentication/models/DriverModel.dart';
 import 'package:food_delivery_h2d/features/authentication/models/LoginResponse.dart';
 import 'package:food_delivery_h2d/features/authentication/models/PartnerModel.dart';
@@ -8,6 +9,7 @@ import 'package:http/http.dart' as http;
 
 class AuthRepository extends GetxController {
   static AuthRepository get instance => Get.find();
+
 
   static const String _loginApi = "auth/login";
   static const String _registerApi = "auth/register";
@@ -82,8 +84,6 @@ class AuthRepository extends GetxController {
       rethrow;
     }
   }
-
-  
 
   // void sendOTP(String email) async {
   //   final data = {"email": email};

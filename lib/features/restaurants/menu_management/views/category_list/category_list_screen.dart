@@ -28,18 +28,20 @@ class CategoryListScreen extends StatelessWidget {
         ],
       ),
       body: Obx(
-        () => ListView.builder(
-          itemCount: menuFoodController.allCategories.length,
-          itemBuilder: (context, index) {
-            return CategoryTile(
-              category: menuFoodController.allCategories[index],
-              handleDelete: () {
-                menuFoodController.removeCategory(
-                    menuFoodController.allCategories[index].categoryId);
-              },
-            );
-          },
-        ),
+        () => menuFoodController.isLoading.value
+            ? const Center(child: CircularProgressIndicator())
+            : ListView.builder(
+                itemCount: menuFoodController.allCategories.length,
+                itemBuilder: (context, index) {
+                  return CategoryTile(
+                    category: menuFoodController.allCategories[index],
+                    handleDelete: () {
+                      menuFoodController.removeCategory(
+                          menuFoodController.allCategories[index].categoryId);
+                    },
+                  );
+                },
+              ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
