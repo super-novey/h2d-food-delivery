@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class DriverTabController extends GetxController
+class PartnerTabController extends GetxController
     with GetSingleTickerProviderStateMixin {
   late TabController controller;
   final List<Tab> myTabs = <Tab>[
     const Tab(
-      text: "Thông tin cơ bản",
+      text: "Thông tin người đại diện",
     ),
     const Tab(
-      text: "Thông tin cư trú",
+      text: "Địa chỉ hoạt động",
     ),
     const Tab(
-      text: "Bằng lái & phương tiện",
+      text: "Thông tin chi tiết quán",
     ),
   ];
 

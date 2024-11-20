@@ -1,7 +1,7 @@
 import 'package:food_delivery_h2d/utils/constants/enums.dart';
 
 class UserModel {
-  final String id;
+  final String userId;
   final String name;
   final String email;
   final String password;
@@ -12,7 +12,7 @@ class UserModel {
   final DateTime updatedAt;
 
   UserModel(
-      {required this.id,
+      {required this.userId,
       required this.name,
       required this.email,
       required this.password,
@@ -23,27 +23,28 @@ class UserModel {
       required this.updatedAt});
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
-    return UserModel(
-      id: json['_id'],
-      name: json['name'],
-      email: json['email'],
-      password: json['password'],
-      status: json['status'],
-      role: json['role'],
-      phone: json['phone'],
-      createdAt: DateTime.parse(json['createdAt']),
-      updatedAt: DateTime.parse(json['updatedAt']),
-    );
-  }
+  return UserModel(
+    userId: json['_id'] ?? '', // Gán chuỗi rỗng nếu là null
+    name: json['name'] ?? '',
+    email: json['email'] ?? '',
+    password: json['password'] ?? '',
+    status: json['status'] ?? false, // Giả sử status luôn có giá trị boolean
+    role: json['role'] ?? '',
+    phone: json['phone'] ?? '',
+    createdAt: DateTime.parse(json['createdAt'] ?? DateTime.now().toString()), // Nếu null, dùng thời gian hiện tại
+    updatedAt: DateTime.parse(json['updatedAt'] ?? DateTime.now().toString()), // Nếu null, dùng thời gian hiện tại
+  );
+}
+
 
   // Method to convert a User instance to a JSON map
   Map<String, dynamic> toJson() {
     return {
-      '_id': id,
+      '_id': userId,
       'name': name,
       'email': email,
       'password': password,
-      'status': status,
+      'status': status.toString(),
       'role': role,
       'phone': phone,
       'createdAt': createdAt.toIso8601String(),
@@ -53,7 +54,7 @@ class UserModel {
 
   void printInfo() {
     print("User Info:");
-    print("ID: $id");
+    print("ID: $userId");
     print("Name: $name");
     print("Email: $email");
     print("Status: $status");

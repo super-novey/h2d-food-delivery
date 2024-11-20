@@ -1,5 +1,6 @@
 import 'package:food_delivery_h2d/features/authentication/models/DriverModel.dart';
 import 'package:food_delivery_h2d/features/authentication/models/LoginResponse.dart';
+import 'package:food_delivery_h2d/features/authentication/models/PartnerModel.dart';
 import 'package:food_delivery_h2d/features/authentication/models/User.dart';
 import 'package:food_delivery_h2d/utils/http/http_client.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,7 @@ class AuthRepository extends GetxController {
   static const String _loginApi = "auth/login";
   static const String _registerApi = "auth/register";
   static const String _driverRegisterApi = "auth/driverRegister";
+  static const String _partnerRegisterApi = "auth/partnerRegister";
   static const String _verifyOTPApi = "auth/verifyOTP";
   static const String _resendOTPApi = "auth/resendOTP";
 
@@ -61,6 +63,18 @@ class AuthRepository extends GetxController {
     try {
       final res = await HttpHelper.postWithFiles(
           _driverRegisterApi, newDriver.toJson(), files);
+      //print(res);
+    } on Exception catch (_) {
+      rethrow;
+    }
+  }
+
+
+  Future<void> registerPartner(
+      PartnerModel newPartner, List<http.MultipartFile> files) async {
+    try {
+      final res = await HttpHelper.postWithFiles(
+          _partnerRegisterApi, newPartner.toJson(), files);
       //print(res);
     } on Exception catch (_) {
       rethrow;

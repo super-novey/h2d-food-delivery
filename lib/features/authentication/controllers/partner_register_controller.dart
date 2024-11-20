@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/data/address/address_repository.dart';
 import 'package:food_delivery_h2d/data/authentication/auth_repository.dart';
 import 'package:food_delivery_h2d/features/authentication/models/DriverModel.dart';
+import 'package:food_delivery_h2d/features/authentication/models/PartnerModel.dart';
 import 'package:food_delivery_h2d/features/authentication/views/register/OTP_verification_screen.dart';
 import 'package:food_delivery_h2d/utils/constants/enums.dart';
 import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
@@ -17,8 +18,8 @@ import 'package:path/path.dart' as path;
 
 import 'package:http/http.dart' as http;
 
-class DriverRegisterController extends GetxController {
-  static DriverRegisterController get instance => Get.find();
+class PartnerRegisterController extends GetxController {
+  static PartnerRegisterController get instance => Get.find();
 
   // Repository
   final _addressRepository = Get.put(AddressRepository());
@@ -29,7 +30,7 @@ class DriverRegisterController extends GetxController {
   final phoneNumbController = TextEditingController();
   final passwordController = TextEditingController();
   final detailAddressController = TextEditingController();
-  final licensePlateController = TextEditingController();
+  final descriptionController = TextEditingController();
 
   // Address
   var provinces = [].obs;
@@ -43,8 +44,10 @@ class DriverRegisterController extends GetxController {
   var lenghtDetailAddress = RxInt(0);
 
   // Images
-  var licenseFrontPlateImage = Rx<File?>(null);
-  var licenseBackPlateImage = Rx<File?>(null);
+  var CCCDFrontUrlImage = Rx<File?>(null);
+  var CCCDBackUrlImage = Rx<File?>(null);
+  var avatarUrlImage = Rx<File?>(null);
+  var storeFrontUrlImage = Rx<File?>(null);
 
   //Loading
   final isLoading = false.obs;
@@ -74,7 +77,7 @@ class DriverRegisterController extends GetxController {
     districts.clear();
     communes.clear();
 
-    Get.delete<DriverRegisterController>();
+    // Get.delete<PartnerRegisterController>();
 
     super.onClose();
   }
@@ -130,7 +133,7 @@ class DriverRegisterController extends GetxController {
 
     if (pickedImage != null) {
       imageFile.value = File(pickedImage.path);
-      var extension = path.extension(licenseFrontPlateImage.value!.path);
+      var extension = path.extension(CCCDFrontUrlImage.value!.path);
       print(extension);
 
       print(imageFile.value!.path);
@@ -141,16 +144,17 @@ class DriverRegisterController extends GetxController {
   }
 
   Future register() async {
-    final newDriver = getDriverFromForm();
+    final newPartner = getPartnerFromForm();
     try {
       FullScreenLoader.openDialog("Đang xử lý", MyImagePaths.spoonAnimation);
 
       List<http.MultipartFile> files = [];
 
       var fields = [
-        {'fieldName': 'profileUrl', 'file': licenseFrontPlateImage.value},
-        {'fieldName': 'licenseFrontUrl', 'file': licenseFrontPlateImage.value},
-        {'fieldName': 'licenseBackUrl', 'file': licenseBackPlateImage.value},
+        {'fieldName': 'avatarUrl', 'file': avatarUrlImage.value},
+        {'fieldName': 'storeFront', 'file': storeFrontUrlImage.value},
+        {'fieldName': 'CCCDFrontUrl', 'file': CCCDFrontUrlImage.value},
+        {'fieldName': 'CCCDBackUrl', 'file': CCCDBackUrlImage.value},
       ];
 
       files = await MultiplePartFileHelper.createMultipleFiles(fields);
@@ -163,7 +167,7 @@ class DriverRegisterController extends GetxController {
       });
 
       // await AuthRepository.instance.registerDriver(newDriver);
-      await AuthRepository.instance.registerDriver1(newDriver, files);
+      await AuthRepository.instance.registerPartner(newPartner, files);
 
       // registeredUser.printInfo();
       Loaders.successSnackBar(title: "Đăng ký thành công!");
@@ -177,13 +181,8 @@ class DriverRegisterController extends GetxController {
     }
   }
 
-  DriverModel getDriverFromForm() {
-    return DriverModel(
-        driverId: '',
-        licensePlate: licensePlateController.text,
-        profileUrl: '',
-        licenseFrontUrl: '',
-        licenseBackUrl: '',
+  PartnerModel getPartnerFromForm() {
+    return PartnerModel(
         provinceId: selectedProvinceId.value,
         districtId: selectedDistrictId.value,
         communeId: selectedCommuneId.value,
@@ -193,9 +192,15 @@ class DriverRegisterController extends GetxController {
         email: emailController.text,
         password: passwordController.text,
         status: false,
-        role: UserRole.driver.name,
+        role: UserRole.partner.name,
         phone: phoneNumbController.text,
         createdAt: DateTime.now(),
-        updatedAt: DateTime.now());
+        updatedAt: DateTime.now(),
+        partnerId: '',
+        description: descriptionController.text,
+        avatarUrl: '',
+        storeFront: '',
+        CCCDFrontUrl: '',
+        CCCDBackUrl: '');
   }
 }

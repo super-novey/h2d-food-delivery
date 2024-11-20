@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/admin/approval_user/controllers/approval_user_controller.dart';
 import 'package:food_delivery_h2d/features/admin/user_management/models/user_model.dart';
-import 'package:food_delivery_h2d/features/authentication/controllers/driver_register_controller.dart';
+import 'package:food_delivery_h2d/features/authentication/controllers/partner_register_controller.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/enums.dart';
 import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
@@ -9,13 +9,13 @@ import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:food_delivery_h2d/utils/helpers/convert_role.dart';
 import 'package:get/get.dart';
 
-class DetailApprovalUser extends StatelessWidget {
+class DetailApprovalPartner extends StatelessWidget {
   final UserModel userSelected;
 
-  final DriverRegisterController driverRegisterController =
-      Get.put(DriverRegisterController());
+  final PartnerRegisterController partnerRegisterController =
+      Get.put(PartnerRegisterController());
 
-  DetailApprovalUser({super.key, required this.userSelected});
+  DetailApprovalPartner({super.key, required this.userSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -25,15 +25,17 @@ class DetailApprovalUser extends StatelessWidget {
     String roleText = ConvertEnumRole.toDisplayName(UserRole.values
         .firstWhere((e) => e.toString() == 'UserRole.${userSelected.role}'));
 
-    controller.fetchDetailDriver(userSelected.userId);
+    controller.fetchDetailPartner(userSelected.userId);
+    print("view ${userSelected.userId}");
+    
 
-    String? provinceId = controller.detailDriver.value?.provinceId;
+    String? provinceId = controller.detailPartner.value?.provinceId;
     if (provinceId != null && provinceId.isNotEmpty) {
-      driverRegisterController.fetchDistricts(provinceId);
+      partnerRegisterController.fetchDistricts(provinceId);
     }
-    String? districtId = controller.detailDriver.value?.districtId;
+    String? districtId = controller.detailPartner.value?.districtId;
     if (districtId != null && districtId.isNotEmpty) {
-      driverRegisterController.fetchCommunes(districtId);
+      partnerRegisterController.fetchCommunes(districtId);
     }
     return SizedBox(
       width: 500,
@@ -58,7 +60,31 @@ class DetailApprovalUser extends StatelessWidget {
                       borderRadius: BorderRadius.circular(100),
                       child: FadeInImage.assetNetwork(
                         placeholder: MyImagePaths.iconImage,
-                        image: controller.detailDriver.value?.profileUrl ??
+                        image: controller.detailPartner.value?.avatarUrl ??
+                            MyImagePaths.iconImage,
+                        width: 150,
+                        height: 150,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  );
+                }),
+                const SizedBox(height: MySizes.spaceBtwItems),
+                Text(
+                  "Ảnh cửa hàng",
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall!
+                      .apply(color: MyColors.darkPrimaryTextColor),
+                ),
+                const SizedBox(height: MySizes.spaceBtwItems),
+                Obx(() {
+                  return Center(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: FadeInImage.assetNetwork(
+                        placeholder: MyImagePaths.iconImage,
+                        image: controller.detailPartner.value?.storeFront ??
                             MyImagePaths.iconImage,
                         width: 150,
                         height: 150,
@@ -74,7 +100,7 @@ class DetailApprovalUser extends StatelessWidget {
                     Column(
                       children: [
                         Text(
-                          "Giấy phép lái xe (mặt trước)",
+                          "CCCD(mặt trước)",
                           style: Theme.of(context)
                               .textTheme
                               .bodySmall!
@@ -89,7 +115,7 @@ class DetailApprovalUser extends StatelessWidget {
                               child: FadeInImage.assetNetwork(
                                 placeholder: MyImagePaths.iconImage,
                                 image: controller
-                                        .detailDriver.value?.licenseFrontUrl ??
+                                        .detailPartner.value?.cccdFrontUrl ??
                                     MyImagePaths.iconImage,
                                 width: 200,
                                 height: 150,
@@ -103,7 +129,7 @@ class DetailApprovalUser extends StatelessWidget {
                     Column(
                       children: [
                         Text(
-                          "Giấy phép lái xe (mặt sau)",
+                          "CCCD(mặt sau)",
                           style: Theme.of(context)
                               .textTheme
                               .bodySmall!
@@ -118,7 +144,7 @@ class DetailApprovalUser extends StatelessWidget {
                               child: FadeInImage.assetNetwork(
                                 placeholder: MyImagePaths.iconImage,
                                 image: controller
-                                        .detailDriver.value?.licenseBackUrl ??
+                                        .detailPartner.value?.cccdBackUrl ??
                                     MyImagePaths.iconImage,
                                 width: 200,
                                 height: 150,
@@ -234,14 +260,14 @@ class DetailApprovalUser extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Biển số xe",
+                        "Mô tả",
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall!
                             .apply(color: MyColors.darkPrimaryTextColor),
                       ),
                       Text(
-                        controller.detailDriver.value?.licensePlate ??
+                        controller.detailPartner.value?.description ??
                             "Không có thông tin",
                         textAlign: TextAlign.right,
                         overflow: TextOverflow.ellipsis,
@@ -266,7 +292,7 @@ class DetailApprovalUser extends StatelessWidget {
                             .apply(color: MyColors.darkPrimaryTextColor),
                       ),
                       Text(
-                        controller.detailDriver.value?.detailAddress ??
+                        controller.detailPartner.value?.detailAddress ??
                             "Không có thông tin",
                         textAlign: TextAlign.right,
                         overflow: TextOverflow.ellipsis,
@@ -292,7 +318,7 @@ class DetailApprovalUser extends StatelessWidget {
                       ),
                       Text(
                         _getCommunesName(
-                            controller.detailDriver.value?.communeId ??
+                            controller.detailPartner.value?.communeId ??
                                 "Không có thông tin"),
                         textAlign: TextAlign.right,
                         overflow: TextOverflow.ellipsis,
@@ -318,7 +344,7 @@ class DetailApprovalUser extends StatelessWidget {
                       ),
                       Text(
                         _getDistrictName(
-                            controller.detailDriver.value?.districtId ??
+                            controller.detailPartner.value?.districtId ??
                                 "Không có thông tin"),
                         textAlign: TextAlign.right,
                         overflow: TextOverflow.ellipsis,
@@ -344,7 +370,7 @@ class DetailApprovalUser extends StatelessWidget {
                       ),
                       Text(
                         _getProvinceName(
-                            controller.detailDriver.value?.provinceId ??
+                            controller.detailPartner.value?.provinceId ??
                                 "Không có thông tin"),
                         textAlign: TextAlign.right,
                         overflow: TextOverflow.ellipsis,
@@ -356,8 +382,6 @@ class DetailApprovalUser extends StatelessWidget {
                     ],
                   );
                 }),
-                
-                
               ],
             ),
           ),
@@ -367,28 +391,25 @@ class DetailApprovalUser extends StatelessWidget {
   }
 
   String _getProvinceName(String provinceId) {
-    var province = driverRegisterController.provinces.firstWhere(
+    var province = partnerRegisterController.provinces.firstWhere(
       (p) => p.id == provinceId,
       orElse: () => null,
     );
 
     if (province == null) {
-      print("Không tìm thấy tỉnh với ID: $provinceId");
       return "Tỉnh không xác định";
     }
     return province.name;
   }
 
   String _getDistrictName(String districtId) {
-    if (driverRegisterController.districts.isEmpty) {
-      print("Danh sách quận rỗng!");
+    if (partnerRegisterController.districts.isEmpty) {
       return "Không có thông tin";
     }
 
-    var district = driverRegisterController.districts.firstWhere(
+    var district = partnerRegisterController.districts.firstWhere(
       (d) => d.id == districtId,
       orElse: () {
-        print('District ID $districtId not found in districts list!');
         return null;
       },
     );
@@ -396,15 +417,13 @@ class DetailApprovalUser extends StatelessWidget {
   }
 
   String _getCommunesName(String communeId) {
-    if (driverRegisterController.communes.isEmpty) {
-      print("Danh sách thành phố rỗng!");
+    if (partnerRegisterController.communes.isEmpty) {
       return "Không có thông tin";
     }
 
-    var commune = driverRegisterController.communes.firstWhere(
+    var commune = partnerRegisterController.communes.firstWhere(
       (d) => d.id == communeId,
       orElse: () {
-        print('Communes ID $communeId not found in commune list!');
         return null;
       },
     );
