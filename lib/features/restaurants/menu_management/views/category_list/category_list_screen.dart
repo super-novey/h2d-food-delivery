@@ -22,7 +22,9 @@ class CategoryListScreen extends StatelessWidget {
                 Icons.done,
                 size: MySizes.iconMd,
               ),
-              onPressed: () {}),
+              onPressed: () {
+                menuFoodController.save();
+              }),
         ],
       ),
       body: Obx(
@@ -31,6 +33,10 @@ class CategoryListScreen extends StatelessWidget {
           itemBuilder: (context, index) {
             return CategoryTile(
               category: menuFoodController.allCategories[index],
+              handleDelete: () {
+                menuFoodController.removeCategory(
+                    menuFoodController.allCategories[index].categoryId);
+              },
             );
           },
         ),

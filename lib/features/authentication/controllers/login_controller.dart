@@ -30,7 +30,7 @@ class LoginController extends GetxController {
   // Repository
   final AuthRepository _authRepository = Get.put(AuthRepository());
 
-  void saveUser(UserModel user) {
+  void saveUser(dynamic user) {
     _localStorage.write("currentUser", user);
   }
 
@@ -59,9 +59,14 @@ class LoginController extends GetxController {
       }
 
       final res = await _authRepository.login(userName.trim(), password.trim());
+
       saveUser(res.user);
 
       if (res.user.role == "driver") {
+        // viet api get chi tiet thong tin driver + user tra ve driver
+        // Xem xet coi đưa dô được một hàm được hay không
+        // tại đang dùng kế thừa, không thì dùng generic
+
         Loaders.successSnackBar(
             title: "Thành công!", message: "Đăng nhập thành công");
         Get.offAll(() => const ShipperNavigationMenu());

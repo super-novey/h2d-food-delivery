@@ -16,16 +16,6 @@ class AuthRepository extends GetxController {
   static const String _verifyOTPApi = "auth/verifyOTP";
   static const String _resendOTPApi = "auth/resendOTP";
 
-  // Future<Map<String, dynamic>> login(String email, String password) async {
-  //   final data = {'email': email, 'password': password};
-  //   try {
-  //     final res = await HttpHelper.post(_loginApi, data);
-  //     return res;
-  //   } on Exception catch (_) {
-  //     rethrow;
-  //   }
-  // }
-
   Future<LoginResponse> login(String email, String password) async {
     final data = {'email': email, 'password': password};
     try {
@@ -48,17 +38,7 @@ class AuthRepository extends GetxController {
     }
   }
 
-  Future<void> registerDriver(DriverModel newDriver) async {
-    final data = newDriver.toJson();
-    try {
-      final res = await HttpHelper.post(_driverRegisterApi, data);
-      print(res["message"]);
-    } on Exception catch (_) {
-      rethrow;
-    }
-  }
-
-  Future<void> registerDriver1(
+  Future<void> registerDriver(
       DriverModel newDriver, List<http.MultipartFile> files) async {
     try {
       final res = await HttpHelper.postWithFiles(
@@ -68,7 +48,6 @@ class AuthRepository extends GetxController {
       rethrow;
     }
   }
-
 
   Future<void> registerPartner(
       PartnerModel newPartner, List<http.MultipartFile> files) async {
@@ -103,6 +82,8 @@ class AuthRepository extends GetxController {
       rethrow;
     }
   }
+
+  
 
   // void sendOTP(String email) async {
   //   final data = {"email": email};

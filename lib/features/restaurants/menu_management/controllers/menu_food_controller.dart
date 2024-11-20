@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:food_delivery_h2d/data/category/category_repository.dart';
+import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:food_delivery_h2d/utils/popups/loaders.dart';
@@ -10,12 +11,6 @@ import 'package:food_delivery_h2d/features/restaurants/menu_management/models/it
 
 class MenuFoodController extends GetxController {
   static MenuFoodController get instance => Get.find();
-
-  // final RxList<Category> allCategories = <Category>[
-  //   Category(categoryId: 2, restaurantId: 101, categoryName: 'Bún'),
-  //   Category(categoryId: 3, restaurantId: 101, categoryName: 'Mì'),
-  //   Category(categoryId: 1, restaurantId: 101, categoryName: 'Cơm'),
-  // ].obs;
 
   final List<Item> allItems = [
     Item(
@@ -71,8 +66,17 @@ class MenuFoodController extends GetxController {
   var isLoading = false.obs;
   List<Category> allCategories = <Category>[].obs;
 
+  final _newCategoryController = TextEditingController();
+
   // Repository
   final CategoryRepository _categoryRepository = Get.put(CategoryRepository());
+
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    _newCategoryController.dispose();
+    super.onClose();
+  }
 
   @override
   void onInit() {
@@ -86,7 +90,7 @@ class MenuFoodController extends GetxController {
       isLoading.value = true;
       allCategories.clear();
       allCategories.assignAll(await _categoryRepository
-          .getCategoriesInRestaurant("6734bf1020d35f486f7f320b"));
+          .getCategoriesInRestaurant("673c3ace54ad5ddb807f5033"));
     } finally {
       isLoading.value = false;
     }
@@ -109,11 +113,11 @@ class MenuFoodController extends GetxController {
     Get.defaultDialog(
         contentPadding: const EdgeInsets.all(MySizes.md),
         title: "Xóa danh mục",
-        middleText: "",
+        middleText: "Bạn có chắc chắn muốn xóa danh mục này!",
         confirm: ElevatedButton(
             onPressed: () async {
               try {
-                // await _categoryRepository.removeCategory(categoryId);
+                await _categoryRepository.removeCategory(categoryId);
                 allCategories
                     .removeWhere((item) => item.categoryId == categoryId);
                 Navigator.of(Get.overlayContext!).pop();
@@ -154,7 +158,75 @@ class MenuFoodController extends GetxController {
   }
 
   void addEmptyCategory() {
-    final cat = Category();
-    allCategories.add(cat);
+    Get.defaultDialog(
+      contentPadding: const EdgeInsets.all(MySizes.md),
+      title: "Thêm danh mục",
+      confirm: ElevatedButton(
+        onPressed: () async {
+          try {
+            String categoryName = _newCategoryController.text.trim();
+            if (categoryName.isEmpty) {
+              Loaders.successSnackBar(
+                title: "Thất bại!",
+                message: "Tên danh mục không thể trống",
+              );
+              return;
+            }
+
+            final newCategory = await _categoryRepository.addCategory(Category(
+                categoryName: categoryName,
+                restaurantId: "673c3ace54ad5ddb807f5033"));
+
+            allCategories.add(newCategory);
+
+            Navigator.of(Get.overlayContext!).pop();
+            Loaders.successSnackBar(
+              title: "Thành công!",
+              message: "Thêm danh mục thành công",
+            );
+          } catch (err) {
+            Loaders.successSnackBar(
+              title: "Thất bại!",
+              message: "${err}",
+            );
+          }
+        },
+        child: const Text("Thêm"),
+      ),
+      cancel: OutlinedButton(
+        onPressed: () => Navigator.of(Get.overlayContext!).pop(),
+        child: const Text("Quay lại"),
+      ),
+      content: Column(
+        children: [
+          TextField(
+            controller: _newCategoryController,
+            decoration: const InputDecoration(
+              labelText: "Tên danh mục",
+              hintText: "Nhập tên danh mục",
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void remove(int index) {
+    allCategories.removeAt(index);
+  }
+
+  Future save() async {
+    for (var cat in allCategories) {
+      final index =
+          allCategories.indexWhere((item) => item.categoryId == cat.categoryId);
+      final updatedCategory = await _categoryRepository.updateCategory(cat);
+      if (index != -1) {
+        // Update the category's name
+        allCategories[index] = updatedCategory;
+        print("Category updated successfully!");
+      } else {
+        print("Category with ID ${updatedCategory.categoryId} not found!");
+      }
+    }
   }
 }
