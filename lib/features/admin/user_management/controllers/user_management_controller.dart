@@ -4,6 +4,7 @@ import 'package:food_delivery_h2d/features/admin/user_management/models/user_mod
 import 'package:get/get.dart';
 
 class UserManagementController extends GetxController {
+  static UserManagementController get instance => Get.find();
   var userList = <UserModel>[].obs;
   var isLoading = true.obs;
   var errorMessage = ''.obs;

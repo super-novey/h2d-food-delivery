@@ -51,8 +51,23 @@ class ConvertEnumRole {
         Get.to(() => CustomerRegisterScreen());
     }
   }
-  static Color getStatusColor(bool status) {
-  return status ? MyColors.successColor : MyColors.primaryColor; 
-}
 
+  static UserRole toEnum(String displayName) {
+    switch (displayName) {
+      case "Quản trị viên":
+        return UserRole.admin;
+      case "Đối tác":
+        return UserRole.partner;
+      case "Tài xế":
+        return UserRole.driver;
+      case "Khách hàng":
+        return UserRole.customer;
+      default:
+        throw Exception('Invalid role');
+    }
+  }
+
+  static Color getStatusColor(bool status) {
+    return status ? MyColors.successColor : MyColors.primaryColor;
+  }
 }

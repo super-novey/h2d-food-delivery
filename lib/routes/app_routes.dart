@@ -1,6 +1,6 @@
 import 'package:food_delivery_h2d/features/admin/approval_user/views/approval_user_list/approval_user_list.dart';
 import 'package:food_delivery_h2d/features/admin/dashboard/admin_dashboard.dart';
-import 'package:food_delivery_h2d/features/admin/user_management/views/user_management.dart';
+import 'package:food_delivery_h2d/features/admin/user_management/views/list_user/user_management.dart';
 import 'package:food_delivery_h2d/routes/routes.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
