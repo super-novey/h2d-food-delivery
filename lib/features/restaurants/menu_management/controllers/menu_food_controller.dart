@@ -5,6 +5,7 @@ import 'package:food_delivery_h2d/features/authentication/controllers/login_cont
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
+import 'package:food_delivery_h2d/utils/popups/full_screen_loader.dart';
 import 'package:food_delivery_h2d/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/category_model.dart';
@@ -97,19 +98,6 @@ class MenuFoodController extends GetxController {
       isLoading.value = false;
     }
   }
-
-  // Future<void> addCategory() async {
-  //   try {
-  //     isLoading.value = true;
-  //     // final newCategory = await _categoryRepository.addCategory(Category(
-  //     //     categoryName: "Duy100", restaurantId: "6734bf1020d35f486f7f320b"));
-  //     final newCategory = Category(
-  //         categoryName: "D10", restaurantId: "6734bf1020d35f486f7f320b");
-  //     allCategories.add(newCategory);
-  //   } finally {
-  //     isLoading.value = false;
-  //   }
-  // }
 
   void removeCategory(String categoryId) async {
     Get.defaultDialog(
@@ -220,17 +208,24 @@ class MenuFoodController extends GetxController {
   }
 
   Future save() async {
-    for (var cat in allCategories) {
-      final index =
-          allCategories.indexWhere((item) => item.categoryId == cat.categoryId);
-      final updatedCategory = await _categoryRepository.updateCategory(cat);
-      if (index != -1) {
-        // Update the category's name
-        allCategories[index] = updatedCategory;
-        print("Category updated successfully!");
-      } else {
-        print("Category with ID ${updatedCategory.categoryId} not found!");
+    try {
+      FullScreenLoader.openDialog("Đang lưu...", MyImagePaths.spoonAnimation);
+      for (var cat in allCategories) {
+        final index = allCategories
+            .indexWhere((item) => item.categoryId == cat.categoryId);
+        final updatedCategory = await _categoryRepository.updateCategory(cat);
+        if (index != -1) {
+          // Update the category's name
+          allCategories[index] = updatedCategory;
+          print("Category updated successfully!");
+        } else {
+          print("Category with ID ${updatedCategory.categoryId} not found!");
+        }
       }
+    } catch (error) {
+      print(error);
+    } finally {
+      FullScreenLoader.stopLoading();
     }
   }
 }

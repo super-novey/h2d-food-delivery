@@ -38,7 +38,7 @@ class CustomerRegisterController extends GetxController {
         name: nameController.text,
         email: emailController.text,
         password: passwordController.text,
-        status: false,
+        status: true,
         role: UserRole.customer.name,
         phone: phoneNumbController.text,
         createdAt: DateTime.now(),

@@ -8,7 +8,7 @@ class HttpHelper {
 
   static const String _baseUrl =
       // "http://localhost:8081/api/v1"; // change URL
-      "https://10f2-14-169-7-78.ngrok-free.app/api/v1";
+      "http://10.0.138.168:8081/api/v1";
 
   // GET method
   static Future<Map<String, dynamic>> get(String endpoint) async {
