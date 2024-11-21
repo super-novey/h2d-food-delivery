@@ -1,6 +1,8 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery_h2d/features/admin/user_management/controllers/update_user_management_controller.dart';
 import 'package:food_delivery_h2d/features/admin/user_management/controllers/user_management_controller.dart';
+import 'package:food_delivery_h2d/features/admin/user_management/views/detail_user/detail_user.dart';
 import 'package:food_delivery_h2d/features/admin/web_layout.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/enums.dart';
@@ -15,6 +17,7 @@ class UserManagementScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final UserManagementController controller =
         Get.put(UserManagementController());
+        final UpdateUserManagementController updateUserManagementController = Get.put(UpdateUserManagementController());
 
     return WebLayout(
       body: Obx(() {
@@ -118,7 +121,41 @@ class UserManagementScreen extends StatelessWidget {
                                 Icons.edit_outlined,
                                 size: MySizes.iconMs,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        scrollable: true,
+                                        title: const Text(
+                                            'Thông tin chi tiết'),
+                                        content: Obx(() {
+                                          if (controller.isLoading.value) {
+                                            return const CircularProgressIndicator();
+                                          } else {
+                                            return DetailUser(
+                                                selectedUser: user);
+                                          }
+                                        }),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text('Đóng'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () async {
+                                              await updateUserManagementController.updateUser(user.userId, context);
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text('Cập nhật'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                              },
                             ),
                             const SizedBox(
                               width: MySizes.spaceBtwItems,

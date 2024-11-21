@@ -9,70 +9,86 @@ class UserRepository extends GetxController {
 
   Future<List<UserModel>> fetchAllUsers() async {
     try {
-      final response = await HttpHelper.get(
-          "user");
-          print(response);
+      final response = await HttpHelper.get("user");
       List<dynamic> data = response['data'] as List<dynamic>;
-      print(data);
       return data.map((item) => UserModel.fromJson(item)).toList();
     } on Exception catch (_) {
       rethrow;
     }
   }
-Future<List<UserModel>> fetchUserByRole({String? role}) async {
-  try {
-    String url = "user/filter";  
-    if (role != null) {
-      url += "?role=$role";  
-    }
-    
-    final response = await HttpHelper.get(url);  
-    List<dynamic> data = response['data'] as List<dynamic>;
-    
-    return data.map((item) => UserModel.fromJson(item)).toList();  
-  } on Exception catch (e) {
-    print("Error fetching users by role: $e");
-    rethrow;
-  }
-}
- Future<DriverModel> fetchDriverById(String driverId) async {
-  try {
-    final response = await HttpHelper.get("driver/$driverId");
-    return DriverModel.fromJson(response);  
-  } on Exception catch (e) {
-    print("Error fetching driver by ID: $e");
-    rethrow;
-  }
-}
-Future<PartnerModel> fetchPartnerById(String partnerId) async {
-  try {
-    final response = await HttpHelper.get("partner/$partnerId");
-    print(response);
-    return PartnerModel.fromJson(response);  
-  } on Exception catch (e) {
-    print("Error fetching partner by ID: $e");
-    rethrow;
-  }
-}
 
-Future<bool> approveUser(String userId) async {
-  try {
-    final response = await HttpHelper.put(
-      "user/approve/$userId", 
-    );
-    
-    if (response['statusCode'] == 200) {
-      return true;
-    } else {
-      print("Failed to approve user: ${response['message']}");
+  Future<List<UserModel>> fetchUserByRole({String? role}) async {
+    try {
+      String url = "user/filter";
+      if (role != null) {
+        url += "?role=$role";
+      }
+
+      final response = await HttpHelper.get(url);
+      List<dynamic> data = response['data'] as List<dynamic>;
+
+      return data.map((item) => UserModel.fromJson(item)).toList();
+    } on Exception catch (e) {
+      print("Error fetching users by role: $e");
+      rethrow;
+    }
+  }
+
+  Future<DriverModel> fetchDriverById(String driverId) async {
+    try {
+      final response = await HttpHelper.get("driver/$driverId");
+      return DriverModel.fromJson(response);
+    } on Exception catch (e) {
+      print("Error fetching driver by ID: $e");
+      rethrow;
+    }
+  }
+
+  Future<PartnerModel> fetchPartnerById(String partnerId) async {
+    try {
+      final response = await HttpHelper.get("partner/$partnerId");
+      print(response);
+      return PartnerModel.fromJson(response);
+    } on Exception catch (e) {
+      print("Error fetching partner by ID: $e");
+      rethrow;
+    }
+  }
+
+  Future<bool> approveUser(String userId) async {
+    try {
+      final response = await HttpHelper.put(
+        "user/approve/$userId",
+      );
+
+      if (response['statusCode'] == 200) {
+        return true;
+      } else {
+        print("Failed to approve user: ${response['message']}");
+        return false;
+      }
+    } on Exception catch (e) {
+      print("Error approving user: $e");
       return false;
     }
+  }
+
+  Future<UserModel> updateUser(String userId, Map<String, dynamic> updateData) async {
+  try {
+    final response = await HttpHelper.put("user/$userId", updateData);
+    print(response); // Xem chi tiết response từ server
+
+    if (response['statusCode'] == 200) {
+      // Nếu cập nhật thành công, trả về UserModel từ response
+      return UserModel.fromJson(response['data']);
+    } else {
+      print("Error: Failed to update user. ${response['message']}");
+      throw Exception("Failed to update user: ${response['message']}");
+    }
   } on Exception catch (e) {
-    print("Error approving user: $e");
-    return false;
+    print("Error updating user: $e");
+    rethrow; // Ném lại lỗi để xử lý ở nơi gọi hàm
   }
 }
-
-
 
 }

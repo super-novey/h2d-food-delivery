@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/images/circle_image.dart';
+import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
@@ -60,13 +61,6 @@ class WebHeader extends StatelessWidget implements PreferredSizeWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    "Tên",
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge!
-                        .apply(color: MyColors.darkPrimaryColor),
-                  ),
                   Text(
                     "Admin",
                     style: Theme.of(context)
