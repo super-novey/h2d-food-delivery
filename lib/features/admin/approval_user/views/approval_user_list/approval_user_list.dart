@@ -29,6 +29,7 @@ class ApprovalUserList extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
         if (controller.errorMessage.isNotEmpty) {
+          print(controller.errorMessage);
           return const Center(
             child: Text(
               'Không có người dùng nào',

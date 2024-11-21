@@ -19,7 +19,7 @@ class ApprovalUserController extends GetxController {
   final UserRepository _repository = UserRepository();
   var isDriverLoading = false.obs;
   var isPartnerLoading = false.obs;
-
+  final UserManagementController controller = Get.put(UserManagementController());
   @override
   void onInit() {
     super.onInit();
@@ -39,6 +39,7 @@ class ApprovalUserController extends GetxController {
       userList.value = data;
     } catch (e) {
       errorMessage.value = e.toString();
+      print(e);
     } finally {
       isLoading(false);
     }
@@ -93,7 +94,8 @@ class ApprovalUserController extends GetxController {
       final isApproved = await _repository.approveUser(userId);
       if (isApproved) {
         fetchUserByRole();  
-        Get.find<UserManagementController>().fetchAllUsers();
+        controller.fetchAllUsers();
+        
         Loaders.successSnackBar(
             title: "Thành công!", message: "Duyệt người dùng thành công");
       } else {
