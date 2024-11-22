@@ -3,7 +3,7 @@ import 'package:food_delivery_h2d/routes/routes.dart';
 import 'package:get/get.dart';
 
 class SideBarController extends GetxController {
-  final activeItem = Routes.dashboard.obs;
+  final activeItem = Routes.dashboard.obs; 
   final hoverItem = ''.obs;
   final GetStorage _storage = GetStorage();
 
@@ -15,7 +15,7 @@ class SideBarController extends GetxController {
 
   void changeActiveItem(String route) {
     activeItem.value = route;
-    _storage.write('activeItem', route);
+    _storage.write('activeItem', route); 
   }
 
   void changeHoverItem(String route) {
@@ -28,9 +28,17 @@ class SideBarController extends GetxController {
   bool isHovering(String route) => hoverItem.value == route;
 
   void menuOnTap(String route) {
-    if (!isActive(route)) {
+    if (route == Routes.logout) {
+      logout(); 
+    } else if (!isActive(route)) {
       changeActiveItem(route);
       Get.toNamed(route);
     }
+  }
+
+  void logout() {
+    _storage.remove('activeItem');
+
+    Get.offAllNamed(Routes.logout);
   }
 }

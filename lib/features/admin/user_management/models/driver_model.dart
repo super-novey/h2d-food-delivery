@@ -30,6 +30,7 @@ class DriverModel extends UserModel {
     required super.phone,
     required super.createdAt,
     required super.updatedAt,
+    required super.isDeleted
   });
 
   factory DriverModel.fromJson(Map<String, dynamic> json) {
@@ -56,6 +57,7 @@ class DriverModel extends UserModel {
       phone: userData['phone'] as String,
       createdAt: DateTime.parse(userData['createdAt'] as String),
       updatedAt: DateTime.parse(userData['updatedAt'] as String),
+      isDeleted: userData['isDeleted'] as bool,
     );
   }
 
@@ -80,6 +82,7 @@ class DriverModel extends UserModel {
         'phone': phone,
         'createdAt': createdAt.toIso8601String(),
         'updatedAt': updatedAt.toIso8601String(),
+        'isDeleted': isDeleted
       },
     };
   }

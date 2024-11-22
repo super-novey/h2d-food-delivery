@@ -69,26 +69,38 @@ class UserRepository extends GetxController {
       }
     } on Exception catch (e) {
       print("Error approving user: $e");
-      return false;
+      rethrow;
     }
   }
 
-  Future<UserModel> updateUser(String userId, Map<String, dynamic> updateData) async {
-  try {
-    final response = await HttpHelper.put("user/$userId", updateData);
-    print(response); // Xem chi tiết response từ server
+  Future<UserModel> updateUser(
+      String userId, Map<String, dynamic> updateData) async {
+    try {
+      final response = await HttpHelper.put("user/$userId", updateData);
+      print(response);
 
-    if (response['statusCode'] == 200) {
-      // Nếu cập nhật thành công, trả về UserModel từ response
       return UserModel.fromJson(response['data']);
-    } else {
-      print("Error: Failed to update user. ${response['message']}");
-      throw Exception("Failed to update user: ${response['message']}");
+    } on Exception catch (e) {
+      print("Error updating user: $e");
+      rethrow;
     }
-  } on Exception catch (e) {
-    print("Error updating user: $e");
-    rethrow; // Ném lại lỗi để xử lý ở nơi gọi hàm
   }
-}
 
+  Future<bool> deleteUser(String userId) async {
+    try {
+      final response = await HttpHelper.put(
+        "user/delete/$userId",
+      );
+
+      if (response['statusCode'] == 200) {
+        return true;
+      } else {
+        print("Failed to approve user: ${response['message']}");
+        return false;
+      }
+    } on Exception catch (e) {
+      print("Error approving user: $e");
+      rethrow;
+    }
+  }
 }

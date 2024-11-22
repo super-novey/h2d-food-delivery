@@ -36,6 +36,7 @@ class PartnerModel extends UserModel {
     required super.phone,
     required super.createdAt,
     required super.updatedAt,
+    required super.isDeleted
   });
 
   factory PartnerModel.fromJson(Map<String, dynamic> json) {
@@ -64,6 +65,7 @@ class PartnerModel extends UserModel {
       phone: userData['phone'] ?? '',
       createdAt: DateTime.parse(userData['createdAt'] ?? DateTime.now().toString()),
       updatedAt: DateTime.parse(userData['updatedAt'] ?? DateTime.now().toString()),
+      isDeleted: userData['isDeleted'] ?? false,
     );
   }
 
@@ -91,6 +93,7 @@ class PartnerModel extends UserModel {
         'phone': phone,
         'createdAt': createdAt.toIso8601String(),
         'updatedAt': updatedAt.toIso8601String(),
+        'isDeleted': isDeleted
       },
     };
   }

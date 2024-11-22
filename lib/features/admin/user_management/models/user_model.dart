@@ -8,7 +8,7 @@ class UserModel {
   final String phone;
   final DateTime createdAt;
   final DateTime updatedAt;
-
+final bool isDeleted;
   UserModel(
       {required this.userId,
       required this.name,
@@ -18,7 +18,8 @@ class UserModel {
       required this.role,
       required this.phone,
       required this.createdAt,
-      required this.updatedAt});
+      required this.updatedAt, 
+      required this.isDeleted});
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
   return UserModel(
@@ -31,6 +32,7 @@ class UserModel {
     phone: json['phone'] ?? '',
     createdAt: DateTime.parse(json['createdAt'] ?? DateTime.now().toString()), // Nếu null, dùng thời gian hiện tại
     updatedAt: DateTime.parse(json['updatedAt'] ?? DateTime.now().toString()), // Nếu null, dùng thời gian hiện tại
+    isDeleted: json['isDeleted'] ?? false,
   );
 }
 
@@ -47,6 +49,7 @@ class UserModel {
       'phone': phone,
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),
+      'isDeleted': isDeleted
     };
   }
 
