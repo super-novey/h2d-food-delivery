@@ -15,7 +15,7 @@ class DetailUser extends StatelessWidget {
       Get.put(UpdateUserManagementController());
 
   DetailUser({super.key, required this.selectedUser});
-  void fetchFoodDetail() {
+  void fetchUserDetail() {
     updateUserManagementController.nameController.text = selectedUser.name;
     updateUserManagementController.emailController.text = selectedUser.email;
     updateUserManagementController.phoneNumberController.text =
@@ -30,7 +30,7 @@ class DetailUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    fetchFoodDetail();
+    fetchUserDetail();
 
     return SizedBox(
       width: 500,
@@ -112,7 +112,6 @@ class DetailUser extends StatelessWidget {
                           .apply(color: MyColors.darkPrimaryTextColor),
                     ),
                     SizedBox(
-                      width: 280,
                       child: Obx(() {
                         return DropdownButton<String>(
                           value: updateUserManagementController
