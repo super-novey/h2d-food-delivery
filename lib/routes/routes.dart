@@ -3,9 +3,12 @@ class Routes {
   static const userManagerment = "/user-managerment";
   static const approveRequest = "/approve-request";
   static const revenueReport = "/revenue-report";
+  static const logout = "/";
   static List sideBarItems = [
     dashboard,
     userManagerment,
-    approveRequest
+    approveRequest,
+    revenueReport,
+    logout
   ];
 }

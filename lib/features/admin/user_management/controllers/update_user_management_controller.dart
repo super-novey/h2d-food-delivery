@@ -3,6 +3,7 @@ import 'package:food_delivery_h2d/bindings/network_manager.dart';
 import 'package:food_delivery_h2d/data/user/user_repository.dart';
 import 'package:food_delivery_h2d/features/admin/user_management/controllers/user_management_controller.dart';
 import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
+import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:food_delivery_h2d/utils/helpers/convert_role.dart';
 import 'package:food_delivery_h2d/utils/popups/full_screen_loader.dart';
 import 'package:food_delivery_h2d/utils/popups/loaders.dart';
@@ -15,7 +16,6 @@ class UpdateUserManagementController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
   
-  // Use RxString for the roleController to make it reactive
   RxString roleController = "".obs;
 
   RxBool isLoading = false.obs;
@@ -31,7 +31,7 @@ class UpdateUserManagementController extends GetxController {
         return;
       }
 
-      final roleEnum = ConvertEnumRole.toEnum(roleController.value); // Use .value for reactive role
+      final roleEnum = ConvertEnumRole.toEnum(roleController.value); 
 
       final updateData = {
         "name": nameController.text.toString().trim(),
@@ -52,5 +52,36 @@ class UpdateUserManagementController extends GetxController {
     } finally {
       isLoading.value = false;
     }
+  }
+  void deleteUser(String id) {
+    Get.defaultDialog(
+      contentPadding: const EdgeInsets.all(MySizes.md),
+      title: "Chắc chắn xóa",
+      middleText: "Bạn chắc chắn xóa người dùng này",
+      confirm: ElevatedButton(
+        onPressed: () async {
+          await userRepository.deleteUser(id);
+          userManagementController.fetchAllUsers(); 
+          Navigator.of(Get.overlayContext!).pop();
+
+          Loaders.successSnackBar(
+              title: "Thành công!", message: "Xóa thành công");
+        },
+        style: ElevatedButton.styleFrom(
+          padding: const EdgeInsets.all(0),
+          backgroundColor: Colors.red,
+          side: const BorderSide(color: Colors.red),
+        ),
+        child: const Text("Xóa"),
+      ),
+      cancel: OutlinedButton(
+        style: OutlinedButton.styleFrom(
+          padding:
+              const EdgeInsets.symmetric(horizontal: MySizes.md, vertical: 0),
+        ),
+        onPressed: () => Navigator.of(Get.overlayContext!).pop(),
+        child: const Text("Quay lại"),
+      ),
+    );
   }
 }

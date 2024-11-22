@@ -57,6 +57,11 @@ class SideBar extends StatelessWidget {
                     icon: Icons.savings_outlined,
                     itemName: "Báo cáo doanh thu",
                   ),
+                  SideBarItem(
+                    route: Routes.logout,
+                    icon: Icons.logout_outlined,
+                    itemName: "Đăng xuất",
+                  ),
                 ],
               )
             ],

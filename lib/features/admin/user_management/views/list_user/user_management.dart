@@ -166,7 +166,9 @@ class UserManagementScreen extends StatelessWidget {
                                 size: MySizes.iconMs,
                                 color: Colors.red,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                updateUserManagementController.deleteUser(user.userId);
+                              },
                             ),
                           ],
                         )),
