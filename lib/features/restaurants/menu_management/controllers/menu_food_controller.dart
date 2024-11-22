@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:food_delivery_h2d/data/category/category_repository.dart';
+import 'package:food_delivery_h2d/data/item/item_repository.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
@@ -15,54 +16,54 @@ class MenuFoodController extends GetxController {
   static MenuFoodController get instance => Get.find();
 
   final List<Item> allItems = [
-    Item(
-        itemId: '1',
-        categoryId: "673df4df3c760a461b080e98",
-        itemName: 'Cơm sườn',
-        price: 50000,
-        description: 'Cơm sườn ngon',
-        isAvailable: true,
-        itemImage: MyImagePaths.iconImage),
-    Item(
-        itemId: '2',
-        categoryId: "673df4f33c760a461b080e9d",
-        itemName: 'Cơm tấm',
-        price: 45000,
-        description: 'Cơm tấm đặc biệt',
-        isAvailable: false,
-        itemImage: MyImagePaths.iconImage),
-    Item(
-        itemId: '3',
-        categoryId: "673df4f33c760a461b080e9d",
-        itemName: 'Bún bò',
-        price: 55000,
-        description: 'Bún bò Huế',
-        isAvailable: false,
-        itemImage: MyImagePaths.imgBunBo),
-    Item(
-        itemId: '4',
-        categoryId: "673df4f33c760a461b080e9d",
-        itemName: 'Bún bò',
-        price: 55000,
-        description: 'Bún bò Huế',
-        isAvailable: true,
-        itemImage: MyImagePaths.iconImage),
-    Item(
-        itemId: '5',
-        categoryId: "673df4df3c760a461b080e98",
-        itemName: 'Bún bò',
-        price: 55000,
-        description: 'Bún bò Huế',
-        isAvailable: true,
-        itemImage: MyImagePaths.iconImage),
-    Item(
-        itemId: '6',
-        categoryId: "673df4ff3c760a461b080ea2",
-        itemName: 'Bún bò',
-        price: 55000,
-        description: 'Bún bò Huế',
-        isAvailable: false,
-        itemImage: MyImagePaths.iconImage),
+    // Item(
+    //     itemId: '1',
+    //     categoryId: "673df4df3c760a461b080e98",
+    //     itemName: 'Cơm sườn',
+    //     price: 50000,
+    //     description: 'Cơm sườn ngon',
+    //     isAvailable: true,
+    //     itemImage: MyImagePaths.iconImage),
+    // Item(
+    //     itemId: '2',
+    //     categoryId: "673df4f33c760a461b080e9d",
+    //     itemName: 'Cơm tấm',
+    //     price: 45000,
+    //     description: 'Cơm tấm đặc biệt',
+    //     isAvailable: false,
+    //     itemImage: MyImagePaths.iconImage),
+    // Item(
+    //     itemId: '3',
+    //     categoryId: "673df4f33c760a461b080e9d",
+    //     itemName: 'Bún bò',
+    //     price: 55000,
+    //     description: 'Bún bò Huế',
+    //     isAvailable: false,
+    //     itemImage: MyImagePaths.imgBunBo),
+    // Item(
+    //     itemId: '4',
+    //     categoryId: "673df4f33c760a461b080e9d",
+    //     itemName: 'Bún bò',
+    //     price: 55000,
+    //     description: 'Bún bò Huế',
+    //     isAvailable: true,
+    //     itemImage: MyImagePaths.iconImage),
+    // Item(
+    //     itemId: '5',
+    //     categoryId: "673df4df3c760a461b080e98",
+    //     itemName: 'Bún bò',
+    //     price: 55000,
+    //     description: 'Bún bò Huế',
+    //     isAvailable: true,
+    //     itemImage: MyImagePaths.iconImage),
+    // Item(
+    //     itemId: '6',
+    //     categoryId: "673df4ff3c760a461b080ea2",
+    //     itemName: 'Bún bò',
+    //     price: 55000,
+    //     description: 'Bún bò Huế',
+    //     isAvailable: false,
+    //     itemImage: MyImagePaths.iconImage),
   ];
 
   var isLoading = false.obs;
@@ -72,6 +73,7 @@ class MenuFoodController extends GetxController {
 
   // Repository
   final CategoryRepository _categoryRepository = Get.put(CategoryRepository());
+  final ItemRepository _itemRepository = Get.put(ItemRepository());
 
   @override
   void onClose() {
@@ -81,22 +83,36 @@ class MenuFoodController extends GetxController {
   }
 
   @override
-  void onInit() {
+  void onInit()async {
     // TODO: implement onInit
-    fetchCategories();
+    await fetchCategories();
+    await fetchAllItems();
     super.onInit();
   }
 
   Future<void> fetchCategories() async {
     try {
+      
       isLoading.value = true;
       allCategories.clear();
-      allCategories.assignAll(
-          await _categoryRepository.getCategoriesInRestaurant(
-              LoginController.instance.currentUser.partnerId));
+      allCategories
+          .assignAll(await _categoryRepository.getCategoriesInRestaurant(
+              LoginController.instance.currentUser.partnerId
+              ));
     } finally {
       isLoading.value = false;
     }
+  }
+
+  Future<void> fetchAllItems() async {
+    // try {
+    //   isLoading.value = true;
+    //   allItems.clear();
+    //   allItems.assignAll(await _itemRepository.getItemsByCategoryID(categoryId))
+    // }
+    // finally {
+    //   isLoading.value = false;
+    // }
   }
 
   void removeCategory(String categoryId) async {
