@@ -70,4 +70,34 @@ class ConvertEnumRole {
   static Color getStatusColor(bool status) {
     return status ? MyColors.successColor : MyColors.primaryColor;
   }
+
+  static Color getColorByRole(String role) {
+    switch (role) {
+      case 'admin':
+        return Colors.purple;
+      case 'driver':
+        return Colors.green;
+      case 'partner':
+        return Colors.orange;
+      case 'customer':
+        return Colors.red;
+      default:
+        return Colors.grey;
+    }
+  }
+  static String roleToDisplayName(String role) {
+  switch (role) {
+    case "admin":
+      return "Quản trị viên";
+    case "partner":
+      return "Đối tác";
+    case "driver":
+      return "Tài xế";
+    case "customer":
+      return "Khách hàng";
+    default:
+      return "Không xác định"; 
+  }
+}
+
 }
