@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery_h2d/common/container/rounded_container.dart';
 import 'package:food_delivery_h2d/features/authentication/views/register/customer_register_screen.dart';
 import 'package:food_delivery_h2d/features/authentication/views/register/register_navigation_menu.dart';
 import 'package:food_delivery_h2d/features/restaurants/restaurant_navigation_menu.dart';
@@ -61,20 +62,28 @@ class LoginForm extends StatelessWidget {
                         ))),
               ),
             ),
-            // Column(
-            //   children: UserRole.values.map((role) {
-            //     return Obx(() => RadioListTile<UserRole>(
-            //           title: Text(ConvertEnumRole.toDisplayName(role)),
-            //           value: role,
-            //           groupValue: authController.selectedRole.value,
-            //           onChanged: (value) {
-            //             if (value != null) {
-            //               authController.selectedRole.value = value;
-            //             }
-            //           },
-            //         ));
-            //   }).toList(),
-            // ),
+            const SizedBox(
+              height: MySizes.spaceBtwInputFields,
+            ),
+            GridView.count(
+              crossAxisCount: 2,
+              childAspectRatio: 5,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.all(0),
+              children: UserRole.values.map((role) {
+                return Obx(() => RadioListTile<UserRole>(
+                      title: Text(ConvertEnumRole.toDisplayName(role)),
+                      value: role,
+                      groupValue: authController.selectedRole.value,
+                      onChanged: (value) {
+                        if (value != null) {
+                          authController.selectedRole.value = value;
+                        }
+                      },
+                    ));
+              }).toList(),
+            ),
             const SizedBox(
               height: MySizes.spaceBtwItems,
             ),
@@ -83,10 +92,6 @@ class LoginForm extends StatelessWidget {
               child: TextButton(
                   onPressed: () {}, child: const Text("Quên mật khẩu")),
             ),
-            const SizedBox(
-              height: MySizes.spaceBtwSections,
-            ),
-
             Obx(
               () => authController.isLoading.value
                   ? const CircularProgressIndicator()

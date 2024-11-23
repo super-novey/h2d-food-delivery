@@ -10,7 +10,6 @@ import 'package:http/http.dart' as http;
 class AuthRepository extends GetxController {
   static AuthRepository get instance => Get.find();
 
-
   static const String _loginApi = "auth/login";
   static const String _registerApi = "auth/register";
   static const String _driverRegisterApi = "auth/driverRegister";
@@ -18,8 +17,9 @@ class AuthRepository extends GetxController {
   static const String _verifyOTPApi = "auth/verifyOTP";
   static const String _resendOTPApi = "auth/resendOTP";
 
-  Future<LoginResponse> login(String email, String password) async {
-    final data = {'email': email, 'password': password};
+  Future<LoginResponse> login(
+      String email, String password, String role) async {
+    final data = {'email': email, 'password': password, 'role': role};
     try {
       final res = await HttpHelper.post(_loginApi, data);
       final loginResponse = LoginResponse.fromJson(res["data"]);
