@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_h2d/features/admin/dashboard/views/widgets/list_item.dart';
 import 'package:food_delivery_h2d/features/admin/dashboard/views/widgets/pie_chart.dart';
 import 'package:food_delivery_h2d/features/admin/web_layout.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
@@ -8,13 +9,48 @@ class AdminDashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const WebLayout(
+    return WebLayout(
       body: SingleChildScrollView(
-        child: SizedBox(
-          height: 500,
-          child: UserRoleChart(),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 130,
+              child: ListItemCount(),
+            ),
+            const Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: SizedBox(
+                    height: 400,
+                    child: UserRoleChart(),
+                  ),
+                ),
+                Expanded(
+                  child: SizedBox(
+                    height: 400,
+                    child: Card(
+                      elevation: 4,
+                      shadowColor: MyColors.darkPrimaryColor,
+                      child: Center(
+                        child: Text("Biểu đồ", textAlign: TextAlign.center),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 400,
+              child: Card(
+                elevation: 4,
+                shadowColor: MyColors.darkPrimaryColor,
+                child: Center(child: Text("More content here")),
+              ),
+            ),
+          ],
         ),
-      )
+      ),
     );
   }
 }
