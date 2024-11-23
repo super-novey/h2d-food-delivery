@@ -52,7 +52,11 @@ class LoginController extends GetxController {
   void login() async {
     final userName = userNameController.text;
     final password = passwordController.text;
-    final role = selectedRole.value.name.toString();
+    var role = selectedRole.value.name.toString();
+
+    if (kIsWeb) {
+      role = UserRole.admin.name.toString();
+    }
 
     try {
       isLoading.value = true;

@@ -65,25 +65,26 @@ class LoginForm extends StatelessWidget {
             const SizedBox(
               height: MySizes.spaceBtwInputFields,
             ),
-            GridView.count(
-              crossAxisCount: 2,
-              childAspectRatio: 5,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              padding: const EdgeInsets.all(0),
-              children: UserRole.values.map((role) {
-                return Obx(() => RadioListTile<UserRole>(
-                      title: Text(ConvertEnumRole.toDisplayName(role)),
-                      value: role,
-                      groupValue: authController.selectedRole.value,
-                      onChanged: (value) {
-                        if (value != null) {
-                          authController.selectedRole.value = value;
-                        }
-                      },
-                    ));
-              }).toList(),
-            ),
+            if (!kIsWeb)
+              GridView.count(
+                crossAxisCount: 2,
+                childAspectRatio: 5,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.all(0),
+                children: UserRole.values.map((role) {
+                  return Obx(() => RadioListTile<UserRole>(
+                        title: Text(ConvertEnumRole.toDisplayName(role)),
+                        value: role,
+                        groupValue: authController.selectedRole.value,
+                        onChanged: (value) {
+                          if (value != null) {
+                            authController.selectedRole.value = value;
+                          }
+                        },
+                      ));
+                }).toList(),
+              ),
             const SizedBox(
               height: MySizes.spaceBtwItems,
             ),
