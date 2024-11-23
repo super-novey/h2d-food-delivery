@@ -173,6 +173,7 @@ class DriverRegisterController extends GetxController {
       FullScreenLoader.stopLoading();
       Get.to(() => OtpVerificationScreen(
             emailAddress: emailController.text,
+            role: UserRole.driver.name.toString(),
           ));
     }
   }

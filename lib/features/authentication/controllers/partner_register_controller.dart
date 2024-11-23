@@ -177,6 +177,7 @@ class PartnerRegisterController extends GetxController {
       FullScreenLoader.stopLoading();
       Get.to(() => OtpVerificationScreen(
             emailAddress: emailController.text,
+            role: UserRole.partner.name.toString(),
           ));
     }
   }

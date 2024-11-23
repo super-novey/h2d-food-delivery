@@ -15,8 +15,9 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 class OtpVerificationScreen extends StatelessWidget {
-  OtpVerificationScreen({super.key, this.emailAddress});
+  OtpVerificationScreen({super.key, this.emailAddress, this.role});
   final emailAddress;
+  final role;
   final OtpCountdown timer = OtpCountdown();
   final OtpController otpController = OtpController();
   // final List<TextEditingController> _controllers =
@@ -114,7 +115,7 @@ class OtpVerificationScreen extends StatelessWidget {
               ),
               ElevatedButton(
                   onPressed: () {
-                    otpController.verifyOTP(emailAddress);
+                    otpController.verifyOTP(emailAddress, role);
                   },
                   child: const Text("Xác thực"))
             ],

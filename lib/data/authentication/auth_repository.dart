@@ -62,10 +62,11 @@ class AuthRepository extends GetxController {
     }
   }
 
-  Future<String> verifyOTP(String email, String otp) async {
+  Future<String> verifyOTP(String email, String otp, String role) async {
     final data = {
       "email": email,
       "otp": otp,
+      "role": role,
     };
     try {
       final res = await HttpHelper.post(_verifyOTPApi, data);

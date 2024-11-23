@@ -12,10 +12,10 @@ class OtpController {
     return controllers.map((controller) => controller.text).join('');
   }
 
-  void verifyOTP(String email) async {
+  void verifyOTP(String email, String role) async {
     try {
       final message =
-          await AuthRepository.instance.verifyOTP(email, returnOTP());
+          await AuthRepository.instance.verifyOTP(email, returnOTP(), role);
       Loaders.successSnackBar(title: message);
 
       Get.offAll(() => const LoginScreen());
