@@ -28,7 +28,7 @@ class LoginController extends GetxController {
   final _localStorage = GetStorage();
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
-  // final selectedRole = UserRole.customer.obs;
+  final selectedRole = UserRole.customer.obs;
 
   GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
 
@@ -52,6 +52,7 @@ class LoginController extends GetxController {
   void login() async {
     final userName = userNameController.text;
     final password = passwordController.text;
+    final role = selectedRole.value.name.toString();
 
     try {
       isLoading.value = true;
@@ -65,7 +66,8 @@ class LoginController extends GetxController {
         return;
       }
 
-      final res = await _authRepository.login(userName.trim(), password.trim());
+      final res =
+          await _authRepository.login(userName.trim(), password.trim(), role);
 
       if (res.user.role == "driver") {
         final currentDriver =
