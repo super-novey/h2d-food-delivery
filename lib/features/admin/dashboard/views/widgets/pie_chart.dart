@@ -15,7 +15,8 @@ class UserRoleChart extends StatelessWidget {
     final controller = Get.put(UserManagementController());
 
     return Scaffold(
-      body: SingleChildScrollView(
+      body: Padding(
+        padding: const EdgeInsets.only(left: MySizes.lg),
         child: Card(
           elevation: 4,
           shadowColor: MyColors.darkPrimaryColor,

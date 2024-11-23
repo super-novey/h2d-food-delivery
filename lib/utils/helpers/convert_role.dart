@@ -85,19 +85,33 @@ class ConvertEnumRole {
         return Colors.grey;
     }
   }
-  static String roleToDisplayName(String role) {
-  switch (role) {
-    case "admin":
-      return "Quản trị viên";
-    case "partner":
-      return "Đối tác";
-    case "driver":
-      return "Tài xế";
-    case "customer":
-      return "Khách hàng";
-    default:
-      return "Không xác định"; 
-  }
-}
 
+  static String roleToDisplayName(String role) {
+    switch (role) {
+      case "admin":
+        return "Quản trị viên";
+      case "partner":
+        return "Đối tác";
+      case "driver":
+        return "Tài xế";
+      case "customer":
+        return "Khách hàng";
+      default:
+        return "Không xác định";
+    }
+  }
+  static UserRole convertToEnum(String displayName) {
+    switch (displayName) {
+      case "admin":
+        return UserRole.admin;
+      case "partner":
+        return UserRole.partner;
+      case "driver":
+        return UserRole.driver;
+      case "customer":
+        return UserRole.customer;
+      default:
+        throw Exception('Invalid role');
+    }
+  }
 }

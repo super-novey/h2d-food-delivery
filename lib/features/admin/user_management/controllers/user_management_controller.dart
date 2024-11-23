@@ -9,9 +9,10 @@ class UserManagementController extends GetxController {
   var userList = <UserModel>[].obs;
   var isLoading = true.obs;
   var errorMessage = ''.obs;
-var touchedIndex = (-1).obs;
+  var touchedIndex = (-1).obs;
   final UserRepository _repository = UserRepository();
-  var roleCounts = <String, int>{}.obs;
+  var roleCounts = <String, int>{}.obs; // Chúng ta lưu trữ thông tin số lượng vai trò
+
   @override
   void onInit() {
     fetchAllUsers();
@@ -27,6 +28,8 @@ var touchedIndex = (-1).obs;
       }
       final data = await _repository.fetchAllUsers();
       userList.value = data;
+
+      updateRoleCounts();
     } catch (e) {
       errorMessage.value = e.toString();
       print(e);
@@ -35,13 +38,16 @@ var touchedIndex = (-1).obs;
     }
   }
 
-  List<ChartModel> getPieChartData() {
-    final Map<String, int> roleCounts = {};
+  void updateRoleCounts() {
+    final Map<String, int> counts = {};
     for (var user in userList) {
       final role = user.role;
-      roleCounts[role] = (roleCounts[role] ?? 0) + 1;
+      counts[role] = (counts[role] ?? 0) + 1;
     }
+    roleCounts.value = counts; 
+  }
 
+  List<ChartModel> getPieChartData() {
     final totalUsers = roleCounts.values.fold(0, (sum, count) => sum + count);
     return roleCounts.entries
         .map((entry) => ChartModel(
@@ -51,7 +57,9 @@ var touchedIndex = (-1).obs;
             ))
         .toList();
   }
+
   void updateTouchedIndex(int index) {
     touchedIndex.value = index;
   }
 }
+
