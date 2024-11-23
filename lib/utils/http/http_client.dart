@@ -8,7 +8,7 @@ class HttpHelper {
 
   static const String _baseUrl =
       // "http://localhost:8081/api/v1"; // change URL
-      "http://10.0.125.8:8081/api/v1";
+      "http://10.0.247.52:8081/api/v1";
 
   // GET method
   static Future<Map<String, dynamic>> get(String endpoint) async {
@@ -62,7 +62,9 @@ class HttpHelper {
   }
 
   static Map<String, dynamic> _handleResponse(http.Response response) {
-    if (response.statusCode == 200 || response.statusCode == 201) {
+    if (response.statusCode == 200 ||
+        response.statusCode == 201 ||
+        response.statusCode == 401) {
       return json.decode(response.body);
     } else {
       throw Exception('${response.body}');

@@ -1,4 +1,5 @@
 import 'package:food_delivery_h2d/data/driver/driver_repository.dart';
+import 'package:food_delivery_h2d/data/response/api_response.dart';
 import 'package:food_delivery_h2d/features/authentication/models/DriverModel.dart';
 import 'package:food_delivery_h2d/features/authentication/models/LoginResponse.dart';
 import 'package:food_delivery_h2d/features/authentication/models/PartnerModel.dart';
@@ -26,6 +27,21 @@ class AuthRepository extends GetxController {
       return loginResponse;
     } on Exception catch (_) {
       rethrow;
+    }
+  }
+
+  Future<ApiResponse<LoginResponse>> testLogin(
+      String email, String password, String role) async {
+    final data = {'email': email, 'password': password, 'role': role};
+    try {
+      final res = await HttpHelper.post(_loginApi, data);
+      if (res["hasError"] == true) {
+        return ApiResponse.error(res["message"]);
+      }
+      final loginResponse = LoginResponse.fromJson(res["data"]);
+      return ApiResponse.completed(loginResponse, res["message"]);
+    } catch (e) {
+      return ApiResponse.error("An unknown error occurred.");
     }
   }
 

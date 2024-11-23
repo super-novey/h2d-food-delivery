@@ -99,7 +99,7 @@ class LoginForm extends StatelessWidget {
                   : SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: authController.login,
+                        onPressed: authController.login1,
                         child: const Text("Đăng nhập"),
                       ),
                     ),

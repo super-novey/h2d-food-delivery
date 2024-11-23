@@ -4,6 +4,7 @@ import 'package:food_delivery_h2d/bindings/network_manager.dart';
 import 'package:food_delivery_h2d/data/authentication/auth_repository.dart';
 import 'package:food_delivery_h2d/data/driver/driver_repository.dart';
 import 'package:food_delivery_h2d/data/partner/partner_repository.dart';
+import 'package:food_delivery_h2d/data/response/status.dart';
 import 'package:food_delivery_h2d/features/authentication/models/DriverModel.dart';
 import 'package:food_delivery_h2d/features/authentication/models/PartnerModel.dart';
 import 'package:food_delivery_h2d/features/authentication/models/User.dart';
@@ -72,7 +73,7 @@ class LoginController extends GetxController {
 
       final res =
           await _authRepository.login(userName.trim(), password.trim(), role);
-  
+
       if (res.user.role == "driver") {
         final currentDriver =
             await _driverRepository.getCurrentDriver(res.user.userId);
@@ -102,9 +103,69 @@ class LoginController extends GetxController {
         }
       }
     } catch (err) {
-      Loaders.errorSnackBar(
-          title: "Thất bại!", message: "Sai Tên đăng nhập hoặc mật khẩu");
-      print(err);
+      Loaders.errorSnackBar(title: "Thất bại!", message: err.toString());
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  void login1() async {
+    final userName = userNameController.text;
+    final password = passwordController.text;
+    var role = selectedRole.value.name.toString();
+
+    if (kIsWeb) {
+      role = UserRole.admin.name.toString();
+    }
+
+    try {
+      isLoading.value = true;
+
+      final isConnected = await NetworkManager.instance.isConnected();
+      if (!isConnected) {
+        return;
+      }
+
+      if (!loginFormKey.currentState!.validate()) {
+        return;
+      }
+
+      final res = await _authRepository.testLogin(
+          userName.trim(), password.trim(), role);
+
+      if (res.status == Status.ERROR) {
+        Loaders.errorSnackBar(title: "Thất bại!", message: res.message);
+        return;
+      }
+
+      if (res.data!.user.role == "driver") {
+        final currentDriver =
+            await _driverRepository.getCurrentDriver(res.data!.user.userId);
+        saveUser(currentDriver);
+        Loaders.successSnackBar(
+            title: "Thành công!", message: res.message.toString());
+        Get.offAll(() => const ShipperNavigationMenu());
+      } else if (res.data!.user.role == "partner") {
+        final currentPartner =
+            await _partnerRepository.getCurrentPartner(res.data!.user.userId);
+        saveUser(currentPartner);
+        Loaders.successSnackBar(title: "Thành công!", message: res.message);
+        Get.offAll(() => const RestaurantNavigationMenu());
+      } else if (res.data!.user.role == "customer") {
+        Loaders.successSnackBar(title: "Thành công!", message: res.message);
+        Get.offAll(() => const CustomerNavigationMenu());
+      } else {
+        Loaders.successSnackBar(
+            title: "Thành công!", message: res.message.toString);
+
+        if (kIsWeb) {
+          Get.toNamed(Routes.dashboard);
+        } else {
+          Loaders.customToast(message: 'Chỉ đăng nhập bằng website!');
+        }
+      }
+    } catch (err) {
+      Loaders.errorSnackBar(title: "Thất bại!", message: err.toString());
     } finally {
       isLoading.value = false;
     }
