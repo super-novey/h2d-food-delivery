@@ -72,7 +72,7 @@ class LoginController extends GetxController {
 
       final res =
           await _authRepository.login(userName.trim(), password.trim(), role);
-
+  
       if (res.user.role == "driver") {
         final currentDriver =
             await _driverRepository.getCurrentDriver(res.user.userId);
