@@ -29,8 +29,8 @@ class SideBar extends StatelessWidget {
                   borderRadius: BorderRadius.circular(MySizes.borderRadiusMd),
                   child: const CircleImage(
                     imageUrl: MyImagePaths.appRed,
-                    width: 160,
-                    height: 160,
+                    width: 120,
+                    height: 120,
                   ),
                 ),
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_h2d/features/admin/dashboard/views/widgets/line_chart.dart';
 import 'package:food_delivery_h2d/features/admin/dashboard/views/widgets/list_item.dart';
 import 'package:food_delivery_h2d/features/admin/dashboard/views/widgets/pie_chart.dart';
 import 'package:food_delivery_h2d/features/admin/web_layout.dart';
@@ -40,13 +41,9 @@ class AdminDashboard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(
+            SizedBox(
               height: 400,
-              child: Card(
-                elevation: 4,
-                shadowColor: MyColors.darkPrimaryColor,
-                child: Center(child: Text("More content here")),
-              ),
+              child: StatisticLineChart()
             ),
           ],
         ),

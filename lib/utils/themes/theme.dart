@@ -12,7 +12,7 @@ class MyTheme {
   static ThemeData lightTheme = ThemeData(
       colorScheme: const ColorScheme.light(
           primary: MyColors.primaryColor,
-          onPrimary: Colors.black,
+          onPrimary: Colors.white,
           surface: Colors.white,
           onSurface: MyColors.primaryTextColor,
           secondary: MyColors.lightPrimaryColor),

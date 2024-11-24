@@ -42,4 +42,9 @@ class MyImagePaths {
   static const String partnerIcon = "assets/icons/restaurant.png";
   static const String driverIcon = "assets/icons/driver.png";
   static const String customerIcon = "assets/icons/customer.png";
+
+  // Login screen
+  static const String background = "assets/icons/background.png";
+  static const String square = "assets/icons/square.png";
+  static const String itemBg = "assets/icons/bg.png";
 }

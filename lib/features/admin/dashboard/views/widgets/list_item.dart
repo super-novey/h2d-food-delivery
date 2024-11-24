@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/item/item_dashboard.dart';
+import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:food_delivery_h2d/utils/helpers/convert_role.dart';
 import 'package:get/get.dart';
 import 'package:food_delivery_h2d/features/admin/user_management/controllers/user_management_controller.dart';
@@ -34,9 +35,9 @@ class ListItemCount extends StatelessWidget {
         }
 
         return Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.only(top: MySizes.lg),
           child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal, // Cuộn ngang
+            scrollDirection: Axis.horizontal,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: roleCounts.entries.map((entry) {

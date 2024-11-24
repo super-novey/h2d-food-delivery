@@ -35,7 +35,9 @@ dependencies:
   get_storage: ^2.1.1
   path_provider: ^2.1.5
   fl_chart: ^0.69.0
-
+  month_year_picker: ^0.4.0+1
+  flutter_datetime_picker: ^1.5.1
+  flutter_localization: ^0.2.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

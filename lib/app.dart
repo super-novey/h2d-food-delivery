@@ -5,6 +5,8 @@ import 'package:food_delivery_h2d/features/authentication/views/login/login_scre
 import 'package:food_delivery_h2d/routes/app_routes.dart';
 import 'package:food_delivery_h2d/utils/themes/theme.dart';
 import 'package:get/get.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:month_year_picker/month_year_picker.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -21,6 +23,17 @@ class App extends StatelessWidget {
       getPages: kIsWeb ? AppRoutes.pages : [],
       title: "H2D Delivery",
       //navigatorObservers: [RouteObserver()],
+      locale: const Locale('vi'),
+      supportedLocales: const [
+        Locale('en'), // English
+        Locale('vi'), // Vietnamese
+      ],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        MonthYearPickerLocalizations.delegate,
+      ],
     );
   }
 }

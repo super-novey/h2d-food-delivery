@@ -27,9 +27,7 @@ class LoginForm extends StatelessWidget {
               obscureText: false,
               decoration: const InputDecoration(
                 hintText: "Tên đăng nhập",
-                prefixIcon: Icon(
-                  Icons.person,
-                ),
+                prefixIcon: Icon(Icons.person, size: MySizes.iconMs),
               ),
             ),
             const SizedBox(
@@ -43,30 +41,34 @@ class LoginForm extends StatelessWidget {
                     Validators.validateEmptyText("Mật khẩu", value),
                 decoration: InputDecoration(
                     hintText: "Mật khẩu",
-                    prefixIcon: const Icon(
-                      Icons.lock,
-                    ),
+                    prefixIcon: const Icon(Icons.lock, size: MySizes.iconMs),
                     suffix: GestureDetector(
                         onTap: () => authController.togglePasswordVisibility(),
                         child: Icon(
+                          size: MySizes.iconMs,
                           (authController.isShowPassword.value)
                               ? Icons.visibility
                               : Icons.visibility_off,
                         ))),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton(
-                    onPressed: () {
-                      Get.to(() => EmailInputScreen());
-                    },
-                    child: const Text("Xác thực tài khoản")),
-                TextButton(
-                    onPressed: () {}, child: const Text("Quên mật khẩu")),
-              ],
-            ),
+            if (!kIsWeb)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                      onPressed: () {
+                        Get.to(() => EmailInputScreen());
+                      },
+                      child: const Text("Xác thực tài khoản")),
+                  TextButton(
+                      onPressed: () {}, child: const Text("Quên mật khẩu")),
+                ],
+              ),
+            if (kIsWeb)
+              const SizedBox(
+                height: MySizes.spaceBtwItems,
+              ),
             if (!kIsWeb)
               GridView.count(
                 crossAxisCount: 2,
