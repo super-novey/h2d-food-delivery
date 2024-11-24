@@ -56,31 +56,31 @@ class ApprovalUserList extends StatelessWidget {
                             color: MyColors.primaryTextColor,
                           ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: MySizes.md),
-                      child: DropdownButton<String>(
-                        value: controller.selectedRole.value,
-                        onChanged: (String? newValue) {
-                          if (newValue != null) {
-                            controller.updateRole(newValue);
-                          }
-                        },
-                        items: const [
-                          DropdownMenuItem(
-                            value: '',
-                            child: Text('Tất cả'),
-                          ),
-                          DropdownMenuItem(
-                            value: 'driver',
-                            child: Text('Tài xế'),
-                          ),
-                          DropdownMenuItem(
-                            value: 'partner',
-                            child: Text('Đối tác'),
-                          ),
-                        ],
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(right: MySizes.md),
+                    //   child: DropdownButton<String>(
+                    //     value: controller.selectedRole.value,
+                    //     onChanged: (String? newValue) {
+                    //       if (newValue != null) {
+                    //         controller.updateRole(newValue);
+                    //       }
+                    //     },
+                    //     items: const [
+                    //       DropdownMenuItem(
+                    //         value: '',
+                    //         child: Text('Tất cả'),
+                    //       ),
+                    //       DropdownMenuItem(
+                    //         value: 'driver',
+                    //         child: Text('Tài xế'),
+                    //       ),
+                    //       DropdownMenuItem(
+                    //         value: 'partner',
+                    //         child: Text('Đối tác'),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 ),
                 const SizedBox(height: MySizes.spaceBtwItems),
@@ -182,10 +182,11 @@ class ApprovalUserList extends StatelessWidget {
                                         }),
                                         actions: [
                                           TextButton(
-                                            onPressed: () {
+                                            onPressed: () async{
+                                              await controller.deleteApprove(user.userId);
                                               Navigator.of(context).pop();
                                             },
-                                            child: const Text('Đóng'),
+                                            child: const Text('Từ chối'),
                                           ),
                                           TextButton(
                                             onPressed: () async {
@@ -233,10 +234,11 @@ class ApprovalUserList extends StatelessWidget {
                                         }),
                                         actions: [
                                           TextButton(
-                                            onPressed: () {
+                                            onPressed: () async {
+                                              await controller.deleteApprove(user.userId);
                                               Navigator.of(context).pop();
                                             },
-                                            child: const Text('Đóng'),
+                                            child: const Text('Từ chối'),
                                           ),
                                           TextButton(
                                             onPressed: () async {

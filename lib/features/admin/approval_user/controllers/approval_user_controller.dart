@@ -13,17 +13,19 @@ class ApprovalUserController extends GetxController {
   var errorMessage = ''.obs;
   var errorMessageDriver = ''.obs;
   var errorMessagePartner = ''.obs;
-  var selectedRole = ''.obs; 
+  var selectedRole = ''.obs;
   var detailDriver = Rxn<DriverModel>();
   var detailPartner = Rxn<PartnerModel>();
   final UserRepository _repository = UserRepository();
   var isDriverLoading = false.obs;
   var isPartnerLoading = false.obs;
-  final UserManagementController controller = Get.put(UserManagementController());
+  final UserManagementController controller =
+      Get.put(UserManagementController());
+
   @override
   void onInit() {
     super.onInit();
-    fetchUserByRole();  
+    fetchUserByRole();
   }
 
   void fetchUserByRole({String? role}) async {
@@ -35,7 +37,8 @@ class ApprovalUserController extends GetxController {
         return;
       }
 
-      final data = await _repository.fetchUserByRole(role: role ?? selectedRole.value);
+      final data =
+          await _repository.fetchUserByRole(role: role ?? selectedRole.value);
       userList.value = data;
     } catch (e) {
       errorMessage.value = e.toString();
@@ -75,9 +78,11 @@ class ApprovalUserController extends GetxController {
 
       final partnerResponse = await _repository.fetchPartnerById(partnerId);
       detailPartner.value = partnerResponse;
-      print("Controller received partnerResponse: ${partnerResponse.toString()}");
+      print(
+          "Controller received partnerResponse: ${partnerResponse.toString()}");
     } catch (e) {
-      errorMessagePartner.value = "Error fetching partner details: ${e.toString()}";
+      errorMessagePartner.value =
+          "Error fetching partner details: ${e.toString()}";
     } finally {
       isPartnerLoading(false);
     }
@@ -93,9 +98,9 @@ class ApprovalUserController extends GetxController {
 
       final isApproved = await _repository.approveUser(userId);
       if (isApproved) {
-        fetchUserByRole();  
+        fetchUserByRole();
         controller.fetchAllUsers();
-        
+
         Loaders.successSnackBar(
             title: "Thành công!", message: "Duyệt người dùng thành công");
       } else {
@@ -109,5 +114,21 @@ class ApprovalUserController extends GetxController {
   void updateRole(String role) {
     selectedRole.value = role;
     fetchUserByRole(role: role);
+  }
+
+  Future<void> deleteApprove(String userId) async {
+    try {
+      final isConnected = await NetworkManager.instance.isConnected();
+      if (!isConnected) {
+        errorMessage.value = "No internet connection";
+        return;
+      }
+      await _repository.deleteApprove(userId);
+      fetchUserByRole();
+
+      Loaders.successSnackBar(title: "Thành công!", message: "Từ chối thành công");
+    } catch (e) {
+      errorMessage.value = "Error delete user: ${e.toString()}";
+    }
   }
 }
