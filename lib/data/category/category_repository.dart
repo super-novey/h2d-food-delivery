@@ -1,3 +1,5 @@
+import 'package:food_delivery_h2d/data/response/api_response.dart';
+import 'package:food_delivery_h2d/features/admin/user_management/models/partner_model.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/category_model.dart';
 import 'package:food_delivery_h2d/utils/http/http_client.dart';
 import 'package:get/get.dart';
@@ -23,6 +25,21 @@ class CategoryRepository extends GetxController {
       await HttpHelper.delete("category/${categoryId.toString()}");
     } on Exception catch (_) {
       rethrow;
+    }
+  }
+
+  Future<ApiResponse<String>> reorderCategoryIndex(
+      String partnerId, List<String> indexes) async {
+    final data = {"partnerId": partnerId, "categoryOrderIdx": indexes};
+
+    try {
+      final res = await HttpHelper.post("category/reorder", data);
+      if (res["hasError"] == true) {
+        return ApiResponse.error(res["message"]);
+      }
+      return ApiResponse.completed(res["message"], res["message"]);
+    } catch (e) {
+      return ApiResponse.error("An unknown error occurred.");
     }
   }
 
