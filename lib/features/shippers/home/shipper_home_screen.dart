@@ -50,19 +50,18 @@ class ShipperHomeScreen extends StatelessWidget {
                 const SizedBox(
                   width: 20,
                 ),
-                const Column(
+                Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      // LoginController.instance.currentUser.licensePlate,
-                      "Nguyễn Văn A",
-                      style: TextStyle(
+                      LoginController.instance.currentUser.licensePlate,
+                      style: const TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 14,
                           color: MyColors.iconColor),
                     ),
-                    Text(
+                    const Text(
                       'Đang hoạt động',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
