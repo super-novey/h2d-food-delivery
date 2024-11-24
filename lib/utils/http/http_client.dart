@@ -64,7 +64,8 @@ class HttpHelper {
     if (response.statusCode == 200 ||
         response.statusCode == 201 ||
         response.statusCode == 401 ||
-        response.statusCode == 409) {
+        response.statusCode == 409 ||
+        response.statusCode == 404) {
       return json.decode(response.body);
     } else {
       throw Exception(response.body);
