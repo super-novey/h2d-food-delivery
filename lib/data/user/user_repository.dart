@@ -19,7 +19,7 @@ class UserRepository extends GetxController {
 
   Future<List<UserModel>> fetchUserByRole({String? role}) async {
     try {
-      String url = "user/filter";
+      String url = "user/approve";
       if (role != null) {
         url += "?role=$role";
       }
@@ -100,6 +100,14 @@ class UserRepository extends GetxController {
       }
     } on Exception catch (e) {
       print("Error approving user: $e");
+      rethrow;
+    }
+  }
+
+  Future<void> deleteApprove(String id) async {
+    try {
+      await HttpHelper.delete("user/$id");
+    } on Exception catch (_) {
       rethrow;
     }
   }
