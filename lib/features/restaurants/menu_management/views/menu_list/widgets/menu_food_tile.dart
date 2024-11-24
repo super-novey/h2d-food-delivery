@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -6,6 +7,7 @@ import 'package:food_delivery_h2d/features/restaurants/menu_management/controlle
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/item_model.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/views/menu_food_detail/menu_food_detail.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
+import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:get/get.dart';
 
@@ -63,14 +65,19 @@ class MenuFoodTile extends StatelessWidget {
               child: Row(
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(MySizes.borderRadiusMd),
-                    child: Image.network(
-                      item.itemImage,
-                      width: 55,
-                      height: 55,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                      borderRadius:
+                          BorderRadius.circular(MySizes.borderRadiusMd),
+                      child: CachedNetworkImage(
+                        imageUrl: item.itemImage,
+                        width: 55,
+                        height: 55,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => const Center(
+                            child:
+                                CircularProgressIndicator()), // Show a loading indicator while the image loads
+                        errorWidget: (context, url, error) => const Icon(Icons
+                            .error), // Show an error icon if the image fails to load
+                      )),
                   const SizedBox(
                     width: MySizes.spaceBtwItems,
                   ),

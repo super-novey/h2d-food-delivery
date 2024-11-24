@@ -43,4 +43,17 @@ class Item {
       itemImage: json['itemImage'] ?? MyImagePaths.iconImage,
     );
   }
+
+  @override
+  String toString() {
+    return 'Item('
+        'itemId: $itemId, '
+        'categoryId: $categoryId, '
+        'itemName: $itemName, '
+        'price: $price, '
+        'description: $description, '
+        'isAvailable: ${isAvailable.value}, '
+        'itemImage: $itemImage'
+        ')';
+  }
 }

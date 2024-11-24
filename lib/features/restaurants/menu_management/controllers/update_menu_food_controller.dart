@@ -59,15 +59,18 @@ class UpdateMenuFoodController extends GetxController {
       files = await MultiplePartFileHelper.createMultipleFiles(fields);
       final res = await _itemRepository.addItem(newItem, files);
 
+      await Future.delayed(Duration(milliseconds: 300));
+
       if (res.status == Status.ERROR) {
         Loaders.errorSnackBar(title: "Lỗi", message: res.message);
         return;
       }
-      MenuFoodController.instance.allItems.add(res.data!);
-      MenuFoodController.instance.allItems
-          .add(Item(categoryId: "674135ebaaf1d1c787f9658d"));
 
-      // Loaders.successSnackBar(title: "Thành công", message: res.message);
+      MenuFoodController.instance.allItems.add(res.data!);
+
+      print(MenuFoodController.instance.allItems.length);
+
+      Loaders.successSnackBar(title: "Thành công", message: res.message);
     } catch (e) {
       Loaders.errorSnackBar(title: "Lỗi", message: e.toString());
     } finally {
