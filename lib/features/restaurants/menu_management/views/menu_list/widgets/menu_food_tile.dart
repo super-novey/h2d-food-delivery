@@ -16,7 +16,6 @@ class MenuFoodTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     final menuFoodController = Get.put(MenuFoodController());
     final updateMenuFoodController = Get.put(UpdateMenuFoodController());
 
@@ -27,7 +26,7 @@ class MenuFoodTile extends StatelessWidget {
         endActionPane: ActionPane(motion: const DrawerMotion(), children: [
           SlidableAction(
             onPressed: ((context) {
-              updateMenuFoodController.isEditting.value=true;
+              updateMenuFoodController.isEditting.value = true;
               Get.to(() => MenuFoodDetailScreen(selectedItem: item));
             }),
             backgroundColor: MyColors.primaryTextColor,
@@ -65,7 +64,7 @@ class MenuFoodTile extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(MySizes.borderRadiusMd),
-                    child: Image.asset(
+                    child: Image.network(
                       item.itemImage,
                       width: 55,
                       height: 55,
@@ -86,7 +85,9 @@ class MenuFoodTile extends StatelessWidget {
                             .bodyLarge!
                             .apply(color: MyColors.darkPrimaryTextColor),
                       ),
-                      const SizedBox(height: MySizes.sm,),
+                      const SizedBox(
+                        height: MySizes.sm,
+                      ),
                       Text(
                         '${item.price} VNĐ',
                         style: Theme.of(context)
