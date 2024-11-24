@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/images/circle_image.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
-import 'package:food_delivery_h2d/features/shippers/home_screen/widgets/map.dart';
-import 'package:food_delivery_h2d/features/shippers/home_screen/widgets/oders_list.dart';
+import 'package:food_delivery_h2d/features/shippers/home/widgets/map.dart';
+import 'package:food_delivery_h2d/features/shippers/home/widgets/oders_list.dart';
 import 'package:food_delivery_h2d/features/shippers/notification/views/notification_screen.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:get/get.dart';
@@ -20,7 +20,7 @@ class ShipperHomeScreen extends StatelessWidget {
             padding: const EdgeInsets.only(
                 left: 20, top: 40, right: 20, bottom: 6.0),
             color: MyColors.darkPrimaryColor,
-            height: 80,
+            height: 100,
             child: Row(
               children: [
                 Stack(
@@ -56,12 +56,12 @@ class ShipperHomeScreen extends StatelessWidget {
                   children: [
                     Text(
                       LoginController.instance.currentUser.licensePlate,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 14,
                           color: MyColors.iconColor),
                     ),
-                    Text(
+                    const Text(
                       'Đang hoạt động',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,

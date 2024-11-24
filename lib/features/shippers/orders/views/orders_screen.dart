@@ -24,7 +24,7 @@ class OrdersScreen extends StatelessWidget {
           },
         ),
       ),
-      backgroundColor: MyColors.backgroundColor,
+      backgroundColor: MyColors.primaryBackgroundColor,
       body: NestedScrollView(
         headerSliverBuilder: (_, innerBoxIsScrolled) {
           return [

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_h2d/features/shippers/home_screen/widgets/order_tile.dart';
+import 'package:food_delivery_h2d/features/shippers/home/widgets/order_tile.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 
 class OdersList extends StatelessWidget {
@@ -15,7 +15,7 @@ class OdersList extends StatelessWidget {
         return Container(
           padding: const EdgeInsets.only(top: 16),
           decoration: const BoxDecoration(
-            color: MyColors.backgroundColor,
+            color: MyColors.primaryBackgroundColor,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20),
               topRight: Radius.circular(20),
@@ -23,7 +23,7 @@ class OdersList extends StatelessWidget {
           ),
           child: ListView.builder(
             controller: scrollController,
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(8),
             itemCount: 5,
             itemBuilder: (context, index) {
               return const OrderTile();

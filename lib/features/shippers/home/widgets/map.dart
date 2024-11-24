@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:food_delivery_h2d/features/shippers/home_screen/controllers/map_controller.dart';
+import 'package:food_delivery_h2d/features/shippers/home/controllers/map_controller.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:get/get.dart';
 
