@@ -37,7 +37,7 @@ class AddressRepository {
   Future<List<DistrictModel>> getDistrict(String idProvince) async {
     try {
       final response =
-          await http.get(Uri.parse("${_baseUrl}/2/${idProvince}.htm"));
+          await http.get(Uri.parse("$_baseUrl/2/$idProvince.htm"));
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> decodedJson = json.decode(response.body);
@@ -62,7 +62,7 @@ class AddressRepository {
   Future<List<CommuneModel>> getCommunes(String idDistrict) async {
     try {
       final response =
-          await http.get(Uri.parse("${_baseUrl}/3/${idDistrict}.htm"));
+          await http.get(Uri.parse("$_baseUrl/3/$idDistrict.htm"));
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> decodedJson = json.decode(response.body);

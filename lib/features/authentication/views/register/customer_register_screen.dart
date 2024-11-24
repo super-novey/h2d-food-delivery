@@ -5,9 +5,7 @@ import 'package:food_delivery_h2d/features/authentication/views/login/widgets/lo
 import 'package:food_delivery_h2d/features/authentication/views/register/OTP_verification_screen.dart';
 import 'package:food_delivery_h2d/features/authentication/views/register/widgets/user_register_form.dart';
 import 'package:food_delivery_h2d/utils/constants/enums.dart';
-import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
-import 'package:food_delivery_h2d/utils/popups/full_screen_loader.dart';
 import 'package:get/get.dart';
 
 class CustomerRegisterScreen extends StatelessWidget {

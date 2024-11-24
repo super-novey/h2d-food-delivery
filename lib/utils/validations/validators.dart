@@ -1,7 +1,8 @@
 class Validators {
   static String? validateEmptyText(String? fieldName, String? value) {
-    if (value == null || value.isEmpty)
+    if (value == null || value.isEmpty) {
       return '$fieldName không được để trống!.';
+    }
     return null;
   }
 

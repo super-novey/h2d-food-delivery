@@ -56,12 +56,12 @@ class ShipperHomeScreen extends StatelessWidget {
                   children: [
                     Text(
                       LoginController.instance.currentUser.licensePlate,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 14,
                           color: MyColors.iconColor),
                     ),
-                    Text(
+                    const Text(
                       'Đang hoạt động',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,

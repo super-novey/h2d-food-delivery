@@ -9,8 +9,8 @@ import 'package:get/get_navigation/src/routes/get_route.dart';
 class AppRoutes {
   static final List<GetPage> pages = [
     GetPage(name: Routes.dashboard, page: () => const AdminDashboard()),
-    GetPage(name: Routes.userManagerment, page: () => UserManagementScreen()),
-    GetPage(name: Routes.approveRequest, page: () => ApprovalUserList()),
-    GetPage(name: Routes.logout, page: () => LoginScreen())
+    GetPage(name: Routes.userManagerment, page: () => const UserManagementScreen()),
+    GetPage(name: Routes.approveRequest, page: () => const ApprovalUserList()),
+    GetPage(name: Routes.logout, page: () => const LoginScreen())
   ];
 }

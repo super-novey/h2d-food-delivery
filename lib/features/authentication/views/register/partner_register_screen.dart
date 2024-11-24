@@ -1,11 +1,8 @@
-import 'dart:io';
 
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:food_delivery_h2d/common/widgets/images/image_picker.dart';
 import 'package:food_delivery_h2d/common/widgets/keyboard/keyboard_hider.dart';
-import 'package:food_delivery_h2d/features/authentication/controllers/driver_tab_controller.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/partner_register_controller.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/partner_tab_controller.dart';
 import 'package:food_delivery_h2d/features/authentication/views/register/widgets/user_register_form.dart';

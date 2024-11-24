@@ -195,7 +195,7 @@ class MenuFoodController extends GetxController {
           } catch (err) {
             Loaders.successSnackBar(
               title: "Thất bại!",
-              message: "${err}",
+              message: "$err",
             );
           }
         },

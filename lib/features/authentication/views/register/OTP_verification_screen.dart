@@ -61,7 +61,7 @@ class OtpVerificationScreen extends StatelessWidget {
           ],
         )),
         Padding(
-          padding: EdgeInsets.all(MySizes.defaultSpace),
+          padding: const EdgeInsets.all(MySizes.defaultSpace),
           child: Column(
             children: [
               Text.rich(

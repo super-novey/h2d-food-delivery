@@ -1,18 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:food_delivery_h2d/common/container/rounded_container.dart';
 import 'package:food_delivery_h2d/features/authentication/views/login/email_input_screen.dart';
-import 'package:food_delivery_h2d/features/authentication/views/register/OTP_verification_screen.dart';
-import 'package:food_delivery_h2d/features/authentication/views/register/customer_register_screen.dart';
 import 'package:food_delivery_h2d/features/authentication/views/register/register_navigation_menu.dart';
-import 'package:food_delivery_h2d/features/restaurants/restaurant_navigation_menu.dart';
-import 'package:food_delivery_h2d/features/shippers/shipper_navigation_menu.dart';
-import 'package:food_delivery_h2d/features/admin/dashboard/views/admin_dashboard.dart';
-import 'package:food_delivery_h2d/features/customers/customer_navigation_menu.dart';
-import 'package:food_delivery_h2d/routes/routes.dart';
 import 'package:food_delivery_h2d/utils/constants/enums.dart';
 import 'package:food_delivery_h2d/utils/helpers/convert_role.dart';
-import 'package:food_delivery_h2d/utils/popups/loaders.dart';
 import 'package:food_delivery_h2d/utils/validations/validators.dart';
 import 'package:get/get.dart';
 import '../../../../../utils/constants/sizes.dart';
@@ -105,7 +96,7 @@ class LoginForm extends StatelessWidget {
                   : SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: authController.login1,
+                        onPressed: authController.login,
                         child: const Text("Đăng nhập"),
                       ),
                     ),

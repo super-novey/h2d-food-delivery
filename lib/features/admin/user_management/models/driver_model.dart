@@ -61,6 +61,7 @@ class DriverModel extends UserModel {
     );
   }
 
+  @override
   Map<String, dynamic> toJson() {
     return {
       'driverId': driverId,

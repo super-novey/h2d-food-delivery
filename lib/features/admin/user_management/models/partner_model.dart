@@ -69,6 +69,7 @@ class PartnerModel extends UserModel {
     );
   }
 
+  @override
   Map<String, dynamic> toJson() {
     return {
       'partnerId': partnerId,

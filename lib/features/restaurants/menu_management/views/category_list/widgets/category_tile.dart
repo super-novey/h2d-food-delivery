@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/category_model.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
-import 'package:food_delivery_h2d/utils/popups/loaders.dart';
 
-import '../../../controllers/menu_food_controller.dart';
 
 class CategoryTile extends StatelessWidget {
   final Category category;
