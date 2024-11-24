@@ -9,7 +9,7 @@ class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MyColors.backgroundColor,
+      backgroundColor: MyColors.primaryBackgroundColor,
       appBar: AppBar(
         title: const Text('Thông báo'),
         centerTitle: true,
