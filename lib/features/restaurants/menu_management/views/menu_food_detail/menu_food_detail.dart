@@ -16,34 +16,38 @@ class MenuFoodDetailScreen extends StatelessWidget {
   final updateMenuFoodController = Get.put(UpdateMenuFoodController());
 
   void fetchFoodDetail() {
-  updateMenuFoodController.nameController.text = selectedItem.itemName;
-  updateMenuFoodController.priceController.text =
-      selectedItem.price.toString();
-  updateMenuFoodController.descriptionController.text =
-      selectedItem.description;
+    updateMenuFoodController.nameController.text = selectedItem.itemName;
+    updateMenuFoodController.priceController.text =
+        selectedItem.price.toString();
+    updateMenuFoodController.descriptionController.text =
+        selectedItem.description;
 
-  String categoryId = selectedItem.categoryId.toString();
-  if (menuFoodController.allCategories
-      .any((category) => category.categoryId.toString() == categoryId)) {
-    updateMenuFoodController.selectedCaterory.value = categoryId;
-  } else {
-    updateMenuFoodController.selectedCaterory.value = null; 
+    String categoryId = selectedItem.categoryId.toString();
+    if (menuFoodController.allCategories
+        .any((category) => category.categoryId.toString() == categoryId)) {
+      updateMenuFoodController.selectedCaterory.value = categoryId;
+    } else {
+      updateMenuFoodController.selectedCaterory.value = null;
+    }
   }
 
-}
   @override
   Widget build(BuildContext context) {
     fetchFoodDetail();
     return Scaffold(
       appBar: CustomAppBar(
-        title: Text(updateMenuFoodController.isEditting.value ? "Chỉnh sửa món ăn" : "Thêm món ăn"),
+        title: Text(updateMenuFoodController.isEditting.value
+            ? "Chỉnh sửa món ăn"
+            : "Thêm món ăn"),
         actions: [
           IconButton(
               icon: const Icon(
                 Icons.save,
                 size: MySizes.iconMd,
               ),
-              onPressed: () {}),
+              onPressed: () {
+                updateMenuFoodController.save();
+              }),
         ],
       ),
       body: SingleChildScrollView(
@@ -79,11 +83,26 @@ class MenuFoodDetailScreen extends StatelessWidget {
                   ),
                   Column(
                     children: [
-                      ClipRRect(
-                        borderRadius:
-                            BorderRadius.circular(MySizes.borderRadiusMd),
-                        child: Image.asset(selectedItem.itemImage,
-                            width: 70, height: 70, fit: BoxFit.cover),
+                      Obx(
+                        () => GestureDetector(
+                          onTap: () => updateMenuFoodController
+                              .pickImage(updateMenuFoodController.foodImage),
+                          child: ClipRRect(
+                              borderRadius:
+                                  BorderRadius.circular(MySizes.borderRadiusMd),
+                              child: updateMenuFoodController.foodImage.value !=
+                                      null
+                                  ? Image.file(
+                                      updateMenuFoodController.foodImage.value!,
+                                      fit: BoxFit.cover,
+                                      width: 70,
+                                      height: 70,
+                                    )
+                                  : Image.asset(selectedItem.itemImage,
+                                      width: 70,
+                                      height: 70,
+                                      fit: BoxFit.cover)),
+                        ),
                       ),
                       TextButton(
                           onPressed: () {},

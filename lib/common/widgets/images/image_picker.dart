@@ -41,7 +41,7 @@ class DottedBorderImagePicker extends StatelessWidget {
                   ? Stack(children: [
                       Image.file(
                         imageFile!,
-                        fit: BoxFit.cover,
+                         fit: BoxFit.cover,
                         width: width,
                         height: height,
                       ),
