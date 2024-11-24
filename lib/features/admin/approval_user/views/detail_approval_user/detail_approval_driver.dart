@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/admin/approval_user/controllers/approval_user_controller.dart';
 import 'package:food_delivery_h2d/features/admin/user_management/models/user_model.dart';
@@ -55,16 +56,19 @@ class DetailApprovalUser extends StatelessWidget {
                 Obx(() {
                   return Center(
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: FadeInImage.assetNetwork(
-                        placeholder: MyImagePaths.iconImage,
-                        image: controller.detailDriver.value?.profileUrl ??
-                            MyImagePaths.iconImage,
-                        width: 150,
+                        borderRadius: BorderRadius.circular(100),
+                        child: CachedNetworkImage(
+                          imageUrl: controller.detailDriver.value?.profileUrl ??
+                              MyImagePaths.iconImage,
+                          width: 150,
                         height: 150,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => const Center(
+                              child:
+                                  CircularProgressIndicator()), // Show a loading indicator while the image loads
+                          errorWidget: (context, url, error) => const Icon(Icons
+                              .error), // Show an error icon if the image fails to load
+                        )),
                   );
                 }),
                 const SizedBox(height: MySizes.spaceBtwItems),
@@ -84,18 +88,22 @@ class DetailApprovalUser extends StatelessWidget {
                         Obx(() {
                           return Center(
                             child: ClipRRect(
-                              borderRadius:
-                                  BorderRadius.circular(MySizes.borderRadiusSm),
-                              child: FadeInImage.assetNetwork(
-                                placeholder: MyImagePaths.iconImage,
-                                image: controller
-                                        .detailDriver.value?.licenseFrontUrl ??
-                                    MyImagePaths.iconImage,
-                                width: 200,
+                                borderRadius: BorderRadius.circular(
+                                    MySizes.borderRadiusSm),
+                                child: CachedNetworkImage(
+                                  imageUrl: controller.detailDriver.value
+                                          ?.licenseFrontUrl ??
+                                      MyImagePaths.iconImage,
+                                  width: 200,
                                 height: 150,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                                  fit: BoxFit.cover,
+                                  placeholder: (context, url) => const Center(
+                                      child:
+                                          CircularProgressIndicator()), // Show a loading indicator while the image loads
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(Icons
+                                          .error), // Show an error icon if the image fails to load
+                                )),
                           );
                         }),
                       ],
@@ -113,18 +121,22 @@ class DetailApprovalUser extends StatelessWidget {
                         Obx(() {
                           return Center(
                             child: ClipRRect(
-                              borderRadius:
-                                  BorderRadius.circular(MySizes.borderRadiusSm),
-                              child: FadeInImage.assetNetwork(
-                                placeholder: MyImagePaths.iconImage,
-                                image: controller
-                                        .detailDriver.value?.licenseBackUrl ??
-                                    MyImagePaths.iconImage,
-                                width: 200,
+                                borderRadius: BorderRadius.circular(
+                                    MySizes.borderRadiusSm),
+                                child: CachedNetworkImage(
+                                  imageUrl: controller
+                                          .detailDriver.value?.licenseBackUrl ??
+                                      MyImagePaths.iconImage,
+                                  width: 200,
                                 height: 150,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                                  fit: BoxFit.cover,
+                                  placeholder: (context, url) => const Center(
+                                      child:
+                                          CircularProgressIndicator()), // Show a loading indicator while the image loads
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(Icons
+                                          .error), // Show an error icon if the image fails to load
+                                )),
                           );
                         }),
                       ],
@@ -280,6 +292,9 @@ class DetailApprovalUser extends StatelessWidget {
                 }),
                 const SizedBox(height: MySizes.spaceBtwItems),
                 Obx(() {
+                  if (driverRegisterController.communes.isEmpty) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -306,6 +321,9 @@ class DetailApprovalUser extends StatelessWidget {
                 }),
                 const SizedBox(height: MySizes.spaceBtwItems),
                 Obx(() {
+                  if (driverRegisterController.districts.isEmpty) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -332,6 +350,9 @@ class DetailApprovalUser extends StatelessWidget {
                 }),
                 const SizedBox(height: MySizes.spaceBtwItems),
                 Obx(() {
+                  if (driverRegisterController.provinces.isEmpty) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -356,8 +377,6 @@ class DetailApprovalUser extends StatelessWidget {
                     ],
                   );
                 }),
-                
-                
               ],
             ),
           ),

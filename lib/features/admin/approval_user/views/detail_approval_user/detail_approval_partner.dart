@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/admin/approval_user/controllers/approval_user_controller.dart';
 import 'package:food_delivery_h2d/features/admin/user_management/models/user_model.dart';
@@ -27,7 +28,6 @@ class DetailApprovalPartner extends StatelessWidget {
 
     controller.fetchDetailPartner(userSelected.userId);
     print("view ${userSelected.userId}");
-    
 
     String? provinceId = controller.detailPartner.value?.provinceId;
     if (provinceId != null && provinceId.isNotEmpty) {
@@ -37,6 +37,7 @@ class DetailApprovalPartner extends StatelessWidget {
     if (districtId != null && districtId.isNotEmpty) {
       partnerRegisterController.fetchCommunes(districtId);
     }
+
     return SizedBox(
       width: 500,
       child: Column(
@@ -57,16 +58,18 @@ class DetailApprovalPartner extends StatelessWidget {
                 Obx(() {
                   return Center(
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: FadeInImage.assetNetwork(
-                        placeholder: MyImagePaths.iconImage,
-                        image: controller.detailPartner.value?.avatarUrl ??
-                            MyImagePaths.iconImage,
-                        width: 150,
-                        height: 150,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                        borderRadius: BorderRadius.circular(100),
+                        child: CachedNetworkImage(
+                          imageUrl: controller.detailPartner.value?.avatarUrl ??
+                              MyImagePaths.iconImage,
+                          width: 150,
+                          height: 150,
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) =>
+                              const Center(child: CircularProgressIndicator()),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                        )),
                   );
                 }),
                 const SizedBox(height: MySizes.spaceBtwItems),
@@ -81,16 +84,19 @@ class DetailApprovalPartner extends StatelessWidget {
                 Obx(() {
                   return Center(
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: FadeInImage.assetNetwork(
-                        placeholder: MyImagePaths.iconImage,
-                        image: controller.detailPartner.value?.storeFront ??
-                            MyImagePaths.iconImage,
-                        width: 150,
-                        height: 150,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                        borderRadius: BorderRadius.circular(100),
+                        child: CachedNetworkImage(
+                          imageUrl:
+                              controller.detailPartner.value?.storeFront ??
+                                  MyImagePaths.iconImage,
+                          width: 150,
+                          height: 150,
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) =>
+                              const Center(child: CircularProgressIndicator()),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                        )),
                   );
                 }),
                 const SizedBox(height: MySizes.spaceBtwItems),
@@ -110,18 +116,20 @@ class DetailApprovalPartner extends StatelessWidget {
                         Obx(() {
                           return Center(
                             child: ClipRRect(
-                              borderRadius:
-                                  BorderRadius.circular(MySizes.borderRadiusSm),
-                              child: FadeInImage.assetNetwork(
-                                placeholder: MyImagePaths.iconImage,
-                                image: controller
-                                        .detailPartner.value?.cccdFrontUrl ??
-                                    MyImagePaths.iconImage,
-                                width: 200,
-                                height: 150,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                                borderRadius: BorderRadius.circular(
+                                    MySizes.borderRadiusSm),
+                                child: CachedNetworkImage(
+                                  imageUrl: controller
+                                          .detailPartner.value?.cccdFrontUrl ??
+                                      MyImagePaths.iconImage,
+                                  width: 200,
+                                  height: 150,
+                                  fit: BoxFit.cover,
+                                  placeholder: (context, url) => const Center(
+                                      child: CircularProgressIndicator()),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(Icons.error),
+                                )),
                           );
                         }),
                       ],
@@ -139,18 +147,20 @@ class DetailApprovalPartner extends StatelessWidget {
                         Obx(() {
                           return Center(
                             child: ClipRRect(
-                              borderRadius:
-                                  BorderRadius.circular(MySizes.borderRadiusSm),
-                              child: FadeInImage.assetNetwork(
-                                placeholder: MyImagePaths.iconImage,
-                                image: controller
-                                        .detailPartner.value?.cccdBackUrl ??
-                                    MyImagePaths.iconImage,
-                                width: 200,
-                                height: 150,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                                borderRadius: BorderRadius.circular(
+                                    MySizes.borderRadiusSm),
+                                child: CachedNetworkImage(
+                                  imageUrl: controller
+                                          .detailPartner.value?.cccdBackUrl ??
+                                      MyImagePaths.iconImage,
+                                  width: 200,
+                                  height: 150,
+                                  fit: BoxFit.cover,
+                                  placeholder: (context, url) => const Center(
+                                      child: CircularProgressIndicator()),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(Icons.error),
+                                )),
                           );
                         }),
                       ],
@@ -306,6 +316,9 @@ class DetailApprovalPartner extends StatelessWidget {
                 }),
                 const SizedBox(height: MySizes.spaceBtwItems),
                 Obx(() {
+                  if (partnerRegisterController.communes.isEmpty) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -318,8 +331,7 @@ class DetailApprovalPartner extends StatelessWidget {
                       ),
                       Text(
                         _getCommunesName(
-                            controller.detailPartner.value?.communeId ??
-                                "Không có thông tin"),
+                            controller.detailPartner.value?.communeId ?? ""),
                         textAlign: TextAlign.right,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
@@ -332,6 +344,9 @@ class DetailApprovalPartner extends StatelessWidget {
                 }),
                 const SizedBox(height: MySizes.spaceBtwItems),
                 Obx(() {
+                  if (partnerRegisterController.districts.isEmpty) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -344,8 +359,7 @@ class DetailApprovalPartner extends StatelessWidget {
                       ),
                       Text(
                         _getDistrictName(
-                            controller.detailPartner.value?.districtId ??
-                                "Không có thông tin"),
+                            controller.detailPartner.value?.districtId ?? ""),
                         textAlign: TextAlign.right,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
@@ -358,6 +372,9 @@ class DetailApprovalPartner extends StatelessWidget {
                 }),
                 const SizedBox(height: MySizes.spaceBtwItems),
                 Obx(() {
+                  if (partnerRegisterController.provinces.isEmpty) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -370,8 +387,7 @@ class DetailApprovalPartner extends StatelessWidget {
                       ),
                       Text(
                         _getProvinceName(
-                            controller.detailPartner.value?.provinceId ??
-                                "Không có thông tin"),
+                            controller.detailPartner.value?.provinceId ?? ""),
                         textAlign: TextAlign.right,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
