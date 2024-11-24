@@ -106,9 +106,12 @@ class OtpVerificationScreen extends StatelessWidget {
                       }),
                   TextButton(
                       onPressed: () async {
-                        await otpController.resendOTP(emailAddress);
-                        timer.init();
-                        timer.startTimer();
+                        final success =
+                            await otpController.resendOTP(emailAddress, role);
+                        if (success) {
+                          timer.init();
+                          timer.startTimer();
+                        }
                       },
                       child: const Text("Gửi lại"))
                 ],

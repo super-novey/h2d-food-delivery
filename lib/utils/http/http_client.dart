@@ -8,7 +8,7 @@ class HttpHelper {
 
   static const String _baseUrl =
       // "http://localhost:8081/api/v1"; // change URL
-      "http://10.0.247.52:8081/api/v1";
+      "http://10.0.249.158:8081/api/v1";
 
   // GET method
   static Future<Map<String, dynamic>> get(String endpoint) async {

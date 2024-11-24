@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/data/authentication/auth_repository.dart';
+import 'package:food_delivery_h2d/data/response/status.dart';
 import 'package:food_delivery_h2d/features/authentication/views/login/login_screen.dart';
 import 'package:food_delivery_h2d/utils/popups/loaders.dart';
 import 'package:get/get.dart';
@@ -24,12 +25,18 @@ class OtpController {
     }
   }
 
-  Future resendOTP(String email) async {
+  Future<bool> resendOTP(String email, String role) async {
     try {
-      final message = await AuthRepository.instance.resendOTP(email);
-      Loaders.successSnackBar(title: message);
-    } catch (_) {
-      Loaders.errorSnackBar(title: "Email không hợp lệ!");
+      final res = await AuthRepository.instance.resendOTP(email, role);
+      if (res.status == Status.ERROR) {
+        Loaders.errorSnackBar(title: email, message: res.message);
+        return false;
+      }
+      Loaders.successSnackBar(title: res.message);
+      return true;
+    } catch (e) {
+      Loaders.errorSnackBar(title: e.toString());
+      return false;
     }
   }
 }

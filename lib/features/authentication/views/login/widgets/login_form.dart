@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/container/rounded_container.dart';
+import 'package:food_delivery_h2d/features/authentication/views/login/email_input_screen.dart';
+import 'package:food_delivery_h2d/features/authentication/views/register/OTP_verification_screen.dart';
 import 'package:food_delivery_h2d/features/authentication/views/register/customer_register_screen.dart';
 import 'package:food_delivery_h2d/features/authentication/views/register/register_navigation_menu.dart';
 import 'package:food_delivery_h2d/features/restaurants/restaurant_navigation_menu.dart';
@@ -62,8 +64,17 @@ class LoginForm extends StatelessWidget {
                         ))),
               ),
             ),
-            const SizedBox(
-              height: MySizes.spaceBtwInputFields,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                    onPressed: () {
+                      Get.to(() => EmailInputScreen());
+                    },
+                    child: const Text("Xác thực tài khoản")),
+                TextButton(
+                    onPressed: () {}, child: const Text("Quên mật khẩu")),
+              ],
             ),
             if (!kIsWeb)
               GridView.count(
@@ -87,11 +98,6 @@ class LoginForm extends StatelessWidget {
               ),
             const SizedBox(
               height: MySizes.spaceBtwItems,
-            ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: TextButton(
-                  onPressed: () {}, child: const Text("Quên mật khẩu")),
             ),
             Obx(
               () => authController.isLoading.value

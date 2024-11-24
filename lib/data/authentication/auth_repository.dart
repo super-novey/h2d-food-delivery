@@ -92,13 +92,16 @@ class AuthRepository extends GetxController {
     }
   }
 
-  Future<String> resendOTP(String email) async {
-    final data = {"email": email};
+  Future<ApiResponse<String>> resendOTP(String email, String role) async {
+    final data = {"email": email, "role": role};
     try {
       final res = await HttpHelper.post(_resendOTPApi, data);
-      return res["message"];
-    } on Exception catch (_) {
-      rethrow;
+      if (res["hasError"] == true) {
+        return ApiResponse.error(res["message"]);
+      }
+      return ApiResponse.completed("", res["message"]);
+    } catch (e) {
+      return ApiResponse.error("An unknown error occurred.");
     }
   }
 
