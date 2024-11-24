@@ -50,8 +50,8 @@ class WebHeader extends StatelessWidget implements PreferredSizeWidget {
             children: [
               const CircleImage(
                 imageUrl: MyImagePaths.appRed,
-                width: 80,
-                height: 80,
+                width: 40,
+                height: 40,
               ),
               const SizedBox(
                 width: MySizes.sm,

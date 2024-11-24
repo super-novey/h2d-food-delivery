@@ -30,4 +30,5 @@ class MyColors {
   static const Color starColor = Color(0xFFFFC107);
   static const Color primaryBackgroundColor = Color(0xFFF5F5F5);
   static const Color white = Color(0xFFFFFFFF);
+  static const Color greyWhite = Color(0xFFFAFAFA);
 }
