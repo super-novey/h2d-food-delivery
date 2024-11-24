@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:food_delivery_h2d/data/category/category_repository.dart';
 import 'package:food_delivery_h2d/data/item/item_repository.dart';
+import 'package:food_delivery_h2d/data/response/status.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
@@ -116,12 +117,28 @@ class MenuFoodController extends GetxController {
     return allItems.where((item) => item.categoryId == categoryId).toList();
   }
 
-  void reorderCategories(int oldIndex, int newIndex) {
-    if (newIndex > oldIndex) newIndex--;
-    final category = allCategories.removeAt(oldIndex);
-    allCategories.insert(newIndex, category);
+  void reorderCategories(int oldIndex, int newIndex) async {
+    try {
+      if (newIndex > oldIndex) newIndex--;
 
-    allCategories.map((item) => print(item.categoryId));
+      final category = allCategories.removeAt(oldIndex);
+      allCategories.insert(newIndex, category);
+
+      final categoryIds =
+          allCategories.map((category) => category.categoryId).toList();
+      final res = await _categoryRepository.reorderCategoryIndex(
+          LoginController.instance.currentUser.partnerId, categoryIds);
+
+      if (res.status == Status.ERROR) {
+        Loaders.errorSnackBar(title: "Lỗi", message: res.message);
+        return;
+      }
+
+      print(res.message);
+    } catch (e) {
+      Loaders.errorSnackBar(title: "Lỗi", message: e.toString());
+      return;
+    }
   }
 
   void addCategory() {
