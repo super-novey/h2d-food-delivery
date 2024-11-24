@@ -44,14 +44,17 @@ class AuthRepository extends GetxController {
     }
   }
 
-  Future<UserModel> register(UserModel newUser) async {
+  Future<ApiResponse<UserModel>> register(UserModel newUser) async {
     final data = newUser.toJson();
     try {
       final res = await HttpHelper.post(_registerApi, data);
-      final newUser = UserModel.fromJson(res["data"]["user"]);
-      return newUser;
-    } on Exception catch (_) {
-      rethrow;
+      if (res["hasError"] == true) {
+        return ApiResponse.error(res["message"]);
+      }
+      final newUser = UserModel.fromJson(res["data"]);
+      return ApiResponse.completed(newUser, res["message"]);
+    } catch (e) {
+      return ApiResponse.error("An unknown error occurred.");
     }
   }
 

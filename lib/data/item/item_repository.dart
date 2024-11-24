@@ -1,3 +1,4 @@
+import 'package:food_delivery_h2d/data/response/api_response.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/item_model.dart';
 import 'package:food_delivery_h2d/utils/http/http_client.dart';
 import 'package:get/get.dart';
@@ -21,13 +22,19 @@ class ItemRepository extends GetxController {
     }
   }
 
-  Future<Item> addItem(Item newItem, List<http.MultipartFile> files) async {
+  Future<ApiResponse<Item>> addItem(
+      Item newItem, List<http.MultipartFile> files) async {
     try {
       final res =
           await HttpHelper.postWithFiles("item", newItem.toJson(), files);
-      return Item.fromJson(res["data"]);
-    } on Exception catch (_) {
-      rethrow;
+      if (res["hasError"] == true) {
+        return ApiResponse.error(res["message"]);
+      }
+      final result = Item.fromJson(res["data"]);
+      return ApiResponse.completed(result, res["message"]);
+    } catch (e) {
+      print(e);
+      return ApiResponse.error("An unknown error occurred.");
     }
   }
 }

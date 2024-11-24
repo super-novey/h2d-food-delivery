@@ -28,9 +28,12 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<!-- Image picker -->
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We need access to your photo library to upload images.</string>
 	<key>UISupportedInterfaceOrientations</key>
+	
+	
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>

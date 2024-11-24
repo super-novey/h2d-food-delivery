@@ -25,9 +25,9 @@ class Item {
       '_id': itemId,
       'categoryId': categoryId,
       'itemName': itemName,
-      'price': price,
+      'price': price.toString(),
       'description': description,
-      'status': isAvailable.value, 
+      'status': isAvailable.value.toString(),
       'itemImage': itemImage,
     };
   }
@@ -39,8 +39,21 @@ class Item {
       itemName: json['itemName'] ?? '',
       price: json['price'] ?? 0,
       description: json['description'] ?? '',
-      isAvailable: json['status'] ?? true, 
+      isAvailable: json['status'] ?? true,
       itemImage: json['itemImage'] ?? MyImagePaths.iconImage,
     );
+  }
+
+  @override
+  String toString() {
+    return 'Item('
+        'itemId: $itemId, '
+        'categoryId: $categoryId, '
+        'itemName: $itemName, '
+        'price: $price, '
+        'description: $description, '
+        'isAvailable: ${isAvailable.value}, '
+        'itemImage: $itemImage'
+        ')';
   }
 }
