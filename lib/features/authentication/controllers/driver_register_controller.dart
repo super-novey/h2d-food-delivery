@@ -156,11 +156,11 @@ class DriverRegisterController extends GetxController {
       files = await MultiplePartFileHelper.createMultipleFiles(fields);
 
       // Print details of the files
-      files.forEach((file) {
+      for (var file in files) {
         print('File Field Name: ${file.field}');
         print('File Path: ${file.filename}');
         print('File Size: ${file.length} bytes');
-      });
+      }
 
       // await AuthRepository.instance.registerDriver(newDriver);
       await AuthRepository.instance.registerDriver(newDriver, files);

@@ -1,7 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
 
-import 'multiple_part_file.dart';
 
 class MultiplePartFileHelper {
   static Future<List<http.MultipartFile>> createMultipleFiles(

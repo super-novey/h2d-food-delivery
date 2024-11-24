@@ -25,7 +25,7 @@ class StatisticScreen extends StatelessWidget {
                     Row(
                       children: [
                         const Icon(Icons.savings_outlined, color: MyColors.darkPrimaryTextColor,),
-                        SizedBox(width: MySizes.xs,),
+                        const SizedBox(width: MySizes.xs,),
                         Text(
                           "Tổng doanh thu",
                           style: Theme.of(context)
@@ -52,8 +52,8 @@ class StatisticScreen extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.inventory_outlined, color: MyColors.darkPrimaryTextColor,),
-                        SizedBox(width: MySizes.xs,),
+                        const Icon(Icons.inventory_outlined, color: MyColors.darkPrimaryTextColor,),
+                        const SizedBox(width: MySizes.xs,),
                         Text(
                           "Tổng đơn hàng",
                           style: Theme.of(context)

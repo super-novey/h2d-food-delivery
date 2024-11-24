@@ -5,7 +5,6 @@ import 'package:food_delivery_h2d/features/authentication/views/login/login_scre
 import 'package:food_delivery_h2d/routes/app_routes.dart';
 import 'package:food_delivery_h2d/utils/themes/theme.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 class App extends StatelessWidget {
   const App({super.key});

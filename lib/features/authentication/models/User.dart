@@ -1,4 +1,3 @@
-import 'package:food_delivery_h2d/utils/constants/enums.dart';
 
 class UserModel {
   final String userId;

@@ -32,7 +32,7 @@ class LoginFormWeb extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
+                SizedBox(
                   width: 400,
                   height: 350,
                   child: const Padding(

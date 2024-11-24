@@ -4,11 +4,10 @@ import 'package:http/http.dart' as http;
 
 class HttpHelper {
   // static const String _baseUrl =
-  //     "https://backend-fooddelivery-1.onrender.com/api/v1/"; // change URL
+  //     "https://backend-foodxdelivery-1.onrender.com/api/v1/"; // change URL
 
-  static const String _baseUrl =
-      // "http://localhost:8081/api/v1"; // change URL
-      "http://10.0.249.158:8081/api/v1";
+  static const String _baseUrl = "http://localhost:8081/api/v1"; // change URL
+  // "http://10.0.249.158:8081/api/v1";
 
   // GET method
   static Future<Map<String, dynamic>> get(String endpoint) async {
@@ -67,7 +66,7 @@ class HttpHelper {
         response.statusCode == 401) {
       return json.decode(response.body);
     } else {
-      throw Exception('${response.body}');
+      throw Exception(response.body);
     }
   }
 
