@@ -107,15 +107,22 @@ class UpdateMenuFoodController extends GetxController {
         confirm: ElevatedButton(
             onPressed: () async {
               try {
-                await _itemRepository.removeItem(itemId);
+                FullScreenLoader.openDialog(
+                    "Đang xử lý...", MyImagePaths.spoonAnimation);
+
                 MenuFoodController.instance.allItems
                     .removeWhere((item) => item.itemId == itemId);
+
+                await _itemRepository.removeItem(itemId);
+
                 Navigator.of(Get.overlayContext!).pop();
                 Loaders.successSnackBar(
                     title: "Thành công!", message: "Xóa món ăn");
               } catch (err) {
                 Loaders.successSnackBar(
                     title: "Thất bại!", message: "Xóa món ăn");
+              } finally {
+                FullScreenLoader.stopLoading();
               }
             },
             style: ElevatedButton.styleFrom(

@@ -21,6 +21,10 @@ class MenuFoodListScreen extends StatelessWidget {
     final menuFoodController = Get.put(MenuFoodController());
     final updateMenuFoodController = Get.put(UpdateMenuFoodController());
 
+    Future<void> reloadPage() async {
+      menuFoodController.reload();
+    }
+
     return Scaffold(
       appBar: const CustomAppBar(
         title: Text('Thực đơn'),
@@ -84,47 +88,52 @@ class MenuFoodListScreen extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Obx(
-              () => menuFoodController.isLoading.value
-                  ? const Center(child: CircularProgressIndicator())
-                  : ListView.builder(
-                      itemCount: menuFoodController.allCategories.length,
-                      itemBuilder: (context, index) {
-                        Category category =
-                            menuFoodController.allCategories[index];
-                        List<Item> categoryItems = menuFoodController
-                            .getItemsForCategory(category.categoryId);
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  top: MySizes.sm, left: MySizes.md),
-                              child: Text(category.categoryName,
-                                  style: const TextStyle(
-                                    color: MyColors.darkPrimaryColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  )),
-                            ),
-                            Column(
-                              children: List.generate(categoryItems.length,
-                                  (itemIndex) {
-                                Item item = categoryItems[itemIndex];
-                                return MenuFoodTile(item: item);
-                              }),
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.only(
-                                  top: MySizes.sm,
-                                  left: MySizes.sm,
-                                  right: MySizes.sm),
-                              child: Divider(color: MyColors.dividerColor),
-                            )
-                          ],
-                        );
-                      },
-                    ),
+            child: RefreshIndicator(
+              onRefresh: () async {
+                await reloadPage();
+              },
+              child: Obx(
+                () => menuFoodController.isLoading.value
+                    ? const Center(child: CircularProgressIndicator())
+                    : ListView.builder(
+                        itemCount: menuFoodController.allCategories.length,
+                        itemBuilder: (context, index) {
+                          Category category =
+                              menuFoodController.allCategories[index];
+                          List<Item> categoryItems = menuFoodController
+                              .getItemsForCategory(category.categoryId);
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: MySizes.sm, left: MySizes.md),
+                                child: Text(category.categoryName,
+                                    style: const TextStyle(
+                                      color: MyColors.darkPrimaryColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    )),
+                              ),
+                              Column(
+                                children: List.generate(categoryItems.length,
+                                    (itemIndex) {
+                                  Item item = categoryItems[itemIndex];
+                                  return MenuFoodTile(item: item);
+                                }),
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.only(
+                                    top: MySizes.sm,
+                                    left: MySizes.sm,
+                                    right: MySizes.sm),
+                                child: Divider(color: MyColors.dividerColor),
+                              )
+                            ],
+                          );
+                        },
+                      ),
+              ),
             ),
           ),
         ],

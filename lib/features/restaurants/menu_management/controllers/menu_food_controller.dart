@@ -25,8 +25,6 @@ class MenuFoodController extends GetxController {
   final CategoryRepository _categoryRepository = Get.put(CategoryRepository());
   final ItemRepository _itemRepository = Get.put(ItemRepository());
 
- 
-
   @override
   void onClose() {
     // TODO: implement onClose
@@ -38,9 +36,13 @@ class MenuFoodController extends GetxController {
   void onInit() async {
     print("INIT");
     // TODO: implement onInit
+    await reload();
+    super.onInit();
+  }
+
+  Future<void> reload() async {
     await fetchCategories();
     await fetchAllItems();
-    super.onInit();
   }
 
   Future<void> fetchCategories() async {
