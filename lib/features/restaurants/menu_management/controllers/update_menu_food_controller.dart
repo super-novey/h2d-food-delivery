@@ -7,6 +7,7 @@ import 'package:food_delivery_h2d/data/response/status.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/controllers/menu_food_controller.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/item_model.dart';
+import 'package:food_delivery_h2d/features/restaurants/menu_management/views/menu_food_detail/menu_food_detail.dart';
 import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:food_delivery_h2d/utils/helpers/convert_text.dart';
@@ -34,6 +35,8 @@ class UpdateMenuFoodController extends GetxController {
   // Repository
   final _itemRepository = Get.put(ItemRepository());
 
+  var updatedItemId = "";
+
   void toggleEditting() {
     isEditting.value = !isEditting.value;
     if (!isEditting.value) {
@@ -55,7 +58,35 @@ class UpdateMenuFoodController extends GetxController {
 
     if (isAdd.value) {
       _handleAddItem(newItem);
-    } else {}
+    } else {
+      _handleUpdateItem(newItem);
+    }
+  }
+
+  Future _handleUpdateItem(Item oldItem) async {
+    try {
+      FullScreenLoader.openDialog("Đang xử lý", MyImagePaths.spoonAnimation);
+      List<http.MultipartFile> files = [];
+      var fields = [
+        {'fieldName': 'itemImage', 'file': foodImage.value},
+      ];
+      files = await MultiplePartFileHelper.createMultipleFiles(fields);
+
+      final res = await _itemRepository.updateItem(oldItem, files);
+
+      if (res.status == Status.ERROR) {
+        Loaders.errorSnackBar(title: "Lỗi", message: res.message);
+        return;
+      }
+
+      // MenuFoodController.instance.allItems.add(res.data!);
+
+      Loaders.successSnackBar(title: "Thành công", message: res.message);
+    } catch (e) {
+      Loaders.errorSnackBar(title: "Lỗi", message: e.toString());
+    } finally {
+      FullScreenLoader.stopLoading();
+    }
   }
 
   Future _handleAddItem(Item newItem) async {
@@ -68,8 +99,6 @@ class UpdateMenuFoodController extends GetxController {
       ];
       files = await MultiplePartFileHelper.createMultipleFiles(fields);
       final res = await _itemRepository.addItem(newItem, files);
-
-      await Future.delayed(const Duration(milliseconds: 300));
 
       if (res.status == Status.ERROR) {
         Loaders.errorSnackBar(title: "Lỗi", message: res.message);
@@ -141,9 +170,9 @@ class UpdateMenuFoodController extends GetxController {
   Item getItemFromForm() {
     return Item(
         itemName: nameController.text,
-        itemId: "",
+        itemId: updatedItemId,
         categoryId: selectedCaterory.value.toString(),
-        itemImage: nameController.text,
+        itemImage: "",
         price: ConvertText.getTextAsInteger(priceController.text),
         description: descriptionController.text,
         isAvailable: true,

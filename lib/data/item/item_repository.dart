@@ -22,6 +22,22 @@ class ItemRepository extends GetxController {
     }
   }
 
+  Future<ApiResponse<Item>> updateItem(
+      Item oldItem, List<http.MultipartFile> files) async {
+    try {
+      final res = await HttpHelper.putWithFiles(
+          "item/${oldItem.itemId.toString()}", oldItem.toJson(), files);
+      if (res["hasError"] == true) {
+        return ApiResponse.error(res["message"]);
+      }
+      final result = Item.fromJson(res["data"]);
+      return ApiResponse.completed(result, res["message"]);
+    } catch (e) {
+      print(e);
+      return ApiResponse.error("An unknown error occurred.");
+    }
+  }
+
   Future<void> removeItem(String itemId) async {
     try {
       await HttpHelper.delete("item/${itemId.toString()}");

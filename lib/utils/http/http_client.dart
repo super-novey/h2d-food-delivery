@@ -61,6 +61,23 @@ class HttpHelper {
     return await _handleMultipartResponse(response);
   }
 
+  // PUT with files
+  static Future<Map<String, dynamic>> putWithFiles(
+      String endpoint, dynamic fields, List<http.MultipartFile> files) async {
+    var request =
+        http.MultipartRequest('PUT', Uri.parse('$_baseUrl/$endpoint'));
+
+    fields.forEach((key, value) {
+      request.fields[key] = value.toString();
+    });
+
+    request.files.addAll(files);
+
+    var response = await request.send();
+
+    return await _handleMultipartResponse(response);
+  }
+
   static Map<String, dynamic> _handleResponse(http.Response response) {
     if (response.statusCode == 200 ||
         response.statusCode == 201 ||

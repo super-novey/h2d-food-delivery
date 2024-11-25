@@ -18,6 +18,7 @@ class MenuFoodDetailScreen extends StatelessWidget {
   final updateMenuFoodController = Get.put(UpdateMenuFoodController());
 
   void fetchFoodDetail() {
+    updateMenuFoodController.updatedItemId = selectedItem.itemId;  // not good
     updateMenuFoodController.nameController.text = selectedItem.itemName;
     updateMenuFoodController.priceController.text =
         selectedItem.price.toString();
