@@ -198,25 +198,25 @@ class ProfileRestaurantScreen extends StatelessWidget {
                             const SizedBox(
                               height: MySizes.spaceBtwSections,
                             ),
-                            SizedBox(
-                              width: double.infinity,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  Get.to(ProfileRestaurantDetailScreen());
-                                },
-                                child: const Text("Chỉnh sửa thông tin"),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: MySizes.spaceBtwItems,
-                            ),
-                            SizedBox(
-                              width: double.infinity,
-                              child: OutlinedButton(
-                                onPressed: () {},
-                                child: const Text("Đăng xuất"),
-                              ),
-                            )
+                            // SizedBox(
+                            //   width: double.infinity,
+                            //   child: ElevatedButton(
+                            //     onPressed: () {
+                            //       Get.to(ProfileRestaurantDetailScreen());
+                            //     },
+                            //     child: const Text("Chỉnh sửa thông tin"),
+                            //   ),
+                            // ),
+                            // const SizedBox(
+                            //   height: MySizes.spaceBtwItems,
+                            // ),
+                            // SizedBox(
+                            //   width: double.infinity,
+                            //   child: OutlinedButton(
+                            //     onPressed: () {},
+                            //     child: const Text("Đăng xuất"),
+                            //   ),
+                            // )
                           ],
                         ),
                       ),
