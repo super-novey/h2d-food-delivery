@@ -6,8 +6,9 @@ class HttpHelper {
   // static const String _baseUrl =
   //     "https://backend-foodxdelivery-1.onrender.com/api/v1/"; // change URL
 
-  static const String _baseUrl = "http://localhost:8081/api/v1"; // change URL
-  // "http://10.0.249.158:8081/api/v1";
+  static const String _baseUrl =
+      // "http://localhost:8081/api/v1"; // change URL
+      "http://10.0.224.84:8081/api/v1";
 
   // GET method
   static Future<Map<String, dynamic>> get(String endpoint) async {

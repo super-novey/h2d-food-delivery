@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/custom_app_bar.dart';
 import 'package:food_delivery_h2d/common/widgets/text_field/my_text_filed.dart';
@@ -36,6 +37,10 @@ class MenuFoodDetailScreen extends StatelessWidget {
     fetchFoodDetail();
     return Scaffold(
       appBar: CustomAppBar(
+        handleBack: () {
+          updateMenuFoodController.foodImage.value = null;
+          Get.back();
+        },
         title: Text(updateMenuFoodController.isEditting.value
             ? "Chỉnh sửa món ăn"
             : "Thêm món ăn"),
@@ -98,10 +103,18 @@ class MenuFoodDetailScreen extends StatelessWidget {
                                       width: 70,
                                       height: 70,
                                     )
-                                  : Image.asset(selectedItem.itemImage,
+                                  : CachedNetworkImage(
+                                      imageUrl: selectedItem.itemImage,
                                       width: 70,
                                       height: 70,
-                                      fit: BoxFit.cover)),
+                                      fit: BoxFit.cover,
+                                      placeholder: (context, url) => const Center(
+                                          child:
+                                              CircularProgressIndicator()), // Show a loading indicator while the image loads
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(Icons
+                                              .error), // Show an error icon if the image fails to load
+                                    )),
                         ),
                       ),
                       TextButton(

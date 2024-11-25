@@ -30,6 +30,11 @@ class UpdateMenuFoodController extends GetxController {
   final _itemRepository = Get.put(ItemRepository());
 
   @override
+  void onInit() {
+    super.onInit();
+  }
+
+  @override
   void onClose() {
     super.onClose();
   }
