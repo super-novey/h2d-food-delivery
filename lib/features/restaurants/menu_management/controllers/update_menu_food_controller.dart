@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:food_delivery_h2d/data/item/item_repository.dart';
 import 'package:food_delivery_h2d/data/response/status.dart';
+import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/controllers/menu_food_controller.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/item_model.dart';
 import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
@@ -30,8 +31,6 @@ class UpdateMenuFoodController extends GetxController {
 
   // Repository
   final _itemRepository = Get.put(ItemRepository());
-
-
 
   void toggleEditting() {
     isEditting.value = !isEditting.value;
@@ -106,6 +105,7 @@ class UpdateMenuFoodController extends GetxController {
         itemImage: nameController.text,
         price: ConvertText.getTextAsInteger(priceController.text),
         description: descriptionController.text,
-        isAvailable: true);
+        isAvailable: true,
+        partnerId: LoginController.instance.currentUser.partnerId);
   }
 }

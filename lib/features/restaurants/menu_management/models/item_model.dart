@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 class Item {
   String itemId;
   String categoryId;
+  String partnerId;
   String itemName;
   int price;
   String description;
@@ -13,6 +14,7 @@ class Item {
   Item({
     this.itemId = '',
     this.categoryId = '',
+    this.partnerId = '',
     this.itemName = '',
     this.price = 0,
     this.description = '',
@@ -29,6 +31,7 @@ class Item {
       'description': description,
       'status': isAvailable.value.toString(),
       'itemImage': itemImage,
+      'partnerId': partnerId
     };
   }
 
@@ -36,6 +39,7 @@ class Item {
     return Item(
       itemId: json['_id'] ?? '',
       categoryId: json['categoryId'] ?? '',
+      partnerId: json['partnerId'] ?? '',
       itemName: json['itemName'] ?? '',
       price: json['price'] ?? 0,
       description: json['description'] ?? '',
@@ -49,6 +53,7 @@ class Item {
     return 'Item('
         'itemId: $itemId, '
         'categoryId: $categoryId, '
+        'partnerId: $partnerId, '
         'itemName: $itemName, '
         'price: $price, '
         'description: $description, '
