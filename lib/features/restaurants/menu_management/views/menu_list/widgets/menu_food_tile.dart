@@ -37,7 +37,9 @@ class MenuFoodTile extends StatelessWidget {
                 bottomLeft: Radius.circular(MySizes.cardRadiusMd)),
           ),
           SlidableAction(
-            onPressed: ((context) {}),
+            onPressed: ((context) {
+              updateMenuFoodController.removeItem(item.itemId);
+            }),
             backgroundColor: MyColors.errorColor,
             icon: Icons.delete,
             padding: const EdgeInsets.all(MySizes.md),

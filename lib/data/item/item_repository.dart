@@ -22,6 +22,14 @@ class ItemRepository extends GetxController {
     }
   }
 
+  Future<void> removeItem(String itemId) async {
+    try {
+      await HttpHelper.delete("item/${itemId.toString()}");
+    } on Exception catch (_) {
+      rethrow;
+    }
+  }
+
   Future<ApiResponse<Item>> addItem(
       Item newItem, List<http.MultipartFile> files) async {
     try {

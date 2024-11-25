@@ -1,12 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/data/item/item_repository.dart';
 import 'package:food_delivery_h2d/data/response/status.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/controllers/menu_food_controller.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/item_model.dart';
 import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
+import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:food_delivery_h2d/utils/helpers/convert_text.dart';
 import 'package:food_delivery_h2d/utils/helpers/multiple_part_file.dart';
 import 'package:food_delivery_h2d/utils/popups/full_screen_loader.dart';
@@ -95,6 +97,38 @@ class UpdateMenuFoodController extends GetxController {
     } else {
       print("No image");
     }
+  }
+
+  void removeItem(String itemId) async {
+    Get.defaultDialog(
+        contentPadding: const EdgeInsets.all(MySizes.md),
+        title: "Xóa món ăn",
+        middleText: "Bạn có chắc chắn muốn xóa món ăn này!",
+        confirm: ElevatedButton(
+            onPressed: () async {
+              try {
+                await _itemRepository.removeItem(itemId);
+                MenuFoodController.instance.allItems
+                    .removeWhere((item) => item.itemId == itemId);
+                Navigator.of(Get.overlayContext!).pop();
+                Loaders.successSnackBar(
+                    title: "Thành công!", message: "Xóa món ăn");
+              } catch (err) {
+                Loaders.successSnackBar(
+                    title: "Thất bại!", message: "Xóa món ăn");
+              }
+            },
+            style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.all(0),
+                backgroundColor: Colors.red,
+                side: const BorderSide(color: Colors.red)),
+            child: const Text("Xóa")),
+        cancel: OutlinedButton(
+            style: OutlinedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: MySizes.md, vertical: 0)),
+            onPressed: () => Navigator.of(Get.overlayContext!).pop(),
+            child: const Text("Quay lại")));
   }
 
   Item getItemFromForm() {
