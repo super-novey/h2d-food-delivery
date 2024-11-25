@@ -20,7 +20,7 @@ class PrimaryHeader extends StatelessWidget {
                 left: MySizes.defaultSpace,
                 right: MySizes.defaultSpace,
                 top: MyDeviceUtils.getAppBarHeight(),
-                bottom: 100),
+                bottom: 130),
             child: child),
       ),
     );

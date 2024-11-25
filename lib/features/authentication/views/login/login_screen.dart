@@ -28,19 +28,16 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 Center(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(MySizes.borderRadiusMd),
-                    child: Image.asset(
+                  child: Image.asset(
                       MyImagePaths.appRed,
-                      width: 200,
-                      height: 200,
+                      width: 130,
+                      height: 130,
                       fit: BoxFit.cover,
                     ),
-                  ),
                 ),
                 //Image.asset(MyImagePaths.appRed),
                 const Padding(
-                  padding: EdgeInsets.all(MySizes.defaultSpace),
+                  padding: EdgeInsets.all(MySizes.spaceBtwItems),
                   child: Column(
                     children: [LoginForm()],
                   ),

@@ -3,6 +3,7 @@ import 'package:food_delivery_h2d/common/widgets/header/primary_header.dart';
 import 'package:food_delivery_h2d/features/authentication/views/login/login_screen.dart';
 import 'package:food_delivery_h2d/features/customers/home/widgets/customer_appbar.dart';
 import 'package:food_delivery_h2d/features/customers/home/widgets/home_search_bar.dart';
+import 'package:food_delivery_h2d/features/customers/home/widgets/image_place_holder.dart';
 import 'package:food_delivery_h2d/features/customers/home/widgets/item_home.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/views/list_famous_restaurant/list_famous_restaurant.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/views/list_top_item/list_top_item.dart';
@@ -42,13 +43,15 @@ class CustomerHomeScreen extends StatelessWidget {
                     bottom: 0,
                     left: 0,
                     right: 0,
-                    child: HomeSearchBar(),
+                    child: HomeSearchBar()
                   ),
                 ],
               ),
+              const SizedBox(height: MySizes.defaultSpace,),
+              const ImagePlaceHolder(),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: MySizes.spaceBtwItems),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: MySizes.spaceBtwItems),
                 child: GridView.count(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -93,22 +96,22 @@ class CustomerHomeScreen extends StatelessWidget {
                       },
                     ),
                     ItemHome(
+                      image: MyImagePaths.iconCake,
+                      title: "Bánh ngọt",
+                      onTap: () {
+                        Get.to(const LoginScreen());
+                      },
+                    ),
+                    ItemHome(
                       image: MyImagePaths.iconDrink,
-                      title: "Nước",
+                      title: "Trà sữa",
                       onTap: () {
                         Get.to(const LoginScreen());
                       },
                     ),
                     ItemHome(
-                      image: MyImagePaths.iconLogout,
-                      title: "Ăn vặt",
-                      onTap: () {
-                        Get.to(const LoginScreen());
-                      },
-                    ),
-                    ItemHome(
-                      image: MyImagePaths.iconLogout,
-                      title: "Ăn vặt",
+                      image: MyImagePaths.iconJuice,
+                      title: "Nước ép",
                       onTap: () {
                         Get.to(const LoginScreen());
                       },
@@ -136,10 +139,12 @@ class CustomerHomeScreen extends StatelessWidget {
                             children: [
                               Text(
                                 "Xem tất cả",
-                                style:
-                                    Theme.of(context).textTheme.bodyLarge!.apply(
-                                          color: MyColors.darkPrimaryTextColor,
-                                        ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .apply(
+                                      color: MyColors.darkPrimaryTextColor,
+                                    ),
                               ),
                               const SizedBox(
                                 width: MySizes.xs,
@@ -178,10 +183,12 @@ class CustomerHomeScreen extends StatelessWidget {
                             children: [
                               Text(
                                 "Xem tất cả",
-                                style:
-                                    Theme.of(context).textTheme.bodyLarge!.apply(
-                                          color: MyColors.darkPrimaryTextColor,
-                                        ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .apply(
+                                      color: MyColors.darkPrimaryTextColor,
+                                    ),
                               ),
                               const SizedBox(
                                 width: MySizes.xs,

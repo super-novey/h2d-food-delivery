@@ -22,6 +22,11 @@ class MyImagePaths {
   static const String iconNoodle = "assets/icons/noodle.png";
   static const String iconSnack = "assets/icons/snack.png";
   static const String iconDrink = "assets/icons/drink.png";
+  static const String iconCake = "assets/icons/cake.png";
+  static const String iconJuice = "assets/icons/juice.png";
+  static const String img1 = "assets/icons/img1.jpg";
+  static const String img2 = "assets/icons/img2.jpg";
+  static const String img3 = "assets/icons/img3.jpg";
 
   static const String iconImage = "assets/icons/img.png";
   static const String imgBunBo = "assets/icons/bunbo.png";

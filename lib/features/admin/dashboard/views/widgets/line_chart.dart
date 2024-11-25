@@ -55,23 +55,23 @@ class StatisticLineChart extends StatelessWidget {
                     },
                   ),
                 )),
-                Text(
-                  'Biểu đồ thống kê số lượng người đăng ký theo tháng',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: MyColors.secondaryTextColor,
-                      ),
-                ),
+            Text(
+              'Biểu đồ thống kê số lượng người đăng ký theo tháng',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: MyColors.secondaryTextColor,
+                  ),
+            ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Obx(() {
                   final chartData = userController.getFilteredChartData();
-      
+
                   if (chartData.isEmpty) {
                     return const Center(child: Text('Không có dữ liệu.'));
                   }
-      
+
                   return LineChart(
                     LineChartData(
                       lineBarsData: [

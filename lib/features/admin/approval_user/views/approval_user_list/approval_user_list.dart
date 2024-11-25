@@ -101,6 +101,18 @@ class ApprovalUserList extends StatelessWidget {
                         topRight: Radius.circular(MySizes.borderRadiusMd),
                       ),
                     ),
+                    // decoration: BoxDecoration(
+                    //   borderRadius: BorderRadius.circular(MySizes.borderRadiusMd),
+                    //   color:
+                    //       Colors.white, 
+                    //   boxShadow: [
+                    //     BoxShadow(
+                    //       color: MyColors.darkPrimaryColor.withOpacity(0.1),
+                    //       blurRadius: 4,
+                    //       offset: Offset(0, 4),
+                    //     ),
+                    //   ],
+                    // ),
                     columns: const [
                       DataColumn(
                         label: Text('Họ tên'),
