@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/images/image_text_image.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
+import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 
 class ItemMenu extends StatelessWidget {
   final String title;
@@ -23,7 +24,7 @@ class ItemMenu extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: MyColors.darkPrimaryTextColor, width: 1.5),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(MySizes.borderRadiusLg),
         ),
         child: Center(
           child: MyVerticalImageText(

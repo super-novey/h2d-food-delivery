@@ -34,7 +34,9 @@ class SideBar extends StatelessWidget {
                   ),
                 ),
               ),
-
+              const SizedBox(
+                height: MySizes.spaceBtwItems,
+              ),
               const Column(
                 children: [
                   SideBarItem(

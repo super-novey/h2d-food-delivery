@@ -1,52 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_h2d/features/customers/search/search_screen.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
+import 'package:get/get.dart';
 
 class HomeSearchBar extends StatelessWidget {
   const HomeSearchBar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController controller = TextEditingController();
-
-    return Padding(
-      padding: const EdgeInsets.only(
-          top: MySizes.md, left: MySizes.md, right: MySizes.md),
-      child: TextField(
-        controller: controller,
-        // onChanged: (value) {
-        //   controller.searchEmployee(query: value);
-        // },
-        decoration: InputDecoration(
-          filled: true,
-          fillColor: Colors.white,
-          prefixIcon: const Icon(
-            Icons.search,
-          ),
-          suffixIcon: IconButton(
-            icon: const Icon(
-              Icons.clear_rounded,
-            ),
-            onPressed: () {
-              controller.clear();
-            },
-          ),
-          hintText: "Nhập tên món ăn, nhà hàng",
-          hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                color: MyColors.secondaryTextColor,
-                fontStyle: FontStyle.italic,
-                fontWeight: FontWeight.w500,
+    return InkWell(
+      onTap: () {
+        Get.to(const SearchScreen());
+      },
+      child: Padding(
+          padding: const EdgeInsets.only(
+              top: MySizes.md, left: MySizes.md, right: MySizes.md),
+          child: SizedBox(
+            height: 60,
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.only(left: MySizes.sm),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.search,
+                      color: MyColors.secondaryTextColor,
+                    ),
+                    const SizedBox(width: MySizes.xs),
+                    Text(
+                      "Nhập tên món ăn, nhà hàng",
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            color: MyColors.secondaryTextColor,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.w500,
+                          ),
+                    ),
+                  ],
+                ),
               ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(MySizes.borderRadiusLg),
-            borderSide: const BorderSide(color: MyColors.darkPrimaryTextColor),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(MySizes.borderRadiusLg),
-            borderSide: const BorderSide(color: MyColors.darkPrimaryTextColor),
-          ),
-        ),
-      ),
+            ),
+          )),
     );
   }
 }

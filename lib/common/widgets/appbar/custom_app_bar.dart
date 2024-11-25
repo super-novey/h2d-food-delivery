@@ -12,16 +12,19 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback? leadingOnPressed;
   final VoidCallback? handleBack;
   final Color? iconColor;
+  final double? appBarHeight; 
 
-  const CustomAppBar(
-      {super.key,
-      this.title,
-      this.actions,
-      this.leadingIcon,
-      this.leadingOnPressed,
-      this.showBackArrow = true,
-      this.iconColor = Colors.white,
-      this.handleBack});
+  const CustomAppBar({
+    super.key,
+    this.title,
+    this.actions,
+    this.leadingIcon,
+    this.leadingOnPressed,
+    this.showBackArrow = true,
+    this.iconColor = Colors.white,
+    this.handleBack,
+    this.appBarHeight, 
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +32,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       automaticallyImplyLeading: false,
       backgroundColor: MyColors.darkPrimaryColor,
       centerTitle: true,
+      titleSpacing: 0,
       leading: showBackArrow
           ? IconButton(
               onPressed: handleBack ?? () => Get.back(),
@@ -48,5 +52,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(MyDeviceUtils.getAppBarHeight());
+  Size get preferredSize => Size.fromHeight(
+      appBarHeight ?? MyDeviceUtils.getAppBarHeight()); 
 }

@@ -17,7 +17,8 @@ class UserManagementScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final UserManagementController controller =
         Get.put(UserManagementController());
-        final UpdateUserManagementController updateUserManagementController = Get.put(UpdateUserManagementController());
+    final UpdateUserManagementController updateUserManagementController =
+        Get.put(UpdateUserManagementController());
 
     return WebLayout(
       body: Obx(() {
@@ -65,6 +66,18 @@ class UserManagementScreen extends StatelessWidget {
                         topRight: Radius.circular(MySizes.borderRadiusMd),
                       ),
                     ),
+                    // decoration: BoxDecoration(
+                    //   borderRadius: BorderRadius.circular(MySizes.borderRadiusMd),
+                    //   color:
+                    //       Colors.white, 
+                    //   boxShadow: [
+                    //     BoxShadow(
+                    //       color: MyColors.darkPrimaryColor.withOpacity(0.1),
+                    //       blurRadius: 4,
+                    //       offset: Offset(0, 4),
+                    //     ),
+                    //   ],
+                    // ),
                     columns: const [
                       DataColumn(
                         label: Text(
@@ -123,38 +136,38 @@ class UserManagementScreen extends StatelessWidget {
                               ),
                               onPressed: () {
                                 showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        scrollable: true,
-                                        title: const Text(
-                                            'Thông tin chi tiết'),
-                                        content: Obx(() {
-                                          if (controller.isLoading.value) {
-                                            return const CircularProgressIndicator();
-                                          } else {
-                                            return DetailUser(
-                                                selectedUser: user);
-                                          }
-                                        }),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: const Text('Đóng'),
-                                          ),
-                                          TextButton(
-                                            onPressed: () async {
-                                              await updateUserManagementController.updateUser(user.userId, context);
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: const Text('Cập nhật'),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      scrollable: true,
+                                      title: const Text('Thông tin chi tiết'),
+                                      content: Obx(() {
+                                        if (controller.isLoading.value) {
+                                          return const CircularProgressIndicator();
+                                        } else {
+                                          return DetailUser(selectedUser: user);
+                                        }
+                                      }),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text('Đóng'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () async {
+                                            await updateUserManagementController
+                                                .updateUser(
+                                                    user.userId, context);
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text('Cập nhật'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
                               },
                             ),
                             const SizedBox(
@@ -167,7 +180,8 @@ class UserManagementScreen extends StatelessWidget {
                                 color: Colors.red,
                               ),
                               onPressed: () {
-                                updateUserManagementController.deleteUser(user.userId);
+                                updateUserManagementController
+                                    .deleteUser(user.userId);
                               },
                             ),
                           ],
