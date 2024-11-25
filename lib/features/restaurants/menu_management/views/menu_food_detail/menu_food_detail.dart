@@ -8,6 +8,7 @@ import 'package:food_delivery_h2d/features/restaurants/menu_management/models/ca
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/item_model.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
+import 'package:food_delivery_h2d/utils/validations/validators.dart';
 import 'package:get/get.dart';
 
 class MenuFoodDetailScreen extends StatelessWidget {
@@ -135,171 +136,180 @@ class MenuFoodDetailScreen extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(MySizes.sm),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: MySizes.sm),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Tên",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .apply(color: MyColors.darkPrimaryTextColor),
-                        ),
-                        SizedBox(
-                          width: 280,
-                          child: MyTextFiled(
-                              textController:
-                                  updateMenuFoodController.nameController,
-                              label: "Nhập tên món ăn"),
-                        ),
-                      ],
+              child: Form(
+                key: updateMenuFoodController.itemFormKey,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: MySizes.sm),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Tên",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .apply(color: MyColors.darkPrimaryTextColor),
+                          ),
+                          SizedBox(
+                            width: 280,
+                            child: MyTextFiled(
+                                validator: (value) =>
+                                    Validators.validateEmptyText("Tên", value),
+                                textController:
+                                    updateMenuFoodController.nameController,
+                                label: "Nhập tên món ăn"),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: MySizes.sm),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Giá",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .apply(color: MyColors.darkPrimaryTextColor),
-                        ),
-                        SizedBox(
-                          width: 280,
-                          child: MyTextFiled(
-                              textController:
-                                  updateMenuFoodController.priceController,
-                              label: "Nhập giá món ăn (VNĐ)"),
-                        ),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.only(left: MySizes.sm),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Giá",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .apply(color: MyColors.darkPrimaryTextColor),
+                          ),
+                          SizedBox(
+                            width: 280,
+                            child: MyTextFiled(
+                                isNumberType: true,
+                                validator: (value) =>
+                                    Validators.validateEmptyText("Giá", value),
+                                textController:
+                                    updateMenuFoodController.priceController,
+                                label: "Nhập giá món ăn (VNĐ)"),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: MySizes.sm),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Danh mục",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .apply(color: MyColors.darkPrimaryTextColor),
-                        ),
-                        SizedBox(
-                          width: 150,
-                          height: 55,
-                          child: Obx(
-                            () => DropdownButtonHideUnderline(
-                              child: DropdownButton<String?>(
-                                value: updateMenuFoodController
-                                    .selectedCaterory.value,
-                                dropdownColor: MyColors.iconColor,
-                                onChanged: (String? newValue) {
-                                  updateMenuFoodController
-                                      .selectedCaterory.value = newValue ?? '';
-                                },
-                                isExpanded: true,
-                                hint: Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.all(MySizes.sm + 2),
-                                    child: Text(
-                                      "Chọn danh mục",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge!
-                                          .copyWith(
-                                            color: MyColors.secondaryTextColor,
-                                          ),
-                                    ),
-                                  ),
-                                ),
-                                selectedItemBuilder: (BuildContext context) {
-                                  return menuFoodController.allCategories
-                                      .map((Category category) {
-                                    return Align(
-                                      alignment: Alignment.centerRight,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(
-                                            MySizes.sm + 2),
-                                        child: Text(
-                                          category.categoryName,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodySmall!
-                                              .apply(
-                                                  color: MyColors
-                                                      .primaryTextColor),
-                                        ),
-                                      ),
-                                    );
-                                  }).toList();
-                                },
-                                items: menuFoodController.allCategories
-                                    .map((Category category) {
-                                  return DropdownMenuItem<String?>(
-                                    value: category.categoryId.toString(),
+                    Padding(
+                      padding: const EdgeInsets.only(left: MySizes.sm),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Danh mục",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .apply(color: MyColors.darkPrimaryTextColor),
+                          ),
+                          SizedBox(
+                            width: 150,
+                            height: 55,
+                            child: Obx(
+                              () => DropdownButtonHideUnderline(
+                                child: DropdownButton<String?>(
+                                  value: updateMenuFoodController
+                                      .selectedCaterory.value,
+                                  dropdownColor: MyColors.iconColor,
+                                  onChanged: (String? newValue) {
+                                    updateMenuFoodController
+                                        .selectedCaterory.value = newValue;
+                                  },
+                                  isExpanded: true,
+                                  hint: Align(
+                                    alignment: Alignment.centerRight,
                                     child: Padding(
                                       padding:
                                           const EdgeInsets.all(MySizes.sm + 2),
-                                      child: Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          category.categoryName,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodySmall!
-                                              .apply(
-                                                  color: MyColors
-                                                      .primaryTextColor),
-                                        ),
+                                      child: Text(
+                                        "Chọn danh mục",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge!
+                                            .copyWith(
+                                              color:
+                                                  MyColors.secondaryTextColor,
+                                            ),
                                       ),
                                     ),
-                                  );
-                                }).toList(),
+                                  ),
+                                  selectedItemBuilder: (BuildContext context) {
+                                    return menuFoodController.allCategories
+                                        .map((Category category) {
+                                      return Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(
+                                              MySizes.sm + 2),
+                                          child: Text(
+                                            category.categoryName,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall!
+                                                .apply(
+                                                    color: MyColors
+                                                        .primaryTextColor),
+                                          ),
+                                        ),
+                                      );
+                                    }).toList();
+                                  },
+                                  items: menuFoodController.allCategories
+                                      .map((Category category) {
+                                    return DropdownMenuItem<String?>(
+                                      value: category.categoryId.toString(),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(
+                                            MySizes.sm + 2),
+                                        child: Align(
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            category.categoryName,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall!
+                                                .apply(
+                                                    color: MyColors
+                                                        .primaryTextColor),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: MySizes.spaceBtwItems,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: MySizes.sm),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Mô tả",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall!
-                            .apply(color: MyColors.darkPrimaryTextColor),
+                          )
+                        ],
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: MySizes.spaceBtwItems,
-                  ),
-                  MyTextFiled(
-                    textAlign: TextAlign.left,
-                    textController:
-                        updateMenuFoodController.descriptionController,
-                    label: "Nhập mô tả món ăn",
-                    maxLines: 5,
-                  ),
-                ],
+                    const SizedBox(
+                      height: MySizes.spaceBtwItems,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: MySizes.sm),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Mô tả",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .apply(color: MyColors.darkPrimaryTextColor),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: MySizes.spaceBtwItems,
+                    ),
+                    MyTextFiled(
+                      textAlign: TextAlign.left,
+                      textController:
+                          updateMenuFoodController.descriptionController,
+                      label: "Nhập mô tả món ăn",
+                      maxLines: 5,
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class MyFormatter {
@@ -28,12 +29,31 @@ class MyFormatter {
   }
 
   static String formatTime(String time) {
-  try {
-    final DateTime parsedTime = DateTime.parse(time).toLocal();
-    final DateFormat formatter = DateFormat('HH:mm'); 
-    return formatter.format(parsedTime);
-  } catch (e) {
-    return 'Invalid time'; 
+    try {
+      final DateTime parsedTime = DateTime.parse(time).toLocal();
+      final DateFormat formatter = DateFormat('HH:mm');
+      return formatter.format(parsedTime);
+    } catch (e) {
+      return 'Invalid time';
+    }
   }
-}
+
+  static TextInputFormatter thousandsSeparatorFormatter() {
+    return TextInputFormatter.withFunction(
+      (oldValue, newValue) {
+        final text = newValue.text
+            .replaceAll(RegExp(r'\D'), ''); // Remove non-numeric characters
+        if (text.isEmpty) {
+          return newValue.copyWith(text: '');
+        }
+        final number = int.tryParse(text);
+        if (number == null) {
+          return newValue;
+        }
+        final formattedNumber = NumberFormat('#,###')
+            .format(number); // Format the number with thousands separator
+        return newValue.copyWith(text: formattedNumber);
+      },
+    );
+  }
 }

@@ -6,6 +6,7 @@ import 'package:food_delivery_h2d/data/response/status.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/controllers/menu_food_controller.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/item_model.dart';
 import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
+import 'package:food_delivery_h2d/utils/helpers/convert_text.dart';
 import 'package:food_delivery_h2d/utils/helpers/multiple_part_file.dart';
 import 'package:food_delivery_h2d/utils/popups/full_screen_loader.dart';
 import 'package:food_delivery_h2d/utils/popups/loaders.dart';
@@ -25,6 +26,8 @@ class UpdateMenuFoodController extends GetxController {
 
   var foodImage = Rx<File?>(null);
   var selectedCaterory = Rxn<String>();
+
+  GlobalKey<FormState> itemFormKey = GlobalKey<FormState>();
 
   // Repository
   final _itemRepository = Get.put(ItemRepository());
@@ -47,7 +50,17 @@ class UpdateMenuFoodController extends GetxController {
   }
 
   Future save() async {
+    if (!itemFormKey.currentState!.validate()) {
+      return;
+    }
+    if (selectedCaterory.value == null) {
+      Loaders.errorSnackBar(
+          title: "Lỗi", message: "Món ăn chưa thuộc danh mục nào!");
+      return;
+    }
+
     final newItem = getItemFromForm();
+
     if (isAdd.value) {
       _handleAddItem(newItem);
     } else {}
@@ -100,7 +113,7 @@ class UpdateMenuFoodController extends GetxController {
         itemId: "",
         categoryId: selectedCaterory.value.toString(),
         itemImage: nameController.text,
-        price: int.parse(priceController.text.trim()),
+        price: ConvertText.getTextAsInteger(priceController.text),
         description: descriptionController.text,
         isAvailable: true);
   }
