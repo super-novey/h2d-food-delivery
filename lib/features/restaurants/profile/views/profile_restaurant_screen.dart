@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/custom_app_bar.dart';
+import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
 import 'package:food_delivery_h2d/features/restaurants/profile/controllers/profile_restaurant_controller.dart';
 import 'package:food_delivery_h2d/features/restaurants/profile/views/profile_restaurant_detail/profile_restaurant_detail_screen.dart';
 import 'package:food_delivery_h2d/features/restaurants/profile/views/widgets/profile_header.dart';
@@ -57,28 +58,6 @@ class ProfileRestaurantScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: MySizes.spaceBtwItems / 2),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Ngày tham gia",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .apply(color: MyColors.darkPrimaryTextColor),
-                        ),
-                        Text(
-                          "12/12/2024",
-                          textAlign: TextAlign.right,
-                          overflow: TextOverflow.ellipsis,
-                          style:
-                              Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                    color: MyColors.primaryTextColor,
-                                    height: 2,
-                                  ),
-                        )
-                      ],
-                    ),
                     const SizedBox(height: MySizes.spaceBtwItems),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -93,7 +72,7 @@ class ProfileRestaurantScreen extends StatelessWidget {
                         SizedBox(
                           width: 200,
                           child: Text(
-                            "Quán ăn nhanh",
+                            LoginController.instance.currentUser.name,
                             textAlign: TextAlign.right,
                             overflow: TextOverflow.ellipsis,
                             style:
@@ -119,7 +98,7 @@ class ProfileRestaurantScreen extends StatelessWidget {
                         SizedBox(
                           width: 200,
                           child: Text(
-                            "019219292929",
+                            LoginController.instance.currentUser.phone,
                             textAlign: TextAlign.right,
                             overflow: TextOverflow.ellipsis,
                             style:
@@ -145,7 +124,7 @@ class ProfileRestaurantScreen extends StatelessWidget {
                         SizedBox(
                           width: 200,
                           child: Text(
-                            "quanan@gmail.com",
+                            LoginController.instance.currentUser.email,
                             textAlign: TextAlign.right,
                             overflow: TextOverflow.ellipsis,
                             style:
@@ -185,7 +164,7 @@ class ProfileRestaurantScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: MySizes.spaceBtwItems),
                     Text(
-                      "Quán ăn ngon",
+                      LoginController.instance.currentUser.description,
                       textAlign: TextAlign.left,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
