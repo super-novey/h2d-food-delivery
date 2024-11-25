@@ -20,7 +20,7 @@ class ProfileHeader extends StatelessWidget {
           Container(
               margin: const EdgeInsets.only(bottom: 20),
               child: ImageHeader(
-                  image: LoginController.instance.currentUser.storeFront,
+                  imageUrl: LoginController.instance.currentUser.storeFront,
                   height: heightImageHeader)),
           if (showEdit)
             Positioned(
