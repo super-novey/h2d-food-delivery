@@ -1,5 +1,4 @@
 import 'package:food_delivery_h2d/data/response/api_response.dart';
-import 'package:food_delivery_h2d/features/admin/user_management/models/partner_model.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/category_model.dart';
 import 'package:food_delivery_h2d/utils/http/http_client.dart';
 import 'package:get/get.dart';

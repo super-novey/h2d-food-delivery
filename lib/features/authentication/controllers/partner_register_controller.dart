@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/data/address/address_repository.dart';
 import 'package:food_delivery_h2d/data/authentication/auth_repository.dart';
-import 'package:food_delivery_h2d/features/authentication/models/DriverModel.dart';
 import 'package:food_delivery_h2d/features/authentication/models/PartnerModel.dart';
 import 'package:food_delivery_h2d/features/authentication/views/register/OTP_verification_screen.dart';
 import 'package:food_delivery_h2d/utils/constants/enums.dart';

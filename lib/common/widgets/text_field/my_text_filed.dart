@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
-import 'package:food_delivery_h2d/utils/validations/validators.dart';
 
 class MyTextFiled extends StatelessWidget {
   const MyTextFiled(

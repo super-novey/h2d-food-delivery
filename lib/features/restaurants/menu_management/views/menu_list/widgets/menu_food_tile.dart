@@ -7,7 +7,6 @@ import 'package:food_delivery_h2d/features/restaurants/menu_management/controlle
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/item_model.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/views/menu_food_detail/menu_food_detail.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
-import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:get/get.dart';
 

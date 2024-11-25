@@ -1,18 +1,12 @@
-import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:food_delivery_h2d/common/widgets/appbar/appbar.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/otp_controller.dart';
-import 'package:food_delivery_h2d/features/authentication/controllers/customer_register_controller.dart';
 import 'package:food_delivery_h2d/features/authentication/views/login/widgets/login_header.dart';
 import 'package:food_delivery_h2d/features/authentication/views/register/widgets/otp_countdown.dart';
 import 'package:food_delivery_h2d/features/authentication/views/register/widgets/otp_widget.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class OtpVerificationScreen extends StatelessWidget {
   OtpVerificationScreen({super.key, this.emailAddress, this.role});

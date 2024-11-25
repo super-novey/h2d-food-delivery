@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:food_delivery_h2d/data/category/category_repository.dart';
 import 'package:food_delivery_h2d/data/item/item_repository.dart';
 import 'package:food_delivery_h2d/data/response/status.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
-import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:food_delivery_h2d/utils/popups/full_screen_loader.dart';

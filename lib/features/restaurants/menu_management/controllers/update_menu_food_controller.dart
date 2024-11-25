@@ -12,7 +12,6 @@ import 'package:food_delivery_h2d/utils/popups/full_screen_loader.dart';
 import 'package:food_delivery_h2d/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart' as path;
 
 import 'package:http/http.dart' as http;
 
@@ -32,15 +31,7 @@ class UpdateMenuFoodController extends GetxController {
   // Repository
   final _itemRepository = Get.put(ItemRepository());
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   void toggleEditting() {
     isEditting.value = !isEditting.value;
@@ -77,7 +68,7 @@ class UpdateMenuFoodController extends GetxController {
       files = await MultiplePartFileHelper.createMultipleFiles(fields);
       final res = await _itemRepository.addItem(newItem, files);
 
-      await Future.delayed(Duration(milliseconds: 300));
+      await Future.delayed(const Duration(milliseconds: 300));
 
       if (res.status == Status.ERROR) {
         Loaders.errorSnackBar(title: "Lỗi", message: res.message);

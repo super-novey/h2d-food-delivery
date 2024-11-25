@@ -1,4 +1,3 @@
-import 'package:animated_background/animated_background.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
