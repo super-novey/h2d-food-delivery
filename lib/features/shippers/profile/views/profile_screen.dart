@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/images/circle_image.dart';
+import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/profile/controllers/profile_controller.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:get/get.dart';
@@ -183,7 +184,9 @@ class ProfileScreen extends StatelessWidget {
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.4,
                       child: OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          LoginController.instance.logout();
+                        },
                         child: const Text("Đăng xuất"),
                       ),
                     ),

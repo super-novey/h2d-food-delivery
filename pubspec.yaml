@@ -41,7 +41,7 @@ dependencies:
   cached_network_image: ^3.4.1
 
   path: any
-  flutter_localizations: any
+  # flutter_localizations: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
