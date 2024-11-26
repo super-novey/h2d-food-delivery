@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_h2d/features/customers/search/search_screen.dart';
+import 'package:food_delivery_h2d/features/customers/search/views/search_screen.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:get/get.dart';
