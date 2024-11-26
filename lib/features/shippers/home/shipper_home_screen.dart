@@ -91,7 +91,7 @@ class ShipperHomeScreen extends StatelessWidget {
               ],
             ),
           ),
-          const OdersList()
+          const OrdersList()
         ],
       ),
     );
