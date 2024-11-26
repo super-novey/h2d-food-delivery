@@ -23,7 +23,16 @@ class ItemHome extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: MyColors.dividerColor, width: 1),
+          color: MyColors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1), 
+              spreadRadius: 1,
+              blurRadius: 8, 
+              offset:
+                  const Offset(0, 2), 
+            ),
+          ],
           borderRadius: BorderRadius.circular(12),
         ),
         child: Center(
@@ -36,9 +45,8 @@ class ItemHome extends StatelessWidget {
             widthImage: 30,
             heightImage: 30,
             textStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
-              color: MyColors.darkPrimaryTextColor,
-              fontWeight: FontWeight.bold
-            ),
+                color: MyColors.darkPrimaryTextColor,
+                fontWeight: FontWeight.bold),
             onTap: onTap,
           ),
         ),
