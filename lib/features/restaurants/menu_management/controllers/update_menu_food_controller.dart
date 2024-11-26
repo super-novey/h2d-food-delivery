@@ -58,6 +58,7 @@ class UpdateMenuFoodController extends GetxController {
 
     if (isAdd.value) {
       _handleAddItem(newItem);
+      isAdd.value = false;
     } else {
       _handleUpdateItem(newItem);
     }
@@ -67,10 +68,12 @@ class UpdateMenuFoodController extends GetxController {
     try {
       FullScreenLoader.openDialog("Đang xử lý", MyImagePaths.spoonAnimation);
       List<http.MultipartFile> files = [];
-      var fields = [
-        {'fieldName': 'itemImage', 'file': foodImage.value},
-      ];
-      files = await MultiplePartFileHelper.createMultipleFiles(fields);
+      if (foodImage.value != null) {
+        var fields = [
+          {'fieldName': 'itemImage', 'file': foodImage.value},
+        ];
+        files = await MultiplePartFileHelper.createMultipleFiles(fields);
+      }
 
       final res = await _itemRepository.updateItem(oldItem, files);
 
@@ -78,8 +81,6 @@ class UpdateMenuFoodController extends GetxController {
         Loaders.errorSnackBar(title: "Lỗi", message: res.message);
         return;
       }
-
-      // MenuFoodController.instance.allItems.add(res.data!);
 
       Loaders.successSnackBar(title: "Thành công", message: res.message);
     } catch (e) {

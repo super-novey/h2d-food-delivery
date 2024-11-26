@@ -23,10 +23,10 @@ class ItemRepository extends GetxController {
   }
 
   Future<ApiResponse<Item>> updateItem(
-      Item oldItem, List<http.MultipartFile> files) async {
+      Item oldItem, List<http.MultipartFile>? files) async {
     try {
       final res = await HttpHelper.putWithFiles(
-          "item/${oldItem.itemId.toString()}", oldItem.toJson(), files);
+          "item/${oldItem.itemId.toString()}", oldItem.toJson(), files ?? []);
       if (res["hasError"] == true) {
         return ApiResponse.error(res["message"]);
       }
