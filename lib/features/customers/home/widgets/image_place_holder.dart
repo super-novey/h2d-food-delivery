@@ -1,68 +1,68 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_h2d/features/customers/home/controllers/image_page_controller.dart';
-import 'package:get/get.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
+import 'package:get/get.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
+import 'package:food_delivery_h2d/features/customers/home/controllers/image_page_controller.dart';
 
 class ImagePlaceHolder extends StatelessWidget {
   const ImagePlaceHolder({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final ImageController imageController = Get.put(ImageController());
+    final List<String> imagePaths = [
+      MyImagePaths.img1,
+      MyImagePaths.img2,
+      MyImagePaths.img3,
+    ];
 
-    return Obx(() => Stack(
-          children: [
-            SizedBox(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height / 4,
-              child: PageView.builder(
-                controller: imageController.pageController,
-                itemCount: imageController.imagePaths.length,
-                onPageChanged: (value) {
-                  imageController.activePage.value = value;
-                },
-                itemBuilder: (context, index) {
-                  return Image.asset(
-                    imageController.imagePaths[index],
+    final ImagePageController controller = Get.put(ImagePageController());
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        CarouselSlider(
+          items: imagePaths.map((path) {
+            return Center(
+              child: SizedBox(
+                height: 200,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(MySizes.borderRadiusMd),
+                  child: Image.asset(
+                    path,
                     fit: BoxFit.cover,
-                  );
-                },
-              ),
-            ),
-            Positioned(
-              bottom: 10,
-              left: 0,
-              right: 0,
-              child: Container(
-                color: Colors.transparent,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List<Widget>.generate(
-                    imageController.imagePaths.length,
-                    (index) => Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: MySizes.xs),
-                      child: InkWell(
-                        onTap: () {
-                          imageController.activePage.value = index;
-                          imageController.pageController.animateToPage(index,
-                              duration: Duration(milliseconds: 300),
-                              curve: Curves.easeIn);
-                        },
-                        child: CircleAvatar(
-                          radius: 4,
-                          backgroundColor:
-                              imageController.activePage.value == index
-                                  ? Colors.yellow
-                                  : Colors.grey,
-                        ),
-                      ),
-                    ),
+                    width: double.infinity,
                   ),
                 ),
               ),
+            );
+          }).toList(),
+          options: CarouselOptions(
+            initialPage: 0,
+            autoPlay: true,
+            autoPlayInterval: const Duration(seconds: 3),
+            enlargeCenterPage: true,
+            enlargeFactor: 0.2,
+            onPageChanged: (index, reason) {
+              controller.updateIndex(index);
+            },
+          ),
+        ),
+        const SizedBox(height: 20),
+        Obx(
+          () => AnimatedSmoothIndicator(
+            activeIndex: controller.currentIndex.value,
+            count: imagePaths.length,
+            effect: const ScrollingDotsEffect(
+              dotHeight: 6,
+              dotWidth: 6,
+              activeDotColor: Colors.yellow,
+              dotColor: Colors.grey,
             ),
-          ],
-        ));
+          ),
+        ),
+      ],
+    );
   }
 }
