@@ -113,7 +113,6 @@ class MenuFoodTile extends StatelessWidget {
                           activeColor: MyColors.darkPrimaryColor,
                           onChanged: (bool value) {
                             menuFoodController.toggleItemAvailability(item);
-                            print(item.isAvailable.value);
                           },
                         ),
                       )),

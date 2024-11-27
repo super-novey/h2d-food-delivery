@@ -1,4 +1,5 @@
 import 'package:food_delivery_h2d/data/response/api_response.dart';
+import 'package:food_delivery_h2d/features/customers/search/models/item_model.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/item_model.dart';
 import 'package:food_delivery_h2d/utils/http/http_client.dart';
 import 'package:get/get.dart';
@@ -59,6 +60,21 @@ class ItemRepository extends GetxController {
     } catch (e) {
       print(e);
       return ApiResponse.error("An unknown error occurred.");
+    }
+  }
+
+  Future<List<ItemModel>> searchItems(String query) async {
+    try {
+      final response =
+          await HttpHelper.get("item/customer/search?query=$query");
+
+      List<dynamic> data = response['data'] as List<dynamic>;
+      print(response);
+
+      return data.map((item) => ItemModel.fromJson(item)).toList();
+    } catch (e) {
+      print(e);
+      rethrow;
     }
   }
 }

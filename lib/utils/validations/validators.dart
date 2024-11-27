@@ -12,7 +12,7 @@ class Validators {
     }
 
     final emailRegex = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$');
-    if (!emailRegex.hasMatch(value)) {
+    if (!emailRegex.hasMatch(value.trim())) {
       return 'Địa chỉ email không hợp lệ!';
     }
     return null;
