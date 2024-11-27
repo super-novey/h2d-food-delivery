@@ -94,7 +94,7 @@ class OrderTile extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                'Giao hàng: {order.customerName}',
+                'Giao hàng: ${order.customerName}',
                 style: const TextStyle(fontSize: 12, color: Colors.grey),
               ),
             ],
