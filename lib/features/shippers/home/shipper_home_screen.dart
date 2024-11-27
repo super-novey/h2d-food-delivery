@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/images/circle_image.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/home/widgets/map.dart';
-import 'package:food_delivery_h2d/features/shippers/home/widgets/oders_list.dart';
+import 'package:food_delivery_h2d/features/shippers/home/widgets/orders_list.dart';
 import 'package:food_delivery_h2d/features/shippers/notification/views/notification_screen.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:get/get.dart';

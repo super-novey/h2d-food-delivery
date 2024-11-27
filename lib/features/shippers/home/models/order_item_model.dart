@@ -14,20 +14,20 @@ class OrderItem {
   // Convert OrderItem object to JSON
   Map<String, dynamic> toJson() {
     return {
-      'item_id': itemId,
+      'itemId': itemId,
       'quantity': quantity,
       'price': price,
-      'total_price': totalPrice,
+      'totalPrice': totalPrice,
     };
   }
 
   // Factory constructor to create an OrderItem from JSON
   factory OrderItem.fromJson(Map<String, dynamic> json) {
     return OrderItem(
-      itemId: json['item_id'] ?? '',
+      itemId: json['itemId'] ?? '',
       quantity: json['quantity'] ?? 0,
       price: (json['price'] as num).toDouble(),
-      totalPrice: (json['total_price'] as num).toDouble(),
+      totalPrice: (json['totalPrice'] as num).toDouble(),
     );
   }
 

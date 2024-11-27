@@ -34,10 +34,25 @@ class AddressRepository {
     }
   }
 
+  Future<ProvinceModel> getProvinceById(String? id) async {
+    try {
+      final provinces = await getProvinces();
+      var province = provinces.firstWhere(
+        (province) => province.id == id,
+      );
+
+      if (province == null) {
+        throw Exception("Province with ID $id not found");
+      }
+      return province;
+    } catch (e) {
+      throw Exception("Failed to fetch province by ID: $e");
+    }
+  }
+
   Future<List<DistrictModel>> getDistrict(String idProvince) async {
     try {
-      final response =
-          await http.get(Uri.parse("$_baseUrl/2/$idProvince.htm"));
+      final response = await http.get(Uri.parse("$_baseUrl/2/$idProvince.htm"));
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> decodedJson = json.decode(response.body);
@@ -61,8 +76,7 @@ class AddressRepository {
 
   Future<List<CommuneModel>> getCommunes(String idDistrict) async {
     try {
-      final response =
-          await http.get(Uri.parse("$_baseUrl/3/$idDistrict.htm"));
+      final response = await http.get(Uri.parse("$_baseUrl/3/$idDistrict.htm"));
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> decodedJson = json.decode(response.body);
