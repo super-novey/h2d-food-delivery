@@ -1,10 +1,9 @@
 import 'package:food_delivery_h2d/features/shippers/home/models/order_item_model.dart';
 
 class Order {
-  String orderId;
-  String customerId;
-  String? driverStatus;
-  String? restaurantId;
+  String id;
+  String customerName;
+  String restaurantName;
   String? assignedShipperId;
   double? custShipperRating;
   double? deliveryFee;
@@ -12,15 +11,15 @@ class Order {
   String note;
   double? custResRating;
   String reason;
-  String? custStatus;
+  String status;
+  String? driverStatus;
   String? partnerStatus;
   List<OrderItem> orderItems;
 
   Order({
-    this.orderId = '',
-    required this.customerId,
-    this.driverStatus,
-    this.restaurantId,
+    this.id = '',
+    required this.customerName,
+    required this.restaurantName,
     this.assignedShipperId,
     this.custShipperRating,
     required this.deliveryFee,
@@ -28,7 +27,8 @@ class Order {
     this.note = '',
     this.custResRating,
     this.reason = '',
-    this.custStatus,
+    required this.status,
+    this.driverStatus,
     this.partnerStatus,
     this.orderItems = const [],
   }) : orderDatetime = orderDatetime ?? DateTime.now();
@@ -36,44 +36,43 @@ class Order {
   // Convert an Order object to a JSON map
   Map<String, dynamic> toJson() {
     return {
-      '_id': orderId,
-      'customer_id': customerId,
-      'driver_status': driverStatus,
-      'restaurant_id': restaurantId,
-      'assigned_shipper_id': assignedShipperId,
-      'cust_shipper_rating': custShipperRating,
-      'delivery_fee': deliveryFee,
-      'order_datetime': orderDatetime.toIso8601String(),
+      'id': id,
+      'customerName': customerName,
+      'restaurantName': restaurantName,
+      'assignedShipperId': assignedShipperId,
+      'custShipperRating': custShipperRating,
+      'deliveryFee': deliveryFee,
+      'orderDatetime': orderDatetime.toIso8601String(),
       'note': note,
-      'cust_res_rating': custResRating,
+      'custResRating': custResRating,
       'reason': reason,
-      'cust_status': custStatus,
-      'partner_status': partnerStatus,
-      'order_items': orderItems.map((item) => item.toJson()).toList(),
+      'status': status,
+      'driverStatus': driverStatus,
+      'partnerStatus': partnerStatus,
+      'orderItems': orderItems.map((item) => item.toJson()).toList(),
     };
   }
 
   // Factory constructor to create an Order object from JSON
-
   factory Order.fromJson(Map<String, dynamic> json) {
     return Order(
-      orderId: json['_id'],
-      customerId: json['customerId'],
-      driverStatus: json['driverStatus'],
-      restaurantId: json['restaurantId'],
+      id: json['id'] ?? '',
+      customerName: json['customerName'] ?? 'Unknown',
+      restaurantName: json['restaurantName'] ?? 'Unknown',
       assignedShipperId: json['assignedShipperId'],
       custShipperRating: json['custShipperRating'] != null
           ? (json['custShipperRating'] as num).toDouble()
           : null,
       deliveryFee: (json['deliveryFee'] as num).toDouble(),
-      note: json['note'],
+      orderDatetime: DateTime.parse(json['orderDatetime']),
+      note: json['note'] ?? '',
       custResRating: json['custResRating'] != null
           ? (json['custResRating'] as num).toDouble()
           : null,
       reason: json['reason'] ?? '',
-      custStatus: json['custStatus'],
+      status: json['status'] ?? 'new',
+      driverStatus: json['driverStatus'],
       partnerStatus: json['partnerStatus'],
-      orderDatetime: DateTime.parse(json['orderDatetime']),
       orderItems: (json['orderItems'] as List)
           .map((item) => OrderItem.fromJson(item))
           .toList(),
@@ -83,18 +82,18 @@ class Order {
   @override
   String toString() {
     return 'Order('
-        'orderId: $orderId, '
-        'customerId: $customerId, '
-        'driverStatus: $driverStatus, '
-        'restaurantId: $restaurantId, '
+        'id: $id, '
+        'customerName: $customerName, '
+        'restaurantName: $restaurantName, '
         'assignedShipperId: $assignedShipperId, '
-        'customerShipperRating: $custShipperRating, '
+        'custShipperRating: $custShipperRating, '
         'deliveryFee: $deliveryFee, '
-        'orderDateTime: $orderDatetime, '
+        'orderDatetime: $orderDatetime, '
         'note: $note, '
-        'customerRestaurantRating: $custResRating, '
+        'custResRating: $custResRating, '
         'reason: $reason, '
-        'customerStatus: $custStatus, '
+        'status: $status, '
+        'driverStatus: $driverStatus, '
         'partnerStatus: $partnerStatus, '
         'orderItems: $orderItems'
         ')';
