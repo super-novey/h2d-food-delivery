@@ -1,4 +1,5 @@
 import 'package:food_delivery_h2d/bindings/network_manager.dart';
+import 'package:food_delivery_h2d/data/address/address_repository.dart';
 import 'package:food_delivery_h2d/data/category/category_repository.dart';
 import 'package:food_delivery_h2d/data/item/item_repository.dart';
 import 'package:food_delivery_h2d/data/partner/partner_repository.dart';
@@ -23,11 +24,17 @@ class RestaurantController extends GetxController {
   final CategoryRepository _categoryRepository = Get.put(CategoryRepository());
   final ItemRepository _itemRepository = Get.put(ItemRepository());
   final PartnerRepository _repository = Get.put(PartnerRepository());
-
+  final _addressRepository = Get.put(AddressRepository());
   String userId = '';
-
+  late String provinceName;
+  late String districtName;
+  late String communeName;
   void setUserId(String id) {
-    userId = id;  
+    userId = id;
+  }
+
+  String get address {
+    return "${detailPartner.value?.detailAddress}, $communeName, $districtName, $provinceName";
   }
 
   @override
@@ -36,12 +43,25 @@ class RestaurantController extends GetxController {
     if (userId.isNotEmpty) {
       await fetchCategoriesAndItems();
     }
-  }
 
+  }
+Future fetchData() async {
+    try {
+      isLoading.value = true;
+      await _fetchProvinceName();
+      await _fetchDistrictName();
+      await _fetchCommunes();
+    } catch (e) {
+      print(e);
+    } finally {
+      isLoading.value = false;
+    }
+  }
   Future<void> fetchCategoriesAndItems() async {
     try {
       isLoading.value = true;
-      allCategories.assignAll(await _categoryRepository.getCategoriesInRestaurant(userId));
+      allCategories.assignAll(
+          await _categoryRepository.getCategoriesInRestaurant(userId));
       await fetchAllItems();
     } catch (e) {
       print("Lỗi khi lấy danh mục và món ăn: $e");
@@ -53,9 +73,11 @@ class RestaurantController extends GetxController {
   Future<void> fetchAllItems() async {
     try {
       final allItemsByCategory = await Future.wait(
-        allCategories.map((cat) => _itemRepository.getItemsByCategoryID(cat.categoryId)),
+        allCategories
+            .map((cat) => _itemRepository.getItemsByCategoryID(cat.categoryId)),
       );
-      final combinedItems = allItemsByCategory.expand((items) => items).toList();
+      final combinedItems =
+          allItemsByCategory.expand((items) => items).toList();
       allItems.assignAll(combinedItems);
     } catch (error) {
       print("Lỗi khi lấy món ăn: $error");
@@ -66,29 +88,69 @@ class RestaurantController extends GetxController {
     return allItems.where((item) => item.categoryId == categoryId).toList();
   }
 
- void fetchDetailPartner(String partnerId) async {
-  try {
-    isLoading(true);
-    final isConnected = await NetworkManager.instance.isConnected();
-    if (!isConnected) {
-      errorMessagePartner.value = "No internet connection";
-      return;
+  void fetchDetailPartner(String partnerId) async {
+    try {
+      isLoading(true);
+      final isConnected = await NetworkManager.instance.isConnected();
+      if (!isConnected) {
+        errorMessagePartner.value = "No internet connection";
+        return;
+      }
+
+      final partnerResponse =
+          await _repository.getPartnerByPartnerId(partnerId);
+      detailPartner.value = partnerResponse;
+          fetchData();
+      print(
+          "Controller received partnerResponse: ${partnerResponse.toString()}");
+    } catch (e) {
+      print("Error: ${e.toString()}");
+
+      errorMessagePartner.value =
+          "Error fetching partner details: ${e.toString()}";
+    } finally {
+      isLoading(false);
     }
-
-    final partnerResponse =
-        await _repository.getPartnerByPartnerId(partnerId);
-    detailPartner.value = partnerResponse;
-    print("Controller received partnerResponse: ${partnerResponse.toString()}");
-  } catch (e) {
-    print("Error: ${e.toString()}");
-    
-    errorMessagePartner.value =
-        "Error fetching partner details: ${e.toString()}";
-  } finally {
-    isLoading(false);
   }
-}
 
+  Future<void> _fetchProvinceName() async {
+    try {
+      final provinces = await _addressRepository.getProvinces();
+      provinceName = provinces
+          .firstWhere((province) =>
+              province.id == detailPartner.value?.provinceId)
+          .fullName;
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> _fetchDistrictName() async {
+    try {
+      final districts = await _addressRepository
+          .getDistrict(detailPartner.value!.provinceId);
+      districtName = districts
+          .firstWhere((district) =>
+              district.id == detailPartner.value?.districtId)
+          .fullName;
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> _fetchCommunes() async {
+    try {
+      final communes = await _addressRepository
+          .getCommunes(detailPartner.value!.districtId);
+
+      communeName = communes
+          .firstWhere((commune) =>
+              commune.id == detailPartner.value?.communeId)
+          .fullName;
+    } catch (e) {
+      print(e);
+    }
+  }
 
   void fetchRestaurants() {
     restaurants.value = [

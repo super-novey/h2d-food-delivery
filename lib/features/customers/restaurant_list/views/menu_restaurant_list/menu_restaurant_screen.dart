@@ -53,7 +53,7 @@ class MenuRestaurantScreen extends StatelessWidget {
                       right: 0,
                       child: IconButton(
                           onPressed: () {
-
+                            Get.to(DetailRestaurantScreen(userId: userId,));
                           },
                           icon: const Icon(
                             Icons.info_rounded,
@@ -131,7 +131,7 @@ class MenuRestaurantScreen extends StatelessWidget {
                         ),
                       ),
                       const Padding(
-                        padding: const EdgeInsets.only(top: MySizes.xs),
+                        padding: EdgeInsets.only(top: MySizes.xs),
                         child:
                             Icon(Icons.arrow_forward_ios, size: MySizes.iconXs),
                       )
