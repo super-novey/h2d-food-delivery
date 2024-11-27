@@ -40,10 +40,6 @@ class AddressRepository {
       var province = provinces.firstWhere(
         (province) => province.id == id,
       );
-
-      if (province == null) {
-        throw Exception("Province with ID $id not found");
-      }
       return province;
     } catch (e) {
       throw Exception("Failed to fetch province by ID: $e");

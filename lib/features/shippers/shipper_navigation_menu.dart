@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_h2d/features/shippers/home/shipper_home_screen.dart';
+import 'package:food_delivery_h2d/features/shippers/home/views/shipper_home_screen.dart';
 import 'package:food_delivery_h2d/features/shippers/income/views/income_screen.dart';
 import 'package:food_delivery_h2d/features/shippers/orders/views/orders_screen.dart';
 import 'package:food_delivery_h2d/features/shippers/profile/views/profile_screen.dart';

@@ -153,8 +153,7 @@ class OrderTile extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  // Get.to(() => DeliveryScreen(order: order));
-                  Get.to(() => const DeliveryScreen());
+                  Get.to(() => DeliveryScreen(order: order));
                 },
                 child: const Text(
                   'Nhận đơn',
