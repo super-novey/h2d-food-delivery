@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/shippers/delivery/views/widgets/customer_tab.dart';
 import 'package:food_delivery_h2d/features/shippers/delivery/views/widgets/restaurant_tab.dart';
+import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:get/get.dart';
 
 class DeliveryScreen extends StatelessWidget {
-  const DeliveryScreen({super.key});
+  final Order order;
+  const DeliveryScreen({super.key, required this.order});
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2, // Number of tabs
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Giao hàng'),
@@ -27,20 +29,20 @@ class DeliveryScreen extends StatelessWidget {
           ),
           bottom: const TabBar(
             dividerColor: Colors.white,
-            indicatorColor: Colors.white, // Indicator color
-            labelColor: Colors.white, // Active tab text color
+            indicatorColor: Colors.white,
+            labelColor: Colors.white,
             labelStyle: TextStyle(fontWeight: FontWeight.bold),
-            unselectedLabelColor: Colors.white70, // Inactive tab text color
+            unselectedLabelColor: Colors.white70,
             tabs: [
-              Tab(text: 'Nhà hàng'), // First tab
-              Tab(text: 'Khách hàng'), // Second tab
+              Tab(text: 'Nhà hàng'),
+              Tab(text: 'Khách hàng'),
             ],
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: [
-            RestaurantTab(),
-            CustomerTab(),
+            RestaurantTab(order: order), // Pass order to RestaurantTab
+            CustomerTab(order: order), // Pass order to CustomerTab
           ],
         ),
       ),

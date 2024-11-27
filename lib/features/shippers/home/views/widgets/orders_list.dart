@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/shippers/home/controllers/order_controller.dart';
 import 'package:get/get.dart';
-import 'package:food_delivery_h2d/features/shippers/home/widgets/order_tile.dart';
+import 'package:food_delivery_h2d/features/shippers/home/views/widgets/order_tile.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 
 class OrdersList extends StatelessWidget {

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
+import 'package:food_delivery_h2d/utils/helpers/handle_status_text.dart';
 
 class CustomerTab extends StatelessWidget {
-  const CustomerTab({super.key});
+  final Order order;
+  const CustomerTab({super.key, required this.order});
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +36,13 @@ class CustomerTab extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Nguyễn Thị A',
+                              order.customerName,
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.grey,
@@ -56,7 +59,7 @@ class CustomerTab extends StatelessWidget {
                             ),
                             SizedBox(height: 8),
                             Text(
-                              'Số 1, Võ Văn Ngân, Thủ Đức, TP.HCM',
+                              "order.customerAddress",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14,
@@ -100,12 +103,12 @@ class CustomerTab extends StatelessWidget {
                             ),
                           ],
                         ),
-                        child: const Expanded(
+                        child: Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                'Trạng thái - Đã đến quán',
+                                "Trạng thái - ${getDriverStatusText(order.driverStatus)}",
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: MyColors.primaryTextColor,
@@ -116,83 +119,112 @@ class CustomerTab extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Container(
-                        width:
-                            double.infinity, // Simplified instead of MediaQuery
-                        padding: const EdgeInsets.all(16),
-                        margin: const EdgeInsets.symmetric(vertical: 8),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.1),
-                              blurRadius: 5,
-                              spreadRadius: 2,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        child: const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Chi tiết đơn hàng',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                Text(
-                                  '#1235564',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              'Số lượng: 2',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: MyColors.primaryTextColor,
+                      buildInfoCard(
+                        context: context,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Chi tiết đơn hàng',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16),
                               ),
-                            ),
-                            Divider(
-                              color: MyColors.dividerColor,
-                              thickness: 1,
-                            ),
-                            SizedBox(height: 8),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
+                              Container(
+                                width:
+                                    130, // Set a fixed width or dynamically adjust it
+                                child: Text(
+                                  '#${order.id}',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Số lượng: ${order.orderItems.length}',
+                            style: const TextStyle(
+                                fontSize: 14, color: MyColors.primaryTextColor),
+                          ),
+                          const Divider(
+                              color: MyColors.dividerColor, thickness: 1),
+                          const SizedBox(height: 8),
+                          // Table Headers
+                          const Row(
+                            children: [
+                              SizedBox(
+                                width: 150,
+                                child: Text(
                                   'Tên món',
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold),
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                                Text(
+                              ),
+                              SizedBox(
+                                width: 50, // Fixed width for the second column
+                                child: Text(
                                   'SL',
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.center,
                                 ),
-                                Text(
+                              ),
+                              Expanded(
+                                child: Text(
                                   'Thành tiền',
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.end,
                                 ),
-                              ],
-                            ),
-                          ],
-                        ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+// Order Items List
+                          ...order.orderItems.map((item) {
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 4.0),
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width:
+                                        150, // Matches the header column width
+                                    child: Text(
+                                      item.itemName,
+                                      style: const TextStyle(fontSize: 14),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width:
+                                        50, // Matches the header column width
+                                    child: Text(
+                                      '${item.quantity}',
+                                      style: const TextStyle(fontSize: 14),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      '${item.totalPrice}đ',
+                                      style: const TextStyle(fontSize: 14),
+                                      textAlign: TextAlign.end,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }),
+                        ],
                       ),
                       Container(
                         width:
@@ -326,6 +358,33 @@ class CustomerTab extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Widget buildInfoCard({
+    required BuildContext context,
+    required List<Widget> children,
+  }) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            blurRadius: 5,
+            spreadRadius: 2,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: children,
+      ),
     );
   }
 }
