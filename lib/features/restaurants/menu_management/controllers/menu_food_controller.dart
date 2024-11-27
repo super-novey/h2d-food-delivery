@@ -111,8 +111,9 @@ class MenuFoodController extends GetxController {
             child: const Text("Quay lại")));
   }
 
-  void toggleItemAvailability(Item item) {
-    item.isAvailable.value = !item.isAvailable.value;
+  void toggleItemAvailability(Item item) async {
+    item.isAvailable.value = !item.isAvailable.value; // switch status
+    await _itemRepository.updateItem(item, []);
   }
 
   List<Item> getItemsForCategory(String categoryId) {
