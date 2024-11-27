@@ -16,7 +16,6 @@ class ItemRepository extends GetxController {
       final list = (res["data"] as List)
           .map((category) => Item.fromJson(category))
           .toList();
-
       return list;
     } on Exception catch (_) {
       rethrow;
