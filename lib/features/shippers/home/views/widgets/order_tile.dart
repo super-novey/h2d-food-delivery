@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/shippers/delivery/views/delivery_screen.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:get/get.dart';
+import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
 
 class OrderTile extends StatelessWidget {
-  const OrderTile({super.key});
+  final Order order;
+
+  const OrderTile({super.key, required this.order});
 
   @override
   Widget build(BuildContext context) {
@@ -25,100 +28,87 @@ class OrderTile extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                '1,7km',
+              const Text(
+                '{order.distance}km',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
                 ),
               ),
               Text(
-                '45.000đ',
-                style: TextStyle(
+                '${order.deliveryFee}đ',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: MyColors.primaryColor,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                width: 8,
+                height: 8,
+                decoration: const BoxDecoration(
+                  color: Colors.red,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Text(
+                'Lấy hàng: ${order.restaurantName}',
+                style: TextStyle(fontSize: 12, color: Colors.grey),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Text(
+                  order.fullAddress.toString(),
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: MyColors.primaryColor),
+                    fontSize: 14,
+                  ),
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ],
           ),
-          const SizedBox(
-            height: 8,
-          ),
+          const Divider(color: MyColors.dividerColor),
           Row(
-            mainAxisAlignment:
-                MainAxisAlignment.start, // Aligns children to the start
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
                 width: 8,
                 height: 8,
                 decoration: const BoxDecoration(
-                  color: Colors.red, // Red color for the dot
-                  shape: BoxShape.circle, // Circular shape
+                  color: Colors.green,
+                  shape: BoxShape.circle,
                 ),
               ),
-              const SizedBox(width: 8), // Space between dot and text
-              // Text widget
-              const Text(
-                'Lấy hàng: Texas chicken Võ Văn Ngân',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey,
-                ),
+              const SizedBox(width: 8),
+              Text(
+                'Giao hàng: ${order.customerName}',
+                style: const TextStyle(fontSize: 12, color: Colors.grey),
               ),
             ],
           ),
-          const SizedBox(
-            height: 8,
-          ),
+          const SizedBox(height: 8),
           const Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                'Số 1, Võ Văn Ngân, Thủ Đức, TP.HCM',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
-                ),
-              ),
-            ],
-          ),
-          const Divider(
-            color: MyColors.dividerColor,
-          ),
-          Row(
-            mainAxisAlignment:
-                MainAxisAlignment.start, // Aligns children to the start
-            children: [
-              Container(
-                width: 8,
-                height: 8,
-                decoration: const BoxDecoration(
-                  color: Colors.green, // Red color for the dot
-                  shape: BoxShape.circle, // Circular shape
-                ),
-              ),
-              const SizedBox(width: 8), // Space between dot and text
-              // Text widget
-              const Text(
-                'Giao hàng: Nguyễn Thị A',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                'Số 1, Võ Văn Ngân, Thủ Đức, TP.HCM',
+                "order.customerAddress",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
@@ -141,7 +131,9 @@ class OrderTile extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  // Handle order rejection
+                },
                 child: const Text(
                   'Từ chối',
                   style: TextStyle(color: MyColors.errorColor, fontSize: 12),
@@ -161,7 +153,7 @@ class OrderTile extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  Get.to(const DeliveryScreen());
+                  Get.to(() => DeliveryScreen(order: order));
                 },
                 child: const Text(
                   'Nhận đơn',
@@ -169,7 +161,7 @@ class OrderTile extends StatelessWidget {
                 ),
               ),
             ],
-          )
+          ),
         ],
       ),
     );
