@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/restaurant_controller.dart';
-import 'package:food_delivery_h2d/features/customers/restaurant_list/views/list_famous_restaurant/widgets/famous_restaurant_tile.dart';
+import 'package:food_delivery_h2d/features/customers/restaurant_list/views/famous_restaurant_list/widgets/famous_restaurant_tile.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:get/get.dart';
 

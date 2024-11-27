@@ -5,8 +5,8 @@ import 'package:food_delivery_h2d/features/customers/home/widgets/customer_appba
 import 'package:food_delivery_h2d/features/customers/home/widgets/home_search_bar.dart';
 import 'package:food_delivery_h2d/features/customers/home/widgets/image_place_holder.dart';
 import 'package:food_delivery_h2d/features/customers/home/widgets/item_home.dart';
-import 'package:food_delivery_h2d/features/customers/restaurant_list/views/list_famous_restaurant/list_famous_restaurant.dart';
-import 'package:food_delivery_h2d/features/customers/restaurant_list/views/list_top_item/list_top_item.dart';
+import 'package:food_delivery_h2d/features/customers/restaurant_list/views/famous_restaurant_list/list_famous_restaurant.dart';
+import 'package:food_delivery_h2d/features/customers/restaurant_list/views/top_item_list/list_top_item.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/views/menu_list/menu_food_list_screen.dart';
 import 'package:food_delivery_h2d/features/restaurants/order_management/views/order_list/order_list_screen.dart';
 import 'package:food_delivery_h2d/features/restaurants/statistic_management/views/statistic_screen.dart';
