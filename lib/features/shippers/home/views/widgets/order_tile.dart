@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/shippers/delivery/views/delivery_screen.dart';
+import 'package:food_delivery_h2d/features/shippers/home/controllers/order_controller.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:get/get.dart';
 import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
@@ -11,6 +12,7 @@ class OrderTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final OrdersController ordersController = Get.find();
     return Container(
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -152,8 +154,21 @@ class OrderTile extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                onPressed: () {
-                  Get.to(() => DeliveryScreen(order: order));
+                onPressed: () async {
+                  try {
+                    Map<String, dynamic> newStatus = {
+                      "custStatus": "heading_to_rest",
+                      "driverStatus": "heading_to_rest",
+                      "restStatus": "new"
+                    };
+
+                    await ordersController.updateOrderStatus(
+                        order.id, newStatus);
+                    Get.to(() => DeliveryScreen(order: order));
+                  } catch (e) {
+                    Get.snackbar("Error", "Failed to accept the order: $e",
+                        snackPosition: SnackPosition.BOTTOM);
+                  }
                 },
                 child: const Text(
                   'Nhận đơn',

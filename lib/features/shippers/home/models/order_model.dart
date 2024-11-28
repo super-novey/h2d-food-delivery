@@ -12,9 +12,9 @@ class Order {
   String note;
   double? custResRating;
   String reason;
-  String status;
+  String custStatus;
   String? driverStatus;
-  String? partnerStatus;
+  String? restStatus;
   List<OrderItem> orderItems;
   String? fullAddress;
 
@@ -35,9 +35,9 @@ class Order {
     this.note = '',
     this.custResRating,
     this.reason = '',
-    required this.status,
+    required this.custStatus,
     this.driverStatus,
-    this.partnerStatus,
+    this.restStatus,
     this.orderItems = const [],
     this.fullAddress,
     this.restProvinceId, // Initialize restProvinceId
@@ -59,14 +59,14 @@ class Order {
       'note': note,
       'custResRating': custResRating,
       'reason': reason,
-      'status': status,
+      'custStatus': custStatus,
       'driverStatus': driverStatus,
-      'partnerStatus': partnerStatus,
+      'restStatus': restStatus,
       'orderItems': orderItems.map((item) => item.toJson()).toList(),
-      'fullAddress': fullAddress, // Include the new field
-      'restProvinceId': restProvinceId, // Include the new field
-      'restDistrictId': restDistrictId, // Include the new field
-      'restCommuneId': restCommuneId, // Include the new field
+      'fullAddress': fullAddress,
+      'restProvinceId': restProvinceId,
+      'restDistrictId': restDistrictId,
+      'restCommuneId': restCommuneId,
     };
   }
 
@@ -88,9 +88,9 @@ class Order {
           ? (json['custResRating'] as num).toDouble()
           : null,
       reason: json['reason'] ?? '',
-      status: json['status'] ?? 'new',
+      custStatus: json['custStatus'] ?? 'waiting',
       driverStatus: json['driverStatus'],
-      partnerStatus: json['partnerStatus'],
+      restStatus: json['restStatus'],
       orderItems: (json['orderItems'] as List)
           .map((item) => OrderItem.fromJson(item))
           .toList(),
@@ -114,9 +114,9 @@ class Order {
         'note: $note, '
         'custResRating: $custResRating, '
         'reason: $reason, '
-        'status: $status, '
+        'custStatus: $custStatus, '
         'driverStatus: $driverStatus, '
-        'partnerStatus: $partnerStatus, '
+        'restStatus: $restStatus, '
         'orderItems: $orderItems, '
         'fullAddress: $fullAddress, '
         'restProvinceId: $restProvinceId, '
