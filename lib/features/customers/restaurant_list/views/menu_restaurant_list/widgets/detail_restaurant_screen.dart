@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/custom_app_bar.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/detail_restaurant_controller.dart';
+import 'package:food_delivery_h2d/features/customers/restaurant_list/models/detail_partner_model.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:get/get.dart';
@@ -14,9 +15,8 @@ class DetailRestaurantScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(DetailRestaurantController());
-
     controller.fetchDetailPartner(userId);
-
+    final partner = Get.arguments as DetailPartnerModel?;
     return Scaffold(
       appBar: const CustomAppBar(
         title: Text('Thông tin'),
@@ -31,7 +31,7 @@ class DetailRestaurantScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  controller.detailPartner.value?.userId.name ?? "",
+                  partner!.userId.name,
                   style: const TextStyle(
                     color: MyColors.primaryTextColor,
                     fontWeight: FontWeight.bold,
@@ -105,7 +105,8 @@ class DetailRestaurantScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Icon(Icons.near_me_rounded, color: MyColors.primaryTextColor, size: MySizes.iconMd),
+                    const Icon(Icons.near_me_rounded,
+                        color: MyColors.primaryTextColor, size: MySizes.iconMd),
                     const SizedBox(width: MySizes.sm),
                     Obx(() {
                       if (controller.isLoading.value) {

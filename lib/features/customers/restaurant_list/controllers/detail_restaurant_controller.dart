@@ -28,7 +28,9 @@ class DetailRestaurantController extends GetxController {
 
   // Address getter that handles null values
   String get address {
-    if (provinceName.value == null || districtName.value == null || communeName.value == null) {
+    if (provinceName.value == null ||
+        districtName.value == null ||
+        communeName.value == null) {
       return "Đang tải...";
     }
     return "${detailPartner.value?.detailAddress}, ${communeName.value}, ${districtName.value}, ${provinceName.value}";
@@ -62,13 +64,16 @@ class DetailRestaurantController extends GetxController {
         return;
       }
 
-      final partnerResponse = await _repository.getPartnerByPartnerId(partnerId);
+      final partnerResponse =
+          await _repository.getPartnerByPartnerId(partnerId);
       detailPartner.value = partnerResponse;
       fetchData();
-      print("Controller received partnerResponse: ${partnerResponse.toString()}");
+      print(
+          "Controller received partnerResponse: ${partnerResponse.toString()}");
     } catch (e) {
       print("Error: ${e.toString()}");
-      errorMessagePartner.value = "Error fetching partner details: ${e.toString()}";
+      errorMessagePartner.value =
+          "Error fetching partner details: ${e.toString()}";
     } finally {
       isLoading(false);
     }
@@ -78,7 +83,8 @@ class DetailRestaurantController extends GetxController {
     try {
       final provinces = await _addressRepository.getProvinces();
       provinceName.value = provinces
-          .firstWhere((province) => province.id == detailPartner.value?.provinceId)
+          .firstWhere(
+              (province) => province.id == detailPartner.value?.provinceId)
           .fullName;
     } catch (e) {
       print(e);
@@ -87,9 +93,11 @@ class DetailRestaurantController extends GetxController {
 
   Future<void> _fetchDistrictName() async {
     try {
-      final districts = await _addressRepository.getDistrict(detailPartner.value!.provinceId);
+      final districts =
+          await _addressRepository.getDistrict(detailPartner.value!.provinceId);
       districtName.value = districts
-          .firstWhere((district) => district.id == detailPartner.value?.districtId)
+          .firstWhere(
+              (district) => district.id == detailPartner.value?.districtId)
           .fullName;
     } catch (e) {
       print(e);
@@ -98,7 +106,8 @@ class DetailRestaurantController extends GetxController {
 
   Future<void> _fetchCommunes() async {
     try {
-      final communes = await _addressRepository.getCommunes(detailPartner.value!.districtId);
+      final communes =
+          await _addressRepository.getCommunes(detailPartner.value!.districtId);
       communeName.value = communes
           .firstWhere((commune) => commune.id == detailPartner.value?.communeId)
           .fullName;

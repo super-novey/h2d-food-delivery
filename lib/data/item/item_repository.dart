@@ -68,7 +68,6 @@ class ItemRepository extends GetxController {
           await HttpHelper.get("item/customer/search?query=$query");
 
       List<dynamic> data = response['data'] as List<dynamic>;
-      print(response);
 
       return data.map((item) => ItemModel.fromJson(item)).toList();
     } catch (e) {
