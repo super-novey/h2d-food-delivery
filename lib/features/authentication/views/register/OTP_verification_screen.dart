@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/otp_controller.dart';
 import 'package:food_delivery_h2d/features/authentication/views/login/widgets/login_header.dart';
@@ -25,100 +24,103 @@ class OtpVerificationScreen extends StatelessWidget {
     // RegisterController.instance.sendOTP(emailAddress);
 
     return Scaffold(
-        body: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        PrimaryHeader(
-            child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Back
-            IconButton(
-              onPressed: () {
-                Get.back();
-              },
-              icon: const Icon(
-                Icons.arrow_back_ios,
-                color: Colors.white,
-                size: MySizes.iconMd,
-              ),
-            ),
-
-            const SizedBox(
-              height: MySizes.spaceBtwItems,
-            ),
-            Text("Xác thực OTP",
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineLarge!
-                    .apply(color: Colors.white)),
-          ],
-        )),
-        Padding(
-          padding: const EdgeInsets.all(MySizes.defaultSpace),
-          child: Column(
+        body: SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          PrimaryHeader(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text.rich(
-                TextSpan(
-                  text: "Mã OTP được gửi đến ",
+              // Back
+              IconButton(
+                onPressed: () {
+                  Get.back();
+                },
+                icon: const Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.white,
+                  size: MySizes.iconMd,
+                ),
+              ),
+
+              const SizedBox(
+                height: MySizes.spaceBtwItems,
+              ),
+              Text("Xác thực OTP",
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineLarge!
+                      .apply(color: Colors.white)),
+            ],
+          )),
+          Padding(
+            padding: const EdgeInsets.all(MySizes.defaultSpace),
+            child: Column(
+              children: [
+                Text.rich(
+                  TextSpan(
+                    text: "Mã OTP được gửi đến ",
+                    children: [
+                      TextSpan(
+                        text: emailAddress.toString(),
+                        style: const TextStyle(
+                            color: MyColors.darkPrimaryColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  // OTP Form
+                ),
+                const SizedBox(
+                  height: MySizes.spaceBtwSections,
+                ),
+                Form(
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: List.generate(
+                        4,
+                        (index) => OTPTextField(
+                          controller: otpController.controllers[index],
+                        ),
+                      )),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    TextSpan(
-                      text: emailAddress.toString(),
-                      style: const TextStyle(
-                          color: MyColors.darkPrimaryColor,
-                          fontWeight: FontWeight.bold),
-                    ),
+                    StreamBuilder(
+                        initialData: "",
+                        stream: timer.stream(),
+                        builder:
+                            (BuildContext context, AsyncSnapshot snapshot) {
+                          String timer =
+                              (snapshot.data == '') ? "00:00" : snapshot.data;
+                          return Text(
+                            timer,
+                          );
+                        }),
+                    TextButton(
+                        onPressed: () async {
+                          final success =
+                              await otpController.resendOTP(emailAddress, role);
+                          if (success) {
+                            timer.init();
+                            timer.startTimer();
+                          }
+                        },
+                        child: const Text("Gửi lại"))
                   ],
                 ),
-                // OTP Form
-              ),
-              const SizedBox(
-                height: MySizes.spaceBtwSections,
-              ),
-              Form(
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: List.generate(
-                      4,
-                      (index) => OTPTextField(
-                        controller: otpController.controllers[index],
-                      ),
-                    )),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  StreamBuilder(
-                      initialData: "",
-                      stream: timer.stream(),
-                      builder: (BuildContext context, AsyncSnapshot snapshot) {
-                        String timer =
-                            (snapshot.data == '') ? "00:00" : snapshot.data;
-                        return Text(
-                          timer,
-                        );
-                      }),
-                  TextButton(
-                      onPressed: () async {
-                        final success =
-                            await otpController.resendOTP(emailAddress, role);
-                        if (success) {
-                          timer.init();
-                          timer.startTimer();
-                        }
-                      },
-                      child: const Text("Gửi lại"))
-                ],
-              ),
-              ElevatedButton(
-                  onPressed: () {
-                    otpController.verifyOTP(emailAddress, role);
-                  },
-                  child: const Text("Xác thực"))
-            ],
-          ),
-        )
-      ],
+                ElevatedButton(
+                    onPressed: () {
+                      otpController.verifyOTP(emailAddress, role);
+                    },
+                    child: const Text("Xác thực"))
+              ],
+            ),
+          )
+        ],
+      ),
     ));
   }
 }

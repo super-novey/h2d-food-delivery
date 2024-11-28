@@ -25,6 +25,7 @@ class UpdateMenuFoodController extends GetxController {
   var isAdd = false.obs;
   TextEditingController nameController = TextEditingController();
   TextEditingController priceController = TextEditingController();
+  TextEditingController quantityController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
   var foodImage = Rx<File?>(null);
@@ -36,6 +37,15 @@ class UpdateMenuFoodController extends GetxController {
   final _itemRepository = Get.put(ItemRepository());
 
   var updatedItemId = "";
+
+  @override
+  void dispose() {
+    super.dispose();
+    nameController.dispose();
+    priceController.dispose();
+    quantityController.dispose();
+    descriptionController.dispose();
+  }
 
   void toggleEditting() {
     isEditting.value = !isEditting.value;
@@ -175,6 +185,7 @@ class UpdateMenuFoodController extends GetxController {
         categoryId: selectedCaterory.value.toString(),
         itemImage: "",
         price: ConvertText.getTextAsInteger(priceController.text),
+        quantity: ConvertText.getTextAsInteger(quantityController.text),
         description: descriptionController.text,
         isAvailable: true,
         partnerId: LoginController.instance.currentUser.partnerId);

@@ -18,10 +18,12 @@ class MenuFoodDetailScreen extends StatelessWidget {
   final updateMenuFoodController = Get.put(UpdateMenuFoodController());
 
   void fetchFoodDetail() {
-    updateMenuFoodController.updatedItemId = selectedItem.itemId;  // not good
+    updateMenuFoodController.updatedItemId = selectedItem.itemId; // not good
     updateMenuFoodController.nameController.text = selectedItem.itemName;
     updateMenuFoodController.priceController.text =
         selectedItem.price.toString();
+    updateMenuFoodController.quantityController.text =
+        selectedItem.quantity.toString();
     updateMenuFoodController.descriptionController.text =
         selectedItem.description;
 
@@ -280,6 +282,32 @@ class MenuFoodDetailScreen extends StatelessWidget {
                               ),
                             ),
                           )
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: MySizes.sm),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Số lượng",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .apply(color: MyColors.darkPrimaryTextColor),
+                          ),
+                          SizedBox(
+                            width: 280,
+                            child: MyTextFiled(
+                                isNumberType: true,
+                                validator: (value) =>
+                                    Validators.validateEmptyText(
+                                        "Số lượng", value),
+                                textController:
+                                    updateMenuFoodController.quantityController,
+                                label: "Nhập số lượng món"),
+                          ),
                         ],
                       ),
                     ),

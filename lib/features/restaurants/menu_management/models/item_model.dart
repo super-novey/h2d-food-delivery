@@ -7,20 +7,22 @@ class Item {
   String partnerId;
   String itemName;
   int price;
+  int quantity;
   String description;
   RxBool isAvailable;
   String itemImage;
 
-  Item({
-    this.itemId = '',
-    this.categoryId = '',
-    this.partnerId = '',
-    this.itemName = '',
-    this.price = 0,
-    this.description = '',
-    bool? isAvailable,
-    this.itemImage = MyImagePaths.iconImage,
-  }) : isAvailable = (isAvailable ?? true).obs;
+  Item(
+      {this.itemId = '',
+      this.categoryId = '',
+      this.partnerId = '',
+      this.itemName = '',
+      this.price = 0,
+      this.description = '',
+      bool? isAvailable,
+      this.itemImage = MyImagePaths.iconImage,
+      this.quantity = 0})
+      : isAvailable = (isAvailable ?? true).obs;
 
   Map<String, dynamic> toJson() {
     return {
@@ -31,7 +33,8 @@ class Item {
       'description': description,
       'status': isAvailable.value.toString(),
       'itemImage': itemImage,
-      'partnerId': partnerId
+      'partnerId': partnerId,
+      "quantity": quantity.toString()
     };
   }
 
@@ -45,6 +48,7 @@ class Item {
       description: json['description'] ?? '',
       isAvailable: json['status'] ?? true,
       itemImage: json['itemImage'] ?? MyImagePaths.iconImage,
+      quantity: json['quantity'] ?? 0,
     );
   }
 
@@ -56,6 +60,7 @@ class Item {
         'partnerId: $partnerId, '
         'itemName: $itemName, '
         'price: $price, '
+        'quantity: $quantity, '
         'description: $description, '
         'isAvailable: ${isAvailable.value}, '
         'itemImage: $itemImage'
