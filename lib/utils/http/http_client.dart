@@ -6,10 +6,10 @@ class HttpHelper {
   // static const String _baseUrl =
   //     "https://backend-foodxdelivery-1.onrender.com/api/v1/"; // change URL
 
-  static const String _baseUrl = "http://10.0.132.62:8081/api/v1"; // change URL
-  //"https://2398-116-108-139-100.ngrok-free.app/api/v1";
+  static const String
+      _baseUrl = //"http://10.0.132.62:8081/api/v1"; // change URL
+      "https://71a2-116-108-139-100.ngrok-free.app/api/v1";
 
-  // GET method
   static Future<Map<String, dynamic>> get(String endpoint) async {
     final response = await http.get(Uri.parse('$_baseUrl/$endpoint'));
     return _handleResponse(response);

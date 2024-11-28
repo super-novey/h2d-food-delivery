@@ -19,7 +19,6 @@ class PartnerRepository extends GetxController {
   Future<DetailPartnerModel> getPartnerByPartnerId(String partnerId) async {
     try {
       final response = await HttpHelper.get("partner/customer/$partnerId");
-      print("repository + ${response}");
       return DetailPartnerModel.fromJson(response);
     } on Exception catch (e) {
       print("Error fetching partner by ID: $e");
