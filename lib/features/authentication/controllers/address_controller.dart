@@ -66,18 +66,20 @@ class AddressController extends GetxController {
 
       if (districtId != null && districtId.isNotEmpty) {
         var districtList = await _addressRepository.getDistrict(provinceId!);
-        var district = districtList.firstWhere((d) => d.id == districtId).name;
+        var district =
+            districtList.firstWhere((d) => d.id == districtId).fullName;
 
         if (communeId != null && communeId.isNotEmpty) {
           var communeList = await _addressRepository.getCommunes(districtId);
-          var commune = communeList.firstWhere((c) => c.id == communeId).name;
+          var commune =
+              communeList.firstWhere((c) => c.id == communeId).fullName;
 
-          return "$detailAddress, $commune, $district, ${province.name}";
+          return "$detailAddress, $commune, $district, ${province.fullName}";
         } else {
-          return "$detailAddress, $district, ${province.name}";
+          return "$detailAddress, $district, ${province.fullName}";
         }
       } else {
-        return "$detailAddress, ${province.name}";
+        return "$detailAddress, ${province.fullName}";
       }
     } catch (e) {
       print("Error fetching full address: $e");

@@ -55,7 +55,7 @@ class ShipperHomeScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      LoginController.instance.currentUser.licensePlate,
+                      LoginController.instance.currentUser.name,
                       style: const TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 14,

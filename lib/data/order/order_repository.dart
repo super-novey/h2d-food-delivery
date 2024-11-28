@@ -20,11 +20,11 @@ class OrderRepository extends GetxController {
     }
   }
 
-  Future<List<Order>> getOrdersByStatus({String? custStatus}) async {
+  Future<List<Order>> getOrdersByStatus({String? driverStatus}) async {
     try {
       String url = "order/orders/status";
-      if (custStatus != null) {
-        url += "?custStatus=$custStatus";
+      if (driverStatus != null) {
+        url += "?status=$driverStatus";
       }
 
       final response = await HttpHelper.get(url);
@@ -64,13 +64,12 @@ class OrderRepository extends GetxController {
     }
   }
 
-  /// Updates the status of an order.
   Future<ApiResponse<Order>> updateOrderStatus(
-      String orderId, String newStatus) async {
+      String? orderId, Map<String, dynamic>? statusUpdates) async {
     try {
-      final res = await HttpHelper.put(
-        "order/${orderId.toString()}",
-        {"status": newStatus},
+      final res = await HttpHelper.patch(
+        "order/$orderId/status",
+        statusUpdates,
       );
       if (res["hasError"] == true) {
         return ApiResponse.error(res["message"]);

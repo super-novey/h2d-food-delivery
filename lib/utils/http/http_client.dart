@@ -5,10 +5,11 @@ import 'package:http/http.dart' as http;
 class HttpHelper {
   // static const String _baseUrl =
   //     "https://backend-foodxdelivery-1.onrender.com/api/v1/"; // change URL
-
+ 
   static const String
       _baseUrl = //"http://10.0.132.62:8081/api/v1"; // change URL
       "https://71a2-116-108-139-100.ngrok-free.app/api/v1";
+
 
   static Future<Map<String, dynamic>> get(String endpoint) async {
     final response = await http.get(Uri.parse('$_baseUrl/$endpoint'));
@@ -34,6 +35,17 @@ class HttpHelper {
       headers: {'Content-Type': 'application/json'},
       body:
           data != null ? json.encode(data) : null, // Chỉ mã hóa nếu có dữ liệu
+    );
+    return _handleResponse(response);
+  }
+
+  // PATCH method
+  static Future<Map<String, dynamic>> patch(String endpoint,
+      [dynamic data]) async {
+    final response = await http.patch(
+      Uri.parse('$_baseUrl/$endpoint'),
+      headers: {'Content-Type': 'application/json'},
+      body: data != null ? json.encode(data) : null, // Encode data if provided
     );
     return _handleResponse(response);
   }

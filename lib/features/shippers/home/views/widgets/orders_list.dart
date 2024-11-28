@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_h2d/features/shippers/home/controllers/order_controller.dart';
 import 'package:get/get.dart';
+import 'package:food_delivery_h2d/features/shippers/home/controllers/order_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/home/views/widgets/order_tile.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 
@@ -10,6 +10,11 @@ class OrdersList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final OrdersController controller = Get.put(OrdersController());
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   if (controller.orders.isEmpty) {
+    //     controller.fetchOrders();
+    //   }
+    // });
 
     return DraggableScrollableSheet(
       initialChildSize: 0.4,
