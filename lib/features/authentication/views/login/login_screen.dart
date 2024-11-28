@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/keyboard/keyboard_hider.dart';
 import 'package:food_delivery_h2d/features/authentication/views/login/widgets/login_form.dart';
 import 'package:food_delivery_h2d/features/authentication/views/login/widgets/login_form_web.dart';
+import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'widgets/login_header.dart';
@@ -23,17 +24,20 @@ class LoginScreen extends StatelessWidget {
               else ...[
                 PrimaryHeader(
                   child: Text(
-                    "Dang nhap",
-                    style: Theme.of(context).textTheme.headlineLarge,
+                    "Đăng nhập",
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineLarge
+                        ?.apply(color: MyColors.white),
                   ),
                 ),
                 Center(
                   child: Image.asset(
-                      MyImagePaths.appRed,
-                      width: 130,
-                      height: 130,
-                      fit: BoxFit.cover,
-                    ),
+                    MyImagePaths.appRed,
+                    width: 130,
+                    height: 130,
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 //Image.asset(MyImagePaths.appRed),
                 const Padding(

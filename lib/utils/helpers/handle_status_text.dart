@@ -1,7 +1,11 @@
 String getDriverStatusText(String? status) {
   const statusMapping = {
-    'new': 'Đang đến quán',
-    'in_progress': 'Đang giao hàng',
+    'new': 'Đơn mới',
+    'waiting': 'Đang chờ',
+    'heading_to_rest': 'Đang tới quán',
+    'preparing': 'Đang chuẩn bị',
+    'delivering': 'Đang giao',
+    'delivered': 'Đã giao',
     'completed': 'Đã hoàn thành',
     'cancelled': 'Đã hủy',
   };

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_h2d/features/shippers/delivery/controllers/restaurant_tab_controller.dart';
+import 'package:food_delivery_h2d/features/shippers/delivery/controllers/tabs_controller.dart';
+import 'package:food_delivery_h2d/features/shippers/home/controllers/order_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/helpers/handle_status_text.dart';
@@ -12,8 +13,8 @@ class RestaurantTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final RestaurantTabController controller =
-        Get.put(RestaurantTabController());
+    final TabsController controller = Get.put(TabsController());
+    final OrdersController ordersController = Get.find();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -192,12 +193,26 @@ class RestaurantTab extends StatelessWidget {
         ),
       ),
       floatingActionButton: Obx(() {
-        return controller.isButtonClicked.value
+        return controller.isRestButtonClicked.value
             ? const SizedBox.shrink()
             : FloatingActionButton.extended(
-                onPressed: () {
-                  controller.isButtonClicked.value = true;
-                  DefaultTabController.of(context)?.animateTo(1);
+                onPressed: () async {
+                  try {
+                    Map<String, dynamic> newStatus = {
+                      "custStatus": "delivering",
+                      "driverStatus": "delivering",
+                      "restStatus": "completed"
+                    };
+
+                    await ordersController.updateOrderStatus(
+                        order.id, newStatus);
+                    // Get.to(() => DeliveryScreen(order: order));
+                  } catch (e) {
+                    Get.snackbar("Error", "Failed to delivery the order: $e",
+                        snackPosition: SnackPosition.BOTTOM);
+                  }
+                  controller.isRestButtonClicked.value = true;
+                  DefaultTabController.of(context).animateTo(1);
                 },
                 label: const Text(
                   'Đã lấy đơn hàng',
