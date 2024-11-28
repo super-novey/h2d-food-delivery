@@ -1,5 +1,4 @@
 import 'package:food_delivery_h2d/bindings/network_manager.dart';
-import 'package:food_delivery_h2d/data/address/address_repository.dart';
 import 'package:food_delivery_h2d/data/category/category_repository.dart';
 import 'package:food_delivery_h2d/data/item/item_repository.dart';
 import 'package:food_delivery_h2d/data/partner/partner_repository.dart';
@@ -24,17 +23,10 @@ class RestaurantController extends GetxController {
   final CategoryRepository _categoryRepository = Get.put(CategoryRepository());
   final ItemRepository _itemRepository = Get.put(ItemRepository());
   final PartnerRepository _repository = Get.put(PartnerRepository());
-  final _addressRepository = Get.put(AddressRepository());
   String userId = '';
-  late String provinceName;
-  late String districtName;
-  late String communeName;
+
   void setUserId(String id) {
     userId = id;
-  }
-
-  String get address {
-    return "${detailPartner.value?.detailAddress}, $communeName, $districtName, $provinceName";
   }
 
   @override
@@ -45,18 +37,7 @@ class RestaurantController extends GetxController {
     }
 
   }
-Future fetchData() async {
-    try {
-      isLoading.value = true;
-      await _fetchProvinceName();
-      await _fetchDistrictName();
-      await _fetchCommunes();
-    } catch (e) {
-      print(e);
-    } finally {
-      isLoading.value = false;
-    }
-  }
+
   Future<void> fetchCategoriesAndItems() async {
     try {
       isLoading.value = true;
@@ -100,7 +81,6 @@ Future fetchData() async {
       final partnerResponse =
           await _repository.getPartnerByPartnerId(partnerId);
       detailPartner.value = partnerResponse;
-          fetchData();
       print(
           "Controller received partnerResponse: ${partnerResponse.toString()}");
     } catch (e) {
@@ -110,45 +90,6 @@ Future fetchData() async {
           "Error fetching partner details: ${e.toString()}";
     } finally {
       isLoading(false);
-    }
-  }
-
-  Future<void> _fetchProvinceName() async {
-    try {
-      final provinces = await _addressRepository.getProvinces();
-      provinceName = provinces
-          .firstWhere((province) =>
-              province.id == detailPartner.value?.provinceId)
-          .fullName;
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  Future<void> _fetchDistrictName() async {
-    try {
-      final districts = await _addressRepository
-          .getDistrict(detailPartner.value!.provinceId);
-      districtName = districts
-          .firstWhere((district) =>
-              district.id == detailPartner.value?.districtId)
-          .fullName;
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  Future<void> _fetchCommunes() async {
-    try {
-      final communes = await _addressRepository
-          .getCommunes(detailPartner.value!.districtId);
-
-      communeName = communes
-          .firstWhere((commune) =>
-              commune.id == detailPartner.value?.communeId)
-          .fullName;
-    } catch (e) {
-      print(e);
     }
   }
 
