@@ -14,10 +14,10 @@ import 'package:food_delivery_h2d/features/restaurants/menu_management/models/it
 class MenuFoodController extends GetxController {
   static MenuFoodController get instance => Get.find();
 
-  List<Item> allItems = <Item>[].obs;
+  var allItems = <Item>[].obs;
 
   var isLoading = false.obs;
-  List<Category> allCategories = <Category>[].obs;
+  var allCategories = <Category>[].obs;
 
   final _newCategoryController = TextEditingController();
 
