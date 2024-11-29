@@ -115,10 +115,9 @@ class UpdateMenuFoodController extends GetxController {
         Loaders.errorSnackBar(title: "Lỗi", message: res.message);
         return;
       }
-
+      // Update to UI
       MenuFoodController.instance.allItems.add(res.data!);
-
-      print(MenuFoodController.instance.allItems.length);
+      MenuFoodController.instance.allItems.refresh();
 
       Loaders.successSnackBar(title: "Thành công", message: res.message);
     } catch (e) {

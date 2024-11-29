@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_h2d/features/restaurants/order_management/models/order_model.dart';
 import 'package:food_delivery_h2d/features/restaurants/order_management/views/order_detail/order_detail_screen.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
 import 'package:get/get.dart';
+
+import '../../../../../shippers/home/models/order_model.dart';
 
 class NewOrderTile extends StatelessWidget {
   final Order order;
@@ -36,14 +37,14 @@ class NewOrderTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        order.orderId.toString(),
+                        order.id.toString(),
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall!
                             .apply(color: MyColors.darkPrimaryTextColor),
                       ),
                       Text(
-                        MyFormatter.formatTime(order.orderDateTime.toString()),
+                        MyFormatter.formatTime(order.orderDatetime.toString()),
                         style: Theme.of(context)
                             .textTheme
                             .labelSmall!
@@ -57,7 +58,7 @@ class NewOrderTile extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        '${order.totalQuantity} món',
+                        '10 món',
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall!
@@ -67,7 +68,7 @@ class NewOrderTile extends StatelessWidget {
                         width: MySizes.sm,
                       ),
                       const SizedBox(
-                        height: 12, 
+                        height: 12,
                         child: VerticalDivider(
                           color: MyColors.dividerColor,
                           width: 12,
@@ -97,7 +98,8 @@ class NewOrderTile extends StatelessWidget {
                           itemBuilder: (context, index) {
                             final item = order.orderItems[index];
                             return Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 4.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 4.0),
                               child: Text(
                                 '${item.quantity} x Tên món ',
                                 style: Theme.of(context)
