@@ -27,27 +27,29 @@ class CustomerHomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Stack(
-                children: [
-                  SizedBox(
-                    height: 160,
-                    child: MyPrimaryHeaderContainer(
-                      child: Column(
-                        children: [
-                          CustomerAppbar(),
-                        ],
+              const SizedBox(
+                height: 190,
+                child: Stack(
+                  children: [
+                    SizedBox(
+                      height: 150,
+                      child: MyPrimaryHeaderContainer(
+                        child: Column(
+                          children: [
+                            CustomerAppbar(),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: HomeSearchBar()
-                  ),
-                ],
+                    Positioned(
+                      top: 90,
+                      left: 0,
+                      right: 0,
+                      child: HomeSearchBar()
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(height: MySizes.defaultSpace,),
               const ImagePlaceHolder(),
               Padding(
                 padding: const EdgeInsets.symmetric(
