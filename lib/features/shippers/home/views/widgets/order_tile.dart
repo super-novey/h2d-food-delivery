@@ -75,7 +75,7 @@ class OrderTile extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  order.fullAddress.toString(),
+                  order.restAddress.toString(),
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 14,

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/custom_app_bar.dart';
 import 'package:food_delivery_h2d/common/widgets/keyboard/keyboard_hider.dart';
+import 'package:food_delivery_h2d/features/customers/address_selection/controllers/address_selection_controller.dart';
+import 'package:food_delivery_h2d/features/customers/confirm_order/controllers/order_controller.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/cart_controller.dart';
-import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/order_controller.dart';
+import 'package:food_delivery_h2d/features/customers/address_selection/views/address_selection/address_selection_screen.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:get/get.dart';
 
@@ -13,6 +15,8 @@ class ConfirmOrderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cartController = CartController.instance;
     final orderController = Get.put(OrderController());
+    // ignore: unused_local_variable
+    final addressController = Get.put(AddressSelectionController());
 
     return KeyboardHider(
       child: Scaffold(
@@ -24,37 +28,65 @@ class ConfirmOrderScreen extends StatelessWidget {
           child: Column(
             children: [
               // Restaurant Information
-              buildInfoCard(
-                context: context,
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.location_pin,
-                        color: MyColors.primaryColor,
-                        size: 16,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        "Địa chỉ giao hàng",
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 14),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    "LoginController.instance.currentUser.name",
-                    style: const TextStyle(fontSize: 14, color: Colors.grey),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    "order.fullAddress ?? ''",
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
-                ],
+              GestureDetector(
+                onTap: () {
+                  Get.to(() => AddressSelectionScreen());
+                },
+                child: buildInfoCard(
+                  context: context,
+                  children: [
+                    Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Row(
+                              children: [
+                                Icon(
+                                  Icons.location_pin,
+                                  color: MyColors.primaryColor,
+                                  size: 16,
+                                ),
+                                SizedBox(width: 8),
+                                Text(
+                                  "Địa chỉ giao hàng",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            const Text(
+                              "{LoginController.instance.currentUser.name}", // Replace with actual user name
+                              style:
+                                  TextStyle(fontSize: 14, color: Colors.grey),
+                            ),
+                            const SizedBox(height: 8),
+                            Obx(() {
+                              return Text(
+                                AddressSelectionController
+                                    .instance.fullAddress.value,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              );
+                            })
+                          ],
+                        ),
+                        const Spacer(),
+                        const Icon(
+                          Icons.arrow_forward_ios_outlined,
+                          color: MyColors.dividerColor,
+                          size: 20,
+                        )
+                      ],
+                    )
+                  ],
+                ),
               ),
+
               // Customer Notes
               buildInfoCard(
                 context: context,
@@ -89,10 +121,10 @@ class ConfirmOrderScreen extends StatelessWidget {
               buildInfoCard(
                 context: context,
                 children: [
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
+                      Text(
                         'Chi tiết đơn hàng',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 16),
@@ -137,9 +169,45 @@ class ConfirmOrderScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      const Text(
+                        'Tổng: ',
+                        style: TextStyle(
+                          fontSize: 14,
+                        ),
+                      ),
                       Text(
-                        'Tổng tiền: ',
+                        '${cartController.totalPrice}đ',
                         style: const TextStyle(
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Phí vận chuyển: ',
+                        style: TextStyle(
+                          fontSize: 14,
+                        ),
+                      ),
+                      Text(
+                        '${cartController.deliveryFee}đ',
+                        style: const TextStyle(
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Tổng tiền: ',
+                        style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                             color: MyColors.primaryTextColor),
@@ -168,10 +236,6 @@ class ConfirmOrderScreen extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          // icon: const Icon(
-          //   Icons.check_circle,
-          //   color: MyColors.white,
-          // ),
           backgroundColor: MyColors.primaryColor,
         ),
       ),
