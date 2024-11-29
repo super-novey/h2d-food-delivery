@@ -35,7 +35,7 @@ class AddressController extends GetxController {
     try {
       var provinceList = await _addressRepository.getProvinces();
       provinces.assignAll(provinceList);
-      print("Dữ liệu các tỉnh: $provinces");
+      // print("Dữ liệu các tỉnh: $provinces");
     } catch (e) {
       print("Error fetching provinces: $e");
     }

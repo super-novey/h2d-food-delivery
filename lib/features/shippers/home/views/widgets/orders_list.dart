@@ -36,7 +36,7 @@ class OrdersList extends StatelessWidget {
             }
 
             if (controller.orders.isEmpty) {
-              return const Center(child: Text("No orders available"));
+              return const Center(child: Text("Không có đơn hàng nào."));
             }
 
             return ListView.builder(
