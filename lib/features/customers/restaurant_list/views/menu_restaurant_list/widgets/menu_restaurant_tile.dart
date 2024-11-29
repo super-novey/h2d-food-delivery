@@ -46,83 +46,88 @@ class MenuRestaurantTile extends StatelessWidget {
                 const SizedBox(
                   width: MySizes.spaceBtwItems,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      item.itemName,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyLarge!
-                          .apply(color: MyColors.primaryTextColor),
-                    ),
-                    const SizedBox(
-                      height: MySizes.xs,
-                    ),
-                    Text(
-                      item.description,
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelMedium!
-                          .apply(color: MyColors.secondaryTextColor),
-                    ),
-                    const SizedBox(
-                      height: MySizes.xs,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          "Còn lại: ${item.quantity.toString()}",
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelSmall!
-                              .apply(color: MyColors.primaryTextColor),
-                        ),
-                        const SizedBox(
-                          width: MySizes.sm,
-                        ),
-                        Container(
-                            color: MyColors.dividerColor,
-                            width: 0.8,
-                            height: 15),
-                        const SizedBox(
-                          width: MySizes.sm,
-                        ),
-                        Text(
-                          "Đã bán: ${item.quantity.toString()}",
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelSmall!
-                              .apply(color: MyColors.primaryTextColor),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: MySizes.xs,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          MyFormatter.formatCurrency(item.price),
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyLarge!
-                              .apply(color: MyColors.darkPrimaryTextColor),
-                        ),
-                        InkWell(
-                          onTap: () {
-                             cartController.addToCart(item);
-                          },
-                          child: const Icon(
-                            Icons.add_box,
-                            color: MyColors.darkPrimaryTextColor,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        item.itemName,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyLarge!
+                            .apply(color: MyColors.primaryTextColor),
+                      ),
+                      const SizedBox(
+                        height: MySizes.xs,
+                      ),
+                      Text(
+                        item.description,
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelMedium!
+                            .apply(color: MyColors.secondaryTextColor),
+                      ),
+                      const SizedBox(
+                        height: MySizes.xs,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            "Còn lại: ${item.quantity.toString()}",
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall!
+                                .apply(color: MyColors.primaryTextColor),
                           ),
+                          const SizedBox(
+                            width: MySizes.sm,
+                          ),
+                          Container(
+                              color: MyColors.dividerColor,
+                              width: 0.8,
+                              height: 15),
+                          const SizedBox(
+                            width: MySizes.sm,
+                          ),
+                          Text(
+                            "Đã bán: ${item.quantity.toString()}",
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall!
+                                .apply(color: MyColors.primaryTextColor),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: MySizes.xs,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: MySizes.sm),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              MyFormatter.formatCurrency(item.price),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .apply(color: MyColors.darkPrimaryTextColor),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                cartController.addToCart(item);
+                              },
+                              child: const Icon(
+                                Icons.add_box,
+                                color: MyColors.darkPrimaryTextColor,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
