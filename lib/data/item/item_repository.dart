@@ -40,7 +40,7 @@ class ItemRepository extends GetxController {
 
   Future<void> removeItem(String itemId) async {
     try {
-      await HttpHelper.delete("item/${itemId.toString()}");
+      await HttpHelper.put("item/delete/${itemId.toString()}");
     } on Exception catch (_) {
       rethrow;
     }
