@@ -55,7 +55,7 @@ class RestaurantController extends GetxController {
     try {
       final allItemsByCategory = await Future.wait(
         allCategories
-            .map((cat) => _itemRepository.getItemsByCategoryID(cat.categoryId)),
+            .map((cat) => _itemRepository.getItemsByCategoryIDInCustomer(cat.categoryId)),
       );
       final combinedItems =
           allItemsByCategory.expand((items) => items).toList();

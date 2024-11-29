@@ -21,6 +21,18 @@ class ItemRepository extends GetxController {
       rethrow;
     }
   }
+  Future<List<Item>> getItemsByCategoryIDInCustomer(String categoryId) async {
+    try {
+      final res =
+          await HttpHelper.get("item/customer/category/${categoryId.toString()}");
+      final list = (res["data"] as List)
+          .map((category) => Item.fromJson(category))
+          .toList();
+      return list;
+    } on Exception catch (_) {
+      rethrow;
+    }
+  }
 
   Future<ApiResponse<Item>> updateItem(
       Item oldItem, List<http.MultipartFile>? files) async {
