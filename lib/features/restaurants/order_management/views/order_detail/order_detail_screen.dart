@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/custom_app_bar.dart';
-import 'package:food_delivery_h2d/features/restaurants/order_management/models/order_model.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
+
+import '../../../../shippers/home/models/order_model.dart';
 
 class OrderDetailScreen extends StatelessWidget {
   const OrderDetailScreen({super.key, required this.selectedOrder});
@@ -53,7 +54,7 @@ class OrderDetailScreen extends StatelessWidget {
                       .apply(color: MyColors.darkPrimaryTextColor),
                 ),
                 Text(
-                  selectedOrder.orderId.toString(),
+                  selectedOrder.id.toString(),
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         color: MyColors.primaryTextColor,
                         height: 2,
@@ -76,7 +77,7 @@ class OrderDetailScreen extends StatelessWidget {
                 ),
                 Text(
                   MyFormatter.formatTime(
-                      selectedOrder.orderDateTime.toString()),
+                      selectedOrder.orderDatetime.toString()),
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         color: MyColors.primaryTextColor,
                         height: 2,

@@ -36,6 +36,7 @@ class OrderListScreen extends StatelessWidget {
             Expanded(
               child: TabBarView(
                 children: [
+                  // New orders list
                   ListView.builder(
                     itemCount: orderController.allOrders.length,
                     itemBuilder: (context, index) {
@@ -43,16 +44,18 @@ class OrderListScreen extends StatelessWidget {
                       return NewOrderTile(order: order);
                     },
                   ),
-                  ListView.builder(itemCount: orderController.allOrders.length,
-                  itemBuilder: (context, index) {
-                    final order = orderController.allOrders[index];
-                    return PreparingOrderTile(order: order);
-                  }),
-                  ListView.builder(itemCount: orderController.allOrders.length,
-                  itemBuilder: (context, index) {
-                    final order = orderController.allOrders[index];
-                    return HistoryOrderTile(order: order);
-                  }),
+                  ListView.builder(
+                      itemCount: orderController.allOrders.length,
+                      itemBuilder: (context, index) {
+                        final order = orderController.allOrders[index];
+                        return PreparingOrderTile(order: order);
+                      }),
+                  ListView.builder(
+                      itemCount: orderController.allOrders.length,
+                      itemBuilder: (context, index) {
+                        final order = orderController.allOrders[index];
+                        return HistoryOrderTile(order: order);
+                      }),
                 ],
               ),
             ),
