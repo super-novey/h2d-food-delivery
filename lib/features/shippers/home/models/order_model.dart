@@ -16,7 +16,8 @@ class Order {
   String? driverStatus;
   String? restStatus;
   List<OrderItem> orderItems;
-  String? fullAddress;
+  String? restAddress;
+  String? custAddress;
 
   // Add the missing fields
   String? restProvinceId;
@@ -39,7 +40,8 @@ class Order {
     this.driverStatus,
     this.restStatus,
     this.orderItems = const [],
-    this.fullAddress,
+    this.restAddress,
+    this.custAddress, // Initialize custAddress
     this.restProvinceId, // Initialize restProvinceId
     this.restDistrictId, // Initialize restDistrictId
     this.restCommuneId, // Initialize restCommuneId
@@ -63,7 +65,8 @@ class Order {
       'driverStatus': driverStatus,
       'restStatus': restStatus,
       'orderItems': orderItems.map((item) => item.toJson()).toList(),
-      'fullAddress': fullAddress,
+      'restAddress': restAddress,
+      'custAddress': custAddress,
       'restProvinceId': restProvinceId,
       'restDistrictId': restDistrictId,
       'restCommuneId': restCommuneId,
@@ -94,7 +97,8 @@ class Order {
       orderItems: (json['orderItems'] as List)
           .map((item) => OrderItem.fromJson(item))
           .toList(),
-      fullAddress: json['fullAddress'], // Parse the fullAddress field
+      restAddress: json['restAddress'], // Parse the restAddress field
+      custAddress: json['custAddress'], // Parse the custAddress field
       restProvinceId: json['restProvinceId'], // Parse the new field
       restDistrictId: json['restDistrictId'], // Parse the new field
       restCommuneId: json['restCommuneId'], // Parse the new field
@@ -118,7 +122,8 @@ class Order {
         'driverStatus: $driverStatus, '
         'restStatus: $restStatus, '
         'orderItems: $orderItems, '
-        'fullAddress: $fullAddress, '
+        'restAddress: $restAddress, '
+        'custAddress: $custAddress, '
         'restProvinceId: $restProvinceId, '
         'restDistrictId: $restDistrictId, '
         'restCommuneId: $restCommuneId'
