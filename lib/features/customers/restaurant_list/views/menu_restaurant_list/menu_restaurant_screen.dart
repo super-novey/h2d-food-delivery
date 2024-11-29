@@ -4,6 +4,7 @@ import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/custom_app_bar.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/cart_controller.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/restaurant_controller.dart';
+import 'package:food_delivery_h2d/features/customers/restaurant_list/views/confirm_order/confirm_order_screen.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/views/menu_restaurant_list/widgets/detail_cart.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/views/menu_restaurant_list/widgets/detail_restaurant_screen.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/views/menu_restaurant_list/widgets/menu_restaurant_tile.dart';
@@ -265,7 +266,9 @@ class MenuRestaurantScreen extends StatelessWidget {
                   width: MySizes.md,
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Get.to(ConfirmOrderScreen());
+                  },
                   child: Text(
                     "Đặt hàng",
                     style: Theme.of(context)

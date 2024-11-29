@@ -4,7 +4,7 @@ class Order {
   String id;
   String customerName;
   String restaurantName;
-  String restDetailAddress;
+  String? restDetailAddress;
   String? assignedShipperId;
   double? custShipperRating;
   double? deliveryFee;
@@ -27,7 +27,7 @@ class Order {
     this.id = '',
     required this.customerName,
     required this.restaurantName,
-    required this.restDetailAddress,
+    this.restDetailAddress,
     this.assignedShipperId,
     this.custShipperRating,
     required this.deliveryFee,

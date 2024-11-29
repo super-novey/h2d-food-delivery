@@ -6,6 +6,7 @@ class CartController extends GetxController {
 
   var cartItems = <Item>[].obs;
   var itemQuantities = <String, int>{}.obs;
+  double deliveryFee = 15000;
 
   int get totalItems {
     return itemQuantities.values.fold(0, (sum, quantity) => sum + quantity);
@@ -16,6 +17,10 @@ class CartController extends GetxController {
       var quantity = itemQuantities[item.itemName] ?? 1;
       return sum + (item.price * quantity);
     });
+  }
+
+  double get orderPrice {
+    return totalPrice + deliveryFee;
   }
 
   void addToCart(Item item) {
