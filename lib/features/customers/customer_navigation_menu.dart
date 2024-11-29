@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/customers/home/customer_home_screen.dart';
+import 'package:food_delivery_h2d/features/customers/profile/views/profile_customer_screen.dart';
 import 'package:food_delivery_h2d/features/restaurants/notification_restaurant/views/notification_restaurant_screen.dart';
-import 'package:food_delivery_h2d/features/restaurants/profile/views/profile_restaurant_screen.dart';
 import 'package:food_delivery_h2d/features/restaurants/rating_management/views/rating_list/rating_list_screen.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
@@ -68,6 +68,6 @@ class NavigationController extends GetxController {
     const CustomerHomeScreen(),
     const RatingListScreen(),
     const NotificationRestaurantScreen(),
-    const ProfileRestaurantScreen()
+    const ProfileCustomerScreen()
   ];
 }

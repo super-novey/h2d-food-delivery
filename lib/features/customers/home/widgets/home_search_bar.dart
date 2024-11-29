@@ -29,7 +29,7 @@ class HomeSearchBar extends StatelessWidget {
                     ),
                     const SizedBox(width: MySizes.xs),
                     Text(
-                      "Nhập tên món ăn, nhà hàng",
+                      "Nhập tên món ăn",
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                             color: MyColors.secondaryTextColor,
                             fontStyle: FontStyle.italic,

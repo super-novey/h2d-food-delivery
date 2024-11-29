@@ -35,6 +35,7 @@ class RestaurantController extends GetxController {
     if (userId.isNotEmpty) {
       await fetchCategoriesAndItems();
     }
+    fetchRestaurants();
 
   }
 

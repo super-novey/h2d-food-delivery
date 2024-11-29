@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/bindings/network_manager.dart';
 import 'package:food_delivery_h2d/data/authentication/auth_repository.dart';
+import 'package:food_delivery_h2d/data/customer/customer_repository.dart';
 import 'package:food_delivery_h2d/data/driver/driver_repository.dart';
 import 'package:food_delivery_h2d/data/partner/partner_repository.dart';
 import 'package:food_delivery_h2d/data/response/status.dart';
@@ -34,6 +35,7 @@ class LoginController extends GetxController {
   final AuthRepository _authRepository = Get.put(AuthRepository());
   final DriverRepository _driverRepository = Get.put(DriverRepository());
   final PartnerRepository _partnerRepository = Get.put(PartnerRepository());
+  final CustomerRepository _userRepository = Get.put(CustomerRepository());
 
   void saveUser(dynamic user) {
     _localStorage.write("currentUser", user);
@@ -91,6 +93,10 @@ class LoginController extends GetxController {
         Loaders.successSnackBar(title: "Thành công!", message: res.message);
         Get.offAll(() => const RestaurantNavigationMenu());
       } else if (userRole == "customer") {
+                print("userid ${userId}");
+
+        final currentCustomer = await _userRepository.getCurrentUser(userId);
+        saveUser(currentCustomer);
         Loaders.successSnackBar(title: "Thành công!", message: res.message);
         Get.offAll(() => const CustomerNavigationMenu());
       } else {
