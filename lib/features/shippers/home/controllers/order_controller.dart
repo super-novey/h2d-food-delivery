@@ -27,7 +27,7 @@ class OrdersController extends GetxController {
 
       List<Order> ordersWithFullAddress = await Future.wait(
         fetchedOrders.map((order) async {
-          order.fullAddress = await addressController.getFullAddress(
+          order.restAddress = await addressController.getFullAddress(
             order.restProvinceId,
             order.restDistrictId,
             order.restCommuneId,

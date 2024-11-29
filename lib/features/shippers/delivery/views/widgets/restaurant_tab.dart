@@ -31,7 +31,7 @@ class RestaurantTab extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  order.fullAddress ?? '',
+                  order.restAddress ?? '',
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 14),
                 ),
