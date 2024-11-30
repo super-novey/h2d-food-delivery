@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/header/primary_header.dart';
-import 'package:food_delivery_h2d/features/authentication/views/login/login_screen.dart';
+import 'package:food_delivery_h2d/features/customers/home/item_home_search_screen.dart';
 import 'package:food_delivery_h2d/features/customers/home/widgets/customer_appbar.dart';
 import 'package:food_delivery_h2d/features/customers/home/widgets/home_search_bar.dart';
 import 'package:food_delivery_h2d/features/customers/home/widgets/image_place_holder.dart';
 import 'package:food_delivery_h2d/features/customers/home/widgets/item_home.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/views/famous_restaurant_list/list_famous_restaurant.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/views/top_item_list/list_top_item.dart';
-import 'package:food_delivery_h2d/features/restaurants/menu_management/views/menu_list/menu_food_list_screen.dart';
-import 'package:food_delivery_h2d/features/restaurants/order_management/views/order_list/order_list_screen.dart';
-import 'package:food_delivery_h2d/features/restaurants/statistic_management/views/statistic_screen.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
@@ -66,56 +63,64 @@ class CustomerHomeScreen extends StatelessWidget {
                       image: MyImagePaths.iconRice,
                       title: "Cơm",
                       onTap: () {
-                        Get.to(const OrderListScreen());
+                        Get.to(const ItemHomeSearchScreen(),
+                        arguments: "Cơm",);
                       },
                     ),
                     ItemHome(
                       title: "Bún",
                       image: MyImagePaths.iconVermicelli,
                       onTap: () {
-                        Get.to(const MenuFoodListScreen());
+                        Get.to(const ItemHomeSearchScreen(),
+                        arguments: "Bún",);
                       },
                     ),
                     ItemHome(
                       image: MyImagePaths.iconPho,
                       title: "Phở",
                       onTap: () {
-                        Get.to(const StatisticScreen());
+                        Get.to(const ItemHomeSearchScreen(),
+                        arguments: "Phở",);
                       },
                     ),
                     ItemHome(
                       image: MyImagePaths.iconNoodle,
                       title: "Mì",
                       onTap: () {
-                        Get.to(const LoginScreen());
+                        Get.to(const ItemHomeSearchScreen(),
+                        arguments: "Mì",);
                       },
                     ),
                     ItemHome(
                       image: MyImagePaths.iconSnack,
                       title: "Ăn vặt",
                       onTap: () {
-                        Get.to(const LoginScreen());
+                        Get.to(const ItemHomeSearchScreen(),
+                        arguments: "Ăn vặt",);
                       },
                     ),
                     ItemHome(
                       image: MyImagePaths.iconCake,
                       title: "Bánh ngọt",
                       onTap: () {
-                        Get.to(const LoginScreen());
+                        Get.to(const ItemHomeSearchScreen(),
+                        arguments: "Bánh ngọt",);
                       },
                     ),
                     ItemHome(
                       image: MyImagePaths.iconDrink,
                       title: "Trà sữa",
                       onTap: () {
-                        Get.to(const LoginScreen());
+                        Get.to(const ItemHomeSearchScreen(),
+                        arguments: "Trà sữa",);
                       },
                     ),
                     ItemHome(
                       image: MyImagePaths.iconJuice,
                       title: "Nước ép",
                       onTap: () {
-                        Get.to(const LoginScreen());
+                        Get.to(const ItemHomeSearchScreen(),
+                        arguments: "Nước ép",);
                       },
                     ),
                   ],

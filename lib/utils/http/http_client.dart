@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class HttpHelper {
-  static const String _baseUrl = "http://localhost:8081/api/v1"; // change URL
-  // "https://e309-14-169-1-147.ngrok-free.app/api/v1";
+  static const String _baseUrl = //"http://localhost:8081/api/v1"; // change URL
+  "https://7409-116-108-139-100.ngrok-free.app/api/v1";
 
   static Future<Map<String, dynamic>> get(String endpoint) async {
     final response = await http.get(Uri.parse('$_baseUrl/$endpoint'));
