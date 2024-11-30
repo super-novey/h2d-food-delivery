@@ -74,11 +74,10 @@ class MenuFoodTile extends StatelessWidget {
                         width: 55,
                         height: 55,
                         fit: BoxFit.cover,
-                        placeholder: (context, url) => const Center(
-                            child:
-                                CircularProgressIndicator()), // Show a loading indicator while the image loads
-                        errorWidget: (context, url, error) => const Icon(Icons
-                            .error), // Show an error icon if the image fails to load
+                        placeholder: (context, url) =>
+                            const Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
                       )),
                   const SizedBox(
                     width: MySizes.spaceBtwItems,

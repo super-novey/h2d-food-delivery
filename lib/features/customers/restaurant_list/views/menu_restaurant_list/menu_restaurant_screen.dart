@@ -19,17 +19,20 @@ import 'package:get/get.dart';
 class MenuRestaurantScreen extends StatelessWidget {
   final String userId;
 
-  const MenuRestaurantScreen({super.key, required this.userId});
+  MenuRestaurantScreen({super.key, required this.userId});
+  final RestaurantController restaurantController =
+      Get.put(RestaurantController());
+
+  final cartController = Get.put(CartController());
+
+  void fetch() {
+    restaurantController.setUserId(userId);
+    restaurantController.fetchDetailPartner(userId);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final restaurantController = Get.put(RestaurantController());
-    restaurantController.setUserId(userId);
-
-    restaurantController.fetchCategoriesAndItems();
-    restaurantController.fetchDetailPartner(userId);
-    final cartController = Get.put(CartController());
-
+    fetch();
     return Scaffold(
       appBar: const CustomAppBar(
         title: Text('Thực đơn'),
@@ -154,53 +157,48 @@ class MenuRestaurantScreen extends StatelessWidget {
               const SizedBox(
                 height: MySizes.md,
               ),
-              Obx(
-                () {
-                  if (restaurantController.isLoading.value) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: restaurantController.allCategories.length,
-                    itemBuilder: (context, index) {
-                      Category category =
-                          restaurantController.allCategories[index];
-                      List<Item> categoryItems = restaurantController
-                          .getItemsForCategory(category.categoryId);
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: MySizes.sm, left: MySizes.md),
-                            child: Text(category.categoryName,
-                                style: const TextStyle(
-                                  color: MyColors.darkPrimaryColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                )),
-                          ),
-                          Column(
-                            children: List.generate(categoryItems.length,
-                                (itemIndex) {
-                              Item item = categoryItems[itemIndex];
-                              return MenuRestaurantTile(item: item);
-                            }),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(
-                                top: MySizes.sm,
-                                left: MySizes.lg,
-                                right: MySizes.lg),
-                            child: Divider(color: MyColors.dividerColor),
-                          )
-                        ],
-                      );
-                    },
-                  );
-                },
-              ),
+              Obx(() => restaurantController.isLoading.value
+                  ? const Center(child: CircularProgressIndicator())
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: restaurantController.allCategories.length,
+                      itemBuilder: (context, index) {
+                        Category category =
+                            restaurantController.allCategories[index];
+                        List<Item> categoryItems = restaurantController
+                            .getItemsForCategory(category.categoryId);
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: MySizes.sm, left: MySizes.md),
+                              child: Text(category.categoryName,
+                                  style: const TextStyle(
+                                    color: MyColors.darkPrimaryColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  )),
+                            ),
+                            Column(
+                              children: List.generate(categoryItems.length,
+                                  (itemIndex) {
+                                Item item = categoryItems[itemIndex];
+                                return MenuRestaurantTile(item: item);
+                              }),
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(
+                                  top: MySizes.sm,
+                                  left: MySizes.lg,
+                                  right: MySizes.lg),
+                              child: Divider(color: MyColors.dividerColor),
+                            )
+                          ],
+                        );
+                      },
+                    )),
             ],
           ),
         ),

@@ -31,12 +31,11 @@ class RestaurantController extends GetxController {
 
   @override
   void onInit() async {
-    super.onInit();
     if (userId.isNotEmpty) {
       await fetchCategoriesAndItems();
     }
+    super.onInit();
     fetchRestaurants();
-
   }
 
   Future<void> fetchCategoriesAndItems() async {
@@ -55,8 +54,8 @@ class RestaurantController extends GetxController {
   Future<void> fetchAllItems() async {
     try {
       final allItemsByCategory = await Future.wait(
-        allCategories
-            .map((cat) => _itemRepository.getItemsByCategoryIDInCustomer(cat.categoryId)),
+        allCategories.map((cat) =>
+            _itemRepository.getItemsByCategoryIDInCustomer(cat.categoryId)),
       );
       final combinedItems =
           allItemsByCategory.expand((items) => items).toList();
