@@ -64,7 +64,7 @@ class CartItemTile extends StatelessWidget {
                       height: MySizes.xs,
                     ),
                     Text(
-                      MyFormatter.formatCurrency(item.price),
+                      '${item.price}đ',
                       style: Theme.of(context)
                           .textTheme
                           .bodyLarge!

@@ -1,3 +1,4 @@
+import 'package:food_delivery_h2d/features/customers/confirm_order/controllers/order_controller.dart';
 import 'package:get/get.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/item_model.dart';
 
@@ -12,7 +13,7 @@ class CartController extends GetxController {
     return itemQuantities.values.fold(0, (sum, quantity) => sum + quantity);
   }
 
-  int get totalPrice {
+  double get totalPrice {
     return cartItems.fold(0, (sum, item) {
       var quantity = itemQuantities[item.itemName] ?? 1;
       return sum + (item.price * quantity);
@@ -20,6 +21,7 @@ class CartController extends GetxController {
   }
 
   double get orderPrice {
+    OrderController.instance.order.totalPrice = totalPrice;
     return totalPrice + deliveryFee;
   }
 

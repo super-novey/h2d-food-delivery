@@ -98,7 +98,7 @@ class MenuFoodTile extends StatelessWidget {
                         height: MySizes.sm,
                       ),
                       Text(
-                        MyFormatter.formatCurrency(item.price),
+                        '${item.price}đ',
                         style: Theme.of(context)
                             .textTheme
                             .labelMedium!

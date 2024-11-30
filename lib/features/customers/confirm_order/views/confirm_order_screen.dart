@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/custom_app_bar.dart';
 import 'package:food_delivery_h2d/common/widgets/keyboard/keyboard_hider.dart';
+import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
 import 'package:food_delivery_h2d/features/customers/address_selection/controllers/address_selection_controller.dart';
 import 'package:food_delivery_h2d/features/customers/confirm_order/controllers/order_controller.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/cart_controller.dart';
@@ -57,19 +58,30 @@ class ConfirmOrderScreen extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(height: 8),
-                            const Text(
-                              "{LoginController.instance.currentUser.name}", // Replace with actual user name
+                            Text(
+                              "${LoginController.instance.currentUser.name}", // Replace with actual user name
+                              style:
+                                  TextStyle(fontSize: 14, color: Colors.grey),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              "${LoginController.instance.currentUser.phone}", // Replace with actual user name
                               style:
                                   TextStyle(fontSize: 14, color: Colors.grey),
                             ),
                             const SizedBox(height: 8),
                             Obx(() {
-                              return Text(
-                                AddressSelectionController
-                                    .instance.fullAddress.value,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
+                              return SizedBox(
+                                width: MediaQuery.of(context).size.width *
+                                    0.8, // Set the desired width
+                                child: Text(
+                                  addressController.fullAddress.value,
+                                  maxLines: 3,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
                                 ),
                               );
                             })
@@ -227,7 +239,9 @@ class ConfirmOrderScreen extends StatelessWidget {
           ),
         ),
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {},
+          onPressed: () {
+            orderController.placeOrder();
+          },
           label: const Text(
             'Đặt hàng',
             style: TextStyle(
