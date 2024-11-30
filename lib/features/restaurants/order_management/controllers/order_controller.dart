@@ -1,15 +1,49 @@
-import 'package:food_delivery_h2d/features/restaurants/order_management/models/order_item_model.dart';
+import 'package:food_delivery_h2d/data/order/order_repository.dart';
 import 'package:get/get.dart';
-
+import '../../../authentication/controllers/address_controller.dart';
 import '../../../shippers/home/models/order_model.dart';
 
 class OrderController extends GetxController {
   static OrderController get instance => Get.find();
+
+  var isLoading = false.obs;
   final List<Order> allOrders = <Order>[].obs;
-  // final List<OrderItem> orderItems = [
-  //   OrderItem(orderItemId: 1, orderId: 1, itemId: 3, quantity: 1),
-  //   OrderItem(orderItemId: 2, orderId: 1, itemId: 4, quantity: 2),
-  //   OrderItem(orderItemId: 3, orderId: 2, itemId: 5, quantity: 1),
-  //   OrderItem(orderItemId: 4, orderId: 3, itemId: 6, quantity: 3),
-  // ];
+
+  final _orderRespository = Get.put(OrderRepository());
+  final addressController = Get.put(AddressController());
+
+  @override
+  void onInit() async {
+    fetchOrders();
+    super.onInit();
+  }
+
+  Future<void> fetchOrders() async {
+    try {
+      isLoading(true);
+
+      // Fetch orders from the repository
+      final fetchedOrders =
+          await _orderRespository.getOrdersByStatus(driverStatus: "waiting");
+
+      List<Order> ordersWithFullAddress = await Future.wait(
+        fetchedOrders.map((order) async {
+          order.restAddress = await addressController.getFullAddress(
+            order.restProvinceId,
+            order.restDistrictId,
+            order.restCommuneId,
+            order.restDetailAddress,
+          );
+          return order;
+        }),
+      );
+
+      allOrders.assignAll(ordersWithFullAddress);
+      print(allOrders);
+    } catch (e) {
+      print("Error fetching orders: $e");
+    } finally {
+      isLoading(false);
+    }
+  }
 }

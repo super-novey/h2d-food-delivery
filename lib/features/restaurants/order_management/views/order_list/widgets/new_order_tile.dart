@@ -58,7 +58,7 @@ class NewOrderTile extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        '10 món',
+                        order.customerName,
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall!
