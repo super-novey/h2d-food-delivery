@@ -108,7 +108,7 @@ class MenuRestaurantTile extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              MyFormatter.formatCurrency(item.price),
+                              '${item.price}đ',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyLarge!

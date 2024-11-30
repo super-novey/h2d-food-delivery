@@ -1,4 +1,5 @@
 import 'package:food_delivery_h2d/data/response/api_response.dart';
+import 'package:food_delivery_h2d/features/customers/confirm_order/models/order_model.dart';
 import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
 import 'package:food_delivery_h2d/utils/http/http_client.dart';
 import 'package:get/get.dart';
@@ -50,13 +51,14 @@ class OrderRepository extends GetxController {
   }
 
   /// Places a new order.
-  Future<ApiResponse<Order>> placeOrder(Order newOrder) async {
+  Future<ApiResponse<Order>> placeOrder(OrderModel newOrder) async {
     try {
       final res = await HttpHelper.post("order", newOrder.toJson());
       if (res["hasError"] == true) {
         return ApiResponse.error(res["message"]);
       }
       final result = Order.fromJson(res["data"]);
+      Get.back();
       return ApiResponse.completed(result, res["message"]);
     } catch (e) {
       print(e);

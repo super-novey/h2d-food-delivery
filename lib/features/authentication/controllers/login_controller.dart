@@ -93,7 +93,7 @@ class LoginController extends GetxController {
         Loaders.successSnackBar(title: "Thành công!", message: res.message);
         Get.offAll(() => const RestaurantNavigationMenu());
       } else if (userRole == "customer") {
-                print("userid ${userId}");
+        print("userid ${userId}");
 
         final currentCustomer = await _userRepository.getCurrentUser(userId);
         saveUser(currentCustomer);
