@@ -11,12 +11,14 @@ class Item {
   String description;
   RxBool isAvailable;
   String itemImage;
+  String keySearch;
 
   Item(
       {this.itemId = '',
       this.categoryId = '',
       this.partnerId = '',
       this.itemName = '',
+      this.keySearch = '',
       this.price = 0,
       this.description = '',
       bool? isAvailable,
@@ -34,7 +36,8 @@ class Item {
       'status': isAvailable.value.toString(),
       'itemImage': itemImage,
       'partnerId': partnerId,
-      "quantity": quantity.toString()
+      "quantity": quantity.toString(),
+      "keySearch": keySearch
     };
   }
 
@@ -49,6 +52,7 @@ class Item {
       isAvailable: json['status'] ?? true,
       itemImage: json['itemImage'] ?? MyImagePaths.iconImage,
       quantity: json['quantity'] ?? 0,
+      keySearch: json['keySearch'] ?? "",
     );
   }
 

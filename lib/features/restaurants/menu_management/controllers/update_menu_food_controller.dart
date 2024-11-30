@@ -30,6 +30,7 @@ class UpdateMenuFoodController extends GetxController {
 
   var foodImage = Rx<File?>(null);
   var selectedCaterory = Rxn<String>();
+  var keySearch = Rxn<String>("");
 
   GlobalKey<FormState> itemFormKey = GlobalKey<FormState>();
 
@@ -179,6 +180,7 @@ class UpdateMenuFoodController extends GetxController {
 
   Item getItemFromForm() {
     return Item(
+        keySearch: keySearch.value.toString(),
         itemName: nameController.text,
         itemId: updatedItemId,
         categoryId: selectedCaterory.value.toString(),

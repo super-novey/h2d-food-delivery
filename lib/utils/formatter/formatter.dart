@@ -56,4 +56,15 @@ class MyFormatter {
       },
     );
   }
+
+  static String removeVietnameseTones(String str) {
+    final withDiacritics =
+        'áàảạãăắằẳẵặâấầẩẫậđéèẻẽẹêếềểễệíìỉĩịóòỏõọôốồổỗộơớờởỡợúùủũụưứừửữựýỳỷỹỵ';
+    final withoutDiacritics =
+        'aaaaaăăăăăâââââđeêêêêêêiiiiiõoôôôôôôoôôôôuụuụuuuyyyyy';
+    for (int i = 0; i < withDiacritics.length; i++) {
+      str = str.replaceAll(withDiacritics[i], withoutDiacritics[i]);
+    }
+    return str;
+  }
 }

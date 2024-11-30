@@ -8,6 +8,7 @@ import 'package:food_delivery_h2d/features/restaurants/menu_management/models/ca
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/item_model.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
+import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
 import 'package:food_delivery_h2d/utils/validations/validators.dart';
 import 'package:get/get.dart';
 
@@ -26,6 +27,8 @@ class MenuFoodDetailScreen extends StatelessWidget {
         selectedItem.quantity.toString();
     updateMenuFoodController.descriptionController.text =
         selectedItem.description;
+
+    updateMenuFoodController.keySearch.value = selectedItem.keySearch;
 
     String categoryId = selectedItem.categoryId.toString();
     if (menuFoodController.allCategories
@@ -307,6 +310,86 @@ class MenuFoodDetailScreen extends StatelessWidget {
                                 textController:
                                     updateMenuFoodController.quantityController,
                                 label: "Nhập số lượng món"),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: MySizes.sm),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Từ khóa",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .apply(color: MyColors.darkPrimaryTextColor),
+                          ),
+                          Obx(
+                            () => SizedBox(
+                              width: 150,
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                    hint: Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(
+                                            MySizes.sm + 2),
+                                        child: Text(
+                                          "Chọn từ khóa",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge!
+                                              .copyWith(
+                                                color:
+                                                    MyColors.secondaryTextColor,
+                                              ),
+                                        ),
+                                      ),
+                                    ),
+                                    isExpanded: true,
+                                    value: updateMenuFoodController
+                                            .keySearch.value!.isNotEmpty
+                                        ? updateMenuFoodController
+                                            .keySearch.value
+                                        : null,
+                                    items: [
+                                      "Cơm",
+                                      "Bún",
+                                      "Phở",
+                                      "Mì",
+                                      "Ăn vặt",
+                                      "Bánh ngọt",
+                                      "Trà sữa",
+                                      "Nước ép"
+                                    ].map((category) {
+                                      return DropdownMenuItem<String>(
+                                        value: category,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(
+                                              MySizes.sm + 2),
+                                          child: Align(
+                                            alignment: Alignment.topRight,
+                                            child: Text(
+                                              category,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodySmall!
+                                                  .apply(
+                                                      color: MyColors
+                                                          .primaryTextColor),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      updateMenuFoodController
+                                          .keySearch(value.toString());
+                                    }),
+                              ),
+                            ),
                           ),
                         ],
                       ),
