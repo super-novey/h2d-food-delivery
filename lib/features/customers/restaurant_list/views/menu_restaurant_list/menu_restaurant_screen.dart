@@ -27,6 +27,7 @@ class MenuRestaurantScreen extends StatelessWidget {
 
   void fetch() {
     restaurantController.setUserId(userId);
+    restaurantController.fetchCategoriesAndItems();
     restaurantController.fetchDetailPartner(userId);
   }
 
