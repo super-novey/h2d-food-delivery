@@ -87,4 +87,18 @@ class ItemRepository extends GetxController {
       rethrow;
     }
   }
+
+  Future<List<Item>> searchItemInHome(String query) async {
+    try {
+      final response =
+          await HttpHelper.get("item/customer/home?keySearch=$query");
+
+      List<dynamic> data = response['data'] as List<dynamic>;
+
+      return data.map((item) => Item.fromJson(item)).toList();
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
 }

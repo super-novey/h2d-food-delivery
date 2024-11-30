@@ -1,23 +1,22 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/views/menu_restaurant_list/menu_restaurant_screen.dart';
-import 'package:food_delivery_h2d/features/customers/search/models/item_model.dart';
+import 'package:food_delivery_h2d/features/restaurants/menu_management/models/item_model.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
 import 'package:get/get.dart';
 
-class ItemSearchTile extends StatelessWidget {
-  final ItemModel item;
+class ItemHomeSearchTile extends StatelessWidget {
+  final Item item;
 
-  const ItemSearchTile({super.key, required this.item});
+  const ItemHomeSearchTile({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.to(const MenuRestaurantScreen(),
-        arguments: item.partnerId);
+        Get.to(MenuRestaurantScreen(), arguments: item.partnerId);
       },
       
       child: Padding(
