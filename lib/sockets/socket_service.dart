@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class SocketService extends GetxService {
-  static SocketService get instance => Get.find();
+  static SocketService get instance => Get.find<SocketService>();
   late IO.Socket _socket;
 
   Future init(String baseUrl) async {
@@ -16,6 +16,7 @@ class SocketService extends GetxService {
 
     _socket.onConnect((_) {
       print('Connected to the socket server');
+      print('SocketService initialized with baseUrl: $baseUrl');
     });
 
     _socket.onDisconnect((_) {

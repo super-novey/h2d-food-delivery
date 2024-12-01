@@ -129,4 +129,10 @@ class Order {
         'restCommuneId: $restCommuneId'
         ')';
   }
+
+  double getToTalPrice() {
+    double result = 0;
+    for (var x in orderItems) result += x.totalPrice;
+    return result;
+  }
 }

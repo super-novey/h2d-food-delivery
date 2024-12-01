@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/custom_app_bar.dart';
+import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
+import 'package:food_delivery_h2d/features/customers/confirm_order/models/order_model.dart';
 import 'package:food_delivery_h2d/features/restaurants/order_management/controllers/order_controller.dart';
 import 'package:food_delivery_h2d/features/restaurants/order_management/views/order_list/widgets/history_order_tile.dart';
 import 'package:food_delivery_h2d/features/restaurants/order_management/views/order_list/widgets/new_order_tile.dart';
 import 'package:food_delivery_h2d/features/restaurants/order_management/views/order_list/widgets/preparing_order_tile.dart';
 import 'package:food_delivery_h2d/features/restaurants/order_management/views/order_list/widgets/tab_item.dart';
+import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
+import 'package:food_delivery_h2d/sockets/socket_service.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:get/get.dart';
+
+import '../../../../../sockets/handlers/order_socket_handler.dart';
 
 class OrderListScreen extends StatelessWidget {
   const OrderListScreen({super.key});
@@ -14,6 +20,17 @@ class OrderListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final orderController = Get.put(OrderController());
+    final orderHandler = OrderSocketHandler();
+
+    orderHandler.joinOrderRoom(LoginController.instance.currentUser.partnerId);
+
+    orderHandler.listenForOrderCreates((newOrder) {
+      // Add the new order to the allOrders list
+      orderController.allOrders.add(newOrder);
+      print("Theeemm");
+      // final order = Order.fromJson(newOrder);
+    });
+
     return DefaultTabController(
       length: 3,
       child: Scaffold(

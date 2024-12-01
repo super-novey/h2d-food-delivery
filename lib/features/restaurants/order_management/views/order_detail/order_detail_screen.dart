@@ -18,7 +18,11 @@ class OrderDetailScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: MySizes.md, right: MySizes.md, top: MySizes.lg, bottom: MySizes.lg),
+          padding: const EdgeInsets.only(
+              left: MySizes.md,
+              right: MySizes.md,
+              top: MySizes.lg,
+              bottom: MySizes.lg),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Row(
@@ -32,7 +36,7 @@ class OrderDetailScreen extends StatelessWidget {
                       .apply(color: MyColors.darkPrimaryTextColor),
                 ),
                 Text(
-                  "Chưa xác nhận",
+                  selectedOrder.restStatus.toString(),
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         color: MyColors.primaryTextColor,
                         height: 2,
@@ -101,7 +105,7 @@ class OrderDetailScreen extends StatelessWidget {
                       .apply(color: MyColors.darkPrimaryTextColor),
                 ),
                 Text(
-                  "Nguyễn Văn A",
+                  selectedOrder.customerName,
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         color: MyColors.primaryTextColor,
                         height: 2,
@@ -125,7 +129,7 @@ class OrderDetailScreen extends StatelessWidget {
                       .apply(color: MyColors.darkPrimaryTextColor),
                 ),
                 Text(
-                  "Nguyễn Văn An",
+                  selectedOrder.restaurantName,
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         color: MyColors.primaryTextColor,
                         height: 2,
@@ -149,7 +153,7 @@ class OrderDetailScreen extends StatelessWidget {
                     final item = selectedOrder.orderItems[index];
                     return ListTile(
                       leading: Text(
-                        'Tên món ',
+                        item.itemName,
                         style: Theme.of(context)
                             .textTheme
                             .bodyLarge!
@@ -170,7 +174,7 @@ class OrderDetailScreen extends StatelessWidget {
                             width: MySizes.spaceBtwSections,
                           ),
                           Text(
-                            '20000đ',
+                            item.price.toString(),
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyLarge!
@@ -197,7 +201,7 @@ class OrderDetailScreen extends StatelessWidget {
                           .apply(color: MyColors.darkPrimaryTextColor),
                     ),
                     Text(
-                      "20000 VNĐ",
+                      selectedOrder.getToTalPrice().toString(),
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                             color: MyColors.primaryTextColor,
                             height: 2,

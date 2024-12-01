@@ -9,7 +9,6 @@ import 'package:url_strategy/url_strategy.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
-  await Get.putAsync(() => SocketService().init(BaseUrlSocket.baseUrl));
   setPathUrlStrategy();
   runApp(const App());
 }

@@ -78,7 +78,7 @@ class NewOrderTile extends StatelessWidget {
                         width: MySizes.sm,
                       ),
                       Text(
-                        '20000đ',
+                        order.getToTalPrice().toString(),
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall!
@@ -101,7 +101,7 @@ class NewOrderTile extends StatelessWidget {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 4.0),
                               child: Text(
-                                '${item.quantity} x Tên món ',
+                                '${item.quantity} x ${item.itemName} ',
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelSmall!
