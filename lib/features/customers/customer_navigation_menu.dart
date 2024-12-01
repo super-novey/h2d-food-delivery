@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/customers/home/customer_home_screen.dart';
+import 'package:food_delivery_h2d/features/customers/order/views/order_list/order_list_screen.dart';
 import 'package:food_delivery_h2d/features/customers/profile/views/profile_customer_screen.dart';
 import 'package:food_delivery_h2d/features/restaurants/notification_restaurant/views/notification_restaurant_screen.dart';
 import 'package:food_delivery_h2d/features/restaurants/rating_management/views/rating_list/rating_list_screen.dart';
@@ -66,7 +67,7 @@ class NavigationController extends GetxController {
 
   final screens = [
     const CustomerHomeScreen(),
-    const RatingListScreen(),
+    const CustomerOrderListScreen(),
     const NotificationRestaurantScreen(),
     const ProfileCustomerScreen()
   ];
