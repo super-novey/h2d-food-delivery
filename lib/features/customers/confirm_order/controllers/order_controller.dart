@@ -5,6 +5,7 @@ import 'package:food_delivery_h2d/features/customers/confirm_order/models/order_
 import 'package:food_delivery_h2d/features/customers/confirm_order/models/order_model.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/cart_controller.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/restaurant_controller.dart';
+import 'package:food_delivery_h2d/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 
 class OrderController extends GetxController {
@@ -51,7 +52,7 @@ class OrderController extends GetxController {
     }
   }
 
-  void placeOrder() {
+  Future<void> placeOrder() async {
     convertCartItemToOrderItem();
     OrderModel newOrder = OrderModel(
       custAddress: order.custAddress,
@@ -60,8 +61,12 @@ class OrderController extends GetxController {
       deliveryFee: deliveryFee,
       orderItems: order.orderItems,
       totalPrice: order.totalPrice,
+      note: order.note,
     );
     print(newOrder.toString());
-    orderRepository.placeOrder(newOrder);
+    await orderRepository.placeOrder(newOrder);
+    cartController.removeAllItem();
+    Loaders.successSnackBar(
+        title: "Thành công", message: "Đặt hàng thành công.");
   }
 }

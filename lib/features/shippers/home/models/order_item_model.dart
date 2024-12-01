@@ -2,8 +2,8 @@ class OrderItem {
   String itemId;
   String itemName;
   int quantity;
-  double price;
-  double totalPrice;
+  int price;
+  int totalPrice;
 
   OrderItem({
     required this.itemId,
@@ -30,8 +30,8 @@ class OrderItem {
       itemId: json['id'] ?? '',
       itemName: json['itemName'] ?? 'Unknow',
       quantity: json['quantity'] ?? 0,
-      price: (json['price'] as num).toDouble(),
-      totalPrice: (json['totalPrice'] as num).toDouble(),
+      price: (json['price'] as num).toInt(),
+      totalPrice: (json['totalPrice'] as num).toInt(),
     );
   }
 

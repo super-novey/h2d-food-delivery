@@ -3,6 +3,7 @@ import 'package:food_delivery_h2d/features/shippers/delivery/controllers/tabs_co
 import 'package:food_delivery_h2d/features/shippers/home/controllers/order_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
+import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
 import 'package:food_delivery_h2d/utils/helpers/handle_status_text.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +19,8 @@ class RestaurantTab extends StatelessWidget {
 
     return Scaffold(
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.only(
+            top: 8.0, left: 8.0, bottom: 68.0, right: 8.0),
         child: Column(
           children: [
             // Restaurant Information
@@ -36,14 +38,14 @@ class RestaurantTab extends StatelessWidget {
                       fontWeight: FontWeight.bold, fontSize: 14),
                 ),
                 const SizedBox(height: 8),
-                const Row(
+                Row(
                   children: [
                     Text(
                       'Trả: ',
                       style: TextStyle(fontSize: 14, color: Colors.grey),
                     ),
                     Text(
-                      '45.000đ',
+                      MyFormatter.formatCurrency(order.totalPrice ?? 0),
                       style:
                           TextStyle(fontSize: 14, color: MyColors.primaryColor),
                     ),
@@ -93,22 +95,28 @@ class RestaurantTab extends StatelessWidget {
             buildInfoCard(
               context: context,
               children: [
+                const Text(
+                  'Chi tiết đơn hàng',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+                const SizedBox(height: 8),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      'Chi tiết đơn hàng',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    Text(
+                      'Mã đơn hàng:',
+                      style: const TextStyle(
+                        fontSize: 14,
+                      ),
                     ),
-                    Container(
-                      width: 130, // Set a fixed width or dynamically adjust it
+                    SizedBox(
                       child: Text(
                         '#${order.id}',
                         overflow: TextOverflow.ellipsis,
+                        maxLines: 3,
                         style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: 14,
                         ),
                       ),
                     ),
@@ -116,7 +124,7 @@ class RestaurantTab extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Số lượng: ${order.orderItems.length}',
+                  'Số lượng món: ${order.orderItems.length}',
                   style: const TextStyle(
                       fontSize: 14, color: MyColors.primaryTextColor),
                 ),
@@ -178,7 +186,7 @@ class RestaurantTab extends StatelessWidget {
                         ),
                         Expanded(
                           child: Text(
-                            '${item.totalPrice}đ',
+                            MyFormatter.formatCurrency(item.totalPrice),
                             style: const TextStyle(fontSize: 14),
                             textAlign: TextAlign.end,
                           ),
@@ -187,6 +195,25 @@ class RestaurantTab extends StatelessWidget {
                     ),
                   );
                 }),
+                const Divider(color: MyColors.dividerColor, thickness: 1),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Tổng: ',
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      MyFormatter.formatCurrency(order.totalPrice ?? 0),
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: MyColors.primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ],
@@ -205,8 +232,10 @@ class RestaurantTab extends StatelessWidget {
                     };
 
                     await ordersController.updateOrderStatus(
-                        order.id, newStatus);
-                    // Get.to(() => DeliveryScreen(order: order));
+                      null,
+                      orderId: order.id,
+                      newStatus: newStatus,
+                    );
                   } catch (e) {
                     Get.snackbar("Error", "Failed to delivery the order: $e",
                         snackPosition: SnackPosition.BOTTOM);

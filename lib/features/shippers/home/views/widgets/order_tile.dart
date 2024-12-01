@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/delivery/views/delivery_screen.dart';
 import 'package:food_delivery_h2d/features/shippers/home/controllers/order_controller.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
+import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
+import 'package:food_delivery_h2d/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
 
@@ -41,7 +44,7 @@ class OrderTile extends StatelessWidget {
                 ),
               ),
               Text(
-                '${order.deliveryFee}đ',
+                MyFormatter.formatCurrency(order.totalPrice ?? 0),
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
@@ -65,7 +68,7 @@ class OrderTile extends StatelessWidget {
               const SizedBox(width: 8),
               Text(
                 'Lấy hàng: ${order.restaurantName}',
-                style: TextStyle(fontSize: 12, color: Colors.grey),
+                style: const TextStyle(fontSize: 12, color: Colors.grey),
               ),
             ],
           ),
@@ -106,14 +109,18 @@ class OrderTile extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(
-                "order.customerAddress",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
+              Expanded(
+                child: Text(
+                  order.custAddress.toString(),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],
@@ -134,7 +141,11 @@ class OrderTile extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  // Handle order rejection
+                  ordersController.orders.removeWhere((o) => o.id == order.id);
+                  Loaders.successSnackBar(
+                    title: "Thành công",
+                    message: "Đơn hàng đã bị từ chối.",
+                  );
                 },
                 child: const Text(
                   'Từ chối',
@@ -163,7 +174,10 @@ class OrderTile extends StatelessWidget {
                     };
 
                     await ordersController.updateOrderStatus(
-                        order.id, newStatus);
+                      LoginController.instance.currentUser.userId,
+                      orderId: order.id,
+                      newStatus: newStatus,
+                    );
                     Get.to(() => DeliveryScreen(order: order));
                   } catch (e) {
                     Get.snackbar("Error", "Failed to accept the order: $e",

@@ -9,7 +9,7 @@ class OrderModel {
   DateTime orderDatetime;
   String note;
   List<OrderItem> orderItems;
-  double totalPrice;
+  int totalPrice;
 
   OrderModel({
     this.id = '',

@@ -1,5 +1,6 @@
 import 'package:food_delivery_h2d/data/order/order_repository.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/address_controller.dart';
+import 'package:food_delivery_h2d/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
 
@@ -21,7 +22,6 @@ class OrdersController extends GetxController {
     try {
       isLoading(true);
 
-      // Fetch orders from the repository
       final fetchedOrders =
           await orderRepository.getOrdersByStatus(driverStatus: "waiting");
 
@@ -47,24 +47,28 @@ class OrdersController extends GetxController {
   }
 
   Future<void> updateOrderStatus(
-      String orderId, Map<String, dynamic> newStatus) async {
+    String? driverId, {
+    required String orderId,
+    required Map<String, dynamic> newStatus,
+  }) async {
     try {
-      await orderRepository.updateOrderStatus(orderId, newStatus);
+      await orderRepository.updateOrderStatus(orderId, driverId, newStatus);
 
       final orderIndex = orders.indexWhere((o) => o.id == orderId);
       if (orderIndex != -1) {
         orders[orderIndex].custStatus = newStatus['custStatus'];
         orders[orderIndex].driverStatus = newStatus['driverStatus'];
         orders[orderIndex].restStatus = newStatus['restStatus'];
+        orders[orderIndex].assignedShipperId = driverId;
         orders.refresh();
       }
-      Get.snackbar("Success", "Order status updated successfully",
-          snackPosition: SnackPosition.BOTTOM);
+      Loaders.successSnackBar(
+          title: "Thành công!",
+          message: "Trạng thái đơn hàng đã được cập nhật.");
     } catch (e) {
       print("Error updating order status: $e");
-      Get.snackbar("Error", "Failed to update order status",
-          snackPosition: SnackPosition.BOTTOM);
-      rethrow; // Re-throw to notify the UI if needed
+      Loaders.errorSnackBar(title: "Thất bại!", message: "Đã xảy ra lỗi.");
+      rethrow;
     }
   }
 }

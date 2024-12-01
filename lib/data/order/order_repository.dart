@@ -67,15 +67,25 @@ class OrderRepository extends GetxController {
   }
 
   Future<ApiResponse<Order>> updateOrderStatus(
-      String? orderId, Map<String, dynamic>? statusUpdates) async {
+    String? orderId,
+    String? driverId,
+    Map<String, dynamic>? statusUpdates,
+  ) async {
     try {
+      final updatedStatus = {
+        ...?statusUpdates,
+        "assignedShipperId": driverId,
+      };
+
       final res = await HttpHelper.patch(
         "order/$orderId/status",
-        statusUpdates,
+        updatedStatus,
       );
+
       if (res["hasError"] == true) {
         return ApiResponse.error(res["message"]);
       }
+
       final result = Order.fromJson(res["data"]);
       return ApiResponse.completed(result, res["message"]);
     } catch (e) {
