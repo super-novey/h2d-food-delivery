@@ -174,7 +174,7 @@ class OrderTile extends StatelessWidget {
                     };
 
                     await ordersController.updateOrderStatus(
-                      LoginController.instance.currentUser.userId,
+                      LoginController.instance.currentUser.driverId,
                       orderId: order.id,
                       newStatus: newStatus,
                     );
