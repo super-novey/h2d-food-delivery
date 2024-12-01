@@ -37,7 +37,8 @@ class MenuRestaurantTile extends StatelessWidget {
               child: Row(
                 children: [
                   ClipRRect(
-                      borderRadius: BorderRadius.circular(MySizes.borderRadiusMd),
+                      borderRadius:
+                          BorderRadius.circular(MySizes.borderRadiusMd),
                       child: CachedNetworkImage(
                         imageUrl: item.itemImage,
                         width: 55,
@@ -117,45 +118,56 @@ class MenuRestaurantTile extends StatelessWidget {
                                   .apply(color: MyColors.darkPrimaryTextColor),
                             ),
                             Obx(() {
-                            var quantity = cartController
-                                    .itemQuantities[item.itemName] ??
-                                0;
-                            if (quantity > 0) {
-                              return Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      cartController.removeFromCart(item);
-                                    },
-                                    icon: const Icon(
-                                        Icons.remove_circle_outline_rounded,
-                                        color:
-                                            MyColors.darkPrimaryTextColor),
-                                  ),
-                                  Text(quantity.toString()),
-                                  IconButton(
-                                    onPressed: () {
+                              var quantity = cartController
+                                      .itemQuantities[item.itemName] ??
+                                  0;
+                              if (item.quantity == 0) {
+                                return Text(
+                                  "Đã hết món",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
+                                      .apply(color: MyColors.primaryColor),
+                                );
+                              }
+                              if (quantity > 0) {
+                                return Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {
+                                        cartController.removeFromCart(item);
+                                      },
+                                      icon: const Icon(
+                                          Icons.remove_circle_outline_rounded,
+                                          color: MyColors.darkPrimaryTextColor),
+                                    ),
+                                    Text(quantity.toString()),
+                                    IconButton(
+                                      onPressed: () {
+                                        if (quantity < item.quantity) {
+                                          cartController.addToCart(item);
+                                        }
+                                      },
+                                      icon: const Icon(Icons.add_circle,
+                                          color: MyColors.darkPrimaryTextColor),
+                                    ),
+                                  ],
+                                );
+                              } else {
+                                return InkWell(
+                                  onTap: () {
+                                    if (quantity < item.quantity) {
                                       cartController.addToCart(item);
-                                    },
-                                    icon: const Icon(Icons.add_circle,
-                                        color:
-                                            MyColors.darkPrimaryTextColor),
+                                    }
+                                  },
+                                  child: const Icon(
+                                    Icons.add_box,
+                                    color: MyColors.darkPrimaryTextColor,
                                   ),
-                                ],
-                              );
-                            } else {
-                              return InkWell(
-                                onTap: () {
-                                  cartController.addToCart(item);
-                                },
-                                child: const Icon(
-                                  Icons.add_box,
-                                  color: MyColors.darkPrimaryTextColor,
-                                ),
-                              );
-                            }
-                          }),
+                                );
+                              }
+                            }),
                           ],
                         ),
                       ],

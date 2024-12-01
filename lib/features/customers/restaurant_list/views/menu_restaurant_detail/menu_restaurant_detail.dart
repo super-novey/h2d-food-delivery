@@ -118,17 +118,17 @@ class MenuRestaurantDetail extends StatelessWidget {
                                       },
                                       icon: const Icon(
                                           Icons.remove_circle_outline_rounded,
-                                          color:
-                                              MyColors.darkPrimaryTextColor),
+                                          color: MyColors.darkPrimaryTextColor),
                                     ),
                                     Text(quantity.toString()),
                                     IconButton(
                                       onPressed: () {
-                                        cartController.addToCart(item);
+                                        if (quantity < item.quantity) {
+                                          cartController.addToCart(item);
+                                        }
                                       },
                                       icon: const Icon(Icons.add_circle,
-                                          color:
-                                              MyColors.darkPrimaryTextColor),
+                                          color: MyColors.darkPrimaryTextColor),
                                     ),
                                   ],
                                 );
