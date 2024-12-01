@@ -255,7 +255,7 @@ class MenuRestaurantScreen extends StatelessWidget {
                 ),
                 const Spacer(),
                 Text(
-                  '${cartController.totalPrice}đ',
+                  MyFormatter.formatCurrency(cartController.totalPrice ?? 0),
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge!

@@ -26,8 +26,8 @@ class DeliveryScreen extends StatelessWidget {
               size: 24,
             ),
             onPressed: () async {
-              Get.back();
               await ordersController.fetchOrders();
+              Get.back();
             },
           ),
           bottom: const TabBar(

@@ -61,13 +61,13 @@ class ConfirmOrderScreen extends StatelessWidget {
                             Text(
                               "${LoginController.instance.currentUser.name}", // Replace with actual user name
                               style:
-                                  TextStyle(fontSize: 14, color: Colors.grey),
+                                  const TextStyle(fontSize: 14, color: Colors.grey),
                             ),
                             const SizedBox(height: 8),
                             Text(
                               "${LoginController.instance.currentUser.phone}", // Replace with actual user name
                               style:
-                                  TextStyle(fontSize: 14, color: Colors.grey),
+                                  const TextStyle(fontSize: 14, color: Colors.grey),
                             ),
                             const SizedBox(height: 8),
                             Obx(() {

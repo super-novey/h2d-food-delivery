@@ -7,7 +7,7 @@ class Order {
   String? restDetailAddress;
   String? assignedShipperId;
   double? custShipperRating;
-  double? deliveryFee;
+  int? deliveryFee;
   DateTime orderDatetime;
   String note;
   double? custResRating;
@@ -18,8 +18,9 @@ class Order {
   List<OrderItem> orderItems;
   String? restAddress;
   String? custAddress;
+  String custPhone;
+  int? totalPrice;
 
-  // Add the missing fields
   String? restProvinceId;
   String? restDistrictId;
   String? restCommuneId;
@@ -29,9 +30,11 @@ class Order {
     required this.customerName,
     required this.restaurantName,
     this.restDetailAddress,
+    required this.custPhone,
     this.assignedShipperId,
     this.custShipperRating,
     required this.deliveryFee,
+    this.totalPrice,
     DateTime? orderDatetime,
     this.note = '',
     this.custResRating,
@@ -77,14 +80,16 @@ class Order {
   factory Order.fromJson(Map<String, dynamic> json) {
     return Order(
       id: json['id'] ?? '',
-      customerName: json['customerName'] ?? 'Unknown',
-      restaurantName: json['restaurantName'] ?? 'Unknown',
-      restDetailAddress: json['restDetailAddress'] ?? 'Unknown',
+      customerName: json['customerName'] ?? '',
+      custPhone: json['custPhone'] ?? '',
+      restaurantName: json['restaurantName'] ?? '',
+      restDetailAddress: json['restDetailAddress'] ?? '',
       assignedShipperId: json['assignedShipperId'],
       custShipperRating: json['custShipperRating'] != null
           ? (json['custShipperRating'] as num).toDouble()
           : null,
-      deliveryFee: (json['deliveryFee'] as num).toDouble(),
+      deliveryFee: (json['deliveryFee'] as num).toInt(),
+      totalPrice: (json['totalPrice'] as num).toInt(),
       orderDatetime: DateTime.parse(json['orderDatetime']),
       note: json['note'] ?? '',
       custResRating: json['custResRating'] != null
