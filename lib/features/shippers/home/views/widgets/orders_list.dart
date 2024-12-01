@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_h2d/features/authentication/controllers/address_controller.dart';
+import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
+import 'package:food_delivery_h2d/sockets/handlers/order_socket_handler.dart';
 import 'package:get/get.dart';
 import 'package:food_delivery_h2d/features/shippers/home/controllers/order_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/home/views/widgets/order_tile.dart';
@@ -10,11 +13,18 @@ class OrdersList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final OrdersController controller = Get.put(OrdersController());
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   if (controller.orders.isEmpty) {
-    //     controller.fetchOrders();
-    //   }
-    // });
+    final addressController = Get.put(AddressController());
+    final _orderSocket = Get.put(OrderSocketHandler());
+
+    _orderSocket.listenForOrderCreates((newOrder) async {
+      newOrder.restAddress = await addressController.getFullAddress(
+        newOrder.restProvinceId,
+        newOrder.restDistrictId,
+        newOrder.restCommuneId,
+        newOrder.restDetailAddress,
+      );
+      controller.orders.add(newOrder);
+    });
 
     return DraggableScrollableSheet(
       initialChildSize: 0.4,

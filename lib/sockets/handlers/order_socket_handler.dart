@@ -10,11 +10,18 @@ class OrderSocketHandler {
 
   void listenForOrderCreates(Function(Order order) onNewOrder) {
     _socketService.socket.on('order:new', (data) {
-      // final order = jsonDecode(jsonEncode(data));
       final orderData = jsonDecode(jsonEncode(data));
       final order = Order.fromJson(orderData);
       onNewOrder(order);
-      print('New order received: $order');
+    });
+  }
+
+  void listenForOrderUpdates(Function(Order order) onOrderUpdated) {
+    _socketService.socket.on('order:updated', (data) {
+      final orderData = jsonDecode(jsonEncode(data));
+      final order = Order.fromJson(orderData);
+      onOrderUpdated(order);
+      print('Order updated: $order');
     });
   }
 
