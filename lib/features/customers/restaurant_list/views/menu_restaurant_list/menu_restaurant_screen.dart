@@ -20,12 +20,13 @@ class MenuRestaurantScreen extends StatelessWidget {
   final String userId;
 
   MenuRestaurantScreen({super.key, required this.userId});
-  final RestaurantController restaurantController =
+  final restaurantController =
       Get.put(RestaurantController());
 
   final cartController = Get.put(CartController());
 
   void fetch() {
+    cartController.removeAllItem();
     restaurantController.setUserId(userId);
     restaurantController.fetchCategoriesAndItems();
     restaurantController.fetchDetailPartner(userId);
@@ -38,170 +39,180 @@ class MenuRestaurantScreen extends StatelessWidget {
       appBar: const CustomAppBar(
         title: Text('Thực đơn'),
       ),
-      body: Container(
-        //color: MyColors.primaryBackgroundColor,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Obx(() {
-                return Stack(
-                  children: [
-                    CachedNetworkImage(
-                      imageUrl:
-                          restaurantController.detailPartner.value?.avatarUrl ??
-                              MyImagePaths.iconImage,
-                      width: MediaQuery.of(context).size.width,
-                      height: 170,
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) =>
-                          const Center(child: CircularProgressIndicator()),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
-                    ),
-                    Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: IconButton(
-                            onPressed: () {
-                              Get.to(
-                                  DetailRestaurantScreen(
-                                    userId: userId,
-                                  ),
-                                  arguments:
-                                      restaurantController.detailPartner.value);
-                            },
-                            icon: const Icon(
-                              Icons.info_rounded,
-                              color: MyColors.white,
-                            )))
-                  ],
-                );
-              }),
-              const SizedBox(
-                height: MySizes.md,
-              ),
-              Obx(() {
-                return Column(
-                  children: [
-                    Text(
-                        restaurantController.detailPartner.value?.userId.name ??
-                            "",
-                        style: const TextStyle(
-                          color: MyColors.primaryTextColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        )),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        RatingStars(
-                          axis: Axis.horizontal,
-                          value: 5,
-                          onValueChanged: (v) {},
-                          starCount: 5,
-                          starSize: 12,
-                          maxValue: 5,
-                          starSpacing: 2,
-                          maxValueVisibility: true,
-                          valueLabelVisibility: false,
-                          valueLabelPadding: const EdgeInsets.symmetric(
-                              vertical: 1, horizontal: 8),
-                          valueLabelMargin: const EdgeInsets.only(right: 8),
-                          starOffColor: MyColors.starOffColor,
-                          starColor: MyColors.starColor,
-                          angle: 12,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Obx(() {
+              return Stack(
+                children: [
+                  CachedNetworkImage(
+                    imageUrl:
+                        restaurantController.detailPartner.value?.avatarUrl ??
+                            MyImagePaths.iconImage,
+                    width: MediaQuery.of(context).size.width,
+                    height: 170,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) =>
+                        const Center(child: CircularProgressIndicator()),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                  ),
+                  Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: IconButton(
+                          onPressed: () {
+                            Get.to(
+                                DetailRestaurantScreen(
+                                  userId: userId,
+                                ),
+                                arguments:
+                                    restaurantController.detailPartner.value);
+                          },
+                          icon: const Icon(
+                            Icons.info_rounded,
+                            color: MyColors.white,
+                          )))
+                ],
+              );
+            }),
+            const SizedBox(
+              height: MySizes.md,
+            ),
+            Obx(() {
+              return Column(
+                children: [
+                  Text(
+                      restaurantController.detailPartner.value?.userId.name ??
+                          "",
+                      style: const TextStyle(
+                        color: MyColors.primaryTextColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      )),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      RatingStars(
+                        axis: Axis.horizontal,
+                        value: 5,
+                        onValueChanged: (v) {},
+                        starCount: 5,
+                        starSize: 12,
+                        maxValue: 5,
+                        starSpacing: 2,
+                        maxValueVisibility: true,
+                        valueLabelVisibility: false,
+                        valueLabelPadding: const EdgeInsets.symmetric(
+                            vertical: 1, horizontal: 8),
+                        valueLabelMargin: const EdgeInsets.only(right: 8),
+                        starOffColor: MyColors.starOffColor,
+                        starColor: MyColors.starColor,
+                        angle: 12,
+                      ),
+                      const SizedBox(
+                        width: MySizes.xs,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: MySizes.xs / 2),
+                        child: Text(
+                          "5",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .apply(color: MyColors.primaryTextColor),
                         ),
-                        const SizedBox(
-                          width: MySizes.xs,
+                      ),
+                      const SizedBox(
+                        width: MySizes.sm,
+                      ),
+                      Container(
+                          color: MyColors.dividerColor,
+                          width: 0.8,
+                          height: 15),
+                      const SizedBox(
+                        width: MySizes.sm,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: MySizes.xs / 2),
+                        child: Text(
+                          "(999+ bình luận)",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .apply(color: MyColors.primaryTextColor),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: MySizes.xs / 2),
-                          child: Text(
-                            "5",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .apply(color: MyColors.primaryTextColor),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.only(top: MySizes.xs),
+                        child: Icon(Icons.arrow_forward_ios,
+                            size: MySizes.iconXs),
+                      )
+                    ],
+                  ),
+                  Obx(() {
+                    if (restaurantController.detailPartner.value?.status ==
+                        true) {
+                      return Text(
+                        "Chưa đến thời gian hoạt động",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleSmall!
+                            .apply(color: MyColors.primaryColor),
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  }),
+                ],
+              );
+            }),
+            const SizedBox(
+              height: MySizes.md,
+            ),
+            Obx(() => restaurantController.isLoading.value
+                ? const Center(child: CircularProgressIndicator())
+                : ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: restaurantController.allCategories.length,
+                    itemBuilder: (context, index) {
+                      Category category =
+                          restaurantController.allCategories[index];
+                      List<Item> categoryItems = restaurantController
+                          .getItemsForCategory(category.categoryId);
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: MySizes.sm, left: MySizes.md),
+                            child: Text(category.categoryName,
+                                style: const TextStyle(
+                                  color: MyColors.darkPrimaryColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                )),
                           ),
-                        ),
-                        const SizedBox(
-                          width: MySizes.sm,
-                        ),
-                        Container(
-                            color: MyColors.dividerColor,
-                            width: 0.8,
-                            height: 15),
-                        const SizedBox(
-                          width: MySizes.sm,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: MySizes.xs / 2),
-                          child: Text(
-                            "(999+ bình luận)",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .apply(color: MyColors.primaryTextColor),
+                          Column(
+                            children: List.generate(categoryItems.length,
+                                (itemIndex) {
+                              Item item = categoryItems[itemIndex];
+                              return MenuRestaurantTile(item: item);
+                            }),
                           ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: MySizes.xs),
-                          child: Icon(Icons.arrow_forward_ios,
-                              size: MySizes.iconXs),
-                        )
-                      ],
-                    )
-                  ],
-                );
-              }),
-              const SizedBox(
-                height: MySizes.md,
-              ),
-              Obx(() => restaurantController.isLoading.value
-                  ? const Center(child: CircularProgressIndicator())
-                  : ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: restaurantController.allCategories.length,
-                      itemBuilder: (context, index) {
-                        Category category =
-                            restaurantController.allCategories[index];
-                        List<Item> categoryItems = restaurantController
-                            .getItemsForCategory(category.categoryId);
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  top: MySizes.sm, left: MySizes.md),
-                              child: Text(category.categoryName,
-                                  style: const TextStyle(
-                                    color: MyColors.darkPrimaryColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  )),
-                            ),
-                            Column(
-                              children: List.generate(categoryItems.length,
-                                  (itemIndex) {
-                                Item item = categoryItems[itemIndex];
-                                return MenuRestaurantTile(item: item);
-                              }),
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.only(
-                                  top: MySizes.sm,
-                                  left: MySizes.lg,
-                                  right: MySizes.lg),
-                              child: Divider(color: MyColors.dividerColor),
-                            )
-                          ],
-                        );
-                      },
-                    )),
-            ],
-          ),
+                          const Padding(
+                            padding: EdgeInsets.only(
+                                top: MySizes.sm,
+                                left: MySizes.lg,
+                                right: MySizes.lg),
+                            child: Divider(color: MyColors.dividerColor),
+                          )
+                        ],
+                      );
+                    },
+                  )),
+          ],
         ),
       ),
       bottomNavigationBar: Obx(() {
@@ -255,7 +266,7 @@ class MenuRestaurantScreen extends StatelessWidget {
                 ),
                 const Spacer(),
                 Text(
-                  MyFormatter.formatCurrency(cartController.totalPrice ?? 0),
+                  MyFormatter.formatCurrency(cartController.totalPrice),
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge!
@@ -264,22 +275,39 @@ class MenuRestaurantScreen extends StatelessWidget {
                 const SizedBox(
                   width: MySizes.md,
                 ),
-                InkWell(
-                  onTap: () {
-                    Get.to(const ConfirmOrderScreen());
-                  },
-                  child: Text(
-                    "Đặt hàng",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge!
-                        .apply(
-                          color: MyColors.darkPrimaryTextColor,
-                          fontWeightDelta: 2,
-                        )
-                        .copyWith(fontWeight: FontWeight.bold),
-                  ),
-                ),
+                Obx(() {
+                  if (restaurantController.detailPartner.value?.status ==
+                      true) {
+                    return Text(
+                      "Đặt hàng",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .apply(
+                            color: MyColors.secondaryTextColor,
+                            fontWeightDelta: 2,
+                          )
+                          .copyWith(fontWeight: FontWeight.bold),
+                    );
+                  } else {
+                    return InkWell(
+                      onTap: () {
+                        Get.to(const ConfirmOrderScreen());
+                      },
+                      child: Text(
+                        "Đặt hàng",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyLarge!
+                            .apply(
+                              color: MyColors.darkPrimaryTextColor,
+                              fontWeightDelta: 2,
+                            )
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    );
+                  }
+                })
               ],
             ),
           ),
