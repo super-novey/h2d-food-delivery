@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/customers/order/models/order_model.dart';
+import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
 import 'package:get/get.dart';
 
 class NewOrderTile extends StatelessWidget {
-  final OrderModel order;
+  final Order order;
 
   const NewOrderTile({super.key, required this.order});
 
@@ -34,14 +35,14 @@ class NewOrderTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        order.orderId.toString(),
+                        order.id,
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall!
                             .apply(color: MyColors.darkPrimaryTextColor),
                       ),
                       Text(
-                        MyFormatter.formatTime(order.orderDateTime.toString()),
+                        MyFormatter.formatTime(order.orderDatetime.toString()),
                         style: Theme.of(context)
                             .textTheme
                             .labelSmall!
@@ -55,7 +56,7 @@ class NewOrderTile extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        '${order.totalQuantity} món',
+                        '${order.id} món',
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall!
@@ -75,7 +76,7 @@ class NewOrderTile extends StatelessWidget {
                         width: MySizes.sm,
                       ),
                       Text(
-                        '20000đ',
+                        MyFormatter.formatCurrency(order.totalPrice ?? 0),
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall!

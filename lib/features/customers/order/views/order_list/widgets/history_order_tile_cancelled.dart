@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_h2d/features/customers/order/models/order_model.dart';
+import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
 
-class HistoryOrderTile extends StatelessWidget {
-  final OrderModel order;
+class HistoryOrderTileCancelled extends StatelessWidget {
+  final Order order;
 
-  const HistoryOrderTile({super.key, required this.order});
+  const HistoryOrderTileCancelled({super.key, required this.order});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class HistoryOrderTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      MyFormatter.formatDate(order.orderDateTime.toString()),
+                      MyFormatter.formatDate(order.orderDatetime.toString()),
                       style: Theme.of(context)
                           .textTheme
                           .labelSmall!
@@ -56,7 +56,7 @@ class HistoryOrderTile extends StatelessWidget {
                   height: MySizes.xs,
                 ),
                 Text(
-                      order.orderId.toString(),
+                      order.id.toString(),
                       style: Theme.of(context)
                           .textTheme
                           .bodySmall!
@@ -68,14 +68,12 @@ class HistoryOrderTile extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      '${order.totalQuantity} món',
+                      '${order.custStatus} món',
                       style: Theme.of(context)
                           .textTheme
                           .bodySmall!
                           .apply(color: MyColors.primaryTextColor),
                     ),
-                    
-                    
                   ],
                 ),
                 
@@ -101,7 +99,7 @@ class HistoryOrderTile extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '20000đ',
+                      MyFormatter.formatCurrency(order.totalPrice ?? 0),
                       style: Theme.of(context)
                           .textTheme
                           .bodySmall!

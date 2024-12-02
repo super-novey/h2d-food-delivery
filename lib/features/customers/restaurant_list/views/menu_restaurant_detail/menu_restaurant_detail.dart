@@ -108,6 +108,15 @@ class MenuRestaurantDetail extends StatelessWidget {
                               var quantity = cartController
                                       .itemQuantities[item.itemName] ??
                                   0;
+                              if (item.quantity == 0) {
+                                return Text(
+                                  "Đã hết món",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
+                                      .apply(color: MyColors.primaryColor),
+                                );
+                              }
                               if (quantity > 0) {
                                 return Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -135,7 +144,9 @@ class MenuRestaurantDetail extends StatelessWidget {
                               } else {
                                 return InkWell(
                                   onTap: () {
-                                    cartController.addToCart(item);
+                                    if (quantity < item.quantity) {
+                                      cartController.addToCart(item);
+                                    }
                                   },
                                   child: const Icon(
                                     Icons.add_box,

@@ -20,35 +20,42 @@ class Order {
   String? custAddress;
   String custPhone;
   int? totalPrice;
-
+  String? driverName;
+  String? driverPhone;
+  String? driverLicensePlate;
+  String? driverProfileUrl;
   String? restProvinceId;
   String? restDistrictId;
   String? restCommuneId;
 
-  Order({
-    this.id = '',
-    required this.customerName,
-    required this.restaurantName,
-    this.restDetailAddress,
-    required this.custPhone,
-    this.assignedShipperId,
-    this.custShipperRating,
-    required this.deliveryFee,
-    this.totalPrice,
-    DateTime? orderDatetime,
-    this.note = '',
-    this.custResRating,
-    this.reason = '',
-    required this.custStatus,
-    this.driverStatus,
-    this.restStatus,
-    this.orderItems = const [],
-    this.restAddress,
-    this.custAddress, // Initialize custAddress
-    this.restProvinceId, // Initialize restProvinceId
-    this.restDistrictId, // Initialize restDistrictId
-    this.restCommuneId, // Initialize restCommuneId
-  }) : orderDatetime = orderDatetime ?? DateTime.now();
+  Order(
+      {this.id = '',
+      required this.customerName,
+      required this.restaurantName,
+      this.restDetailAddress,
+      required this.custPhone,
+      this.assignedShipperId,
+      this.custShipperRating,
+      required this.deliveryFee,
+      this.totalPrice,
+      DateTime? orderDatetime,
+      this.note = '',
+      this.custResRating,
+      this.reason = '',
+      required this.custStatus,
+      this.driverStatus,
+      this.restStatus,
+      this.orderItems = const [],
+      this.restAddress,
+      this.custAddress, // Initialize custAddress
+      this.restProvinceId, // Initialize restProvinceId
+      this.restDistrictId, // Initialize restDistrictId
+      this.restCommuneId, // Initialize restCommuneId
+      this.driverName,
+      this.driverPhone,
+      this.driverLicensePlate,
+      this.driverProfileUrl})
+      : orderDatetime = orderDatetime ?? DateTime.now();
 
   // Convert an Order object to a JSON map
   Map<String, dynamic> toJson() {
@@ -73,6 +80,10 @@ class Order {
       'restProvinceId': restProvinceId,
       'restDistrictId': restDistrictId,
       'restCommuneId': restCommuneId,
+      'driverName': driverName,
+      'driverPhone': driverPhone,
+      'driverLicensePlate': driverLicensePlate,
+      'driverProfileUrl': driverProfileUrl,
     };
   }
 
@@ -107,6 +118,10 @@ class Order {
       restProvinceId: json['restProvinceId'], // Parse the new field
       restDistrictId: json['restDistrictId'], // Parse the new field
       restCommuneId: json['restCommuneId'], // Parse the new field
+      driverName: json['driverName'],
+      driverPhone: json['driverPhone'],
+      driverLicensePlate: json['driverLicensePlate'],
+      driverProfileUrl: json['driverProfileUrl'],
     );
   }
 
@@ -131,7 +146,11 @@ class Order {
         'custAddress: $custAddress, '
         'restProvinceId: $restProvinceId, '
         'restDistrictId: $restDistrictId, '
-        'restCommuneId: $restCommuneId'
+        'restCommuneId: $restCommuneId, '
+        'driverName: $driverName, '
+        'driverPhone: $driverPhone, '
+        'driverLicensePlate: $driverLicensePlate, '
+        'driverProfileUrl: $driverProfileUrl, '
         ')';
   }
 
