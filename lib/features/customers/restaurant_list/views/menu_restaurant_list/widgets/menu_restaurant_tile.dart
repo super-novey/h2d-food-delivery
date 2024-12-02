@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/cart_controller.dart';
+import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/restaurant_controller.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/views/menu_restaurant_detail/menu_restaurant_detail.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/item_model.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
@@ -16,6 +17,8 @@ class MenuRestaurantTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartController = Get.put(CartController());
+    final restaurantController = Get.put(RestaurantController());
+
     return InkWell(
       onTap: () {
         Get.to(MenuRestaurantDetail(item: item));
@@ -153,6 +156,14 @@ class MenuRestaurantTile extends StatelessWidget {
                                           color: MyColors.darkPrimaryTextColor),
                                     ),
                                   ],
+                                );
+                              }
+                              if (restaurantController
+                                      .detailPartner.value?.status ==
+                                  false) {
+                                return Icon(
+                                  Icons.add_box,
+                                  color: MyColors.secondaryTextColor,
                                 );
                               } else {
                                 return InkWell(
