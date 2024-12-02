@@ -4,6 +4,7 @@ class Order {
   String id;
   String customerName;
   String restaurantName;
+  String? restaurantId;
   String? restDetailAddress;
   String? assignedShipperId;
   double? custShipperRating;
@@ -32,6 +33,7 @@ class Order {
       {this.id = '',
       required this.customerName,
       required this.restaurantName,
+      this.restaurantId,
       this.restDetailAddress,
       required this.custPhone,
       this.assignedShipperId,
@@ -94,6 +96,7 @@ class Order {
       customerName: json['customerName'] ?? '',
       custPhone: json['custPhone'] ?? '',
       restaurantName: json['restaurantName'] ?? '',
+      restaurantId: json['restaurantId'] ?? '',
       restDetailAddress: json['restDetailAddress'] ?? '',
       assignedShipperId: json['assignedShipperId'],
       custShipperRating: json['custShipperRating'] != null
@@ -131,6 +134,7 @@ class Order {
         'id: $id, '
         'customerName: $customerName, '
         'restaurantName: $restaurantName, '
+        'restaurantId: $restaurantId, '
         'assignedShipperId: $assignedShipperId, '
         'custShipperRating: $custShipperRating, '
         'deliveryFee: $deliveryFee, '

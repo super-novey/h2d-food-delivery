@@ -1,4 +1,5 @@
 import 'package:food_delivery_h2d/data/order/order_repository.dart';
+import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
 import 'package:get/get.dart';
 import '../../../authentication/controllers/address_controller.dart';
 import '../../../shippers/home/models/order_model.dart';
@@ -23,11 +24,11 @@ class OrderController extends GetxController {
       isLoading(true);
 
       // Fetch orders from the repository
-      final fetchedOrders =
-          await _orderRespository.getOrdersByStatus(driverStatus: "waiting");
+      final fetchedOrders = await _orderRespository.getOrdersByPartnerStatus(
+          LoginController.instance.currentUser.partnerId, "new");
 
       List<Order> ordersWithFullAddress = await Future.wait(
-        fetchedOrders.map((order) async {
+        fetchedOrders.data!.map((order) async {
           order.restAddress = await addressController.getFullAddress(
             order.restProvinceId,
             order.restDistrictId,
@@ -39,7 +40,6 @@ class OrderController extends GetxController {
       );
 
       allOrders.assignAll(ordersWithFullAddress);
-      print(allOrders);
     } catch (e) {
       print("Error fetching orders: $e");
     } finally {
