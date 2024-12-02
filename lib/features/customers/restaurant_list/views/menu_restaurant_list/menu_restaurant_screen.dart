@@ -150,7 +150,7 @@ class MenuRestaurantScreen extends StatelessWidget {
                   ),
                   Obx(() {
                     if (restaurantController.detailPartner.value?.status ==
-                        true) {
+                        false) {
                       return Text(
                         "Chưa đến thời gian hoạt động",
                         style: Theme.of(context)
@@ -274,7 +274,7 @@ class MenuRestaurantScreen extends StatelessWidget {
                 ),
                 Obx(() {
                   if (restaurantController.detailPartner.value?.status ==
-                      true) {
+                      false) {
                     return Text(
                       "Đặt hàng",
                       style: Theme.of(context)
