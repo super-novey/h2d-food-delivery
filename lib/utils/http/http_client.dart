@@ -4,8 +4,9 @@ import 'package:http/http.dart' as http;
 
 class HttpHelper {
   static const String _baseUrl =
-      "http://localhost:8081/api/v1"; // change URL
-      // "https://e310-116-108-139-100.ngrok-free.app/api/v1";
+
+      // "http://localhost:8081/api/v1"; // change URL
+      "https://985a-171-247-149-38.ngrok-free.app/api/v1";
 
 
   static Future<Map<String, dynamic>> get(String endpoint) async {

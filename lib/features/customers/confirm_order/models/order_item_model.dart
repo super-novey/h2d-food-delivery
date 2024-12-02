@@ -3,7 +3,7 @@ class OrderItem {
   String itemName;
   int quantity;
   int price;
-  double totalPrice;
+  int totalPrice;
 
   OrderItem({
     required this.itemId,
@@ -31,7 +31,7 @@ class OrderItem {
       itemName: json['itemName'] ?? 'Unknow',
       quantity: json['quantity'] ?? 0,
       price: (json['price'] as num).toInt(),
-      totalPrice: (json['totalPrice'] as num).toDouble(),
+      totalPrice: (json['totalPrice'] as num).toInt(),
     );
   }
 

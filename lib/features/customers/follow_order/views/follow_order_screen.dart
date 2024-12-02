@@ -1,17 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/custom_app_bar.dart';
+import 'package:food_delivery_h2d/features/authentication/controllers/address_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
 import 'package:get/get.dart';
 
 class FollowOrderScreen extends StatelessWidget {
-  const FollowOrderScreen({super.key});
+  FollowOrderScreen({super.key});
+  final Order order = Get.arguments;
+
+  Color _getLineColor(String orderStatus, int step) {
+    // Apply grey color if the order is not in progress or completed, otherwise use primaryColor
+    if (orderStatus == "pending" || orderStatus == "delivered") {
+      return Colors.grey; // Grey color for pending or delivered
+    } else {
+      return MyColors.primaryColor; // Primary color for in-progress orders
+    }
+  }
+
+  getFullAddress(Order order) async {
+    final addressController = Get.put(AddressController());
+
+    order.restAddress = await addressController.getFullAddress(
+      order.restProvinceId,
+      order.restDistrictId,
+      order.restCommuneId,
+      order.restDetailAddress,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    final Order order = Get.arguments;
-
+    getFullAddress(order);
     return Scaffold(
       appBar: const CustomAppBar(
         title: Text("Theo dõi đơn hàng"),
@@ -40,76 +61,83 @@ class FollowOrderScreen extends StatelessWidget {
                   ),
                   child: Column(
                     children: [
-                      buildInfoCard(context: context, children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Tài xế  đang trên đường giao...",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
+                      buildInfoCard(
+                        context: context,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Tài xế đang trên đường giao...",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 24),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                const Icon(
-                                  Icons.checklist_rtl_sharp,
-                                  size: 18,
-                                  color: MyColors.primaryColor,
-                                ),
-                                const SizedBox(width: 8),
-                                Container(
-                                  width: 50,
-                                  height: 2.5,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
+                              const SizedBox(height: 24),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  const Icon(
+                                    Icons.checklist_rtl_sharp,
+                                    size: 18,
                                     color: MyColors.primaryColor,
                                   ),
-                                ),
-                                const SizedBox(width: 8),
-                                const Icon(
-                                  Icons.local_dining,
-                                  size: 18,
-                                  color: MyColors.primaryColor,
-                                ),
-                                const SizedBox(width: 8),
-                                Container(
-                                  width: 50,
-                                  height: 2.5,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
+                                  const SizedBox(width: 8),
+                                  Container(
+                                    width: 50,
+                                    height: 2.5,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: _getLineColor("pending",
+                                          1), // Apply condition based on order status
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  const Icon(
+                                    Icons.local_dining,
+                                    size: 18,
                                     color: MyColors.primaryColor,
                                   ),
-                                ),
-                                const SizedBox(width: 8),
-                                const Icon(
-                                  Icons.motorcycle_rounded,
-                                  size: 18,
-                                  color: MyColors.primaryColor,
-                                ),
-                                const SizedBox(width: 8),
-                                Container(
-                                  width: 50,
-                                  height: 2.5,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
+                                  const SizedBox(width: 8),
+                                  Container(
+                                    width: 50,
+                                    height: 2.5,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: _getLineColor("delivered",
+                                          2), // Apply condition based on order status
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  const Icon(
+                                    Icons.motorcycle_rounded,
+                                    size: 18,
                                     color: MyColors.primaryColor,
                                   ),
-                                ),
-                                const SizedBox(width: 8),
-                                const Icon(
-                                  Icons.home,
-                                  size: 18,
-                                  color: MyColors.primaryColor,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ]),
+                                  const SizedBox(width: 8),
+                                  Container(
+                                    width: 50,
+                                    height: 2.5,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: _getLineColor("delivered",
+                                          3), // Apply condition based on order status
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  const Icon(
+                                    Icons.home,
+                                    size: 18,
+                                    color: MyColors.primaryColor,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                       buildInfoCard(context: context, children: [
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

@@ -179,6 +179,8 @@ class OrderTile extends StatelessWidget {
                       orderId: order.id,
                       newStatus: newStatus,
                     );
+                    ordersController.newOrders
+                        .removeWhere((o) => o.id == order.id);
                     Get.to(() => DeliveryScreen(order: order));
                   } catch (e) {
                     Get.snackbar("Error", "Failed to accept the order: $e",
