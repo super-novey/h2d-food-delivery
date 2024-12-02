@@ -16,13 +16,15 @@ class OrdersList extends StatelessWidget {
     final _orderSocket = Get.put(OrderSocketHandler());
 
     _orderSocket.listenForOrderCreates((newOrder) async {
-      newOrder.restAddress = await addressController.getFullAddress(
-        newOrder.restProvinceId,
-        newOrder.restDistrictId,
-        newOrder.restCommuneId,
-        newOrder.restDetailAddress,
-      );
-      controller.newOrders.add(newOrder);
+      if (newOrder.custStatus == "waiting") {
+        newOrder.restAddress = await addressController.getFullAddress(
+          newOrder.restProvinceId,
+          newOrder.restDistrictId,
+          newOrder.restCommuneId,
+          newOrder.restDetailAddress,
+        );
+        controller.newOrders.insert(0, newOrder);
+      }
     });
 
     return DraggableScrollableSheet(

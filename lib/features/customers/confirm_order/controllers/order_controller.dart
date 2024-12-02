@@ -65,7 +65,6 @@ class OrderController extends GetxController {
       totalPrice: order.totalPrice,
       note: noteController.text,
     );
-    print(newOrder.toString());
     await orderRepository.placeOrder(newOrder);
     cartController.removeAllItem();
     Loaders.successSnackBar(

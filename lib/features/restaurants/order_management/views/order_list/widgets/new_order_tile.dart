@@ -78,7 +78,7 @@ class NewOrderTile extends StatelessWidget {
                         width: MySizes.sm,
                       ),
                       Text(
-                        order.totalPrice.toString(),
+                        MyFormatter.formatCurrency(order.totalPrice!),
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall!

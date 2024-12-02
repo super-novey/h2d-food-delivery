@@ -113,6 +113,25 @@ class OrderDetailScreen extends StatelessWidget {
                 )
               ],
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Số điện thoại",
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall!
+                      .apply(color: MyColors.darkPrimaryTextColor),
+                ),
+                Text(
+                  selectedOrder.custPhone,
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        color: MyColors.primaryTextColor,
+                        height: 2,
+                      ),
+                )
+              ],
+            ),
             const SizedBox(height: MySizes.spaceBtwItems),
             const Divider(
               color: MyColors.dividerColor,
@@ -129,7 +148,26 @@ class OrderDetailScreen extends StatelessWidget {
                       .apply(color: MyColors.darkPrimaryTextColor),
                 ),
                 Text(
-                  selectedOrder.restaurantName,
+                  selectedOrder.driverName.toString(),
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        color: MyColors.primaryTextColor,
+                        height: 2,
+                      ),
+                )
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Số điện thoại",
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall!
+                      .apply(color: MyColors.darkPrimaryTextColor),
+                ),
+                Text(
+                  selectedOrder.driverPhone.toString(),
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         color: MyColors.primaryTextColor,
                         height: 2,
@@ -174,7 +212,7 @@ class OrderDetailScreen extends StatelessWidget {
                             width: MySizes.spaceBtwSections,
                           ),
                           Text(
-                            item.price.toString(),
+                            MyFormatter.formatCurrency(item.price),
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyLarge!
@@ -201,7 +239,7 @@ class OrderDetailScreen extends StatelessWidget {
                           .apply(color: MyColors.darkPrimaryTextColor),
                     ),
                     Text(
-                      selectedOrder.totalPrice.toString(),
+                      MyFormatter.formatCurrency(selectedOrder.totalPrice!),
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                             color: MyColors.primaryTextColor,
                             height: 2,
