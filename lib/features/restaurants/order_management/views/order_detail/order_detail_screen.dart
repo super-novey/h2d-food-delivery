@@ -201,7 +201,7 @@ class OrderDetailScreen extends StatelessWidget {
                           .apply(color: MyColors.darkPrimaryTextColor),
                     ),
                     Text(
-                      selectedOrder.getToTalPrice().toString(),
+                      selectedOrder.totalPrice.toString(),
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                             color: MyColors.primaryTextColor,
                             height: 2,

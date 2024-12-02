@@ -143,4 +143,23 @@ class OrderRepository extends GetxController {
       rethrow;
     }
   }
+
+  Future<ApiResponse<List<Order>>> getOrdersByPartnerStatus(
+      String partnerId, String status) async {
+    try {
+      final res = await HttpHelper.get(
+          "order/orders/partner?partnerId=${partnerId.toString()}&status=${status.toString()}");
+
+      if (res["hasError"] == true) {
+        return ApiResponse.error(res["message"]);
+      }
+
+      final list =
+          (res["data"] as List).map((order) => Order.fromJson(order)).toList();
+
+      return ApiResponse.completed(list, res["message"]);
+    } catch (e) {
+      return ApiResponse.error("An unknown error occurred.");
+    }
+  }
 }
