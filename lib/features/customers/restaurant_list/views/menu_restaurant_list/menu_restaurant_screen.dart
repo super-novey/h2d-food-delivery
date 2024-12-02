@@ -20,8 +20,7 @@ class MenuRestaurantScreen extends StatelessWidget {
   final String userId;
 
   MenuRestaurantScreen({super.key, required this.userId});
-  final restaurantController =
-      Get.put(RestaurantController());
+  final restaurantController = Get.put(RestaurantController());
 
   final cartController = Get.put(CartController());
 
@@ -128,9 +127,7 @@ class MenuRestaurantScreen extends StatelessWidget {
                         width: MySizes.sm,
                       ),
                       Container(
-                          color: MyColors.dividerColor,
-                          width: 0.8,
-                          height: 15),
+                          color: MyColors.dividerColor, width: 0.8, height: 15),
                       const SizedBox(
                         width: MySizes.sm,
                       ),
@@ -146,8 +143,8 @@ class MenuRestaurantScreen extends StatelessWidget {
                       ),
                       const Padding(
                         padding: EdgeInsets.only(top: MySizes.xs),
-                        child: Icon(Icons.arrow_forward_ios,
-                            size: MySizes.iconXs),
+                        child:
+                            Icon(Icons.arrow_forward_ios, size: MySizes.iconXs),
                       )
                     ],
                   ),
@@ -292,7 +289,7 @@ class MenuRestaurantScreen extends StatelessWidget {
                   } else {
                     return InkWell(
                       onTap: () {
-                        Get.to(const ConfirmOrderScreen());
+                        Get.to(ConfirmOrderScreen());
                       },
                       child: Text(
                         "Đặt hàng",

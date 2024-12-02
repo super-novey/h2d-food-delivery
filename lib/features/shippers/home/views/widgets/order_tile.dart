@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/delivery/views/delivery_screen.dart';
-import 'package:food_delivery_h2d/features/shippers/home/controllers/order_controller.dart';
+import 'package:food_delivery_h2d/features/shippers/common/controllers/order_controller.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
 import 'package:food_delivery_h2d/utils/popups/loaders.dart';
@@ -15,7 +15,7 @@ class OrderTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final OrdersController ordersController = Get.find();
+    final OrderController ordersController = Get.find();
     return Container(
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -141,7 +141,8 @@ class OrderTile extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  ordersController.orders.removeWhere((o) => o.id == order.id);
+                  ordersController.newOrders
+                      .removeWhere((o) => o.id == order.id);
                   Loaders.successSnackBar(
                     title: "Thành công",
                     message: "Đơn hàng đã bị từ chối.",

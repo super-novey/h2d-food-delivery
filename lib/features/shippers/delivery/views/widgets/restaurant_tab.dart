@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/shippers/delivery/controllers/tabs_controller.dart';
-import 'package:food_delivery_h2d/features/shippers/home/controllers/order_controller.dart';
+import 'package:food_delivery_h2d/features/shippers/common/controllers/order_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
@@ -10,12 +10,12 @@ import 'package:get/get.dart';
 class RestaurantTab extends StatelessWidget {
   final Order order;
 
-  const RestaurantTab({Key? key, required this.order}) : super(key: key);
+  const RestaurantTab({super.key, required this.order});
 
   @override
   Widget build(BuildContext context) {
     final TabsController controller = Get.put(TabsController());
-    final OrdersController ordersController = Get.find();
+    final OrderController ordersController = Get.find();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -220,7 +220,8 @@ class RestaurantTab extends StatelessWidget {
         ),
       ),
       floatingActionButton: Obx(() {
-        return controller.isRestButtonClicked.value
+        return controller.isRestButtonClicked.value ||
+                order.driverStatus != "heading_to_rest"
             ? const SizedBox.shrink()
             : FloatingActionButton.extended(
                 onPressed: () async {

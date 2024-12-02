@@ -1,12 +1,14 @@
 import 'package:food_delivery_h2d/data/order/order_repository.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/address_controller.dart';
+import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
 import 'package:food_delivery_h2d/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
 
-class OrdersController extends GetxController {
-  static OrdersController get instance => Get.find();
+class OrderController extends GetxController {
+  static OrderController get instance => Get.find();
 
+  var newOrders = <Order>[].obs; // Observable list of orders
   var orders = <Order>[].obs; // Observable list of orders
   var isLoading = true.obs; // Observable for loading state
   OrderRepository orderRepository = Get.put(OrderRepository());
@@ -15,10 +17,11 @@ class OrdersController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchOrders();
+    fetchNewOrders();
+    fetchAllOrders();
   }
 
-  Future<void> fetchOrders() async {
+  Future<void> fetchNewOrders() async {
     try {
       isLoading(true);
 
@@ -37,7 +40,36 @@ class OrdersController extends GetxController {
         }),
       );
 
+      newOrders.assignAll(ordersWithFullAddress);
+      // print(newOrders);
+    } catch (e) {
+      print("Error fetching orders: $e");
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  Future<void> fetchAllOrders() async {
+    try {
+      isLoading(true);
+
+      final fetchedOrders = await orderRepository
+          .getOrdersByDriverId(LoginController.instance.currentUser.driverId);
+
+      List<Order> ordersWithFullAddress = await Future.wait(
+        fetchedOrders.map((order) async {
+          order.restAddress = await addressController.getFullAddress(
+            order.restProvinceId,
+            order.restDistrictId,
+            order.restCommuneId,
+            order.restDetailAddress,
+          );
+          return order;
+        }),
+      );
+
       orders.assignAll(ordersWithFullAddress);
+
       print(orders);
     } catch (e) {
       print("Error fetching orders: $e");
@@ -54,13 +86,13 @@ class OrdersController extends GetxController {
     try {
       await orderRepository.updateOrderStatus(orderId, driverId, newStatus);
 
-      final orderIndex = orders.indexWhere((o) => o.id == orderId);
+      final orderIndex = newOrders.indexWhere((o) => o.id == orderId);
       if (orderIndex != -1) {
-        orders[orderIndex].custStatus = newStatus['custStatus'];
-        orders[orderIndex].driverStatus = newStatus['driverStatus'];
-        orders[orderIndex].restStatus = newStatus['restStatus'];
-        orders[orderIndex].assignedShipperId = driverId;
-        orders.refresh();
+        newOrders[orderIndex].custStatus = newStatus['custStatus'];
+        newOrders[orderIndex].driverStatus = newStatus['driverStatus'];
+        newOrders[orderIndex].restStatus = newStatus['restStatus'];
+        newOrders[orderIndex].assignedShipperId = driverId;
+        newOrders.refresh();
       }
       Loaders.successSnackBar(
           title: "Thành công!",

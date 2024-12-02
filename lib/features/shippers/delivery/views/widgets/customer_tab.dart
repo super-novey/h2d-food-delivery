@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/shippers/delivery/controllers/tabs_controller.dart';
-import 'package:food_delivery_h2d/features/shippers/home/controllers/order_controller.dart';
+import 'package:food_delivery_h2d/features/shippers/common/controllers/order_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
@@ -16,7 +16,7 @@ class CustomerTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TabsController controller = Get.put(TabsController());
-    final OrdersController ordersController = Get.find();
+    final OrderController ordersController = Get.find();
 
     // Wrap the widget to observe changes in the order or status
     return Obx(() {
@@ -422,7 +422,8 @@ class CustomerTab extends StatelessWidget {
             ),
           ),
           // Floating action button
-          if (!controller.isCustButtonClicked.value)
+          if (!controller.isCustButtonClicked.value &&
+              order.driverStatus != "delivered")
             Positioned(
               bottom: 16,
               right: 16,
