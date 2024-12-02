@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/custom_app_bar.dart';
 import 'package:food_delivery_h2d/features/customers/confirm_order/views/confirm_order_screen.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/cart_controller.dart';
+import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/restaurant_controller.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/views/menu_restaurant_list/widgets/detail_cart.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/item_model.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
@@ -19,6 +20,7 @@ class MenuRestaurantDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     //final partner = Get.arguments as DetailPartnerModel?;
     final cartController = Get.put(CartController());
+  final restaurantController = Get.put(RestaurantController());
 
     return Scaffold(
       appBar: const CustomAppBar(
@@ -140,6 +142,13 @@ class MenuRestaurantDetail extends StatelessWidget {
                                           color: MyColors.darkPrimaryTextColor),
                                     ),
                                   ],
+                                );
+                              }if (restaurantController
+                                      .detailPartner.value?.status ==
+                                  false) {
+                                return Icon(
+                                  Icons.add_box,
+                                  color: MyColors.secondaryTextColor,
                                 );
                               } else {
                                 return InkWell(

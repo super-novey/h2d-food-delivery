@@ -20,16 +20,17 @@ class OrderListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final orderController = Get.put(OrderController());
-    // final orderHandler = OrderSocketHandler();
+    final orderHandler = OrderSocketHandler();
 
-    // orderHandler.joinOrderRoom(LoginController.instance.currentUser.partnerId);
-
-    // orderHandler.listenForOrderCreates((newOrder) {
-    //   // Add the new order to the allOrders list
-    //   orderController.allOrders.add(newOrder);
-    //   print("Theeemm");
-    //   // final order = Order.fromJson(newOrder);
-    // });
+    orderHandler.listenForOrderCreates((newOrder) {
+      // Add the new order to the allOrders list
+      if (newOrder.restStatus == "new" &&
+          newOrder.restaurantId ==
+              LoginController.instance.currentUser.partnerId &&
+          newOrder.assignedShipperId != null) {
+        orderController.allOrders.insert(0, newOrder);
+      }
+    });
 
     return DefaultTabController(
       length: 3,

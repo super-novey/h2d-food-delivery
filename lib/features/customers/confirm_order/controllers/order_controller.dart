@@ -74,6 +74,7 @@ class OrderController extends GetxController {
       totalPrice: order.totalPrice,
       note: noteController.text,
     );
+
     // print(newOrder.toString());
 
     ApiResponse<Order> createdOrder =
@@ -100,5 +101,6 @@ class OrderController extends GetxController {
     // cartController.removeAllItem();
 
     // Get.to(const FollowOrderScreen(), arguments: newOrder);
+
   }
 }
