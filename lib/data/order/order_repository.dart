@@ -58,6 +58,7 @@ class OrderRepository extends GetxController {
         return ApiResponse.error(res["message"]);
       }
       final result = Order.fromJson(res["data"]);
+      print('result: ' + result.toString());
       Get.back();
       return ApiResponse.completed(result, res["message"]);
     } catch (e) {
@@ -112,15 +113,17 @@ class OrderRepository extends GetxController {
   Future<ApiResponse<Order>> getOrderById(String id) async {
     try {
       final res = await HttpHelper.get("order/$id");
+      print('RESPONSE:' + res.toString());
 
       if (res["hasError"] == true) {
         return ApiResponse.error(res["message"]);
       }
 
       final order = Order.fromJson(res["data"]);
+      print(order);
       return ApiResponse.completed(order, res["message"]);
     } catch (e) {
-      print(e);
+      print(e); // Debug unexpected errors
       return ApiResponse.error("An unknown error occurred.");
     }
   }

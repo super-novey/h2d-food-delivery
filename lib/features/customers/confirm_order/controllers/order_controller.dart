@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/data/order/order_repository.dart';
+import 'package:food_delivery_h2d/data/response/api_response.dart';
+import 'package:food_delivery_h2d/data/response/status.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
 import 'package:food_delivery_h2d/features/customers/confirm_order/models/order_item_model.dart';
 import 'package:food_delivery_h2d/features/customers/confirm_order/models/order_model.dart';
+import 'package:food_delivery_h2d/features/customers/follow_order/views/follow_order_screen.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/cart_controller.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/restaurant_controller.dart';
+import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
 import 'package:food_delivery_h2d/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 
@@ -25,6 +29,7 @@ class OrderController extends GetxController {
     // order = OrderModel(orderItems: []);
     // noteController.text = order.note;
     // handleNoteOnChange();
+    convertCartItemToOrderItem();
   }
 
   @override
@@ -40,17 +45,21 @@ class OrderController extends GetxController {
   // }
 
   void convertCartItemToOrderItem() {
-    order.orderItems.clear();
-    for (var cartItem in cartController.cartItems) {
-      order.orderItems.add(OrderItem(
-        itemName: cartItem.itemName,
-        price: cartItem.price,
-        quantity: cartController.itemQuantities[cartItem.itemName] ?? 0,
-        totalPrice: 1.0 *
-            cartItem.price *
-            cartController.itemQuantities[cartItem.itemName]!,
-        itemId: cartItem.itemId,
-      ));
+    // order.orderItems.clear();
+    if (order.orderItems.isEmpty) {
+      for (var cartItem in cartController.cartItems) {
+        order.orderItems.add(OrderItem(
+          itemName: cartItem.itemName,
+          price: cartItem.price,
+          quantity: cartController.itemQuantities[cartItem.itemName] ?? 0,
+          totalPrice: cartItem.price *
+              cartController.itemQuantities[cartItem.itemName]!,
+          itemId: cartItem.itemId,
+        ));
+      }
+      order.totalPrice =
+          order.orderItems.fold(0, (sum, item) => sum + item.totalPrice);
+      order.deliveryFee = deliveryFee;
     }
   }
 
@@ -65,10 +74,31 @@ class OrderController extends GetxController {
       totalPrice: order.totalPrice,
       note: noteController.text,
     );
-    print(newOrder.toString());
-    await orderRepository.placeOrder(newOrder);
-    cartController.removeAllItem();
-    Loaders.successSnackBar(
-        title: "Thành công", message: "Đặt hàng thành công.");
+    // print(newOrder.toString());
+
+    ApiResponse<Order> createdOrder =
+        await orderRepository.placeOrder(newOrder);
+    if (createdOrder.status == Status.OK) {
+      var orderDetail = createdOrder.data!;
+      print('orderDetail:' + orderDetail.id);
+      cartController.removeAllItem();
+
+      ApiResponse<Order> orderResponse =
+          await orderRepository.getOrderById(orderDetail.id);
+      print('ORROOOOOOO' + orderResponse.toString());
+      Loaders.successSnackBar(
+          title: "Thành công", message: "Đặt hàng thành công.");
+      if (orderResponse.status == Status.OK) {
+        Get.to(FollowOrderScreen(), arguments: orderResponse.data);
+        Loaders.successSnackBar(
+            title: "Thành công", message: "Đặt hàng thành công.");
+      } else {
+        Loaders.errorSnackBar(
+            title: "Lỗi", message: "Không thể lấy chi tiết đơn hàng.");
+      }
+    }
+    // cartController.removeAllItem();
+
+    // Get.to(const FollowOrderScreen(), arguments: newOrder);
   }
 }

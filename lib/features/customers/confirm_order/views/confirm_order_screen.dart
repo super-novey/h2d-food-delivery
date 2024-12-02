@@ -7,6 +7,7 @@ import 'package:food_delivery_h2d/features/customers/confirm_order/controllers/o
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/cart_controller.dart';
 import 'package:food_delivery_h2d/features/customers/address_selection/views/address_selection/address_selection_screen.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
+import 'package:food_delivery_h2d/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 
 class ConfirmOrderScreen extends StatelessWidget {
@@ -21,8 +22,20 @@ class ConfirmOrderScreen extends StatelessWidget {
     orderController.convertCartItemToOrderItem();
     return KeyboardHider(
       child: Scaffold(
-        appBar: const CustomAppBar(
+        appBar: AppBar(
           title: Text('Xác nhận đơn hàng'),
+          centerTitle: true,
+          backgroundColor: MyColors.darkPrimaryColor,
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back_ios_new,
+              size: 20,
+            ),
+            onPressed: () {
+              orderController.order.orderItems.clear();
+              Get.back();
+            },
+          ),
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(8.0),
@@ -161,7 +174,7 @@ class ConfirmOrderScreen extends StatelessWidget {
                           SizedBox(
                             width: 50,
                             child: Text(
-                              '${cartController.itemQuantities[item.itemName]}',
+                              '${item.quantity}',
                               style: const TextStyle(fontSize: 14),
                               textAlign: TextAlign.center,
                             ),
@@ -188,7 +201,7 @@ class ConfirmOrderScreen extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '${cartController.totalPrice}đ',
+                        '${orderController.order.totalPrice}đ',
                         style: const TextStyle(
                           fontSize: 14,
                         ),
@@ -206,7 +219,7 @@ class ConfirmOrderScreen extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '${cartController.deliveryFee}đ',
+                        '${orderController.order.deliveryFee}đ',
                         style: const TextStyle(
                           fontSize: 14,
                         ),
@@ -225,7 +238,7 @@ class ConfirmOrderScreen extends StatelessWidget {
                             color: MyColors.primaryTextColor),
                       ),
                       Text(
-                        '${cartController.orderPrice}đ',
+                        '${orderController.order.totalPrice + orderController.order.deliveryFee}đ',
                         style: const TextStyle(
                             fontSize: 14,
                             color: MyColors.primaryColor,
@@ -240,7 +253,14 @@ class ConfirmOrderScreen extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
-            orderController.placeOrder();
+            if (addressController.fullAddress.value.isEmpty) {
+              Loaders.errorSnackBar(
+                title: 'Chưa chọn địa chỉ',
+                message: 'Vui lòng chọn địa chỉ giao hàng trước khi đặt hàng.',
+              );
+            } else {
+              orderController.placeOrder();
+            }
           },
           label: const Text(
             'Đặt hàng',

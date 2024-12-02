@@ -26,19 +26,18 @@ class HistoryScreen extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
 
-        if (orderController.orders.isEmpty) {
-          return const Center(child: Text("Không có đơn hàng nào."));
-        }
-
         return RefreshIndicator(
           onRefresh: _refreshOrders,
-          child: ListView.builder(
-            padding: const EdgeInsets.all(8),
-            itemCount: orderController.orders.length,
-            itemBuilder: (context, index) {
-              return HistoryOrderTile(order: orderController.orders[index]);
-            },
-          ),
+          child: orderController.orders.isEmpty
+              ? const Center(child: Text("Không có đơn hàng nào."))
+              : ListView.builder(
+                  padding: const EdgeInsets.all(8),
+                  itemCount: orderController.orders.length,
+                  itemBuilder: (context, index) {
+                    return HistoryOrderTile(
+                        order: orderController.orders[index]);
+                  },
+                ),
         );
       }),
     );
