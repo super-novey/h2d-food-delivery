@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/shippers/delivery/views/widgets/customer_tab.dart';
 import 'package:food_delivery_h2d/features/shippers/delivery/views/widgets/restaurant_tab.dart';
-import 'package:food_delivery_h2d/features/shippers/home/controllers/order_controller.dart';
+import 'package:food_delivery_h2d/features/shippers/common/controllers/order_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:get/get.dart';
@@ -12,7 +12,7 @@ class DeliveryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final OrdersController ordersController = Get.find();
+    final OrderController ordersController = Get.find();
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -26,8 +26,8 @@ class DeliveryScreen extends StatelessWidget {
               size: 24,
             ),
             onPressed: () async {
-              await ordersController.fetchOrders();
               Get.back();
+              await ordersController.fetchNewOrders();
             },
           ),
           bottom: const TabBar(

@@ -6,6 +6,9 @@ import 'package:food_delivery_h2d/features/restaurants/menu_management/models/it
 
 class CartController extends GetxController {
   static CartController get instance => Get.find();
+  CartController() {
+    print('CartController initialized');
+  }
 
   var cartItems = <Item>[].obs;
   var itemQuantities = <String, int>{}.obs;

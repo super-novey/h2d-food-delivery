@@ -224,7 +224,7 @@ class MenuRestaurantDetail extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    Get.to(const ConfirmOrderScreen());
+                    Get.to(ConfirmOrderScreen());
                   },
                   child: Text(
                     "Đặt hàng",

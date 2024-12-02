@@ -10,15 +10,15 @@ import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:get/get.dart';
 
 class ConfirmOrderScreen extends StatelessWidget {
-  const ConfirmOrderScreen({super.key});
+  ConfirmOrderScreen({super.key});
+  final CartController cartController = Get.find();
+  final orderController = Get.put(OrderController());
+  // ignore: unused_local_variable
+  final addressController = Get.put(AddressSelectionController());
 
   @override
   Widget build(BuildContext context) {
-    final cartController = CartController.instance;
-    final orderController = Get.put(OrderController());
-    // ignore: unused_local_variable
-    final addressController = Get.put(AddressSelectionController());
-
+    orderController.convertCartItemToOrderItem();
     return KeyboardHider(
       child: Scaffold(
         appBar: const CustomAppBar(
@@ -60,14 +60,14 @@ class ConfirmOrderScreen extends StatelessWidget {
                             const SizedBox(height: 8),
                             Text(
                               "${LoginController.instance.currentUser.name}", // Replace with actual user name
-                              style:
-                                  const TextStyle(fontSize: 14, color: Colors.grey),
+                              style: const TextStyle(
+                                  fontSize: 14, color: Colors.grey),
                             ),
                             const SizedBox(height: 8),
                             Text(
                               "${LoginController.instance.currentUser.phone}", // Replace with actual user name
-                              style:
-                                  const TextStyle(fontSize: 14, color: Colors.grey),
+                              style: const TextStyle(
+                                  fontSize: 14, color: Colors.grey),
                             ),
                             const SizedBox(height: 8),
                             Obx(() {
@@ -145,7 +145,7 @@ class ConfirmOrderScreen extends StatelessWidget {
                   ),
                   const Divider(color: MyColors.dividerColor, thickness: 1),
                   const SizedBox(height: 8),
-                  ...cartController.cartItems.map((item) {
+                  ...orderController.order.orderItems.map((item) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4.0),
                       child: Row(

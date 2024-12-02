@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/address_controller.dart';
-import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
 import 'package:food_delivery_h2d/sockets/handlers/order_socket_handler.dart';
 import 'package:get/get.dart';
-import 'package:food_delivery_h2d/features/shippers/home/controllers/order_controller.dart';
+import 'package:food_delivery_h2d/features/shippers/common/controllers/order_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/home/views/widgets/order_tile.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 
@@ -12,7 +11,7 @@ class OrdersList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final OrdersController controller = Get.put(OrdersController());
+    final OrderController controller = Get.put(OrderController());
     final addressController = Get.put(AddressController());
     final _orderSocket = Get.put(OrderSocketHandler());
 
@@ -23,7 +22,7 @@ class OrdersList extends StatelessWidget {
         newOrder.restCommuneId,
         newOrder.restDetailAddress,
       );
-      controller.orders.add(newOrder);
+      controller.newOrders.add(newOrder);
     });
 
     return DraggableScrollableSheet(
@@ -45,16 +44,16 @@ class OrdersList extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             }
 
-            if (controller.orders.isEmpty) {
+            if (controller.newOrders.isEmpty) {
               return const Center(child: Text("Không có đơn hàng nào."));
             }
 
             return ListView.builder(
               controller: scrollController,
               padding: const EdgeInsets.all(8),
-              itemCount: controller.orders.length,
+              itemCount: controller.newOrders.length,
               itemBuilder: (context, index) {
-                return OrderTile(order: controller.orders[index]);
+                return OrderTile(order: controller.newOrders[index]);
               },
             );
           }),

@@ -13,16 +13,18 @@ class OrderController extends GetxController {
 
   final TextEditingController noteController = TextEditingController();
   final orderRepository = Get.put(OrderRepository());
-  final cartController = CartController.instance;
-  late final OrderModel order;
+  final CartController cartController = Get.find();
+  late final OrderModel order = OrderModel(
+    orderItems: [], // Default delivery fee
+  );
   double deliveryFee = 15000;
 
   @override
   void onInit() {
     super.onInit();
-    order = OrderModel(orderItems: []);
-    noteController.text = order.note;
-    handleNoteOnChange();
+    // order = OrderModel(orderItems: []);
+    // noteController.text = order.note;
+    // handleNoteOnChange();
   }
 
   @override
@@ -31,11 +33,11 @@ class OrderController extends GetxController {
     super.dispose();
   }
 
-  handleNoteOnChange() {
-    noteController.addListener(() {
-      order.note = noteController.text;
-    });
-  }
+  // handleNoteOnChange() {
+  //   noteController.addListener(() {
+  //     order.note = noteController.text;
+  //   });
+  // }
 
   void convertCartItemToOrderItem() {
     order.orderItems.clear();
@@ -61,7 +63,7 @@ class OrderController extends GetxController {
       deliveryFee: deliveryFee,
       orderItems: order.orderItems,
       totalPrice: order.totalPrice,
-      note: order.note,
+      note: noteController.text,
     );
     print(newOrder.toString());
     await orderRepository.placeOrder(newOrder);

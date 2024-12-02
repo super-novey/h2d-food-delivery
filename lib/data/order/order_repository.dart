@@ -107,4 +107,40 @@ class OrderRepository extends GetxController {
       return ApiResponse.error("An unknown error occurred.");
     }
   }
+
+  /// Fetches a specific order by its ID.
+  Future<ApiResponse<Order>> getOrderById(String id) async {
+    try {
+      final res = await HttpHelper.get("order/$id");
+
+      if (res["hasError"] == true) {
+        return ApiResponse.error(res["message"]);
+      }
+
+      final order = Order.fromJson(res["data"]);
+      return ApiResponse.completed(order, res["message"]);
+    } catch (e) {
+      print(e);
+      return ApiResponse.error("An unknown error occurred.");
+    }
+  }
+
+  Future<List<Order>> getOrdersByDriverId(String driverId) async {
+    try {
+      final url = "order/driver/$driverId";
+      final response = await HttpHelper.get(url);
+
+      if (response["hasError"] == true) {
+        throw Exception(response["message"]);
+      }
+
+      final list = (response["data"] as List)
+          .map((order) => Order.fromJson(order))
+          .toList();
+      return list;
+    } catch (e) {
+      print("Error fetching orders by driver ID: $e");
+      rethrow;
+    }
+  }
 }

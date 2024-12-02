@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_h2d/features/shippers/history/views/history_screen.dart';
 import 'package:food_delivery_h2d/features/shippers/home/views/shipper_home_screen.dart';
 import 'package:food_delivery_h2d/features/shippers/income/views/income_screen.dart';
-import 'package:food_delivery_h2d/features/shippers/orders/views/orders_screen.dart';
 import 'package:food_delivery_h2d/features/shippers/profile/views/profile_screen.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
@@ -69,7 +69,7 @@ class NavigationController extends GetxController {
 
   final screens = [
     const ShipperHomeScreen(),
-    const OrdersScreen(),
+    HistoryScreen(),
     const IncomeScreen(),
     const ProfileScreen(),
     Container(
