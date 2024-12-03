@@ -83,7 +83,6 @@ class OrderRepository extends GetxController {
         updatedStatus,
       );
 
-
       if (res["hasError"] == true) {
         return ApiResponse.error(res["message"]);
       }

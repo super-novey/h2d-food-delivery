@@ -1,38 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/custom_app_bar.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/address_controller.dart';
+import 'package:food_delivery_h2d/features/customers/follow_order/controllers/order_status_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
 import 'package:get/get.dart';
 
 class FollowOrderScreen extends StatelessWidget {
-  FollowOrderScreen({super.key});
-  final Order order = Get.arguments;
+  final Order order;
+  const FollowOrderScreen({super.key, required this.order});
 
-  Color _getLineColor(String orderStatus, int step) {
-    // Apply grey color if the order is not in progress or completed, otherwise use primaryColor
-    if (orderStatus == "pending" || orderStatus == "delivered") {
-      return Colors.grey; // Grey color for pending or delivered
-    } else {
-      return MyColors.primaryColor; // Primary color for in-progress orders
-    }
-  }
+  // Color _getContainer1Color(String orderStatus) {
+  //   return (orderStatus == 'waiting' || orderStatus == 'preparing')
+  //       ? MyColors.primaryColor
+  //       : Colors.grey;
+  // }
 
-  getFullAddress(Order order) async {
-    final addressController = Get.put(AddressController());
+  // Color _getContainer2Color(String orderStatus) {
+  //   return (orderStatus == 'preparing' || orderStatus == 'delivering')
+  //       ? MyColors.primaryColor
+  //       : Colors.grey;
+  // }
 
-    order.restAddress = await addressController.getFullAddress(
-      order.restProvinceId,
-      order.restDistrictId,
-      order.restCommuneId,
-      order.restDetailAddress,
-    );
-  }
+  // Color _getContainer3Color(String orderStatus) {
+  //   return orderStatus == 'delivering' ? MyColors.primaryColor : Colors.grey;
+  // }
 
   @override
   Widget build(BuildContext context) {
-    getFullAddress(order);
+    final orderStatusController = Get.put(OrderStatusController());
+    // order.custStatus = 'preparing';
     return Scaffold(
       appBar: const CustomAppBar(
         title: Text("Theo dõi đơn hàng"),
@@ -67,7 +65,7 @@ class FollowOrderScreen extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 "Tài xế đang trên đường giao...",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -85,15 +83,34 @@ class FollowOrderScreen extends StatelessWidget {
                                     color: MyColors.primaryColor,
                                   ),
                                   const SizedBox(width: 8),
-                                  Container(
-                                    width: 50,
-                                    height: 2.5,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      color: _getLineColor("pending",
-                                          1), // Apply condition based on order status
-                                    ),
-                                  ),
+                                  Obx(() => AnimatedContainer(
+                                        duration:
+                                            const Duration(milliseconds: 500),
+                                        curve: Curves.easeInOut,
+                                        width: 50,
+                                        height: 2.5,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          color: orderStatusController
+                                              .getContainerColor(1),
+                                        ),
+                                        child: orderStatusController
+                                                .isContainer1Blinking.value
+                                            ? Container(
+                                                color: Colors.transparent)
+                                            : LinearProgressIndicator(
+                                                value: orderStatusController
+                                                    .container1Progress.value,
+                                                minHeight: 6,
+                                                backgroundColor:
+                                                    Colors.grey.shade300,
+                                                valueColor:
+                                                    const AlwaysStoppedAnimation<
+                                                            Color>(
+                                                        MyColors.primaryColor),
+                                              ),
+                                      )),
                                   const SizedBox(width: 8),
                                   const Icon(
                                     Icons.local_dining,
@@ -101,15 +118,28 @@ class FollowOrderScreen extends StatelessWidget {
                                     color: MyColors.primaryColor,
                                   ),
                                   const SizedBox(width: 8),
-                                  Container(
-                                    width: 50,
-                                    height: 2.5,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      color: _getLineColor("delivered",
-                                          2), // Apply condition based on order status
-                                    ),
-                                  ),
+                                  Obx(() => AnimatedContainer(
+                                        duration:
+                                            const Duration(milliseconds: 500),
+                                        curve: Curves.easeInOut,
+                                        width: 50,
+                                        height: 2.5,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          color: orderStatusController
+                                              .getContainerColor(2),
+                                        ),
+                                        child: LinearProgressIndicator(
+                                          value: orderStatusController
+                                              .container2Progress.value,
+                                          minHeight: 6,
+                                          backgroundColor: Colors.grey.shade300,
+                                          valueColor:
+                                              const AlwaysStoppedAnimation<
+                                                  Color>(MyColors.primaryColor),
+                                        ),
+                                      )),
                                   const SizedBox(width: 8),
                                   const Icon(
                                     Icons.motorcycle_rounded,
@@ -117,15 +147,28 @@ class FollowOrderScreen extends StatelessWidget {
                                     color: MyColors.primaryColor,
                                   ),
                                   const SizedBox(width: 8),
-                                  Container(
-                                    width: 50,
-                                    height: 2.5,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      color: _getLineColor("delivered",
-                                          3), // Apply condition based on order status
-                                    ),
-                                  ),
+                                  Obx(() => AnimatedContainer(
+                                        duration:
+                                            const Duration(milliseconds: 500),
+                                        curve: Curves.easeInOut,
+                                        width: 50,
+                                        height: 2.5,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          color: orderStatusController
+                                              .getContainerColor(3),
+                                        ),
+                                        child: LinearProgressIndicator(
+                                          value: orderStatusController
+                                              .container3Progress.value,
+                                          minHeight: 6,
+                                          backgroundColor: Colors.grey.shade300,
+                                          valueColor:
+                                              const AlwaysStoppedAnimation<
+                                                  Color>(MyColors.primaryColor),
+                                        ),
+                                      )),
                                   const SizedBox(width: 8),
                                   const Icon(
                                     Icons.home,
@@ -149,32 +192,33 @@ class FollowOrderScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      order.assignedShipperId ?? "",
-                                      style: TextStyle(color: Colors.grey),
+                                      order.driverName ?? "",
+                                      style:
+                                          const TextStyle(color: Colors.grey),
                                     ),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
-                                        Icon(
+                                        const Icon(
                                           Icons.star,
                                           color: MyColors.warningColor,
                                           size: 18,
                                         ),
-                                        Text("4.9"),
-                                        SizedBox(
+                                        const Text("4.9"),
+                                        const SizedBox(
                                           width: 8.0,
                                         ),
                                         Text(
-                                          "67-G1 544.91",
-                                          style: TextStyle(
+                                          order.driverLicensePlate ?? '',
+                                          style: const TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ],
                                     )
                                   ],
                                 ),
-                                SizedBox(width: 8),
+                                const SizedBox(width: 8),
                               ],
                             ),
                           ],
