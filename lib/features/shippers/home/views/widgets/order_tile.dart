@@ -44,7 +44,8 @@ class OrderTile extends StatelessWidget {
                 ),
               ),
               Text(
-                MyFormatter.formatCurrency(order.totalPrice ?? 0),
+                MyFormatter.formatCurrency(
+                    order.totalPrice! + order.deliveryFee!),
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,

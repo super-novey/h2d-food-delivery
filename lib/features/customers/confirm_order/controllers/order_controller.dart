@@ -89,6 +89,7 @@ class OrderController extends GetxController {
       print('ORROOOOOOO' + orderResponse.toString());
       Loaders.successSnackBar(
           title: "Thành công", message: "Đặt hàng thành công.");
+      order.orderItems.clear();
       if (orderResponse.status == Status.OK) {
         Get.to(FollowOrderScreen(), arguments: orderResponse.data);
         Loaders.successSnackBar(
@@ -101,6 +102,5 @@ class OrderController extends GetxController {
     // cartController.removeAllItem();
 
     // Get.to(const FollowOrderScreen(), arguments: newOrder);
-
   }
 }
