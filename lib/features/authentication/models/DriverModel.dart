@@ -16,6 +16,7 @@ class DriverModel extends UserModel {
       required super.email,
       required super.password,
       required super.status,
+      this.workingStatus = false,
       required super.role,
       required super.phone,
       required super.createdAt,
@@ -30,6 +31,7 @@ class DriverModel extends UserModel {
   final String districtId;
   final String communeId;
   final String detailAddress;
+  bool workingStatus;
 
   factory DriverModel.fromJson(Map<String, dynamic> json) {
     // final user = UserModel.fromJson(json["userId"]);
@@ -46,6 +48,7 @@ class DriverModel extends UserModel {
       districtId: json['districtId'] ?? '',
       communeId: json['communeId'] ?? '',
       detailAddress: json['detailAddress'] ?? '',
+      workingStatus: json['status'] ?? '',
       userId: user.userId,
       name: user.name,
       email: user.email,

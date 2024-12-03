@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:food_delivery_h2d/features/restaurants/rating_management/models/rating_restaurant_model.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
+import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
 
 class RatingTile extends StatelessWidget {
-  final RatingRestaurant rating;
+  final RatingModel rating;
 
   const RatingTile({super.key, required this.rating});
 
@@ -30,9 +31,9 @@ class RatingTile extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 20,
-                      backgroundImage: AssetImage(rating.avatar),
+                      backgroundImage: AssetImage(MyImagePaths.iconImage),
                       backgroundColor: Colors.white,
                     ),
                     const SizedBox(
@@ -42,20 +43,21 @@ class RatingTile extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          rating.nameCustomer,
+                          rating.customerName,
                           style: Theme.of(context)
                               .textTheme
                               .labelMedium!
                               .apply(color: MyColors.darkPrimaryTextColor),
                         ),
+                        const SizedBox(height: MySizes.xs),
                         RatingStars(
                           axis: Axis.horizontal,
-                          value: rating.stars.toDouble(),
+                          value: rating.custResRating,
                           onValueChanged: (v) {},
                           starCount: 5,
                           starSize: 12,
                           maxValue: 5,
-                          starSpacing: 2,
+                          starSpacing: 4,
                           maxValueVisibility: true,
                           valueLabelVisibility: false,
                           valueLabelPadding: const EdgeInsets.symmetric(
@@ -63,7 +65,6 @@ class RatingTile extends StatelessWidget {
                           valueLabelMargin: const EdgeInsets.only(right: 8),
                           starOffColor: MyColors.starOffColor,
                           starColor: MyColors.starColor,
-                          angle: 12,
                         )
                       ],
                     ),
@@ -73,7 +74,7 @@ class RatingTile extends StatelessWidget {
                   height: MySizes.sm,
                 ),
                 Text(
-                  rating.comment,
+                  rating.custResRatingComment,
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium!
@@ -90,14 +91,14 @@ class RatingTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      MyFormatter.formatDate(rating.orderDateTime.toString()),
+                      MyFormatter.formatDate(rating.orderDatetime.toString()),
                       style: Theme.of(context)
                           .textTheme
                           .labelSmall!
                           .apply(color: MyColors.primaryTextColor),
                     ),
                     Text(
-                      MyFormatter.formatTime(rating.orderDateTime.toString()),
+                      MyFormatter.formatTime(rating.orderDatetime.toString()),
                       style: Theme.of(context)
                           .textTheme
                           .labelSmall!
