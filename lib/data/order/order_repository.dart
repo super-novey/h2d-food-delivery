@@ -71,18 +71,19 @@ class OrderRepository extends GetxController {
     String? orderId,
     String? driverId,
     Map<String, dynamic>? statusUpdates,
+    String? reason,
   ) async {
     try {
       final updatedStatus = {
         ...?statusUpdates,
         "assignedShipperId": driverId,
+        "reason": reason,
       };
       print("order/$orderId/status");
       final res = await HttpHelper.patch(
         "order/$orderId/status",
         updatedStatus,
       );
-
 
       if (res["hasError"] == true) {
         return ApiResponse.error(res["message"]);

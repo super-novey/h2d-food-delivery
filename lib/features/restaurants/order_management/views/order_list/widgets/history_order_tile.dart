@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
+import 'package:food_delivery_h2d/utils/helpers/status_helper.dart';
 
 import '../../../../../shippers/home/models/order_model.dart';
 
@@ -39,11 +40,11 @@ class HistoryOrderTile extends StatelessWidget {
                           .apply(color: MyColors.primaryTextColor),
                     ),
                     Text(
-                      "Đã hủy",
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelSmall!
-                          .apply(color: MyColors.primaryTextColor),
+                      StatusHelper.restStatusTranslations[order.restStatus] ??
+                          'Unknown status',
+                      style: Theme.of(context).textTheme.labelSmall!.apply(
+                          color:
+                              StatusHelper.restStatusColors[order.restStatus]),
                     ),
                   ],
                 ),
@@ -69,7 +70,7 @@ class HistoryOrderTile extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      '10 món',
+                      '${order.orderItems.fold(0, (sum, item) => sum + item.quantity)} món',
                       style: Theme.of(context)
                           .textTheme
                           .bodySmall!
@@ -89,7 +90,7 @@ class HistoryOrderTile extends StatelessWidget {
                     SizedBox(
                       width: 180,
                       child: Text(
-                        'Lý do hủy',
+                        order.reason,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         style: Theme.of(context)
@@ -99,7 +100,7 @@ class HistoryOrderTile extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '20000đ',
+                      MyFormatter.formatCurrency(order.totalPrice!),
                       style: Theme.of(context)
                           .textTheme
                           .bodySmall!

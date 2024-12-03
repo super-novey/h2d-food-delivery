@@ -10,7 +10,11 @@ import '../../../../../shippers/home/models/order_model.dart';
 class NewOrderTile extends StatelessWidget {
   final Order order;
 
-  const NewOrderTile({super.key, required this.order});
+  final VoidCallback? handleAccept;
+  final VoidCallback? handleCancel;
+
+  const NewOrderTile(
+      {super.key, required this.order, this.handleAccept, this.handleCancel});
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +138,7 @@ class NewOrderTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       InkWell(
-                        onTap: () => {},
+                        onTap: handleCancel,
                         child: Container(
                           width: 80,
                           height: 30,
@@ -156,7 +160,7 @@ class NewOrderTile extends StatelessWidget {
                         width: MySizes.sm,
                       ),
                       InkWell(
-                        onTap: () => {},
+                        onTap: handleAccept,
                         child: Container(
                           width: 80,
                           height: 30,

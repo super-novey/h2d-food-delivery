@@ -84,7 +84,8 @@ class OrderController extends GetxController {
     required Map<String, dynamic> newStatus,
   }) async {
     try {
-      await orderRepository.updateOrderStatus(orderId, driverId, newStatus);
+      await orderRepository.updateOrderStatus(
+          orderId, driverId, newStatus, null);
 
       final orderIndex = newOrders.indexWhere((o) => o.id == orderId);
       if (orderIndex != -1) {
