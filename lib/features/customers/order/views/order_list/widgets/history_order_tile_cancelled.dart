@@ -3,6 +3,7 @@ import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
+import 'package:food_delivery_h2d/utils/helpers/status_helper.dart';
 
 class HistoryOrderTileCancelled extends StatelessWidget {
   final Order order;
@@ -38,7 +39,7 @@ class HistoryOrderTileCancelled extends StatelessWidget {
                           .apply(color: MyColors.primaryTextColor),
                     ),
                     Text(
-                      "Đã hủy",
+                      StatusHelper.custStatusTranslations[order.custStatus] ?? 'Unknown status',
                       style: Theme.of(context)
                           .textTheme
                           .labelSmall!
@@ -68,7 +69,7 @@ class HistoryOrderTileCancelled extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      '${order.custStatus} món',
+                      '${order.orderItems.fold(0, (sum, item) => sum + item.quantity)} món',
                       style: Theme.of(context)
                           .textTheme
                           .bodySmall!
@@ -89,7 +90,7 @@ class HistoryOrderTileCancelled extends StatelessWidget {
                     SizedBox(
                       width: 180,
                       child: Text(
-                        'Lý do hủy',
+                        order.reason,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         style: Theme.of(context)
