@@ -77,11 +77,12 @@ class OrderRepository extends GetxController {
         ...?statusUpdates,
         "assignedShipperId": driverId,
       };
-
+      print("order/$orderId/status");
       final res = await HttpHelper.patch(
         "order/$orderId/status",
         updatedStatus,
       );
+
 
       if (res["hasError"] == true) {
         return ApiResponse.error(res["message"]);

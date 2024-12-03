@@ -92,7 +92,7 @@ class Order {
   // Factory constructor to create an Order object from JSON
   factory Order.fromJson(Map<String, dynamic> json) {
     return Order(
-      id: json['_id'] ?? '',
+      id: (json['_id'] == null) ? json['id'] : json['_id'],
       customerName: json['customerName'] ?? '',
       custPhone: json['custPhone'] ?? '',
       restaurantName: json['restaurantName'] ?? '',

@@ -6,8 +6,7 @@ class HttpHelper {
   static const String _baseUrl =
 
       // "http://localhost:8081/api/v1"; // change URL
-      "https://985a-171-247-149-38.ngrok-free.app/api/v1";
-
+      "https://f396-14-169-94-210.ngrok-free.app/api/v1";
 
   static Future<Map<String, dynamic>> get(String endpoint) async {
     final response = await http.get(Uri.parse('$_baseUrl/$endpoint'));
