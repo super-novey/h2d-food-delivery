@@ -13,6 +13,8 @@ class OrderDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("STATUS");
+    print(selectedOrder.restStatus);
     return Scaffold(
       appBar: const CustomAppBar(
         title: Text("Chi tiết đơn hàng"),
@@ -38,10 +40,11 @@ class OrderDetailScreen extends StatelessWidget {
                 ),
                 Text(
                   StatusHelper
-                          .custStatusTranslations[selectedOrder.restStatus] ??
+                          .restStatusTranslations[selectedOrder.restStatus] ??
                       'Unknown status',
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        color: MyColors.primaryTextColor,
+                        color: StatusHelper
+                            .restStatusColors[selectedOrder.restStatus],
                         height: 2,
                       ),
                 )

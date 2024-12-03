@@ -219,6 +219,7 @@ class OrderController extends GetxController {
             onPressed: () async {
               try {
                 cancelOrder(orderId);
+                Navigator.of(Get.overlayContext!).pop();
               } catch (err) {
                 Loaders.successSnackBar(title: "Thất bại!", message: "Từ chối");
               }
