@@ -5,6 +5,7 @@ import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
 import 'package:food_delivery_h2d/utils/helpers/handle_status_text.dart';
+import 'package:food_delivery_h2d/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 
 class RestaurantTab extends StatelessWidget {
@@ -237,6 +238,9 @@ class RestaurantTab extends StatelessWidget {
                       orderId: order.id,
                       newStatus: newStatus,
                     );
+                    Loaders.successSnackBar(
+                        title: "Thành công!",
+                        message: "Trạng thái đơn hàng đã được cập nhật.");
                   } catch (e) {
                     Get.snackbar("Error", "Failed to delivery the order: $e",
                         snackPosition: SnackPosition.BOTTOM);

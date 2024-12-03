@@ -25,6 +25,8 @@ class OrderController extends GetxController {
   );
   double deliveryFee = 15000;
 
+  var paymentMethod = 'Cash'.obs;
+
   @override
   void onInit() {
     super.onInit();
