@@ -80,24 +80,36 @@ class OrderListScreen extends StatelessWidget {
                                     },
                                   ),
                           ),
-                          ListView.builder(
-                              itemCount: orderController.preparingOrders.length,
-                              itemBuilder: (context, index) {
-                                final order =
-                                    orderController.preparingOrders[index];
-                                return PreparingOrderTile(
-                                  order: order,
-                                  handleDone: () {
-                                    orderController.completeOrder(order.id);
-                                  },
-                                );
-                              }),
-                          ListView.builder(
-                              itemCount: orderController.doneOrders.length,
-                              itemBuilder: (context, index) {
-                                final order = orderController.doneOrders[index];
-                                return HistoryOrderTile(order: order);
-                              }),
+                          Obx(
+                            () => orderController.preparingOrders.isEmpty
+                                ? const Center(child: Text("Không có đơn"))
+                                : ListView.builder(
+                                    itemCount:
+                                        orderController.preparingOrders.length,
+                                    itemBuilder: (context, index) {
+                                      final order = orderController
+                                          .preparingOrders[index];
+                                      return PreparingOrderTile(
+                                        order: order,
+                                        handleDone: () {
+                                          orderController
+                                              .completeOrder(order.id);
+                                        },
+                                      );
+                                    }),
+                          ),
+                          Obx(
+                            () => orderController.doneOrders.isEmpty
+                                ? const Center(child: Text("Không có đơn"))
+                                : ListView.builder(
+                                    itemCount:
+                                        orderController.doneOrders.length,
+                                    itemBuilder: (context, index) {
+                                      final order =
+                                          orderController.doneOrders[index];
+                                      return HistoryOrderTile(order: order);
+                                    }),
+                          ),
                         ],
                       ),
                     ),
