@@ -91,19 +91,15 @@ class OrderController extends GetxController {
       await orderRepository.updateOrderStatus(
           orderId, driverId, newStatus, null);
 
-      final orderIndex = newOrders.indexWhere((o) => o.id == orderId);
+      final orderIndex = orders.indexWhere((o) => o.id == orderId);
       if (orderIndex != -1) {
-        newOrders[orderIndex].custStatus = newStatus['custStatus'];
-        newOrders[orderIndex].driverStatus = newStatus['driverStatus'];
-        newOrders[orderIndex].restStatus = newStatus['restStatus'];
-        newOrders[orderIndex].assignedShipperId = driverId;
-        newOrders.refresh();
+        orders[orderIndex].custStatus = newStatus['custStatus'];
+        orders[orderIndex].driverStatus = newStatus['driverStatus'];
+        orders[orderIndex].restStatus = newStatus['restStatus'];
+        orders[orderIndex].assignedShipperId = driverId;
+        orders.refresh();
       }
-      Loaders.successSnackBar(
-          title: "Thành công!",
-          message: "Trạng thái đơn hàng đã được cập nhật.");
     } catch (e) {
-      print("Error updating order status: $e");
       Loaders.errorSnackBar(title: "Thất bại!", message: "Đã xảy ra lỗi.");
       rethrow;
     }

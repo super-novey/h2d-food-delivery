@@ -7,6 +7,7 @@ import 'package:food_delivery_h2d/features/customers/confirm_order/controllers/o
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/cart_controller.dart';
 import 'package:food_delivery_h2d/features/customers/address_selection/views/address_selection/address_selection_screen.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
+import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
 import 'package:food_delivery_h2d/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 
@@ -23,7 +24,7 @@ class ConfirmOrderScreen extends StatelessWidget {
     return KeyboardHider(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Xác nhận đơn hàng'),
+          title: const Text('Xác nhận đơn hàng'),
           centerTitle: true,
           backgroundColor: MyColors.darkPrimaryColor,
           leading: IconButton(
@@ -37,8 +38,14 @@ class ConfirmOrderScreen extends StatelessWidget {
             },
           ),
         ),
+        backgroundColor: MyColors.primaryBackgroundColor,
         body: SingleChildScrollView(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.only(
+            top: 8.0,
+            right: 8.0,
+            bottom: 80.0,
+            left: 8.0,
+          ),
           child: Column(
             children: [
               // Restaurant Information
@@ -156,6 +163,37 @@ class ConfirmOrderScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 8),
+                  const Row(
+                    children: [
+                      SizedBox(
+                        width: 150,
+                        child: Text(
+                          'Tên món',
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.bold),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 50, // Fixed width for the second column
+                        child: Text(
+                          'SL',
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          'Thành tiền',
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.end,
+                        ),
+                      ),
+                    ],
+                  ),
                   const Divider(color: MyColors.dividerColor, thickness: 1),
                   const SizedBox(height: 8),
                   ...orderController.order.orderItems.map((item) {
@@ -181,7 +219,7 @@ class ConfirmOrderScreen extends StatelessWidget {
                           ),
                           Expanded(
                             child: Text(
-                              '${item.price}đ',
+                              MyFormatter.formatCurrency(item.totalPrice),
                               style: const TextStyle(fontSize: 14),
                               textAlign: TextAlign.end,
                             ),
@@ -201,7 +239,8 @@ class ConfirmOrderScreen extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '${orderController.order.totalPrice}đ',
+                        MyFormatter.formatCurrency(
+                            orderController.order.totalPrice),
                         style: const TextStyle(
                           fontSize: 14,
                         ),
@@ -219,7 +258,8 @@ class ConfirmOrderScreen extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '${orderController.order.deliveryFee}đ',
+                        MyFormatter.formatCurrency(
+                            orderController.order.deliveryFee.toInt()),
                         style: const TextStyle(
                           fontSize: 14,
                         ),
@@ -238,7 +278,10 @@ class ConfirmOrderScreen extends StatelessWidget {
                             color: MyColors.primaryTextColor),
                       ),
                       Text(
-                        '${orderController.order.totalPrice + orderController.order.deliveryFee}đ',
+                        MyFormatter.formatCurrency(
+                            (orderController.order.totalPrice +
+                                    orderController.order.deliveryFee)
+                                .toInt()),
                         style: const TextStyle(
                             fontSize: 14,
                             color: MyColors.primaryColor,
@@ -246,6 +289,44 @@ class ConfirmOrderScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+                ],
+              ),
+              // Inside the body of the Column widget
+              buildInfoCard(
+                context: context,
+                children: [
+                  const Text(
+                    'Phương thức thanh toán',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: MyColors.primaryColor,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Obx(() {
+                    return Row(
+                      children: [
+                        Expanded(
+                          child: RadioListTile<String>(
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('Thanh toán khi nhận hàng'),
+                                Image.asset('assets/icons/ic_cash.png',
+                                    width: 32, height: 32),
+                              ],
+                            ),
+                            value: 'Cash',
+                            groupValue: orderController.paymentMethod.value,
+                            onChanged: (value) {
+                              orderController.paymentMethod.value = value!;
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+                  }),
                 ],
               ),
             ],
