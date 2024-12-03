@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:food_delivery_h2d/data/item/item_repository.dart';
 import 'package:food_delivery_h2d/data/order/order_repository.dart';
 import 'package:food_delivery_h2d/data/response/status.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
@@ -20,6 +21,7 @@ class OrderController extends GetxController {
   final _orderRespository = Get.put(OrderRepository());
   final addressController = Get.put(AddressController());
   final _orderRepository = Get.put(OrderRepository());
+  final _itemRepository = Get.put(ItemRepository());
 
   final _reasonController = TextEditingController();
 
@@ -117,28 +119,33 @@ class OrderController extends GetxController {
           await _orderRespository.getOrdersByPartnerStatus(
               LoginController.instance.currentUser.partnerId, "cancelled");
 
-      final List<Order> ordersWithFullAddress = await Future.wait(
-        fetchedCompletedOrders.data!.map((order) async {
-          order.restAddress = await addressController.getFullAddress(
-            order.restProvinceId,
-            order.restDistrictId,
-            order.restCommuneId,
-            order.restDetailAddress,
-          );
-          return order;
-        }),
-      );
+      var ordersWithFullAddress = <Order>[];
 
-      final List<Order> canceledOrdersWithFullAddress = await Future.wait(
-        fetchedCanceledOrders.data!.map((order) async {
-          order.restAddress = await addressController.getFullAddress(
-            order.restProvinceId,
-            order.restDistrictId,
-            order.restCommuneId,
-            order.restDetailAddress,
-          );
-          return order;
-        }),
+      ordersWithFullAddress =
+          await Future.wait(fetchedCompletedOrders.data?.map((order) async {
+                order.restAddress = await addressController.getFullAddress(
+                  order.restProvinceId,
+                  order.restDistrictId,
+                  order.restCommuneId,
+                  order.restDetailAddress,
+                );
+                return order;
+              }) ??
+              []);
+
+      var canceledOrdersWithFullAddress = <Order>[];
+
+      canceledOrdersWithFullAddress = await Future.wait(
+        fetchedCanceledOrders.data?.map((order) async {
+              order.restAddress = await addressController.getFullAddress(
+                order.restProvinceId,
+                order.restDistrictId,
+                order.restCommuneId,
+                order.restDetailAddress,
+              );
+              return order;
+            }) ??
+            [],
       );
 
       doneOrders.assignAll(ordersWithFullAddress);
@@ -196,6 +203,12 @@ class OrderController extends GetxController {
       final orderIndex = preparingOrders.indexWhere((o) => o.id == orderId);
       preparingOrders[orderIndex].restStatus = "completed";
       doneOrders.add(preparingOrders[orderIndex]);
+
+      // Decrease quantity
+      await Future.wait(preparingOrders[orderIndex].orderItems.map(
+            (e) => _itemRepository.decreaseQuantity(e.foodId, e.quantity),
+          ));
+
       preparingOrders.removeAt(orderIndex);
 
       Loaders.successSnackBar(

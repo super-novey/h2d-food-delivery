@@ -4,9 +4,11 @@ class OrderItem {
   int quantity;
   int price;
   int totalPrice;
+  String foodId;
 
   OrderItem({
     required this.itemId,
+    required this.foodId,
     required this.itemName,
     required this.quantity,
     required this.price,
@@ -32,6 +34,7 @@ class OrderItem {
       quantity: json['quantity'] ?? 0,
       price: (json['price'] as num).toInt(),
       totalPrice: (json['totalPrice'] as num).toInt(),
+      foodId: json['foodId'] ?? '',
     );
   }
 

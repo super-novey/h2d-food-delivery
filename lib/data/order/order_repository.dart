@@ -154,7 +154,6 @@ class OrderRepository extends GetxController {
     try {
       final res = await HttpHelper.get(
           "order/orders/partner?partnerId=${partnerId.toString()}&status=${status.toString()}");
-      // "order/orders/partner?partnerId=6749d1a1214ecac2cd6094ef&status=new");
 
       if (res["hasError"] == true) {
         return ApiResponse.error(res["message"]);
