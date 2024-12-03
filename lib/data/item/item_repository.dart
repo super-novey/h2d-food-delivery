@@ -21,10 +21,11 @@ class ItemRepository extends GetxController {
       rethrow;
     }
   }
+
   Future<List<Item>> getItemsByCategoryIDInCustomer(String categoryId) async {
     try {
-      final res =
-          await HttpHelper.get("item/customer/category/${categoryId.toString()}");
+      final res = await HttpHelper.get(
+          "item/customer/category/${categoryId.toString()}");
       final list = (res["data"] as List)
           .map((category) => Item.fromJson(category))
           .toList();
@@ -99,6 +100,25 @@ class ItemRepository extends GetxController {
     } catch (e) {
       print(e);
       rethrow;
+    }
+  }
+
+  Future<ApiResponse<Item>> decreaseQuantity(
+      String orderId, int quantity) async {
+    try {
+      final res = await HttpHelper.patch(
+          "item/${orderId.toString()}/quantity", {"quantity": quantity});
+
+      print("GIAM SO LUONG ${res.toString()}");
+
+      if (res["hasError"] == true) {
+        return ApiResponse.error(res["message"]);
+      }
+      final result = Item.fromJson(res["data"]);
+      return ApiResponse.completed(result, res["message"]);
+    } catch (e) {
+      print(e);
+      return ApiResponse.error("An unknown error occurred.");
     }
   }
 }

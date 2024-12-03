@@ -13,8 +13,6 @@ class OrderDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("STATUS");
-    print(selectedOrder.restStatus);
     return Scaffold(
       appBar: const CustomAppBar(
         title: Text("Chi tiết đơn hàng"),
