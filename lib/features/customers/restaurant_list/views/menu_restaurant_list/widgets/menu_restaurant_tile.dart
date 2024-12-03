@@ -102,7 +102,7 @@ class MenuRestaurantTile extends StatelessWidget {
                               width: MySizes.sm,
                             ),
                             Text(
-                              "Đã bán: ${item.quantity.toString()}",
+                              "Đã bán: ${item.sales.toString()}",
                               style: Theme.of(context)
                                   .textTheme
                                   .labelSmall!
