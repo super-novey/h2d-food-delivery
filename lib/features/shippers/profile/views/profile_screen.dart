@@ -22,14 +22,14 @@ class ProfileScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 20.0),
+            padding:
+                const EdgeInsets.symmetric(vertical: 40.0, horizontal: 20.0),
             child: Column(
               children: [
                 Stack(
                   children: [
                     CircleImage(
-                      imageUrl:
-                          LoginController.instance.currentUser.profileUrl,
+                      imageUrl: LoginController.instance.currentUser.profileUrl,
                       radius: 50.0,
                     ),
                     Positioned(
@@ -98,7 +98,6 @@ class ProfileScreen extends StatelessWidget {
                                   fontSize: 14,
                                   color: MyColors.secondaryTextColor),
                             ),
-                            
                           ],
                         ),
                       ),
@@ -156,7 +155,9 @@ class ProfileScreen extends StatelessWidget {
                             ),
                             const Spacer(),
                             Text(
-                              MyFormatter.formatDate(LoginController.instance.currentUser.createdAt.toString()),
+                              MyFormatter.formatDate(LoginController
+                                  .instance.currentUser.createdAt
+                                  .toString()),
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,

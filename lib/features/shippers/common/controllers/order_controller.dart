@@ -25,22 +25,26 @@ class OrderController extends GetxController {
     try {
       isLoading(true);
 
-      final fetchedOrders =
-          await orderRepository.getOrdersByStatus(driverStatus: "waiting");
+      if (LoginController.instance.currentUser.workingStatus) {
+        final fetchedOrders =
+            await orderRepository.getOrdersByStatus(driverStatus: "waiting");
 
-      List<Order> ordersWithFullAddress = await Future.wait(
-        fetchedOrders.map((order) async {
-          order.restAddress = await addressController.getFullAddress(
-            order.restProvinceId,
-            order.restDistrictId,
-            order.restCommuneId,
-            order.restDetailAddress,
-          );
-          return order;
-        }),
-      );
+        List<Order> ordersWithFullAddress = await Future.wait(
+          fetchedOrders.map((order) async {
+            order.restAddress = await addressController.getFullAddress(
+              order.restProvinceId,
+              order.restDistrictId,
+              order.restCommuneId,
+              order.restDetailAddress,
+            );
+            return order;
+          }),
+        );
 
-      newOrders.assignAll(ordersWithFullAddress);
+        newOrders.assignAll(ordersWithFullAddress);
+      } else {
+        newOrders.clear();
+      }
       // print(newOrders);
     } catch (e) {
       print("Error fetching orders: $e");
