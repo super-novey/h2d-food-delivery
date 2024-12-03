@@ -206,8 +206,11 @@ class OrderController extends GetxController {
 
       // Decrease quantity
       await Future.wait(preparingOrders[orderIndex].orderItems.map(
-            (e) => _itemRepository.decreaseQuantity(e.foodId, e.quantity),
-          ));
+        (e) async {
+          _itemRepository.decreaseQuantity(e.foodId, e.quantity);
+          _itemRepository.increaseSales(e.foodId, e.quantity);
+        },
+      ));
 
       preparingOrders.removeAt(orderIndex);
 

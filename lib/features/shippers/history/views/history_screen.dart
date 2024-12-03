@@ -14,6 +14,8 @@ class HistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    orderController.fetchAllOrders();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Lịch sử đơn hàng'),
