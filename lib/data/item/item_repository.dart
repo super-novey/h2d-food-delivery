@@ -121,4 +121,20 @@ class ItemRepository extends GetxController {
       return ApiResponse.error("An unknown error occurred.");
     }
   }
+
+  Future<ApiResponse<Item>> increaseSales(String orderId, int quantity) async {
+    try {
+      final res = await HttpHelper.patch(
+          "item/${orderId.toString()}/sales", {"quantity": quantity});
+
+      if (res["hasError"] == true) {
+        return ApiResponse.error(res["message"]);
+      }
+      final result = Item.fromJson(res["data"]);
+      return ApiResponse.completed(result, res["message"]);
+    } catch (e) {
+      print(e);
+      return ApiResponse.error("An unknown error occurred.");
+    }
+  }
 }
