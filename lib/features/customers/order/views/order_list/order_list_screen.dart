@@ -4,12 +4,18 @@ import 'package:food_delivery_h2d/features/customers/order/controllers/order_con
 import 'package:food_delivery_h2d/features/customers/order/views/order_list/widgets/history_order_tile_cancelled.dart';
 import 'package:food_delivery_h2d/features/customers/order/views/order_list/widgets/history_order_tile_delivered.dart';
 import 'package:food_delivery_h2d/features/customers/order/views/order_list/widgets/new_order_tile.dart';
+import 'package:food_delivery_h2d/features/customers/order/views/order_list/widgets/ongoing_order_tile.dart';
 import 'package:food_delivery_h2d/features/customers/order/views/order_list/widgets/tab_item.dart';
+import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:get/get.dart';
 
 class CustomerOrderListScreen extends StatelessWidget {
   const CustomerOrderListScreen({super.key});
+
+  Future<void> _refreshOrders() async {
+    await CustomerOrderController.instance.fetchAllOrders();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +24,11 @@ class CustomerOrderListScreen extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: const CustomAppBar(
+        appBar: CustomAppBar(
           title: Text("Đơn hàng"),
           showBackArrow: false,
         ),
+        backgroundColor: MyColors.primaryBackgroundColor,
         body: Column(
           children: [
             const TabBar(
@@ -35,64 +42,78 @@ class CustomerOrderListScreen extends StatelessWidget {
               ],
             ),
             Expanded(
-              child: TabBarView(
-                children: [
-                  Obx(() {
-                    if (orderController.isLoading.value) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: TabBarView(
+                  children: [
+                    Obx(() {
+                      if (orderController.isLoading.value) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
 
-                    final historyOrders = orderController.orders
-                        .where((order) =>
-                            order.custStatus == 'waiting' ||
-                            order.custStatus == 'heading_to_rest' ||
-                            order.custStatus == 'preparing' ||
-                            order.custStatus == 'delivering')
-                        .toList();
+                      final onGoingOrders = orderController.orders
+                          .where((order) =>
+                              order.custStatus == 'waiting' ||
+                              order.custStatus == 'heading_to_rest' ||
+                              order.custStatus == 'preparing' ||
+                              order.custStatus == 'delivering')
+                          .toList();
 
-                    if (historyOrders.isEmpty) {
-                      return const Center(
-                          child: Text("Không có lịch sử đơn hàng!"));
-                    }
+                      if (onGoingOrders.isEmpty) {
+                        return RefreshIndicator(
+                          onRefresh: _refreshOrders,
+                          child: const Center(
+                              child: Text("Không có lịch sử đơn hàng!")),
+                        );
+                      }
 
-                    return ListView.builder(
-                      itemCount: historyOrders.length,
-                      itemBuilder: (context, index) {
-                        final order = historyOrders[index];
-                        return NewOrderTile(order: order);
-                      },
-                    );
-                  }),
-                  Obx(() {
-                    if (orderController.isLoading.value) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
+                      return RefreshIndicator(
+                        onRefresh: _refreshOrders,
+                        child: ListView.builder(
+                          itemCount: onGoingOrders.length,
+                          itemBuilder: (context, index) {
+                            final order = onGoingOrders[index];
+                            return OngoingOrderTile(order: order);
+                          },
+                        ),
+                      );
+                    }),
+                    Obx(() {
+                      if (orderController.isLoading.value) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
 
-                    final historyOrders = orderController.orders
-                        .where((order) =>
-                            order.custStatus == 'delivered' ||
-                            order.custStatus == 'cancelled')
-                        .toList();
+                      final historyOrders = orderController.orders
+                          .where((order) =>
+                              order.custStatus == 'delivered' ||
+                              order.custStatus == 'cancelled')
+                          .toList();
 
-                    if (historyOrders.isEmpty) {
-                      return const Center(
-                          child: Text("Không có lịch sử đơn hàng!"));
-                    }
+                      if (historyOrders.isEmpty) {
+                        return RefreshIndicator(
+                          onRefresh: _refreshOrders,
+                          child: const Center(
+                              child: Text("Không có lịch sử đơn hàng!")),
+                        );
+                      }
 
-                    return ListView.builder(
-                      itemCount: historyOrders.length,
-                      itemBuilder: (context, index) {
-                        final order = historyOrders[index];
-                        if (order.custStatus == 'delivered') {
-                          return HistoryOrderTileDelivered(order: order);
-                        }
-                        else {
-                          return HistoryOrderTileCancelled(order: order);
-                        }
-                      },
-                    );
-                  }),
-                ],
+                      return RefreshIndicator(
+                        onRefresh: _refreshOrders,
+                        child: ListView.builder(
+                          itemCount: historyOrders.length,
+                          itemBuilder: (context, index) {
+                            final order = historyOrders[index];
+                            if (order.custStatus == 'delivered') {
+                              return HistoryOrderTileDelivered(order: order);
+                            } else {
+                              return HistoryOrderTileCancelled(order: order);
+                            }
+                          },
+                        ),
+                      );
+                    }),
+                  ],
+                ),
               ),
             ),
           ],

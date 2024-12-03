@@ -186,8 +186,18 @@ class FollowOrderScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+                                CircleAvatar(
+                                  radius: 20,
+                                  backgroundImage: NetworkImage(
+                                      order.driverProfileUrl ?? ''),
+                                  backgroundColor: Colors
+                                      .grey.shade200, // Optional fallback color
+                                ),
+                                const SizedBox(
+                                  width: 16,
+                                ),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [

@@ -16,7 +16,9 @@ class HistoryOrderTileDelivered extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.to(CustomerOrderDetail(selectedOrder: order,));
+        Get.to(CustomerOrderDetail(
+          selectedOrder: order,
+        ));
       },
       child: Padding(
         padding: const EdgeInsets.only(
@@ -45,7 +47,7 @@ class HistoryOrderTileDelivered extends StatelessWidget {
                             .apply(color: MyColors.primaryTextColor),
                       ),
                       Text(
-                         MyFormatter.formatDate(order.orderDatetime.toString()),
+                        MyFormatter.formatDate(order.orderDatetime.toString()),
                         style: Theme.of(context)
                             .textTheme
                             .labelSmall!
@@ -63,12 +65,12 @@ class HistoryOrderTileDelivered extends StatelessWidget {
                     height: MySizes.xs,
                   ),
                   Text(
-                        order.restaurantName,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall!
-                            .apply(color: MyColors.darkPrimaryTextColor),
-                      ),
+                    order.restaurantName,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall!
+                        .apply(color: MyColors.darkPrimaryTextColor),
+                  ),
                   const SizedBox(
                     height: MySizes.xs,
                   ),
@@ -76,14 +78,15 @@ class HistoryOrderTileDelivered extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                         '${order.orderItems.fold(0, (sum, item) => sum + item.quantity)} món',
+                        '${order.orderItems.fold(0, (sum, item) => sum + item.quantity)} món',
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall!
                             .apply(color: MyColors.primaryTextColor),
                       ),
                       Text(
-                        MyFormatter.formatCurrency(order.totalPrice ?? 0),
+                        MyFormatter.formatCurrency(
+                            order.totalPrice! + order.deliveryFee!),
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall!
@@ -91,7 +94,6 @@ class HistoryOrderTileDelivered extends StatelessWidget {
                       ),
                     ],
                   ),
-                  
                   const Divider(
                     color: MyColors.dividerColor,
                   ),
@@ -104,7 +106,9 @@ class HistoryOrderTileDelivered extends StatelessWidget {
                       SizedBox(
                         width: 180,
                         child: Text(
-                          StatusHelper.custStatusTranslations[order.custStatus] ?? 'Unknown status',
+                          StatusHelper
+                                  .custStatusTranslations[order.custStatus] ??
+                              'Unknown status',
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: Theme.of(context)
