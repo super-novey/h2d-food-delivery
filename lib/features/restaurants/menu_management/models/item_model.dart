@@ -8,6 +8,7 @@ class Item {
   String itemName;
   int price;
   int quantity;
+  int sales;
   String description;
   RxBool isAvailable;
   String itemImage;
@@ -20,6 +21,7 @@ class Item {
       this.itemName = '',
       this.keySearch = '',
       this.price = 0,
+      this.sales = 0,
       this.description = '',
       bool? isAvailable,
       this.itemImage = MyImagePaths.iconImage,
@@ -48,6 +50,7 @@ class Item {
       partnerId: json['partnerId'] ?? '',
       itemName: json['itemName'] ?? '',
       price: json['price'] ?? 0,
+      sales: json['sales'] ?? 0,
       description: json['description'] ?? '',
       isAvailable: json['status'] ?? true,
       itemImage: json['itemImage'] ?? MyImagePaths.iconImage,
