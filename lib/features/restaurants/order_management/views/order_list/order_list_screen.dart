@@ -28,7 +28,7 @@ class OrderListScreen extends StatelessWidget {
           newOrder.restaurantId ==
               LoginController.instance.currentUser.partnerId &&
           newOrder.assignedShipperId != null) {
-        orderController.allOrders.insert(0, newOrder);
+        orderController.newOrders.insert(0, newOrder);
       }
     });
 
@@ -58,23 +58,44 @@ class OrderListScreen extends StatelessWidget {
                       child: TabBarView(
                         children: [
                           // New orders list
-                          ListView.builder(
-                            itemCount: orderController.allOrders.length,
-                            itemBuilder: (context, index) {
-                              final order = orderController.allOrders[index];
-                              return NewOrderTile(order: order);
-                            },
+
+                          Obx(
+                            () => orderController.newOrders.isEmpty
+                                ? const Center(child: Text("Không có đơn"))
+                                : ListView.builder(
+                                    itemCount: orderController.newOrders.length,
+                                    itemBuilder: (context, index) {
+                                      final order =
+                                          orderController.newOrders[index];
+                                      return NewOrderTile(
+                                        order: order,
+                                        handleAccept: () {
+                                          orderController.acceptOrder(order.id);
+                                        },
+                                        handleCancel: () {
+                                          orderController
+                                              .handleCancelOrder(order.id);
+                                        },
+                                      );
+                                    },
+                                  ),
                           ),
                           ListView.builder(
-                              itemCount: orderController.allOrders.length,
+                              itemCount: orderController.preparingOrders.length,
                               itemBuilder: (context, index) {
-                                final order = orderController.allOrders[index];
-                                return PreparingOrderTile(order: order);
+                                final order =
+                                    orderController.preparingOrders[index];
+                                return PreparingOrderTile(
+                                  order: order,
+                                  handleDone: () {
+                                    orderController.completeOrder(order.id);
+                                  },
+                                );
                               }),
                           ListView.builder(
-                              itemCount: orderController.allOrders.length,
+                              itemCount: orderController.doneOrders.length,
                               itemBuilder: (context, index) {
-                                final order = orderController.allOrders[index];
+                                final order = orderController.doneOrders[index];
                                 return HistoryOrderTile(order: order);
                               }),
                         ],

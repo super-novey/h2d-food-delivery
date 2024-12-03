@@ -3,6 +3,7 @@ import 'package:food_delivery_h2d/common/widgets/appbar/custom_app_bar.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
+import 'package:food_delivery_h2d/utils/helpers/status_helper.dart';
 
 import '../../../../shippers/home/models/order_model.dart';
 
@@ -36,7 +37,9 @@ class OrderDetailScreen extends StatelessWidget {
                       .apply(color: MyColors.darkPrimaryTextColor),
                 ),
                 Text(
-                  selectedOrder.restStatus.toString(),
+                  StatusHelper
+                          .custStatusTranslations[selectedOrder.restStatus] ??
+                      'Unknown status',
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         color: MyColors.primaryTextColor,
                         height: 2,
