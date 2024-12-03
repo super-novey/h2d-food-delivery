@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/customers/order/views/order_detail/customer_order_detail.dart';
+import 'package:food_delivery_h2d/features/customers/rating/views/rating_view.dart';
 import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
@@ -27,7 +28,7 @@ class HistoryOrderTileDelivered extends StatelessWidget {
           left: MySizes.sm,
         ),
         child: SizedBox(
-          height: 165,
+          height: 175,
           child: Card(
             elevation: 4,
             shadowColor: MyColors.darkPrimaryColor,
@@ -117,6 +118,29 @@ class HistoryOrderTileDelivered extends StatelessWidget {
                               .apply(color: MyColors.primaryTextColor),
                         ),
                       ),
+                      const Spacer(),
+                      if (order.custResRating == null ||
+                          order.custShipperRating == null)
+                        InkWell(
+                          onTap: () {
+                            Get.to(RatingView(order: order,));
+                          },
+                          child: Container(
+                            width: 80,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              color: MyColors.darkPrimaryColor,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Center(
+                              child: Text("Đánh giá",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelSmall!
+                                      .apply(color: Colors.white)),
+                            ),
+                          ),
+                        ),
                     ],
                   ),
                 ],

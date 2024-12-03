@@ -167,4 +167,36 @@ class OrderRepository extends GetxController {
       return ApiResponse.error("An unknown error occurred.");
     }
   }
+
+  Future<ApiResponse<Order>> updateRating(String orderId, double custResRating,
+    {String? custResRatingComment,
+    double? custShipperRating,
+    String? custShipperRatingComment}) async {
+  try {
+    final Map<String, dynamic> payload = {
+      "custResRating": custResRating,
+      "custResRatingComment": custResRatingComment,
+      "custShipperRating": custShipperRating,
+      "custShipperRatingComment": custShipperRatingComment,
+    };
+
+    final res = await HttpHelper.patch(
+      "order/rating/${orderId.toString()}",
+      payload,
+    );
+
+    print("Update rating response: ${res.toString()}");
+
+    if (res["hasError"] == true) {
+      return ApiResponse.error(res["message"]);
+    }
+
+    final result = Order.fromJson(res["data"]);
+    return ApiResponse.completed(result, res["message"]);
+  } catch (e) {
+    print("Error in updateRating: $e");
+    return ApiResponse.error("An unknown error occurred.");
+  }
+}
+
 }
