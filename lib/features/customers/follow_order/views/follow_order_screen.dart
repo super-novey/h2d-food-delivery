@@ -11,20 +11,31 @@ import 'package:food_delivery_h2d/utils/helpers/handle_status_text.dart';
 import 'package:food_delivery_h2d/utils/helpers/status_helper.dart';
 import 'package:get/get.dart';
 
-class FollowOrderScreen extends StatelessWidget {
+class FollowOrderScreen extends StatefulWidget {
   final Order order;
   const FollowOrderScreen({super.key, required this.order});
 
   @override
+  State<FollowOrderScreen> createState() => _FollowOrderScreenState();
+}
+
+class _FollowOrderScreenState extends State<FollowOrderScreen> {
+  final orderSocketHandler = OrderSocketHandler();
+  @override
+  void dispose() {
+    orderSocketHandler.removeJoinRoom(widget.order.id);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final orderSocketHandler = OrderSocketHandler();
     final orderStatusController = Get.put(OrderStatusController());
     final customerOrderController = Get.put(CustomerOrderController());
 
-    var currentOrder = order.obs;
+    var currentOrder = widget.order.obs;
 
-    orderStatusController.orderStatus.value = order.custStatus;
-    orderSocketHandler.joinOrderRoom(order.id);
+    orderStatusController.orderStatus.value = widget.order.custStatus;
+    orderSocketHandler.joinOrderRoom(widget.order.id);
 
     orderSocketHandler.listenForOrderUpdates((newOrder) {
       orderStatusController.orderStatus.value = newOrder.custStatus;
@@ -307,7 +318,7 @@ class FollowOrderScreen extends StatelessWidget {
                                         ),
                                         const SizedBox(width: 8),
                                         Text(
-                                          'Lấy hàng: ${order.restaurantName}',
+                                          'Lấy hàng: ${widget.order.restaurantName}',
                                           style: const TextStyle(
                                               fontSize: 12, color: Colors.grey),
                                         ),
@@ -320,7 +331,7 @@ class FollowOrderScreen extends StatelessWidget {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            order.restAddress.toString(),
+                                            widget.order.restAddress.toString(),
                                             style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 14,
@@ -346,7 +357,7 @@ class FollowOrderScreen extends StatelessWidget {
                                         ),
                                         const SizedBox(width: 8),
                                         Text(
-                                          'Giao hàng: ${order.customerName}',
+                                          'Giao hàng: ${widget.order.customerName}',
                                           style: const TextStyle(
                                               fontSize: 12, color: Colors.grey),
                                         ),
@@ -359,7 +370,7 @@ class FollowOrderScreen extends StatelessWidget {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            order.custAddress.toString(),
+                                            widget.order.custAddress.toString(),
                                             style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 14,
@@ -372,7 +383,7 @@ class FollowOrderScreen extends StatelessWidget {
                                     ),
                                     const SizedBox(height: 8),
                                     Text(
-                                      order.customerName,
+                                      widget.order.customerName,
                                       style: const TextStyle(
                                         fontSize: 14,
                                         color: Colors.grey,
@@ -381,7 +392,7 @@ class FollowOrderScreen extends StatelessWidget {
                                     ),
                                     const SizedBox(height: 8),
                                     Text(
-                                      order.custPhone,
+                                      widget.order.custPhone,
                                       style: const TextStyle(
                                         fontSize: 14,
                                         color: Colors.grey,
@@ -416,7 +427,7 @@ class FollowOrderScreen extends StatelessWidget {
                                           ),
                                           SizedBox(
                                             child: Text(
-                                              '#${order.id}',
+                                              '#${widget.order.id}',
                                               overflow: TextOverflow.ellipsis,
                                               maxLines: 3,
                                               style: const TextStyle(
@@ -428,7 +439,7 @@ class FollowOrderScreen extends StatelessWidget {
                                       ),
                                       const SizedBox(height: 8),
                                       Text(
-                                        'Số lượng món: ${order.orderItems.length}',
+                                        'Số lượng món: ${widget.order.orderItems.length}',
                                         style: const TextStyle(
                                             fontSize: 14,
                                             color: MyColors.primaryTextColor),
@@ -474,7 +485,7 @@ class FollowOrderScreen extends StatelessWidget {
                                       ),
                                       const SizedBox(height: 8),
                                       // Order Items List
-                                      ...order.orderItems.map((item) {
+                                      ...widget.order.orderItems.map((item) {
                                         return Padding(
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 4.0),
@@ -530,7 +541,7 @@ class FollowOrderScreen extends StatelessWidget {
                                           ),
                                           Text(
                                             MyFormatter.formatCurrency(
-                                                order.totalPrice ?? 0),
+                                                widget.order.totalPrice ?? 0),
                                             style: const TextStyle(
                                               fontSize: 14,
                                             ),
@@ -550,7 +561,7 @@ class FollowOrderScreen extends StatelessWidget {
                                           ),
                                           Text(
                                             MyFormatter.formatCurrency(
-                                                order.deliveryFee ?? 0),
+                                                widget.order.deliveryFee ?? 0),
                                             style: const TextStyle(
                                               fontSize: 14,
                                             ),
@@ -572,8 +583,9 @@ class FollowOrderScreen extends StatelessWidget {
                                           ),
                                           Text(
                                             MyFormatter.formatCurrency(
-                                              (order.totalPrice ?? 0) +
-                                                  (order.deliveryFee ?? 0),
+                                              (widget.order.totalPrice ?? 0) +
+                                                  (widget.order.deliveryFee ??
+                                                      0),
                                             ),
                                             style: const TextStyle(
                                                 fontSize: 14,
@@ -626,7 +638,7 @@ class FollowOrderScreen extends StatelessWidget {
                                             ),
                                             Text(
                                               MyFormatter.formatCurrency(
-                                                  order.totalPrice ?? 0),
+                                                  widget.order.totalPrice ?? 0),
                                               style: const TextStyle(
                                                 fontSize: 14,
                                               ),
@@ -670,7 +682,7 @@ class FollowOrderScreen extends StatelessWidget {
                                             ),
                                             Text(
                                               MyFormatter.formatCurrency(
-                                                  order.totalPrice ?? 0),
+                                                  widget.order.totalPrice ?? 0),
                                               style: const TextStyle(
                                                   color: MyColors.primaryColor,
                                                   fontWeight: FontWeight.bold,
