@@ -175,14 +175,14 @@ class OrderTile extends StatelessWidget {
                       order.driverStatus != 'delivered' &&
                       order.driverStatus != 'canceled');
 
-                  // if (invalidOrders.isNotEmpty) {
-                  //   Loaders.errorSnackBar(
-                  //     title: "Nhận đơn thất bại",
-                  //     message:
-                  //         "Bạn không thể nhận đơn vì có đơn hàng chưa hoàn thành.",
-                  //   );
-                  //   return;
-                  // }
+                  if (invalidOrders.isNotEmpty) {
+                    Loaders.errorSnackBar(
+                      title: "Nhận đơn thất bại",
+                      message:
+                          "Bạn không thể nhận đơn vì có đơn hàng chưa hoàn thành.",
+                    );
+                    return;
+                  }
                   try {
                     Map<String, dynamic> newStatus = {
                       "custStatus": "heading_to_rest",
