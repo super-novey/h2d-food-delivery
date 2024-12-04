@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/custom_app_bar.dart';
 import 'package:food_delivery_h2d/features/customers/confirm_order/views/confirm_order_screen.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/cart_controller.dart';
+import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/rating_item_controller.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/restaurant_controller.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/views/menu_restaurant_list/widgets/detail_cart.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/item_model.dart';
+import 'package:food_delivery_h2d/features/restaurants/rating_management/views/rating_list/widgets/rating_tile.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
@@ -20,8 +22,10 @@ class MenuRestaurantDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     //final partner = Get.arguments as DetailPartnerModel?;
     final cartController = Get.put(CartController());
-  final restaurantController = Get.put(RestaurantController());
-
+    final restaurantController = Get.put(RestaurantController());
+    final ratingItemController = Get.put(RatingItemController());
+    ratingItemController.fetchRating(item.itemId);
+    print("iteemmm${item.itemId}");
     return Scaffold(
       appBar: const CustomAppBar(
         title: Text("Chi tiết món ăn"),
@@ -85,7 +89,7 @@ class MenuRestaurantDetail extends StatelessWidget {
                             width: MySizes.sm,
                           ),
                           Text(
-                            "Đã bán: ${item.quantity.toString()}",
+                            "Đã bán: ${item.sales.toString()}",
                             style: Theme.of(context)
                                 .textTheme
                                 .labelMedium!
@@ -143,7 +147,8 @@ class MenuRestaurantDetail extends StatelessWidget {
                                     ),
                                   ],
                                 );
-                              }if (restaurantController
+                              }
+                              if (restaurantController
                                       .detailPartner.value?.status ==
                                   false) {
                                 return const Icon(
@@ -179,6 +184,25 @@ class MenuRestaurantDetail extends StatelessWidget {
                 ],
               ),
             ),
+            Obx(() {
+              if (ratingItemController.isLoading.value) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              if (ratingItemController.ratingList.isEmpty) {
+                return const Center(child: Text("Không có đánh giá nào"));
+              }
+              final ratings = ratingItemController.ratingList;
+              if (ratings.isEmpty) {
+                return const Center(child: Text("Không có đánh giá nào"));
+              }
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: ratings.length,
+                itemBuilder: (context, index) {
+                  return RatingTile(rating: ratings[index]);
+                },
+              );
+            }),
           ],
         ),
       ),

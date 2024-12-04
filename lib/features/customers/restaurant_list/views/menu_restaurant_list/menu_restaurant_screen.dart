@@ -11,7 +11,6 @@ import 'package:food_delivery_h2d/features/customers/restaurant_list/views/menu_
 import 'package:food_delivery_h2d/features/customers/restaurant_list/views/menu_restaurant_list/widgets/menu_restaurant_tile.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/category_model.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/item_model.dart';
-import 'package:food_delivery_h2d/features/restaurants/rating_management/controllers/rating_controller.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
@@ -115,7 +114,6 @@ class MenuRestaurantScreen extends StatelessWidget {
                               axis: Axis.horizontal,
                               value: restaurantController.value.value,
                               onValueChanged: (v) {
-                                restaurantController.value.value = v;
                               },
                               starCount: 5,
                               starSize: 12,
@@ -135,7 +133,7 @@ class MenuRestaurantScreen extends StatelessWidget {
                               padding:
                                   const EdgeInsets.only(top: MySizes.xs / 2),
                               child: Text(
-                                restaurantController.count.toString(),
+                                MyFormatter.formatDouble(restaurantController.value.value),
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium!

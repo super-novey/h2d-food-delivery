@@ -1,17 +1,21 @@
 import 'package:food_delivery_h2d/bindings/network_manager.dart';
-import 'package:food_delivery_h2d/data/partner/partner_repository.dart';
+import 'package:food_delivery_h2d/data/item/item_repository.dart';
 import 'package:food_delivery_h2d/features/restaurants/rating_management/models/rating_restaurant_model.dart';
 import 'package:get/get.dart';
 
-class RatingController extends GetxController {
-  static RatingController get instance => Get.find();
+class RatingItemController extends GetxController {
+  static RatingItemController get instance => Get.find();
   var selectedFilter = 0.obs;
   var value = 0.0.obs;
   var count = 0.obs;
   var isLoading = true.obs;
   var errorMessage = ''.obs;
-  final _repository = PartnerRepository();
+  final _repository = ItemRepository();
   var ratingList = <RatingModel>[].obs;
+  @override
+  void onInit() async {
+    super.onInit();
+  }
 
   Future<void> fetchRating(String id) async {
     try {
@@ -22,7 +26,7 @@ class RatingController extends GetxController {
         return;
       }
 
-      final data = await _repository.fetchPartnerRating(id);
+      final data = await _repository.fecthRatingItem(id);
       
       print("id user$id");
       ratingList.value = data;
