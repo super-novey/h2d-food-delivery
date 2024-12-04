@@ -26,11 +26,9 @@ class OrderController extends GetxController {
   );
   double deliveryFee = 15000;
 
-
   final _orderSocketHandler = Get.put(OrderSocketHandler());
 
   var paymentMethod = 'Cash'.obs;
-
 
   @override
   void onInit() {

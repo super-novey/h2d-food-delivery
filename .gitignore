@@ -43,4 +43,4 @@ app.*.map.json
 /android/app/release
 
 # http_client
-/lib/utils/http/http_client.dart
+lib\utils\http\http_client.dart

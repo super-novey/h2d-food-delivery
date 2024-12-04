@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_h2d/data/order/order_repository.dart';
+import 'package:food_delivery_h2d/data/response/api_response.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/delivery/views/delivery_screen.dart';
 import 'package:food_delivery_h2d/features/shippers/common/controllers/order_controller.dart';
@@ -171,6 +173,7 @@ class OrderTile extends StatelessWidget {
                   ),
                 ),
                 onPressed: () async {
+                  // ordersController.acceptOrder(order);
                   final invalidOrders = ordersController.orders.where((order) =>
                       order.driverStatus != 'delivered' &&
                       order.driverStatus != 'cancelled');
@@ -184,6 +187,29 @@ class OrderTile extends StatelessWidget {
                     return;
                   }
                   try {
+                    ApiResponse<Order> orderResponse =
+                        await OrderRepository.instance.getOrderById(order.id);
+                    Order? newOrder = orderResponse.data!;
+                    if (newOrder.assignedShipperId != null) {
+                      Loaders.errorSnackBar(
+                        title: "Nhận đơn thất bại",
+                        message:
+                            "Đã có tài xế nhận đơn này. Vui lòng nhận đơn khác.",
+                      );
+                      ordersController.newOrders
+                          .removeWhere((o) => o.id == order.id);
+                      return;
+                    }
+                    if (newOrder.custStatus == 'cancelled') {
+                      Loaders.errorSnackBar(
+                        title: "Nhận đơn thất bại",
+                        message:
+                            "Đơn hàng đã được hủy. Vui lòng nhận đơn khác.",
+                      );
+                      ordersController.newOrders
+                          .removeWhere((o) => o.id == order.id);
+                      return;
+                    }
                     Map<String, dynamic> newStatus = {
                       "custStatus": "heading_to_rest",
                       "driverStatus": "heading_to_rest",
