@@ -25,7 +25,7 @@ class RatingController extends GetxController {
 
       final data = await _repository.fetchPartnerRating(id);
       
-      print(LoginController.instance.currentUser.partnerId);
+      print("id user$id");
       ratingList.value = data;
       await calculateAverageRating();
       await countComments();

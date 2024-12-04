@@ -4,6 +4,7 @@ import 'package:food_delivery_h2d/data/item/item_repository.dart';
 import 'package:food_delivery_h2d/data/partner/partner_repository.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/models/detail_partner_model.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/models/restaurant.dart';
+import 'package:food_delivery_h2d/features/restaurants/rating_management/models/rating_restaurant_model.dart';
 import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
 import 'package:get/get.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/category_model.dart';
@@ -19,6 +20,11 @@ class RestaurantController extends GetxController {
   List<Category> allCategories = <Category>[].obs;
   var restaurants = <Restaurant>[].obs;
   var detailPartner = Rxn<DetailPartnerModel>();
+  var selectedFilter = 0.obs;
+  var value = 0.0.obs;
+  var count = 0.obs;
+  var errorMessage = ''.obs;
+  var ratingList = <RatingModel>[].obs;
 
   final CategoryRepository _categoryRepository = Get.put(CategoryRepository());
   final ItemRepository _itemRepository = Get.put(ItemRepository());
@@ -116,5 +122,56 @@ class RestaurantController extends GetxController {
           image: MyImagePaths.iconImage,
           rating: 4.8),
     ];
+  }
+  Future<void> fetchRating(String id) async {
+    try {
+      isLoading(true);
+      final isConnected = await NetworkManager.instance.isConnected();
+      if (!isConnected) {
+        errorMessage.value = "No internet connection";
+        return;
+      }
+
+      final data = await _repository.fetchPartnerRating(id);
+      
+      print("id user$id");
+      ratingList.value = data;
+      await calculateAverageRating();
+      await countComments();
+    } catch (e) {
+      errorMessage.value = "Error fetching driver details: ${e.toString()}";
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  Future<void> calculateAverageRating() async {
+    if (ratingList.isNotEmpty) {
+      double totalStars =
+          ratingList.fold(0, (sum, rating) => sum + rating.custResRating);
+      value.value = totalStars / ratingList.length;
+    } else {
+      value.value = 0.0;
+    }
+  }
+
+  Future<void> countComments() async {
+    count.value = ratingList.length;
+  }
+
+  List<RatingModel> get filteredRatings {
+    if (selectedFilter.value == 0) {
+      return ratingList;
+    }
+    return ratingList
+        .where((rating) => rating.custResRating == selectedFilter.value)
+        .toList();
+  }
+
+  void updateFilter(int newFilter) {
+    selectedFilter.value = newFilter;
+    print("Updated selectedFilter: ${selectedFilter.value}"); // Log giá trị mới
+    print(
+        "Filtered ratings count: ${filteredRatings.length}"); // Log số lượng đánh giá đã lọc
   }
 }
