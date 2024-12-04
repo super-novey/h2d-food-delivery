@@ -175,7 +175,7 @@ class OrderTile extends StatelessWidget {
                       order.driverStatus != 'delivered' &&
                       order.driverStatus != 'canceled');
 
-                  if (invalidOrders.isNotEmpty) {
+                if (invalidOrders.isNotEmpty) {
                     Loaders.errorSnackBar(
                       title: "Nhận đơn thất bại",
                       message:
