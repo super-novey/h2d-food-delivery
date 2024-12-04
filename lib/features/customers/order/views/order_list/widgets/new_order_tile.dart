@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_h2d/features/customers/order/models/order_model.dart';
 import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
-import 'package:get/get.dart';
 
 class NewOrderTile extends StatelessWidget {
   final Order order;

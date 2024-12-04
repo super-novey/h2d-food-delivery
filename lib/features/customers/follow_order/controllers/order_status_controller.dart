@@ -29,7 +29,7 @@ class OrderStatusController extends GetxController {
   // Bắt đầu hiệu ứng nhấp nháy
   void _startBlinking() {
     if (orderStatus.value == 'preparing') {
-      _blinkTimer = Timer.periodic(Duration(milliseconds: 500), (timer) {
+      _blinkTimer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
         // Đảo ngược giá trị của isContainer1Blinking mỗi 500ms
         isContainer1Blinking.value = !isContainer1Blinking.value;
       });

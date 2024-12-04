@@ -14,8 +14,10 @@ class OrdersList extends StatelessWidget {
   Widget build(BuildContext context) {
     final OrderController controller = Get.put(OrderController());
     final addressController = Get.put(AddressController());
-    final _orderSocket = Get.put(OrderSocketHandler());
-    _orderSocket.listenForOrderCreates((newOrder) async {
+    final orderSocket = Get.put(OrderSocketHandler());
+
+
+    orderSocket.listenNewOrderDriver((newOrder) async {
       if (newOrder.custStatus == "waiting") {
         newOrder.restAddress = await addressController.getFullAddress(
           newOrder.restProvinceId,
@@ -26,6 +28,7 @@ class OrdersList extends StatelessWidget {
         controller.newOrders.insert(0, newOrder);
       }
     });
+
 
     return DraggableScrollableSheet(
       initialChildSize: 0.4,

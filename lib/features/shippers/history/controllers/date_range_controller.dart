@@ -10,13 +10,11 @@ class DateRangeHistoryController extends GetxController {
 
   Future<void> showWeekPicker() async {
     DateTime selectedDate = await _showDatePicker();
-    if (selectedDate != null) {
-      DateTime startOfWeek = _getStartOfWeek(selectedDate);
-      DateTime endOfWeek = _getEndOfWeek(startOfWeek);
+    DateTime startOfWeek = _getStartOfWeek(selectedDate);
+    DateTime endOfWeek = _getEndOfWeek(startOfWeek);
 
-      dateRange.value = DateTimeRange(start: startOfWeek, end: endOfWeek);
+    dateRange.value = DateTimeRange(start: startOfWeek, end: endOfWeek);
     }
-  }
 
   Future<DateTime> _showDatePicker() async {
     DateTime? picked = await showDatePicker(

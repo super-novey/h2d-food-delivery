@@ -11,10 +11,6 @@ class ProfileCustomerController extends GetxController {
 
   var isLoading = false.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
  
 }
