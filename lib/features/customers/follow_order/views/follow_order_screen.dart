@@ -161,7 +161,7 @@ class _FollowOrderScreenState extends State<FollowOrderScreen> {
                                               )),
                                           const SizedBox(width: 8),
                                           const Icon(
-                                            Icons.motorcycle_rounded,
+                                            Icons.delivery_dining,
                                             size: 18,
                                             color: MyColors.primaryColor,
                                           ),
@@ -231,13 +231,13 @@ class _FollowOrderScreenState extends State<FollowOrderScreen> {
                                                       height: 40,
                                                       errorBuilder: (context,
                                                           error, stackTrace) {
-                                                        return Icon(
+                                                        return const Icon(
                                                             Icons.person,
                                                             size: 40,
                                                             color: Colors.grey);
                                                       },
                                                     )
-                                                  : Icon(Icons.person,
+                                                  : const Icon(Icons.person,
                                                       size: 30,
                                                       color: Colors.grey),
                                             ),

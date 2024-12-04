@@ -137,7 +137,7 @@ class CustomerOrderDetail extends StatelessWidget {
                               )),
                           const SizedBox(width: 8),
                           const Icon(
-                            Icons.motorcycle_rounded,
+                            Icons.delivery_dining,
                             size: 18,
                             color: MyColors.primaryColor,
                           ),

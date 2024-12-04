@@ -32,14 +32,24 @@ class RestaurantHomeAppbar extends StatelessWidget {
                   margin: const EdgeInsets.only(right: MySizes.xs),
                   height: 12,
                   width: 12,
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle, color: MyColors.openColor)),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: LoginController.instance.currentUser.workingStatus
+                          ? MyColors.openColor
+                          : MyColors.greyWhite)),
               Text(
-                "Đang mở cửa",
-                style: Theme.of(context)
-                    .textTheme
-                    .labelMedium!
-                    .apply(color: MyColors.openColor),
+                LoginController.instance.currentUser.workingStatus
+                    ? "Đang mở cửa"
+                    : "Đã đóng cửa",
+                style: LoginController.instance.currentUser.workingStatus
+                    ? Theme.of(context)
+                        .textTheme
+                        .labelMedium!
+                        .apply(color: MyColors.openColor)
+                    : Theme.of(context)
+                        .textTheme
+                        .labelMedium!
+                        .apply(color: MyColors.greyWhite),
               ),
             ],
           ),
