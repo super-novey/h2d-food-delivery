@@ -18,7 +18,7 @@ class ProfileController extends GetxController {
 
   Future<void> toggleWorkingStatus() async {
     final invalidOrders = orderController.orders.where((order) =>
-        order.driverStatus != 'delivered' && order.driverStatus != 'canceled');
+        order.driverStatus != 'delivered' && order.driverStatus != 'cancelled');
 
     if (invalidOrders.isNotEmpty) {
       Loaders.errorSnackBar(

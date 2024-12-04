@@ -30,13 +30,11 @@ class RestaurantTab extends StatelessWidget {
 
     return Scaffold(
         body: Obx(
-          () => 
-          currentOrder.value.custStatus == "cancelled"
+          () => currentOrder.value.custStatus == "cancelled"
               ? Center(
                   child: Text(
                       "${currentOrder.value.restaurantName} đã hủy đơn vì ${currentOrder.value.reason}"))
-              : 
-              SingleChildScrollView(
+              : SingleChildScrollView(
                   padding: const EdgeInsets.only(
                       top: 8.0, left: 8.0, bottom: 68.0, right: 8.0),
                   child: Column(
