@@ -220,6 +220,8 @@ class OrderController extends GetxController {
 
       Loaders.successSnackBar(
           title: "Thành công!", message: "Đã hàng đã hoàn thành!.");
+
+      _orderSocketHandler.updateStatusOrder(orderId, newStatus);
     } catch (e) {
       Loaders.errorSnackBar(title: "Thất bại!", message: e.toString());
       rethrow;
