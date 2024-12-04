@@ -168,17 +168,17 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {},
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 16),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
+                              Text(
                                 'Đánh giá',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 14),
                               ),
-                              const Icon(
+                              Icon(
                                 Icons.arrow_forward_ios_outlined,
                                 color: MyColors.secondaryTextColor,
                                 size: 20,

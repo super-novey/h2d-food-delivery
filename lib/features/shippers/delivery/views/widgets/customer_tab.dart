@@ -425,7 +425,7 @@ class CustomerTab extends StatelessWidget {
           ),
           // Floating action button
           if (!controller.isCustButtonClicked.value &&
-              order.driverStatus != "delivered")
+              order.driverStatus == "delivering")
             Positioned(
               bottom: 16,
               right: 16,
