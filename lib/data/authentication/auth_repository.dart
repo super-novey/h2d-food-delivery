@@ -16,6 +16,7 @@ class AuthRepository extends GetxController {
   static const String _partnerRegisterApi = "auth/partnerRegister";
   static const String _verifyOTPApi = "auth/verifyOTP";
   static const String _resendOTPApi = "auth/resendOTP";
+  static const String _changePasswordApi = "auth/changePassword";
 
   Future<LoginResponse> login(
       String email, String password, String role) async {
@@ -98,6 +99,24 @@ class AuthRepository extends GetxController {
     final data = {"email": email, "role": role};
     try {
       final res = await HttpHelper.post(_resendOTPApi, data);
+      if (res["hasError"] == true) {
+        return ApiResponse.error(res["message"]);
+      }
+      return ApiResponse.completed("", res["message"]);
+    } catch (e) {
+      return ApiResponse.error("An unknown error occurred.");
+    }
+  }
+
+  Future<ApiResponse<String>> changePassword(
+      String id, String oldPassword, String newPassword) async {
+    final data = {
+      "id": id,
+      "oldPassword": oldPassword,
+      "newPassword": newPassword
+    };
+    try {
+      final res = await HttpHelper.post(_changePasswordApi, data);
       if (res["hasError"] == true) {
         return ApiResponse.error(res["message"]);
       }
