@@ -139,31 +139,7 @@ class CustomerHomeScreen extends StatelessWidget {
                                 color: MyColors.darkPrimaryTextColor,
                               ),
                         ),
-                        const Spacer(),
-                        InkWell(
-                          onTap: () {},
-                          child: Row(
-                            children: [
-                              Text(
-                                "Xem tất cả",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge!
-                                    .apply(
-                                      color: MyColors.darkPrimaryTextColor,
-                                    ),
-                              ),
-                              const SizedBox(
-                                width: MySizes.xs,
-                              ),
-                              const Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                size: MySizes.iconXs,
-                                color: MyColors.darkPrimaryTextColor,
-                              )
-                            ],
-                          ),
-                        )
+                        
                       ],
                     ),
                     const ListTopItem(),
@@ -183,31 +159,7 @@ class CustomerHomeScreen extends StatelessWidget {
                                 color: MyColors.darkPrimaryTextColor,
                               ),
                         ),
-                        const Spacer(),
-                        InkWell(
-                          onTap: () {},
-                          child: Row(
-                            children: [
-                              Text(
-                                "Xem tất cả",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge!
-                                    .apply(
-                                      color: MyColors.darkPrimaryTextColor,
-                                    ),
-                              ),
-                              const SizedBox(
-                                width: MySizes.xs,
-                              ),
-                              const Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                size: MySizes.iconXs,
-                                color: MyColors.darkPrimaryTextColor,
-                              )
-                            ],
-                          ),
-                        )
+                        
                       ],
                     ),
                     const ListFamousRestaurant(),

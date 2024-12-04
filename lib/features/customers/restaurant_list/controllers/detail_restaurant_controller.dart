@@ -2,7 +2,7 @@ import 'package:food_delivery_h2d/bindings/network_manager.dart';
 import 'package:food_delivery_h2d/data/address/address_repository.dart';
 import 'package:food_delivery_h2d/data/partner/partner_repository.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/models/detail_partner_model.dart';
-import 'package:food_delivery_h2d/features/customers/restaurant_list/models/restaurant.dart';
+import 'package:food_delivery_h2d/features/customers/restaurant_list/models/top_restaurant_model.dart';
 import 'package:get/get.dart';
 
 class DetailRestaurantController extends GetxController {
@@ -10,7 +10,7 @@ class DetailRestaurantController extends GetxController {
 
   var errorMessagePartner = ''.obs;
   var isLoading = false.obs;
-  var restaurants = <Restaurant>[].obs;
+  var restaurants = <TopRestaurantModel>[].obs;
   var detailPartner = Rxn<DetailPartnerModel>();
 
   // Use Rx to handle nullable variables
