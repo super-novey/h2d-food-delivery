@@ -1,4 +1,5 @@
 import 'package:food_delivery_h2d/data/response/api_response.dart';
+import 'package:food_delivery_h2d/features/admin/dashboard/models/order_status_chart.dart';
 import 'package:food_delivery_h2d/features/customers/confirm_order/models/order_model.dart';
 import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
 import 'package:food_delivery_h2d/utils/http/http_client.dart';
@@ -169,34 +170,47 @@ class OrderRepository extends GetxController {
   }
 
   Future<ApiResponse<Order>> updateRating(String orderId, double custResRating,
-    {String? custResRatingComment,
-    double? custShipperRating,
-    String? custShipperRatingComment}) async {
-  try {
-    final Map<String, dynamic> payload = {
-      "custResRating": custResRating,
-      "custResRatingComment": custResRatingComment,
-      "custShipperRating": custShipperRating,
-      "custShipperRatingComment": custShipperRatingComment,
-    };
+      {String? custResRatingComment,
+      double? custShipperRating,
+      String? custShipperRatingComment}) async {
+    try {
+      final Map<String, dynamic> payload = {
+        "custResRating": custResRating,
+        "custResRatingComment": custResRatingComment,
+        "custShipperRating": custShipperRating,
+        "custShipperRatingComment": custShipperRatingComment,
+      };
 
-    final res = await HttpHelper.patch(
-      "order/rating/${orderId.toString()}",
-      payload,
-    );
+      final res = await HttpHelper.patch(
+        "order/rating/${orderId.toString()}",
+        payload,
+      );
 
-    print("Update rating response: ${res.toString()}");
+      print("Update rating response: ${res.toString()}");
 
-    if (res["hasError"] == true) {
-      return ApiResponse.error(res["message"]);
+      if (res["hasError"] == true) {
+        return ApiResponse.error(res["message"]);
+      }
+
+      final result = Order.fromJson(res["data"]);
+      return ApiResponse.completed(result, res["message"]);
+    } catch (e) {
+      print("Error in updateRating: $e");
+      return ApiResponse.error("An unknown error occurred.");
     }
-
-    final result = Order.fromJson(res["data"]);
-    return ApiResponse.completed(result, res["message"]);
-  } catch (e) {
-    print("Error in updateRating: $e");
-    return ApiResponse.error("An unknown error occurred.");
   }
-}
 
+  Future<OrderStatusChartModel> fetchStatistic() async {
+    try {
+      final response = await HttpHelper.get("order/admin/statistics");
+
+      var data = response['data'];
+      print("Driver income data: $data");
+
+      return OrderStatusChartModel.fromJson(data);
+    } on Exception catch (e) {
+      print("Error: $e");
+      rethrow;
+    }
+  }
 }
