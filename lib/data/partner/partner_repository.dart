@@ -2,6 +2,7 @@ import 'package:food_delivery_h2d/features/authentication/models/PartnerModel.da
 import 'package:food_delivery_h2d/features/customers/restaurant_list/models/detail_partner_model.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/models/top_restaurant_model.dart';
 import 'package:food_delivery_h2d/features/restaurants/rating_management/models/rating_restaurant_model.dart';
+import 'package:food_delivery_h2d/features/restaurants/statistic_management/models/statistic_model.dart';
 import 'package:food_delivery_h2d/utils/http/http_client.dart';
 import 'package:get/get.dart';
 
@@ -76,4 +77,18 @@ Future<void> updatePartnerStatus(String userId, bool status) async {
       rethrow;
     }
   }
+  Future<StatisticModel> fetchStatistic(String driverId) async {
+    try {
+      final response = await HttpHelper.get("partner/statistic/$driverId");
+
+      var data = response['data'];
+      print("Driver income data: $data");
+
+      return StatisticModel.fromJson(data);
+    } on Exception catch (e) {
+      print("Error: $e");
+      rethrow;
+    }
+  }
+
 }
