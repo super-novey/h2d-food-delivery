@@ -3,7 +3,6 @@ import 'package:food_delivery_h2d/common/widgets/appbar/custom_app_bar.dart';
 import 'package:food_delivery_h2d/features/customers/order/controllers/order_controller.dart';
 import 'package:food_delivery_h2d/features/customers/order/views/order_list/widgets/history_order_tile_cancelled.dart';
 import 'package:food_delivery_h2d/features/customers/order/views/order_list/widgets/history_order_tile_delivered.dart';
-import 'package:food_delivery_h2d/features/customers/order/views/order_list/widgets/new_order_tile.dart';
 import 'package:food_delivery_h2d/features/customers/order/views/order_list/widgets/ongoing_order_tile.dart';
 import 'package:food_delivery_h2d/features/customers/order/views/order_list/widgets/tab_item.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';

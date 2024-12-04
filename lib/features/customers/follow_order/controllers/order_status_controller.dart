@@ -25,7 +25,7 @@ class OrderStatusController extends GetxController {
 
 
   void _startProgress() {
-    _progressTimer = Timer.periodic(Duration(milliseconds: 10), (timer) {
+    _progressTimer = Timer.periodic(const Duration(milliseconds: 10), (timer) {
       if (orderStatus.value == 'waiting' ||
           orderStatus.value == 'heading_to_rest') {
         if (container1Progress.value < 1.0) {

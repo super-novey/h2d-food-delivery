@@ -13,10 +13,6 @@ class RatingController extends GetxController {
   var errorMessage = ''.obs;
   final _repository = PartnerRepository();
   var ratingList = <RatingModel>[].obs;
-  @override
-  void onInit() async {
-    super.onInit();
-  }
 
   Future<void> fetchRating(String id) async {
     try {

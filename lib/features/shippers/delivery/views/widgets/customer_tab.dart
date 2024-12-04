@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/shippers/delivery/controllers/tabs_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/common/controllers/order_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
+import 'package:food_delivery_h2d/sockets/handlers/order_socket_handler.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
 import 'package:food_delivery_h2d/utils/helpers/handle_status_text.dart';
@@ -17,6 +18,7 @@ class CustomerTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final TabsController controller = Get.put(TabsController());
     final OrderController ordersController = Get.find();
+    final orderHandler = OrderSocketHandler();
 
     // Wrap the widget to observe changes in the order or status
     return Obx(() {
@@ -447,6 +449,8 @@ class CustomerTab extends StatelessWidget {
                     Loaders.successSnackBar(
                         title: "Hoàn thành",
                         message: "Đã hoàn thành đơn hàng.");
+
+                    orderHandler.updateStatusOrder(order.id, newStatus);
                   } catch (e) {
                     Loaders.errorSnackBar(title: "Đã xảy ra lỗi", message: e);
                   }
