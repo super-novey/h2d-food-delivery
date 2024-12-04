@@ -173,9 +173,9 @@ class OrderTile extends StatelessWidget {
                 onPressed: () async {
                   final invalidOrders = ordersController.orders.where((order) =>
                       order.driverStatus != 'delivered' &&
-                      order.driverStatus != 'canceled');
+                      order.driverStatus != 'cancelled');
 
-                if (invalidOrders.isNotEmpty) {
+                  if (invalidOrders.isNotEmpty) {
                     Loaders.errorSnackBar(
                       title: "Nhận đơn thất bại",
                       message:
