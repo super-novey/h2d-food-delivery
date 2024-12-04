@@ -3,7 +3,6 @@ import 'package:food_delivery_h2d/features/customers/home/customer_home_screen.d
 import 'package:food_delivery_h2d/features/customers/order/views/order_list/order_list_screen.dart';
 import 'package:food_delivery_h2d/features/customers/profile/views/profile_customer_screen.dart';
 import 'package:food_delivery_h2d/features/restaurants/notification_restaurant/views/notification_restaurant_screen.dart';
-import 'package:food_delivery_h2d/features/restaurants/rating_management/views/rating_list/rating_list_screen.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:get/get.dart';

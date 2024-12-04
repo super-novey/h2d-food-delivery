@@ -41,14 +41,14 @@ class RestaurantTab extends StatelessWidget {
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    Text(
+                    const Text(
                       'Trả: ',
                       style: TextStyle(fontSize: 14, color: Colors.grey),
                     ),
                     Text(
                       MyFormatter.formatCurrency(order.totalPrice ?? 0),
                       style:
-                          TextStyle(fontSize: 14, color: MyColors.primaryColor),
+                          const TextStyle(fontSize: 14, color: MyColors.primaryColor),
                     ),
                   ],
                 ),
@@ -105,9 +105,9 @@ class RestaurantTab extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       'Mã đơn hàng:',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 14,
                       ),
                     ),

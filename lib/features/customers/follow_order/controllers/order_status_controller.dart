@@ -23,6 +23,7 @@ class OrderStatusController extends GetxController {
     super.onClose();
   }
 
+
   void _startProgress() {
     _progressTimer = Timer.periodic(Duration(milliseconds: 10), (timer) {
       if (orderStatus.value == 'waiting' ||
@@ -62,6 +63,7 @@ class OrderStatusController extends GetxController {
         container3Progress.value = 1.0;
       }
     });
+
   }
 
   void updateProgress(String status) {

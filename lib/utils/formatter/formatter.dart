@@ -58,9 +58,9 @@ class MyFormatter {
   }
 
   static String removeVietnameseTones(String str) {
-    final withDiacritics =
+    const withDiacritics =
         'áàảạãăắằẳẵặâấầẩẫậđéèẻẽẹêếềểễệíìỉĩịóòỏõọôốồổỗộơớờởỡợúùủũụưứừửữựýỳỷỹỵ';
-    final withoutDiacritics =
+    const withoutDiacritics =
         'aaaaaăăăăăâââââđeêêêêêêiiiiiõoôôôôôôoôôôôuụuụuuuyyyyy';
     for (int i = 0; i < withDiacritics.length; i++) {
       str = str.replaceAll(withDiacritics[i], withoutDiacritics[i]);

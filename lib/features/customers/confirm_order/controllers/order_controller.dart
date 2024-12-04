@@ -10,6 +10,7 @@ import 'package:food_delivery_h2d/features/customers/follow_order/views/follow_o
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/cart_controller.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/restaurant_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
+import 'package:food_delivery_h2d/sockets/handlers/order_socket_handler.dart';
 import 'package:food_delivery_h2d/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 
@@ -25,7 +26,11 @@ class OrderController extends GetxController {
   );
   double deliveryFee = 15000;
 
+
+  final _orderSocketHandler = Get.put(OrderSocketHandler());
+
   var paymentMethod = 'Cash'.obs;
+
 
   @override
   void onInit() {
@@ -81,6 +86,7 @@ class OrderController extends GetxController {
 
     ApiResponse<Order> createdOrder =
         await orderRepository.placeOrder(newOrder);
+
     if (createdOrder.status == Status.OK) {
       var orderDetail = createdOrder.data!;
       cartController.removeAllItem();
@@ -98,9 +104,13 @@ class OrderController extends GetxController {
         responseOrder.restCommuneId,
         responseOrder.restDetailAddress,
       );
+
       Get.to(FollowOrderScreen(
         order: orderResponse.data!,
       ));
+
+      _orderSocketHandler.createOrder(orderResponse.data!);
+
       if (responseOrder != null) {
         Loaders.successSnackBar(
             title: "Thành công", message: "Đặt hàng thành công.");

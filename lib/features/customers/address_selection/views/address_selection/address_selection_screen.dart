@@ -15,7 +15,7 @@ class AddressSelectionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         title: Text("Địa chỉ giao hàng"),
       ),
       body: // Thông tin cư trú

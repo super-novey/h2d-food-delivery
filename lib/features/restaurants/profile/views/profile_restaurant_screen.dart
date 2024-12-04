@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/custom_app_bar.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
 import 'package:food_delivery_h2d/features/restaurants/profile/controllers/profile_restaurant_controller.dart';
-import 'package:food_delivery_h2d/features/restaurants/profile/views/profile_restaurant_detail/profile_restaurant_detail_screen.dart';
 import 'package:food_delivery_h2d/features/restaurants/profile/views/widgets/profile_header.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/delivery/views/delivery_screen.dart';
 import 'package:food_delivery_h2d/features/shippers/common/controllers/order_controller.dart';
+import 'package:food_delivery_h2d/sockets/handlers/order_socket_handler.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
 import 'package:food_delivery_h2d/utils/popups/loaders.dart';
@@ -16,6 +17,8 @@ class OrderTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final OrderController ordersController = Get.find();
+    final orderHandler = OrderSocketHandler();
+
     return Container(
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -192,6 +195,9 @@ class OrderTile extends StatelessWidget {
                       orderId: order.id,
                       newStatus: newStatus,
                     );
+
+                    orderHandler.updateStatusOrder(order.id, newStatus);
+
                     ordersController.newOrders
                         .removeWhere((o) => o.id == order.id);
                     Get.to(() => DeliveryScreen(order: order));

@@ -3,7 +3,6 @@ import 'package:food_delivery_h2d/common/widgets/header/image_header.dart';
 import 'package:food_delivery_h2d/common/widgets/images/circle_image.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
-import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({super.key, this.showEdit = false});

@@ -146,7 +146,7 @@ class MenuRestaurantDetail extends StatelessWidget {
                               }if (restaurantController
                                       .detailPartner.value?.status ==
                                   false) {
-                                return Icon(
+                                return const Icon(
                                   Icons.add_box,
                                   color: MyColors.secondaryTextColor,
                                 );
