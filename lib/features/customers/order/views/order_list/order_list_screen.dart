@@ -42,78 +42,75 @@ class CustomerOrderListScreen extends StatelessWidget {
               ],
             ),
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: TabBarView(
-                  children: [
-                    Obx(() {
-                      if (orderController.isLoading.value) {
-                        return const Center(child: CircularProgressIndicator());
-                      }
-
-                      final onGoingOrders = orderController.orders
-                          .where((order) =>
-                              order.custStatus == 'waiting' ||
-                              order.custStatus == 'heading_to_rest' ||
-                              order.custStatus == 'preparing' ||
-                              order.custStatus == 'delivering')
-                          .toList();
-
-                      if (onGoingOrders.isEmpty) {
-                        return RefreshIndicator(
-                          onRefresh: _refreshOrders,
-                          child: const Center(
-                              child: Text("Không có lịch sử đơn hàng!")),
-                        );
-                      }
-
+              child: TabBarView(
+                children: [
+                  Obx(() {
+                    if (orderController.isLoading.value) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+              
+                    final onGoingOrders = orderController.orders
+                        .where((order) =>
+                            order.custStatus == 'waiting' ||
+                            order.custStatus == 'heading_to_rest' ||
+                            order.custStatus == 'preparing' ||
+                            order.custStatus == 'delivering')
+                        .toList();
+              
+                    if (onGoingOrders.isEmpty) {
                       return RefreshIndicator(
                         onRefresh: _refreshOrders,
-                        child: ListView.builder(
-                          itemCount: onGoingOrders.length,
-                          itemBuilder: (context, index) {
-                            final order = onGoingOrders[index];
-                            return OngoingOrderTile(order: order);
-                          },
-                        ),
+                        child: const Center(
+                            child: Text("Không có lịch sử đơn hàng!")),
                       );
-                    }),
-                    Obx(() {
-                      if (orderController.isLoading.value) {
-                        return const Center(child: CircularProgressIndicator());
-                      }
-
-                      final historyOrders = orderController.orders
-                          .where((order) =>
-                              order.custStatus == 'delivered' ||
-                              order.custStatus == 'cancelled')
-                          .toList();
-
-                      if (historyOrders.isEmpty) {
-                        return RefreshIndicator(
-                          onRefresh: _refreshOrders,
-                          child: const Center(
-                              child: Text("Không có lịch sử đơn hàng!")),
-                        );
-                      }
-
+                    }
+              
+                    return RefreshIndicator(
+                      onRefresh: _refreshOrders,
+                      child: ListView.builder(
+                        itemCount: onGoingOrders.length,
+                        itemBuilder: (context, index) {
+                          final order = onGoingOrders[index];
+                          return OngoingOrderTile(order: order);
+                        },
+                      ),
+                    );
+                  }),
+                  Obx(() {
+                    if (orderController.isLoading.value) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+              
+                    final historyOrders = orderController.orders
+                        .where((order) =>
+                            order.custStatus == 'delivered' ||
+                            order.custStatus == 'cancelled')
+                        .toList();
+              
+                    if (historyOrders.isEmpty) {
                       return RefreshIndicator(
                         onRefresh: _refreshOrders,
-                        child: ListView.builder(
-                          itemCount: historyOrders.length,
-                          itemBuilder: (context, index) {
-                            final order = historyOrders[index];
-                            if (order.custStatus == 'delivered') {
-                              return HistoryOrderTileDelivered(order: order);
-                            } else {
-                              return HistoryOrderTileCancelled(order: order);
-                            }
-                          },
-                        ),
+                        child: const Center(
+                            child: Text("Không có lịch sử đơn hàng!")),
                       );
-                    }),
-                  ],
-                ),
+                    }
+              
+                    return RefreshIndicator(
+                      onRefresh: _refreshOrders,
+                      child: ListView.builder(
+                        itemCount: historyOrders.length,
+                        itemBuilder: (context, index) {
+                          final order = historyOrders[index];
+                          if (order.custStatus == 'delivered') {
+                            return HistoryOrderTileDelivered(order: order);
+                          } else {
+                            return HistoryOrderTileCancelled(order: order);
+                          }
+                        },
+                      ),
+                    );
+                  }),
+                ],
               ),
             ),
           ],

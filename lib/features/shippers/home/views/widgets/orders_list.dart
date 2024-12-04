@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/address_controller.dart';
+import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
 import 'package:food_delivery_h2d/sockets/handlers/order_socket_handler.dart';
 import 'package:get/get.dart';
 import 'package:food_delivery_h2d/features/shippers/common/controllers/order_controller.dart';
@@ -15,17 +16,6 @@ class OrdersList extends StatelessWidget {
     final addressController = Get.put(AddressController());
     final orderSocket = Get.put(OrderSocketHandler());
 
-    // _orderSocket.listenForOrderCreates((newOrder) async {
-    //   if (newOrder.custStatus == "waiting") {
-    //     newOrder.restAddress = await addressController.getFullAddress(
-    //       newOrder.restProvinceId,
-    //       newOrder.restDistrictId,
-    //       newOrder.restCommuneId,
-    //       newOrder.restDetailAddress,
-    //     );
-    //     controller.newOrders.insert(0, newOrder);
-    //   }
-    // });
 
     orderSocket.listenNewOrderDriver((newOrder) async {
       if (newOrder.custStatus == "waiting") {
@@ -38,6 +28,7 @@ class OrdersList extends StatelessWidget {
         controller.newOrders.insert(0, newOrder);
       }
     });
+
 
     return DraggableScrollableSheet(
       initialChildSize: 0.4,
@@ -59,6 +50,11 @@ class OrdersList extends StatelessWidget {
             }
 
             if (controller.newOrders.isEmpty) {
+              if (!LoginController.instance.currentUser.workingStatus) {
+                return const Center(
+                    child: Text("Bật trạng thái hoạt động để tìm đơn mới."));
+              }
+
               return const Center(child: Text("Không có đơn hàng nào."));
             }
 

@@ -28,6 +28,8 @@ class Order {
   String? restProvinceId;
   String? restDistrictId;
   String? restCommuneId;
+  String? custResRatingComment;
+  String? custShipperRatingComment;
 
   Order(
       {this.id = '',
@@ -56,7 +58,9 @@ class Order {
       this.driverName,
       this.driverPhone,
       this.driverLicensePlate,
-      this.driverProfileUrl})
+      this.driverProfileUrl,
+      this.custResRatingComment,
+      this.custShipperRatingComment,})
       : orderDatetime = orderDatetime ?? DateTime.now();
 
   // Convert an Order object to a JSON map
@@ -86,6 +90,8 @@ class Order {
       'driverPhone': driverPhone,
       'driverLicensePlate': driverLicensePlate,
       'driverProfileUrl': driverProfileUrl,
+      'custShipperRatingComment': custShipperRatingComment,
+      'custResRatingComment': custResRatingComment,
     };
   }
 
@@ -125,6 +131,8 @@ class Order {
       driverPhone: json['driverPhone'],
       driverLicensePlate: json['driverLicensePlate'],
       driverProfileUrl: json['driverProfileUrl'],
+      custResRatingComment: json['custResRatingComment'],
+      custShipperRatingComment: json['custShipperRatingComment']
     );
   }
 
@@ -155,6 +163,8 @@ class Order {
         'driverPhone: $driverPhone, '
         'driverLicensePlate: $driverLicensePlate, '
         'driverProfileUrl: $driverProfileUrl, '
+        'custShipperRatingComment: $custShipperRatingComment, '
+        'custResRatingComment: $custResRatingComment, '
         ')';
   }
 

@@ -105,7 +105,7 @@ class MenuRestaurantScreen extends StatelessWidget {
                           starCount: 5,
                           starSize: 12,
                           maxValue: 5,
-                          starSpacing: 2,
+                          starSpacing: 4,
                           maxValueVisibility: true,
                           valueLabelVisibility: false,
                           valueLabelPadding: const EdgeInsets.symmetric(
@@ -113,7 +113,6 @@ class MenuRestaurantScreen extends StatelessWidget {
                           valueLabelMargin: const EdgeInsets.only(right: 8),
                           starOffColor: MyColors.starOffColor,
                           starColor: MyColors.starColor,
-                          angle: 12,
                         ),
                         const SizedBox(
                           width: MySizes.xs,
