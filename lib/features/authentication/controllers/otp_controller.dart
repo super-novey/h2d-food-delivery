@@ -39,4 +39,19 @@ class OtpController {
       return false;
     }
   }
+
+  Future<bool> resetPassword(String email, String role) async {
+    try {
+      final res = await AuthRepository.instance.resetPassword(email, role);
+      if (res.status == Status.ERROR) {
+        Loaders.errorSnackBar(title: email, message: res.message);
+        return false;
+      }
+      Loaders.successSnackBar(title: res.message);
+      return true;
+    } catch (e) {
+      Loaders.errorSnackBar(title: e.toString());
+      return false;
+    }
+  }
 }

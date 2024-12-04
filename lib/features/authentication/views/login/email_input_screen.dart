@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/otp_controller.dart';
+import 'package:food_delivery_h2d/features/authentication/views/login/login_screen.dart';
 import 'package:food_delivery_h2d/features/authentication/views/login/widgets/login_header.dart';
 import 'package:food_delivery_h2d/features/authentication/views/register/OTP_verification_screen.dart';
 import 'package:food_delivery_h2d/utils/constants/enums.dart';
@@ -10,7 +12,9 @@ import 'package:food_delivery_h2d/utils/validations/validators.dart';
 import 'package:get/get.dart';
 
 class EmailInputScreen extends StatelessWidget {
-  EmailInputScreen({super.key});
+  EmailInputScreen({super.key, this.isResetPassword = false});
+
+  final bool isResetPassword;
 
   final TextEditingController emailController = TextEditingController();
   final GlobalKey<FormState> emailFormKey = GlobalKey<FormState>();
@@ -102,14 +106,23 @@ class EmailInputScreen extends StatelessWidget {
                                 return;
                               }
 
-                              // print(selectedRole.value!.name);
-                              final success = await otpController.resendOTP(
-                                  emailController.text,
-                                  selectedRole.value!.name);
-                              if (success) {
-                                Get.to(() => OtpVerificationScreen(
-                                    emailAddress: emailController.text,
-                                    role: selectedRole.value!.name));
+                              if (isResetPassword) {
+                                final success =
+                                    await otpController.resetPassword(
+                                        emailController.text,
+                                        selectedRole.value!.name);
+                                if (success) {
+                                  Get.offAll(() => const LoginScreen());
+                                }
+                              } else {
+                                final success = await otpController.resendOTP(
+                                    emailController.text,
+                                    selectedRole.value!.name);
+                                if (success) {
+                                  Get.to(() => OtpVerificationScreen(
+                                      emailAddress: emailController.text,
+                                      role: selectedRole.value!.name));
+                                }
                               }
                             },
                             child: const Text("Tiếp")),
