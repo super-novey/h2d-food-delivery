@@ -17,6 +17,7 @@ class PartnerModel extends UserModel {
       required super.email,
       required super.password,
       required super.status,
+      this.workingStatus = false,
       required super.role,
       required super.phone,
       required super.createdAt,
@@ -32,6 +33,7 @@ class PartnerModel extends UserModel {
   final String storeFront;
   final String CCCDFrontUrl;
   final String CCCDBackUrl;
+  bool workingStatus;
 
   factory PartnerModel.fromJson(Map<String, dynamic> json) {
     final user = json["userId"] is Map<String, dynamic>
@@ -48,6 +50,7 @@ class PartnerModel extends UserModel {
       storeFront: json["storeFront"] ?? '',
       CCCDFrontUrl: json["CCCDFrontUrl"] ?? '',
       CCCDBackUrl: json["CCCDBackUrl"] ?? '',
+      workingStatus: json['status'] ?? '',
       userId: user.userId,
       name: user.name,
       email: user.email,

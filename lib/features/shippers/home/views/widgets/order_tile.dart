@@ -172,7 +172,7 @@ class OrderTile extends StatelessWidget {
                 ),
                 onPressed: () async {
                   final invalidOrders = ordersController.orders.where((order) =>
-                      order.driverStatus != 'delivered' &&
+                      order.driverStatus != 'delivered' ||
                       order.driverStatus != 'canceled');
 
                   if (invalidOrders.isNotEmpty) {

@@ -37,126 +37,164 @@ class CustomerOrderDetail extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Trạng thái đơn  -  ${getDriverStatusText(selectedOrder.custStatus)}...',
+                      'Trạng thái đơn  -  ${(StatusHelper.custStatusTranslations[selectedOrder.custStatus])}',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
                     ),
                     const SizedBox(height: 24),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        const Icon(
-                          Icons.inventory_outlined,
-                          size: 18,
-                          color: MyColors.primaryColor,
-                        ),
-                        const SizedBox(width: 8),
-                        Obx(() => AnimatedContainer(
-                              duration: const Duration(milliseconds: 1),
-                              curve: Curves.linear,
-                              width: 55,
-                              height: 2.5,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color:
-                                    orderStatusController.getContainerColor(1),
-                              ),
-                              child: LinearProgressIndicator(
-                                value: orderStatusController
-                                    .container1Progress.value,
-                                minHeight: 6,
-                                backgroundColor: Colors.grey.shade300,
-                                valueColor: const AlwaysStoppedAnimation<Color>(
-                                    MyColors.primaryColor),
-                              ),
-                            )),
-                        const SizedBox(width: 8),
-                        const Icon(
-                          Icons.local_dining,
-                          size: 18,
-                          color: MyColors.primaryColor,
-                        ),
-                        const SizedBox(width: 8),
-                        Obx(() => AnimatedContainer(
-                              duration: const Duration(milliseconds: 1),
-                              curve: Curves.linear,
-                              width: 55,
-                              height: 2.5,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color:
-                                    orderStatusController.getContainerColor(2),
-                              ),
-                              child: LinearProgressIndicator(
-                                value: orderStatusController
-                                    .container2Progress.value,
-                                minHeight: 6,
-                                backgroundColor: Colors.grey.shade300,
-                                valueColor: const AlwaysStoppedAnimation<Color>(
-                                    MyColors.primaryColor),
-                              ),
-                            )),
-                        const SizedBox(width: 8),
-                        const Icon(
-                          Icons.motorcycle_rounded,
-                          size: 18,
-                          color: MyColors.primaryColor,
-                        ),
-                        const SizedBox(width: 8),
-                        Obx(() => AnimatedContainer(
-                              duration: const Duration(milliseconds: 1),
-                              curve: Curves.linear,
-                              width: 55,
-                              height: 2.5,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color:
-                                    orderStatusController.getContainerColor(3),
-                              ),
-                              child: LinearProgressIndicator(
-                                value: orderStatusController
-                                    .container3Progress.value,
-                                minHeight: 6,
-                                backgroundColor: Colors.grey.shade300,
-                                valueColor: const AlwaysStoppedAnimation<Color>(
-                                    MyColors.primaryColor),
-                              ),
-                            )),
-                        const SizedBox(width: 8),
-                        const Icon(
-                          Icons.home,
-                          size: 18,
-                          color: MyColors.primaryColor,
-                        ),
-                      ],
-                    ),
+                    if (selectedOrder.custStatus == 'cancelled')
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Lý do hủy: ",
+                            style:
+                                Theme.of(context).textTheme.bodySmall!.copyWith(
+                                      color: MyColors.errorColor,
+                                    ),
+                          ),
+                          const SizedBox(
+                            height: 8.0,
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            child: Text(
+                              selectedOrder.reason,
+                              softWrap:
+                                  true, // Ensures text wraps to the next line if it's too long
+                              overflow: TextOverflow
+                                  .ellipsis, // Adds "..." if the text is too long
+                              maxLines:
+                                  3, // Optional: Limits the number of lines
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(
+                                    color: MyColors.primaryTextColor,
+                                  ),
+                            ),
+                          ),
+                        ],
+                      )
+                    else
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          const Icon(
+                            Icons.inventory_outlined,
+                            size: 18,
+                            color: MyColors.primaryColor,
+                          ),
+                          const SizedBox(width: 8),
+                          Obx(() => AnimatedContainer(
+                                duration: const Duration(milliseconds: 1),
+                                curve: Curves.linear,
+                                width: 55,
+                                height: 2.5,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: orderStatusController
+                                      .getContainerColor(1),
+                                ),
+                                child: LinearProgressIndicator(
+                                  value: orderStatusController
+                                      .container1Progress.value,
+                                  minHeight: 6,
+                                  backgroundColor: Colors.grey.shade300,
+                                  valueColor:
+                                      const AlwaysStoppedAnimation<Color>(
+                                          MyColors.primaryColor),
+                                ),
+                              )),
+                          const SizedBox(width: 8),
+                          const Icon(
+                            Icons.local_dining,
+                            size: 18,
+                            color: MyColors.primaryColor,
+                          ),
+                          const SizedBox(width: 8),
+                          Obx(() => AnimatedContainer(
+                                duration: const Duration(milliseconds: 1),
+                                curve: Curves.linear,
+                                width: 55,
+                                height: 2.5,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: orderStatusController
+                                      .getContainerColor(2),
+                                ),
+                                child: LinearProgressIndicator(
+                                  value: orderStatusController
+                                      .container2Progress.value,
+                                  minHeight: 6,
+                                  backgroundColor: Colors.grey.shade300,
+                                  valueColor:
+                                      const AlwaysStoppedAnimation<Color>(
+                                          MyColors.primaryColor),
+                                ),
+                              )),
+                          const SizedBox(width: 8),
+                          const Icon(
+                            Icons.motorcycle_rounded,
+                            size: 18,
+                            color: MyColors.primaryColor,
+                          ),
+                          const SizedBox(width: 8),
+                          Obx(() => AnimatedContainer(
+                                duration: const Duration(milliseconds: 1),
+                                curve: Curves.linear,
+                                width: 55,
+                                height: 2.5,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: orderStatusController
+                                      .getContainerColor(3),
+                                ),
+                                child: LinearProgressIndicator(
+                                  value: orderStatusController
+                                      .container3Progress.value,
+                                  minHeight: 6,
+                                  backgroundColor: Colors.grey.shade300,
+                                  valueColor:
+                                      const AlwaysStoppedAnimation<Color>(
+                                          MyColors.primaryColor),
+                                ),
+                              )),
+                          const SizedBox(width: 8),
+                          const Icon(
+                            Icons.home,
+                            size: 18,
+                            color: MyColors.primaryColor,
+                          ),
+                        ],
+                      ),
                   ],
                 ),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Trạng thái",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall!
-                      .apply(color: MyColors.darkPrimaryTextColor),
-                ),
-                Text(
-                  StatusHelper
-                          .custStatusTranslations[selectedOrder.custStatus] ??
-                      'Unknown status',
-                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        color: MyColors.primaryTextColor,
-                        height: 2,
-                      ),
-                )
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     Text(
+            //       "Trạng thái",
+            //       style: Theme.of(context)
+            //           .textTheme
+            //           .bodySmall!
+            //           .apply(color: MyColors.darkPrimaryTextColor),
+            //     ),
+            //     Text(
+            //       StatusHelper
+            //               .custStatusTranslations[selectedOrder.custStatus] ??
+            //           'Unknown status',
+            //       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+            //             color: MyColors.primaryTextColor,
+            //             height: 2,
+            //           ),
+            //     )
+            //   ],
+            // ),
             const SizedBox(
               height: MySizes.spaceBtwItems,
             ),

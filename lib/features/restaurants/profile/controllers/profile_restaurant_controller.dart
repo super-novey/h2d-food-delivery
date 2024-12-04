@@ -1,18 +1,44 @@
 import 'package:food_delivery_h2d/data/address/address_repository.dart';
+import 'package:food_delivery_h2d/data/partner/partner_repository.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
+import 'package:food_delivery_h2d/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 import 'package:food_delivery_h2d/features/restaurants/profile/models/profile_restaurant_model.dart';
 
 class ProfileRestaurantController extends GetxController {
   static ProfileRestaurantController get instance => Get.find();
   final _addressRepository = Get.put(AddressRepository());
+  final currentUser = LoginController.instance.currentUser;
 
-  // Thêm thuộc tính profile
   var profile = ProfileRestaurant(); // Khởi tạo ProfileRestaurant theo nhu cầu
 
-  void toggleItemAvailability(ProfileRestaurant profile) {
-    profile.isAvailable.value =
-        !profile.isAvailable.value; // Chuyển đổi trạng thái
+  Future<void> toggleItemAvailability(ProfileRestaurant profile) async {
+    final newStatus = !profile.isAvailable.value;
+    profile.isAvailable.value = newStatus;
+
+    try {
+      print("Updating partner status...");
+      await PartnerRepository.instance
+          .updatePartnerStatus(currentUser.partnerId, newStatus);
+      print("Partner status updated successfully");
+
+      currentUser.workingStatus = newStatus;
+      if (currentUser.workingStatus) {
+        Loaders.successSnackBar(
+            title: "Thành công", message: "Đã bật trạng thái hoạt động.");
+      } else {
+        Loaders.successSnackBar(
+            title: "Thành công", message: "Đã tắt trạng thái hoạt động.");
+      }
+    } catch (error) {
+      print("Error occurred: $error");
+      profile.isAvailable.value = !newStatus;
+      Get.snackbar(
+        "Error",
+        "Failed to update working status. Please check your network and try again.",
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
   }
 
   var isLoading = false.obs;
@@ -23,6 +49,9 @@ class ProfileRestaurantController extends GetxController {
   @override
   void onInit() {
     fetchData();
+
+    profile = ProfileRestaurant();
+
     super.onInit();
   }
 
