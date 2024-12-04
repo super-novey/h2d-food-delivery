@@ -3,9 +3,8 @@ import 'package:food_delivery_h2d/data/category/category_repository.dart';
 import 'package:food_delivery_h2d/data/item/item_repository.dart';
 import 'package:food_delivery_h2d/data/partner/partner_repository.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/models/detail_partner_model.dart';
-import 'package:food_delivery_h2d/features/customers/restaurant_list/models/restaurant.dart';
+import 'package:food_delivery_h2d/features/customers/restaurant_list/models/top_restaurant_model.dart';
 import 'package:food_delivery_h2d/features/restaurants/rating_management/models/rating_restaurant_model.dart';
-import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
 import 'package:get/get.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/category_model.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/item_model.dart';
@@ -18,13 +17,13 @@ class RestaurantController extends GetxController {
 
   var isLoading = false.obs;
   List<Category> allCategories = <Category>[].obs;
-  var restaurants = <Restaurant>[].obs;
   var detailPartner = Rxn<DetailPartnerModel>();
   var selectedFilter = 0.obs;
   var value = 0.0.obs;
   var count = 0.obs;
   var errorMessage = ''.obs;
   var ratingList = <RatingModel>[].obs;
+  var topRestaurantList = <TopRestaurantModel>[].obs;
 
   final CategoryRepository _categoryRepository = Get.put(CategoryRepository());
   final ItemRepository _itemRepository = Get.put(ItemRepository());
@@ -40,8 +39,9 @@ class RestaurantController extends GetxController {
     if (userId.isNotEmpty) {
       await fetchCategoriesAndItems();
     }
+    await fetchTopRestaurant();
+
     super.onInit();
-    fetchRestaurants();
   }
 
   Future<void> fetchCategoriesAndItems() async {
@@ -99,30 +99,6 @@ class RestaurantController extends GetxController {
     }
   }
 
-  void fetchRestaurants() {
-    restaurants.value = [
-      Restaurant(
-          restaurantId: 1,
-          restaurantName: "Nhà Hàng Ngon",
-          image: MyImagePaths.imgBunBo,
-          rating: 4.5),
-      Restaurant(
-          restaurantId: 2,
-          restaurantName: "Nhà Hàng 2",
-          image: MyImagePaths.iconImage,
-          rating: 4.0),
-      Restaurant(
-          restaurantId: 3,
-          restaurantName: "Nhà Hàng 3",
-          image: MyImagePaths.iconImage,
-          rating: 5.0),
-      Restaurant(
-          restaurantId: 4,
-          restaurantName: "Nhà Hàng 4",
-          image: MyImagePaths.iconImage,
-          rating: 4.8),
-    ];
-  }
   Future<void> fetchRating(String id) async {
     try {
       isLoading(true);
@@ -133,7 +109,7 @@ class RestaurantController extends GetxController {
       }
 
       final data = await _repository.fetchPartnerRating(id);
-      
+
       print("id user$id");
       ratingList.value = data;
       await calculateAverageRating();
@@ -173,5 +149,27 @@ class RestaurantController extends GetxController {
     print("Updated selectedFilter: ${selectedFilter.value}"); // Log giá trị mới
     print(
         "Filtered ratings count: ${filteredRatings.length}"); // Log số lượng đánh giá đã lọc
+  }
+
+  Future<void> fetchTopRestaurant() async {
+    try {
+      isLoading(true);
+      final isConnected = await NetworkManager.instance.isConnected();
+      if (!isConnected) {
+        errorMessage.value = "No internet connection";
+        return;
+      }
+
+      final data = await _repository.fetchTopRestaurant();
+
+      topRestaurantList.value = data;
+      await calculateAverageRating();
+      await countComments();
+    } catch (e) {
+      errorMessage.value =
+          "Error fetching top restaurant details: ${e.toString()}";
+    } finally {
+      isLoading(false);
+    }
   }
 }

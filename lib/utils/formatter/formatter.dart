@@ -24,7 +24,7 @@ class MyFormatter {
     if (number == number.toInt()) {
       return number.toInt().toString();
     } else {
-      return number.toString();
+      return number.toStringAsFixed(1);
     }
   }
 
