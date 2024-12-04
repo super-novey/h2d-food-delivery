@@ -36,6 +36,19 @@ class OrderSocketHandler {
     });
   }
 
+  void listenForCancelOrder(Function(Order order) onOrderUpdated) {
+    _socketService.socket.on('order:cancelled', (data) {
+      try {
+        print("Cancelled order: $data");
+        final orderData = jsonDecode(jsonEncode(data));
+        final order = Order.fromJson(orderData);
+        onOrderUpdated(order);
+      } catch (e) {
+        print('Error processing order update: $e');
+      }
+    });
+  }
+
   void createOrder(Order order) {
     final orderData = order.toJson();
     _socketService.socket.emit('order:create', jsonEncode(orderData));
