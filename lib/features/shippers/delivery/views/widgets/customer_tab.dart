@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 class CustomerTab extends StatelessWidget {
   final Order order;
 
-  CustomerTab({super.key, required this.order});
+  const CustomerTab({super.key, required this.order});
 
   @override
   Widget build(BuildContext context) {
@@ -149,9 +149,9 @@ class CustomerTab extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Mã đơn hàng:',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 14,
                                     ),
                                   ),

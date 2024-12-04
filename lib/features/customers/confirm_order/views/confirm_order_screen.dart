@@ -23,7 +23,7 @@ class ConfirmOrderScreen extends StatelessWidget {
     return KeyboardHider(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Xác nhận đơn hàng'),
+          title: const Text('Xác nhận đơn hàng'),
           centerTitle: true,
           backgroundColor: MyColors.darkPrimaryColor,
           leading: IconButton(

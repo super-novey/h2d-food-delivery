@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/custom_app_bar.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
-import 'package:food_delivery_h2d/features/customers/confirm_order/models/order_model.dart';
 import 'package:food_delivery_h2d/features/restaurants/order_management/controllers/order_controller.dart';
 import 'package:food_delivery_h2d/features/restaurants/order_management/views/order_list/widgets/history_order_tile.dart';
 import 'package:food_delivery_h2d/features/restaurants/order_management/views/order_list/widgets/new_order_tile.dart';
 import 'package:food_delivery_h2d/features/restaurants/order_management/views/order_list/widgets/preparing_order_tile.dart';
 import 'package:food_delivery_h2d/features/restaurants/order_management/views/order_list/widgets/tab_item.dart';
-import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
-import 'package:food_delivery_h2d/sockets/socket_service.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:get/get.dart';
 
@@ -22,14 +19,20 @@ class OrderListScreen extends StatelessWidget {
     final orderController = Get.put(OrderController());
     final orderHandler = OrderSocketHandler();
 
-    orderHandler.listenForOrderCreates((newOrder) {
-      // Add the new order to the allOrders list
-      if (newOrder.restStatus == "new" &&
-          newOrder.restaurantId ==
-              LoginController.instance.currentUser.partnerId &&
-          newOrder.assignedShipperId != null) {
-        orderController.newOrders.insert(0, newOrder);
-      }
+    // orderHandler.listenForOrderCreates((newOrder) {
+    //   // Add the new order to the allOrders list
+    //   if (newOrder.restStatus == "new" &&
+    //       newOrder.restaurantId ==
+    //           LoginController.instance.currentUser.partnerId &&
+    //       newOrder.assignedShipperId != null) {
+    //     orderController.newOrders.insert(0, newOrder);
+    //   }
+    // });
+
+    orderHandler.joinOrderRoom(LoginController.instance.currentUser.partnerId);
+
+    orderHandler.listenForOrderUpdates((newOrder) {
+      orderController.newOrders.insert(0, newOrder);
     });
 
     return DefaultTabController(

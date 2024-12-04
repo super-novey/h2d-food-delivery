@@ -24,7 +24,7 @@ class CustomerOrderListScreen extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: CustomAppBar(
+        appBar: const CustomAppBar(
           title: Text("Đơn hàng"),
           showBackArrow: false,
         ),

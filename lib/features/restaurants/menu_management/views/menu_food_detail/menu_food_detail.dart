@@ -8,7 +8,6 @@ import 'package:food_delivery_h2d/features/restaurants/menu_management/models/ca
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/item_model.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
-import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
 import 'package:food_delivery_h2d/utils/validations/validators.dart';
 import 'package:get/get.dart';
 

@@ -160,7 +160,9 @@ class Order {
 
   int getToTalPrice() {
     int result = 0;
-    for (var x in orderItems) result += x.totalPrice;
+    for (var x in orderItems) {
+      result += x.totalPrice;
+    }
     return result;
   }
 }

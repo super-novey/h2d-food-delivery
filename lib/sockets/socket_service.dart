@@ -16,7 +16,6 @@ class SocketService extends GetxService {
 
     _socket.onConnect((_) {
       print('Connected to the socket server');
-      print('SocketService initialized with baseUrl: $baseUrl');
     });
 
     _socket.onDisconnect((_) {

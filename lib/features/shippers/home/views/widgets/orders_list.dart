@@ -13,9 +13,21 @@ class OrdersList extends StatelessWidget {
   Widget build(BuildContext context) {
     final OrderController controller = Get.put(OrderController());
     final addressController = Get.put(AddressController());
-    final _orderSocket = Get.put(OrderSocketHandler());
+    final orderSocket = Get.put(OrderSocketHandler());
 
-    _orderSocket.listenForOrderCreates((newOrder) async {
+    // _orderSocket.listenForOrderCreates((newOrder) async {
+    //   if (newOrder.custStatus == "waiting") {
+    //     newOrder.restAddress = await addressController.getFullAddress(
+    //       newOrder.restProvinceId,
+    //       newOrder.restDistrictId,
+    //       newOrder.restCommuneId,
+    //       newOrder.restDetailAddress,
+    //     );
+    //     controller.newOrders.insert(0, newOrder);
+    //   }
+    // });
+
+    orderSocket.listenNewOrderDriver((newOrder) async {
       if (newOrder.custStatus == "waiting") {
         newOrder.restAddress = await addressController.getFullAddress(
           newOrder.restProvinceId,
