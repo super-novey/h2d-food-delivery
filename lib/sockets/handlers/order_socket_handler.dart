@@ -25,16 +25,15 @@ class OrderSocketHandler {
   void listenForOrderUpdates(Function(Order order) onOrderUpdated) {
     _socketService.socket.on('order:updatedStatus', (data) {
       try {
-        print("Received update: $data");
         final orderData = jsonDecode(jsonEncode(data));
         final order = Order.fromJson(orderData);
         onOrderUpdated(order);
-        print('Order updated: ${order.id}');
       } catch (e) {
         print('Error processing order update: $e');
       }
     });
   }
+
 
   void createOrder(Order order) {
     final orderData = order.toJson();

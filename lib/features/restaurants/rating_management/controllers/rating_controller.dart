@@ -13,10 +13,6 @@ class RatingController extends GetxController {
   var errorMessage = ''.obs;
   final _repository = PartnerRepository();
   var ratingList = <RatingModel>[].obs;
-  @override
-  void onInit() async {
-    super.onInit();
-  }
 
   Future<void> fetchRating(String id) async {
     try {
@@ -29,7 +25,7 @@ class RatingController extends GetxController {
 
       final data = await _repository.fetchPartnerRating(id);
       
-      print(LoginController.instance.currentUser.partnerId);
+      print("id user$id");
       ratingList.value = data;
       await calculateAverageRating();
       await countComments();

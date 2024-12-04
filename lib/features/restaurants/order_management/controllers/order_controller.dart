@@ -3,6 +3,7 @@ import 'package:food_delivery_h2d/data/item/item_repository.dart';
 import 'package:food_delivery_h2d/data/order/order_repository.dart';
 import 'package:food_delivery_h2d/data/response/status.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
+import 'package:food_delivery_h2d/sockets/handlers/order_socket_handler.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:food_delivery_h2d/utils/popups/loaders.dart';
 import 'package:get/get.dart';
@@ -23,6 +24,8 @@ class OrderController extends GetxController {
   final _itemRepository = Get.put(ItemRepository());
 
   final _reasonController = TextEditingController();
+
+  final _orderSocketHandler = OrderSocketHandler();
 
   @override
   void dispose() {
@@ -178,6 +181,8 @@ class OrderController extends GetxController {
 
       Loaders.successSnackBar(
           title: "Thành công!", message: "Nhận đơn hàng thành công!.");
+
+      _orderSocketHandler.updateStatusOrder(orderId, newStatus);
     } catch (e) {
       Loaders.errorSnackBar(title: "Thất bại!", message: e.toString());
       rethrow;
@@ -273,6 +278,8 @@ class OrderController extends GetxController {
       newOrders.removeAt(orderIndex);
 
       Loaders.successSnackBar(title: "Thành công!", message: "Đơn đã hủy!.");
+
+      _orderSocketHandler.updateStatusOrder(orderId, newStatus);
     } catch (e) {
       Loaders.errorSnackBar(title: "Thất bại!", message: e.toString());
       rethrow;

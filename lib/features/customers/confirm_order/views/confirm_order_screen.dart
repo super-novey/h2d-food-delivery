@@ -312,7 +312,7 @@ class ConfirmOrderScreen extends StatelessWidget {
                             title: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text('Thanh toán khi nhận hàng'),
+                                const Text('Thanh toán khi nhận hàng'),
                                 Image.asset('assets/icons/ic_cash.png',
                                     width: 32, height: 32),
                               ],

@@ -4,9 +4,11 @@ import 'package:food_delivery_h2d/features/customers/follow_order/controllers/or
 import 'package:food_delivery_h2d/features/customers/order/controllers/order_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/common/controllers/order_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
+import 'package:food_delivery_h2d/sockets/handlers/order_socket_handler.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
 import 'package:food_delivery_h2d/utils/helpers/handle_status_text.dart';
+import 'package:food_delivery_h2d/utils/helpers/status_helper.dart';
 import 'package:get/get.dart';
 
 class FollowOrderScreen extends StatelessWidget {
@@ -15,9 +17,17 @@ class FollowOrderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final orderSocketHandler = OrderSocketHandler();
     final orderStatusController = Get.put(OrderStatusController());
-    // final orderController = Get.put(OrderController());
+
     orderStatusController.orderStatus.value = order.custStatus;
+    orderSocketHandler.joinOrderRoom(order.id);
+
+    orderSocketHandler.listenForOrderUpdates((newOrder) {
+      print("DANG TOI QUAN");
+      orderStatusController.orderStatus.value = newOrder.custStatus;
+    });
+
     return Scaffold(
       appBar: const CustomAppBar(
         title: Text("Theo dõi đơn hàng"),
@@ -52,11 +62,13 @@ class FollowOrderScreen extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Trạng thái đơn  -  ${getDriverStatusText(order.custStatus)}...',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
+                              Obx(
+                                () => Text(
+                                  'Trạng thái đơn  -  ${StatusHelper.custStatusTranslations[orderStatusController.orderStatus.value]}...',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
                                 ),
                               ),
                               const SizedBox(height: 24),
@@ -169,6 +181,7 @@ class FollowOrderScreen extends StatelessWidget {
                             Row(
                               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+
                                 CircleAvatar(
                                   radius: 20,
                                   backgroundColor: Colors.grey
@@ -192,6 +205,7 @@ class FollowOrderScreen extends StatelessWidget {
                                             size: 30, color: Colors.grey),
                                   ),
                                 ),
+
                                 const SizedBox(
                                   width: 16,
                                 ),
