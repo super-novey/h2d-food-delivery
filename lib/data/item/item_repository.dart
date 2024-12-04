@@ -1,6 +1,7 @@
 import 'package:food_delivery_h2d/data/response/api_response.dart';
 import 'package:food_delivery_h2d/features/customers/search/models/item_model.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/item_model.dart';
+import 'package:food_delivery_h2d/features/restaurants/rating_management/models/rating_restaurant_model.dart';
 import 'package:food_delivery_h2d/utils/http/http_client.dart';
 import 'package:get/get.dart';
 
@@ -135,6 +136,18 @@ class ItemRepository extends GetxController {
     } catch (e) {
       print(e);
       return ApiResponse.error("An unknown error occurred.");
+    }
+  }
+  Future<List<RatingModel>> fecthRatingItem(String itemId) async {
+    try {
+      final response = await HttpHelper.get("item/rating/$itemId");
+
+      List<dynamic> data = response['data'] as List<dynamic>;
+      print("rating partner ${data}");
+      return data.map((item) => RatingModel.fromJson(item)).toList();
+    } on Exception catch (e) {
+      print("error $e");
+      rethrow;
     }
   }
 }
