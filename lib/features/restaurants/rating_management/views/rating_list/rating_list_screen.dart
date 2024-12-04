@@ -50,7 +50,6 @@ class RatingListScreen extends StatelessWidget {
                               axis: Axis.horizontal,
                               value: ratingController.value.value,
                               onValueChanged: (v) {
-                                ratingController.value.value = v;
                               },
                               starCount: 5,
                               starSize: 20,

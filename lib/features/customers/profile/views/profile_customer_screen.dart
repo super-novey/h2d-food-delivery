@@ -117,15 +117,15 @@ class ProfileCustomerScreen extends StatelessWidget {
                               ],
                             ),
                             
-                            // SizedBox(
-                            //   width: double.infinity,
-                            //   child: ElevatedButton(
-                            //     onPressed: () {
-                            //       Get.to(ProfileRestaurantDetailScreen());
-                            //     },
-                            //     child: const Text("Chỉnh sửa thông tin"),
-                            //   ),
-                            // ),
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  //Get.to(ProfileRestaurantDetailScreen());
+                                },
+                                child: const Text("Chỉnh sửa thông tin"),
+                              ),
+                            ),
                             const SizedBox(
                               height: MySizes.spaceBtwItems,
                             ),
