@@ -192,8 +192,8 @@ class OrderController extends GetxController {
   void completeOrder(String orderId) async {
     try {
       Map<String, dynamic> newStatus = {
-        "custStatus": "delivering",
-        "driverStatus": "delivering",
+        "custStatus": "preparing",
+        "driverStatus": "heading_to_rest",
         "restStatus": "completed"
       };
       final res = await _orderRepository.updateOrderStatus(
