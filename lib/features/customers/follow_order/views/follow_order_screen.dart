@@ -20,8 +20,8 @@ class FollowOrderScreen extends StatelessWidget {
 
     orderSocketHandler.joinOrderRoom(order.id);
 
-    orderSocketHandler.listenForCancelOrder((newOrder) {
-      print("CANCEL");
+    orderSocketHandler.listenForOrderUpdates((newOrder) {
+      print("DANG TOI QUAN");
       orderStatusController.orderStatus.value = newOrder.custStatus;
     });
     return Scaffold(
