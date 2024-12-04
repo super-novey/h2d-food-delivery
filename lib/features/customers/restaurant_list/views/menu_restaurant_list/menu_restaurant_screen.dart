@@ -7,9 +7,11 @@ import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/restaurant_controller.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/views/menu_restaurant_list/widgets/detail_cart.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/views/menu_restaurant_list/widgets/detail_restaurant_screen.dart';
+import 'package:food_delivery_h2d/features/customers/restaurant_list/views/menu_restaurant_list/widgets/menu_restaurant_rating.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/views/menu_restaurant_list/widgets/menu_restaurant_tile.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/category_model.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/item_model.dart';
+import 'package:food_delivery_h2d/features/restaurants/rating_management/controllers/rating_controller.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
@@ -25,7 +27,7 @@ class MenuRestaurantScreen extends StatelessWidget {
   final cartController = Get.put(CartController());
 
   void fetch() {
-    cartController.removeAllItem();
+    //cartController.removeAllItem();
     restaurantController.setUserId(userId);
     restaurantController.fetchCategoriesAndItems();
     restaurantController.fetchDetailPartner(userId);
@@ -34,6 +36,7 @@ class MenuRestaurantScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     fetch();
+    restaurantController.fetchRating(userId);
 
     return Scaffold(
       appBar: const CustomAppBar(
@@ -47,6 +50,9 @@ class MenuRestaurantScreen extends StatelessWidget {
           child: Column(
             children: [
               Obx(() {
+                if (restaurantController.isLoading.value) {
+                  return const Center(child: CircularProgressIndicator());
+                }
                 return Stack(
                   children: [
                     CachedNetworkImage(
@@ -94,65 +100,76 @@ class MenuRestaurantScreen extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
                         )),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        RatingStars(
-                          axis: Axis.horizontal,
-                          value: 5,
-                          onValueChanged: (v) {},
-                          starCount: 5,
-                          starSize: 12,
-                          maxValue: 5,
-                          starSpacing: 4,
-                          maxValueVisibility: true,
-                          valueLabelVisibility: false,
-                          valueLabelPadding: const EdgeInsets.symmetric(
-                              vertical: 1, horizontal: 8),
-                          valueLabelMargin: const EdgeInsets.only(right: 8),
-                          starOffColor: MyColors.starOffColor,
-                          starColor: MyColors.starColor,
-                        ),
-                        const SizedBox(
-                          width: MySizes.xs,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: MySizes.xs / 2),
-                          child: Text(
-                            "5",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .apply(color: MyColors.primaryTextColor),
+                    InkWell(
+                      onTap: () {
+                        Get.to(MenuRestaurantRating(
+                          userId: userId,
+                        ));
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Obx(() {
+                            return RatingStars(
+                              axis: Axis.horizontal,
+                              value: restaurantController.value.value,
+                              onValueChanged: (v) {
+                                restaurantController.value.value = v;
+                              },
+                              starCount: 5,
+                              starSize: 12,
+                              maxValue: 5,
+                              starSpacing: 4,
+                              maxValueVisibility: true,
+                              valueLabelVisibility: false,
+                              starOffColor: MyColors.starOffColor,
+                              starColor: MyColors.starColor,
+                            );
+                          }),
+                          const SizedBox(
+                            width: MySizes.xs,
                           ),
-                        ),
-                        const SizedBox(
-                          width: MySizes.sm,
-                        ),
-                        Container(
-                            color: MyColors.dividerColor,
-                            width: 0.8,
-                            height: 15),
-                        const SizedBox(
-                          width: MySizes.sm,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: MySizes.xs / 2),
-                          child: Text(
-                            "(999+ bình luận)",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .apply(color: MyColors.primaryTextColor),
+                          Obx(() {
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.only(top: MySizes.xs / 2),
+                              child: Text(
+                                restaurantController.count.toString(),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .apply(color: MyColors.primaryTextColor),
+                              ),
+                            );
+                          }),
+                          const SizedBox(
+                            width: MySizes.sm,
                           ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: MySizes.xs),
-                          child: Icon(Icons.arrow_forward_ios,
-                              size: MySizes.iconXs),
-                        )
-                      ],
+                          Container(
+                              color: MyColors.dividerColor,
+                              width: 0.8,
+                              height: 15),
+                          const SizedBox(
+                            width: MySizes.sm,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: MySizes.xs / 2),
+                            child: Text(
+                              "(${restaurantController.ratingList.length} bình luận)",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .apply(color: MyColors.primaryTextColor),
+                            ),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.only(top: MySizes.xs),
+                            child: Icon(Icons.arrow_forward_ios,
+                                size: MySizes.iconXs),
+                          )
+                        ],
+                      ),
                     ),
                     Obx(() {
                       if (restaurantController.detailPartner.value?.status ==
