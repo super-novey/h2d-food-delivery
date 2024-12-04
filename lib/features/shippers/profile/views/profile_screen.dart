@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/custom_app_bar.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
+import 'package:food_delivery_h2d/features/authentication/views/login/widgets/changePassword.dart';
 import 'package:food_delivery_h2d/features/shippers/profile/controllers/profile_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/profile/views/widgets/profile_driver_header.dart';
 import 'package:food_delivery_h2d/features/shippers/rating/views/driver_rating.dart';
@@ -20,6 +21,9 @@ class ProfileScreen extends StatelessWidget {
       appBar: const CustomAppBar(
         title: Text("Hồ sơ của tôi"),
         showBackArrow: false,
+        actions: [
+          ChangingPassword(),
+        ],
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -143,8 +147,8 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                          Get.to(const DriverRating());
-                        },
+                        Get.to(const DriverRating());
+                      },
                       child: const Padding(
                         padding: EdgeInsets.symmetric(vertical: 16),
                         child: Row(
@@ -163,7 +167,6 @@ class ProfileScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-
                     ),
                     const SizedBox(
                       height: MySizes.spaceBtwItems,
