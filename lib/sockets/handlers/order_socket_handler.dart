@@ -34,7 +34,6 @@ class OrderSocketHandler {
     });
   }
 
-
   void createOrder(Order order) {
     final orderData = order.toJson();
     _socketService.socket.emit('order:create', jsonEncode(orderData));
@@ -67,8 +66,21 @@ class OrderSocketHandler {
     });
   }
 
+  void removeJoinRoom(String room) async {
+    _socketService.socket.emit('leaveRoom', room);
+    print('Requested to leave room: $room');
+
+    _socketService.socket.on('leftRoom', (data) {
+      print('Successfully left room: ${data['roomId']}');
+    });
+
+    _socketService.socket.on('error', (data) {
+      print('Failed to leave room: ${data['message']}');
+    });
+  }
+
   // Clean up listeners
   void cleanUp() {
-    _socketService.socket.off('order:new');
+    _socketService.socket.off('order:updateStatus');
   }
 }
