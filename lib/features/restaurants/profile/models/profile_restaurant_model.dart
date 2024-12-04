@@ -20,5 +20,5 @@ class ProfileRestaurant {
     this.description = '',
     bool? isAvailable,
   }) : joinDate = joinDate ?? DateTime.now(),
-   isAvailable = (isAvailable ?? true).obs;
+   isAvailable = (isAvailable ?? false).obs;
 }

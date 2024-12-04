@@ -1,4 +1,5 @@
 import 'package:food_delivery_h2d/data/order/order_repository.dart';
+import 'package:food_delivery_h2d/data/response/status.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/address_controller.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
 import 'package:food_delivery_h2d/utils/popups/loaders.dart';
@@ -10,7 +11,7 @@ class OrderController extends GetxController {
 
   var newOrders = <Order>[].obs; // Observable list of orders
   var orders = <Order>[].obs; // Observable list of orders
-  var isLoading = true.obs; // Observable for loading state
+  var isLoading = true.obs;
   OrderRepository orderRepository = Get.put(OrderRepository());
   final addressController = Get.put(AddressController());
 
