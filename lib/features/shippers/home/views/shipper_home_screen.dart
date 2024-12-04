@@ -28,26 +28,63 @@ class ShipperHomeScreen extends StatelessWidget {
               children: [
                 Stack(
                   children: [
-                    const CircleImage(
-                      imageUrl:
-                          'https://www.shutterstock.com/image-vector/user-icon-trendy-flat-style-260nw-418179865.jpg',
+                    CircleAvatar(
                       radius: 20,
+                      backgroundColor:
+                          Colors.grey.shade200, // Fallback background color
+                      child: ClipOval(
+                        child:
+                            LoginController.instance.currentUser.profileUrl !=
+                                        "Unknown" &&
+                                    LoginController.instance.currentUser
+                                        .profileUrl!.isNotEmpty
+                                ? Image.network(
+                                    LoginController
+                                        .instance.currentUser.profileUrl!,
+                                    fit: BoxFit.cover,
+                                    width: 40,
+                                    height: 40,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return const Icon(Icons.person,
+                                          size: 40, color: Colors.grey);
+                                    },
+                                  )
+                                : const Icon(Icons.person,
+                                    size: 30, color: Colors.grey),
+                      ),
                     ),
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: Container(
-                          width: 12,
-                          height: 12,
-                          decoration: const BoxDecoration(
-                            color: Color.fromARGB(255, 22, 230, 36),
-                            shape: BoxShape.circle,
+                    if (LoginController.instance.currentUser.workingStatus)
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            width: 12,
+                            height: 12,
+                            decoration: const BoxDecoration(
+                              color: Color.fromARGB(255, 22, 230, 36),
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        ),
+                      )
+                    else
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            width: 12,
+                            height: 12,
+                            decoration: const BoxDecoration(
+                              color: Colors.grey,
+                              shape: BoxShape.circle,
+                            ),
                           ),
                         ),
                       ),
-                    ),
                   ],
                 ),
                 const SizedBox(
@@ -64,13 +101,22 @@ class ShipperHomeScreen extends StatelessWidget {
                           fontSize: 14,
                           color: MyColors.iconColor),
                     ),
-                    const Text(
-                      'Đang hoạt động',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 10,
-                          color: MyColors.iconColor),
-                    )
+                    if (LoginController.instance.currentUser.workingStatus)
+                      Text(
+                        'Đang hoạt động',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10,
+                            color: MyColors.iconColor),
+                      )
+                    else
+                      Text(
+                        'Không hoạt động',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10,
+                            color: MyColors.iconColor),
+                      )
                   ],
                 ),
                 Expanded(

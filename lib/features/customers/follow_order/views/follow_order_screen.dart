@@ -19,6 +19,7 @@ class FollowOrderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final orderSocketHandler = OrderSocketHandler();
     final orderStatusController = Get.put(OrderStatusController());
+    final customerOrderController = Get.put(CustomerOrderController());
 
     orderStatusController.orderStatus.value = order.custStatus;
     orderSocketHandler.joinOrderRoom(order.id);
@@ -181,7 +182,6 @@ class FollowOrderScreen extends StatelessWidget {
                             Row(
                               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-
                                 CircleAvatar(
                                   radius: 20,
                                   backgroundColor: Colors.grey
@@ -205,7 +205,6 @@ class FollowOrderScreen extends StatelessWidget {
                                             size: 30, color: Colors.grey),
                                   ),
                                 ),
-
                                 const SizedBox(
                                   width: 16,
                                 ),
@@ -666,8 +665,7 @@ class FollowOrderScreen extends StatelessWidget {
       floatingActionButton: order.custStatus == 'waiting'
           ? FloatingActionButton.extended(
               onPressed: () {
-                CustomerOrderController.instance
-                    .showCancelDialog(context, order.id);
+                customerOrderController.showCancelDialog(context, order.id);
               },
               label: const Text(
                 'Hủy đơn',
