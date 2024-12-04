@@ -90,4 +90,5 @@ Future<void> updatePartnerStatus(String userId, bool status) async {
       rethrow;
     }
   }
+
 }
