@@ -1,4 +1,5 @@
 import 'package:food_delivery_h2d/features/authentication/models/DriverModel.dart';
+import 'package:food_delivery_h2d/features/restaurants/rating_management/models/rating_restaurant_model.dart';
 import 'package:food_delivery_h2d/utils/http/http_client.dart';
 import 'package:get/get.dart';
 
@@ -34,6 +35,18 @@ class DriverRepository extends GetxController {
       }
     } catch (error) {
       print("Error in updateDriverStatus: $error");
+      rethrow;
+    }
+  }
+  Future<List<RatingModel>> fetchDriverRating(String driverId) async {
+    try {
+      final response = await HttpHelper.get("driver/rating/$driverId");
+
+      List<dynamic> data = response['data'] as List<dynamic>;
+      print("rating partner $data");
+      return data.map((item) => RatingModel.fromJson(item)).toList();
+    } on Exception catch (e) {
+      print("error $e");
       rethrow;
     }
   }
