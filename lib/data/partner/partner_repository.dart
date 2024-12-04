@@ -28,6 +28,28 @@ class PartnerRepository extends GetxController {
     }
   }
 
+Future<void> updatePartnerStatus(String userId, bool status) async {
+    try {
+      final data = {
+        'status': status,
+      };
+      print('REPO STATUS: $data');
+
+      final res = await HttpHelper.put("partner/updateStatus/$userId", data);
+
+      print("Response from API: $res");
+
+      if (res["hasError"] == false && res["statusCode"] == 200) {
+        print("Partner status updated successfully.");
+      } else {
+        throw Exception("Failed to update partner status: ${res["message"]}");
+      }
+    } catch (error) {
+      print("Error in updatePartnerStatus: $error");
+      rethrow;
+    }
+  }
+
   Future<List<RatingModel>> fetchPartnerRating(String partnerId) async {
     try {
       final response = await HttpHelper.get("partner/rating/$partnerId");
