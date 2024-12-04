@@ -35,13 +35,13 @@ class WebHeader extends StatelessWidget implements PreferredSizeWidget {
           icon: const Icon(Icons.more_vert, size: MySizes.iconMd, color: MyColors.darkPrimaryColor,),
         ),
         actions: [
-          IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.notifications_outlined,
-                size: MySizes.iconMs,
-                color: MyColors.darkPrimaryColor,
-              )),
+          // IconButton(
+          //     onPressed: () {},
+          //     icon: const Icon(
+          //       Icons.notifications_outlined,
+          //       size: MySizes.iconMs,
+          //       color: MyColors.darkPrimaryColor,
+          //     )),
           const SizedBox(
             width: MySizes.spaceBtwItems / 2,
           ),

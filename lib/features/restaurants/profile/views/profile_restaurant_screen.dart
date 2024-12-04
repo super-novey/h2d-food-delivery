@@ -1,11 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/custom_app_bar.dart';
+import 'package:food_delivery_h2d/data/authentication/auth_repository.dart';
+import 'package:food_delivery_h2d/data/response/status.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
+import 'package:food_delivery_h2d/features/authentication/views/login/widgets/changePassword.dart';
 import 'package:food_delivery_h2d/features/restaurants/profile/controllers/profile_restaurant_controller.dart';
 import 'package:food_delivery_h2d/features/restaurants/profile/views/widgets/profile_header.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
+import 'package:food_delivery_h2d/utils/popups/loaders.dart';
+import 'package:food_delivery_h2d/utils/validations/validators.dart';
 import 'package:get/get.dart';
 
 class ProfileRestaurantScreen extends StatelessWidget {
@@ -15,9 +20,12 @@ class ProfileRestaurantScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final profileRestaurantController = Get.put(ProfileRestaurantController());
     return Scaffold(
-        appBar: const CustomAppBar(
-          title: Text("Hồ sơ của tôi"),
+        appBar: CustomAppBar(
+          title: const Text("Hồ sơ của tôi"),
           showBackArrow: false,
+          actions: [
+            ChangingPassword(),
+          ],
         ),
         body: Obx(
           () => profileRestaurantController.isLoading.value

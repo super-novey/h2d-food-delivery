@@ -62,7 +62,10 @@ class LoginForm extends StatelessWidget {
                       },
                       child: const Text("Xác thực tài khoản")),
                   TextButton(
-                      onPressed: () {}, child: const Text("Quên mật khẩu")),
+                      onPressed: () {
+                        Get.to(() => EmailInputScreen());
+                      },
+                      child: const Text("Quên mật khẩu")),
                 ],
               ),
             if (kIsWeb)

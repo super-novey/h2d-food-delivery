@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/admin/dashboard/views/widgets/line_chart.dart';
 import 'package:food_delivery_h2d/features/admin/dashboard/views/widgets/list_item.dart';
+import 'package:food_delivery_h2d/features/admin/dashboard/views/widgets/order_status_chart.dart';
 import 'package:food_delivery_h2d/features/admin/dashboard/views/widgets/pie_chart.dart';
 import 'package:food_delivery_h2d/features/admin/web_layout.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
@@ -28,13 +29,14 @@ class AdminDashboard extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  child: SizedBox(
-                    height: 400,
-                    child: Card(
-                      elevation: 4,
-                      shadowColor: MyColors.darkPrimaryColor,
-                      child: Center(
-                        child: Text("Biểu đồ", textAlign: TextAlign.center),
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 28),
+                    child: SizedBox(
+                      height: 400,
+                      child: Card(
+                        elevation: 4,
+                        shadowColor: MyColors.darkPrimaryColor,
+                        child: OrderStatusChart(),
                       ),
                     ),
                   ),
