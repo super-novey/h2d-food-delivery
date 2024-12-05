@@ -12,6 +12,8 @@ class RestaurantHomeAppbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(
+        'TRANG THAI HD: +${LoginController.instance.currentUser!.workingStatus}');
     return MyAppBar(
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,14 +36,14 @@ class RestaurantHomeAppbar extends StatelessWidget {
                   width: 12,
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: LoginController.instance.currentUser.workingStatus
+                      color: LoginController.instance.currentUser!.workingStatus
                           ? MyColors.openColor
                           : MyColors.greyWhite)),
               Text(
-                LoginController.instance.currentUser.workingStatus
+                LoginController.instance.currentUser!.workingStatus
                     ? "Đang mở cửa"
                     : "Đã đóng cửa",
-                style: LoginController.instance.currentUser.workingStatus
+                style: LoginController.instance.currentUser!.workingStatus
                     ? Theme.of(context)
                         .textTheme
                         .labelMedium!
