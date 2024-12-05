@@ -17,10 +17,8 @@ class ProfileRestaurantController extends GetxController {
     profile.isAvailable.value = newStatus;
 
     try {
-      print("Updating partner status...");
       await PartnerRepository.instance
           .updatePartnerStatus(currentUser.partnerId, newStatus);
-      print("Partner status updated successfully");
 
       currentUser.workingStatus = newStatus;
       if (currentUser.workingStatus) {
@@ -31,7 +29,6 @@ class ProfileRestaurantController extends GetxController {
             title: "Thành công", message: "Đã tắt trạng thái hoạt động.");
       }
     } catch (error) {
-      print("Error occurred: $error");
       profile.isAvailable.value = !newStatus;
       Get.snackbar(
         "Error",
@@ -51,6 +48,8 @@ class ProfileRestaurantController extends GetxController {
     fetchData();
 
     profile = ProfileRestaurant();
+    profile.isAvailable.value =
+        LoginController.instance.currentUser.workingStatus;
 
     super.onInit();
   }
