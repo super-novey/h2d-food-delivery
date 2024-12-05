@@ -8,6 +8,7 @@ import 'package:food_delivery_h2d/features/restaurants/menu_management/models/it
 import 'package:food_delivery_h2d/features/restaurants/menu_management/views/menu_food_detail/menu_food_detail.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
+import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
 import 'package:get/get.dart';
 
 class MenuFoodTile extends StatelessWidget {
@@ -96,7 +97,7 @@ class MenuFoodTile extends StatelessWidget {
                         height: MySizes.sm,
                       ),
                       Text(
-                        '${item.price}đ',
+                        MyFormatter.formatCurrency(item.price),
                         style: Theme.of(context)
                             .textTheme
                             .labelMedium!
