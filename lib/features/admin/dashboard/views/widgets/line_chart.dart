@@ -76,6 +76,7 @@ class StatisticLineChart extends StatelessWidget {
                     LineChartData(
                       lineBarsData: [
                         LineChartBarData(
+                          preventCurveOverShooting: true,
                           spots: chartData.asMap().entries.map((entry) {
                             final index = entry.key.toDouble();
                             final data = entry.value;

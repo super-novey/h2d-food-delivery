@@ -5,6 +5,7 @@ import 'package:food_delivery_h2d/features/authentication/views/register/partner
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/enums.dart';
 import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
+import 'package:food_delivery_h2d/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 
 class ConvertEnumRole {
@@ -41,7 +42,7 @@ class ConvertEnumRole {
   static void toPage(UserRole role) {
     switch (role) {
       case UserRole.admin:
-      //TODO
+        Loaders.waringSnackBar(title: "Không được đăng ký admin!");
       case UserRole.partner:
         Get.to(() => PartnerRegisterScreen());
       case UserRole.driver:
@@ -100,6 +101,7 @@ class ConvertEnumRole {
         return "Không xác định";
     }
   }
+
   static UserRole convertToEnum(String displayName) {
     switch (displayName) {
       case "admin":
