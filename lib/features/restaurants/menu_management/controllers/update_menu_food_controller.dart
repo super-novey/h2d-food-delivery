@@ -92,6 +92,7 @@ class UpdateMenuFoodController extends GetxController {
       }
 
       Loaders.successSnackBar(title: "Thành công", message: res.message);
+      Get.back();
     } catch (e) {
       Loaders.errorSnackBar(title: "Lỗi", message: e.toString());
     } finally {
@@ -119,6 +120,7 @@ class UpdateMenuFoodController extends GetxController {
       MenuFoodController.instance.allItems.refresh();
 
       Loaders.successSnackBar(title: "Thành công", message: res.message);
+      Get.back();
     } catch (e) {
       Loaders.errorSnackBar(title: "Lỗi", message: e.toString());
     } finally {

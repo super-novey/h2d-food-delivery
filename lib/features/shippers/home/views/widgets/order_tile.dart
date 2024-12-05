@@ -42,7 +42,7 @@ class OrderTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                '{order.distance}km',
+                "",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 14,

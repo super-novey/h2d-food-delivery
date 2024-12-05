@@ -93,15 +93,8 @@ class ChangingPassword extends StatelessWidget {
                           title: "Thất bại!", message: "Từ chối");
                     }
                   },
-                  style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.all(10),
-                      backgroundColor: Colors.red,
-                      side: const BorderSide(color: Colors.red)),
                   child: const Text("Cập nhật")),
               cancel: OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: MySizes.md, vertical: 0)),
                   onPressed: () => Navigator.of(Get.overlayContext!).pop(),
                   child: const Text("Hủy")));
         });

@@ -20,8 +20,8 @@ class ProfileRestaurantScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final profileRestaurantController = Get.put(ProfileRestaurantController());
     return Scaffold(
-        appBar: CustomAppBar(
-          title: const Text("Hồ sơ của tôi"),
+        appBar: const CustomAppBar(
+          title: Text("Hồ sơ của tôi"),
           showBackArrow: false,
           actions: [
             ChangingPassword(),

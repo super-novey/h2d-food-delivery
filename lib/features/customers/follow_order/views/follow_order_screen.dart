@@ -4,6 +4,7 @@ import 'package:food_delivery_h2d/features/customers/follow_order/controllers/or
 import 'package:food_delivery_h2d/features/customers/order/controllers/order_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/common/controllers/order_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
+import 'package:food_delivery_h2d/features/shippers/rating/controllers/driver_rating_controller.dart';
 import 'package:food_delivery_h2d/sockets/handlers/order_socket_handler.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
@@ -31,6 +32,7 @@ class _FollowOrderScreenState extends State<FollowOrderScreen> {
   Widget build(BuildContext context) {
     final orderStatusController = Get.put(OrderStatusController());
     final customerOrderController = Get.put(CustomerOrderController());
+    final ratingControler = Get.put(DriverRatingController());
 
     var currentOrder = widget.order.obs;
 
@@ -271,7 +273,16 @@ class _FollowOrderScreenState extends State<FollowOrderScreen> {
                                                   color: MyColors.warningColor,
                                                   size: 18,
                                                 ),
-                                                const Text("4.9"),
+                                                Obx(() {
+                                                  ratingControler.fetchRating(
+                                                      currentOrder.value
+                                                          .assignedShipperId
+                                                          .toString());
+                                                  return Text(
+                                                      MyFormatter.formatDouble(
+                                                          ratingControler
+                                                              .value.value));
+                                                }),
                                                 const SizedBox(
                                                   width: 8.0,
                                                 ),
