@@ -18,35 +18,36 @@ class StatisticScreen extends StatelessWidget {
           title: Text("Thống kê"),
         ),
         body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(MySizes.md),
-            child: Column(
-              children: [
-                const ChooseDateWidget(),
-                const SizedBox(
-                  height: MySizes.spaceBtwItems,
-                ),
-                const StatisticWidget(),
-                const SizedBox(
-                  height: MySizes.spaceBtwItems,
-                ),
-                Obx(() {
-                  if (incomeController.errorMessage.isNotEmpty) {
-                    return const Center(
-                      child: Text(
-                        "",
-                        style: TextStyle(color: Colors.red),
-                      ),
-                    );
-                  }
-                  return SizedBox(
-                    height: 400,
-                    width: MediaQuery.of(context).size.width,
-                    child: const RestaurantChart(),
+          child: Column(
+            children: [
+              const ChooseDateWidget(),
+              const SizedBox(
+                height: MySizes.spaceBtwItems,
+              ),
+              const Padding(
+                padding: EdgeInsets.all(MySizes.md),
+                child: StatisticWidget(),
+              ),
+   
+              Obx(() {
+                if (incomeController.errorMessage.isNotEmpty) {
+                  return const Center(
+                    child: Text(
+                      "",
+                      style: TextStyle(color: Colors.red),
+                    ),
                   );
-                })
-              ],
-            ),
+                }
+                return SizedBox(
+                  height: 430,
+                  width: MediaQuery.of(context).size.width,
+                  child: const Padding(
+                    padding: EdgeInsets.all(MySizes.md),
+                    child: RestaurantChart(),
+                  ),
+                );
+              })
+            ],
           ),
         ));
   }

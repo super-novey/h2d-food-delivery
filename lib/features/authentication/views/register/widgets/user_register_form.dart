@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
+import 'package:food_delivery_h2d/utils/validations/validators.dart';
+import 'package:get/get.dart';
 
 class UserRegisterForm extends StatelessWidget {
   const UserRegisterForm({
@@ -18,6 +21,7 @@ class UserRegisterForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authController = Get.put(LoginController());
     return Form(
         child: Column(
       children: [
@@ -45,11 +49,29 @@ class UserRegisterForm extends StatelessWidget {
         const SizedBox(
           height: MySizes.spaceBtwInputFields,
         ),
-        TextFormField(
-          controller: passwordController,
-          decoration: const InputDecoration(
-              labelText: "Mật khẩu", hintText: "Nhập mật khẩu"),
-        ),
+        Obx(
+              () => TextFormField(
+                controller: passwordController,
+                obscureText: !authController.isShowPassword.value,
+                validator: (value) =>
+                    Validators.validateEmptyText("Mật khẩu", value),
+                decoration: InputDecoration(
+                    hintText: "Nhập mật khẩu",
+                    labelText: "Mật khẩu",
+                    suffix: GestureDetector(
+                        onTap: () => authController.togglePasswordVisibility(),
+                        child: Icon(
+                          size: MySizes.iconMs,
+                          (authController.isShowPassword.value)
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                        ))),
+              ),
+            ),
+        // TextFormField(
+        //   controller: passwordController,
+        //   decoration: const InputDecoration(
+        //       labelText: "Mật khẩu", hintText: "Nhập mật khẩu"),
       ],
     ));
   }
