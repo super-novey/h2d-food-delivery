@@ -77,18 +77,22 @@ Future<void> updatePartnerStatus(String userId, bool status) async {
       rethrow;
     }
   }
-  Future<StatisticModel> fetchStatistic(String driverId) async {
-    try {
-      final response = await HttpHelper.get("partner/statistic/$driverId");
-
-      var data = response['data'];
-      print("Driver income data: $data");
-
-      return StatisticModel.fromJson(data);
-    } on Exception catch (e) {
-      print("Error: $e");
-      rethrow;
+ Future<List<StatisticModel>> fetchStatistic(String partnerId, {String? dateFrom, String? dateTo}) async {
+  try {
+    String url = "partner/statistic/$partnerId";
+    if (dateFrom != null && dateTo != null) {
+      url += "?query_dateFrom=$dateFrom&query_dateTo=$dateTo";
     }
-  }
+    print("urrl $url");
+    final response = await HttpHelper.get(url); 
 
+    List<dynamic> data = response['data'] as List<dynamic>; 
+    print("rating partner $data");
+
+    return data.map<StatisticModel>((json) => StatisticModel.fromJson(json)).toList();
+  } on Exception catch (e) {
+    print("error $e");
+    rethrow;
+  }
+}
 }

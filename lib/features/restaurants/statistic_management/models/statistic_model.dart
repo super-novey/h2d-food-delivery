@@ -1,33 +1,53 @@
 class StatisticModel {
-  final String restaurantId;
+  final String orderId;
+  final double custResRating;
+  final String custResRatingComment;
+  final String customerName;
+  final String custShipperRatingComment;
+  final DateTime orderDatetime;
+  final double custShipperRating;
+  final String status;
   final int totalPrice;
-  final int deliveredOrdersCount;
-  final int cancelledOrdersCount;
 
   StatisticModel({
-    required this.restaurantId,
+    required this.orderId,
+    required this.custResRating,
+    required this.custResRatingComment,
+    required this.customerName,
+    required this.custShipperRatingComment,
+    required this.orderDatetime,
+    required this.custShipperRating,
+    required this.status,
     required this.totalPrice,
-    required this.deliveredOrdersCount,
-    required this.cancelledOrdersCount,
   });
 
-  // Factory constructor to create a RestaurantRatingModel from JSON data
+  // Factory constructor để tạo RatingModel từ dữ liệu JSON
   factory StatisticModel.fromJson(Map<String, dynamic> json) {
     return StatisticModel(
-      restaurantId: json['restaurantId'],
-      totalPrice: json['totalPrice'] ?? 0,
-      deliveredOrdersCount: json['deliveredOrdersCount'] ?? 0,
-      cancelledOrdersCount: json['cancelledOrdersCount'] ?? 0,
+      orderId: json['orderId'] ?? '',
+      custResRating: (json['custResRating'] ?? 0).toDouble(),
+      custResRatingComment: json['custResRatingComment'] ?? '',
+      customerName: json['customerName'] ?? 'Unknown',
+      custShipperRatingComment: json['custShipperRatingComment'] ?? '',
+      orderDatetime: DateTime.parse(json['orderDatetime']),
+      custShipperRating: (json['custShipperRating'] ?? 0).toDouble(),
+      status: json['status'] ?? 'unknown', // Gán mặc định cho status
+      totalPrice: json['totalPrice'] ?? 0, // Sửa lại: lấy đúng totalPrice từ JSON
     );
   }
 
-  // Method to convert the RestaurantRatingModel object back to JSON
+  // Phương thức toJson để chuyển object thành JSON
   Map<String, dynamic> toJson() {
     return {
-      'restaurantId': restaurantId,
+      'orderId': orderId,
+      'custResRating': custResRating,
+      'custResRatingComment': custResRatingComment,
+      'customerName': customerName,
+      'custShipperRatingComment': custShipperRatingComment,
+      'orderDatetime': orderDatetime.toIso8601String(),
+      'custShipperRating': custShipperRating,
+      'status': status,
       'totalPrice': totalPrice,
-      'deliveredOrdersCount': deliveredOrdersCount,
-      'cancelledOrdersCount': cancelledOrdersCount,
     };
   }
 }
