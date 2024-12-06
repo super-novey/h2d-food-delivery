@@ -35,11 +35,7 @@ class RestaurantChart extends StatelessWidget {
                 if (controller.isLoading.value) {
                   return const Center(child: CircularProgressIndicator());
                 }
-                if (controller.incomeData.value == null) {
-                  return const Center(
-                    child: Text('Không có dữ liệu thu nhập.'),
-                  );
-                }
+                
                 final completedOrders =
                     controller.totalCompletedOrders.toDouble();
                 final cancelledOrders = controller.totalFailedOrders.toDouble();

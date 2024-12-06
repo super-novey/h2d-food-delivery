@@ -99,7 +99,7 @@ class StatisticWidget extends StatelessWidget {
               Row(
                 children: [
                   const Icon(
-                    Icons.inventory_outlined,
+                    Icons.assignment_outlined,
                     color: MyColors.darkPrimaryTextColor,
                   ),
                   const SizedBox(
