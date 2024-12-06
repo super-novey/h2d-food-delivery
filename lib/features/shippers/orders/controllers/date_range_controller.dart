@@ -6,11 +6,7 @@ class DateRangeController extends GetxController {
   var dateRange =
       DateTimeRange(start: DateTime(DateTime.now().year), end: DateTime.now())
           .obs;
-
-
-  
-
-
+          
   Future<void> showRangeDatePicker() async {
     DateTimeRange? picked = await showDateRangePicker(
         fieldStartLabelText: "Lọc từ ngày",
