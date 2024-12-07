@@ -78,7 +78,7 @@ class OrderController extends GetxController {
       );
 
       orders.assignAll(ordersWithFullAddress);
-
+      orders.sort((a, b) => b.orderDatetime.compareTo(a.orderDatetime));
       print(orders);
     } catch (e) {
       print("Error fetching orders: $e");
