@@ -35,14 +35,10 @@ class DriverChart extends StatelessWidget {
                 if (controller.isLoading.value) {
                   return const Center(child: CircularProgressIndicator());
                 }
-                if (controller.incomeData.value == null) {
-                  return const Center(
-                    child: Text('Không có dữ liệu thu nhập.'),
-                  );
-                }
-                final incomeData = controller.incomeData.value;
-                final completedOrders = incomeData?.deliveredOrdersCount.toDouble() ?? 0;
-                final cancelledOrders = incomeData?.cancelledOrdersCount.toDouble() ?? 0;
+                
+                final completedOrders =
+                    controller.totalCompletedOrders.toDouble();
+                final cancelledOrders = controller.totalFailedOrders.toDouble();
                 final total = completedOrders + cancelledOrders;
 
                 return PieChart(
@@ -56,7 +52,8 @@ class DriverChart extends StatelessWidget {
                         color: Colors.green,
                         radius: controller.touchedIndex.value == 0 ? 105 : 75,
                         titleStyle: TextStyle(
-                          fontSize: controller.touchedIndex.value == 0 ? 16 : 13,
+                          fontSize:
+                              controller.touchedIndex.value == 0 ? 16 : 13,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
@@ -67,7 +64,8 @@ class DriverChart extends StatelessWidget {
                         color: MyColors.primaryColor,
                         radius: controller.touchedIndex.value == 1 ? 105 : 75,
                         titleStyle: TextStyle(
-                          fontSize: controller.touchedIndex.value == 1 ? 16 : 13,
+                          fontSize:
+                              controller.touchedIndex.value == 1 ? 16 : 13,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
@@ -93,9 +91,9 @@ class DriverChart extends StatelessWidget {
               }),
             ),
             Obx(() {
-              final incomeData = controller.incomeData.value;
-              final completedOrders = incomeData?.deliveredOrdersCount.toDouble() ?? 0;
-              final cancelledOrders = incomeData?.cancelledOrdersCount.toDouble() ?? 0;
+              final completedOrders =
+                  controller.totalCompletedOrders.toDouble();
+              final cancelledOrders = controller.totalFailedOrders.toDouble();
 
               return Padding(
                 padding: const EdgeInsets.only(

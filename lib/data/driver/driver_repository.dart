@@ -53,16 +53,24 @@ class DriverRepository extends GetxController {
     }
   }
 
-  Future<IncomeModel> fetchIncomeDriver(String driverId) async {
+  Future<List<IncomeModel>> fetchIncomeDriver(String driverId,
+      {String? dateFrom, String? dateTo}) async {
     try {
-      final response = await HttpHelper.get("driver/statistic/$driverId");
+      String url = "driver/statistic/$driverId";
+      if (dateFrom != null && dateTo != null) {
+        url += "?query_dateFrom=$dateFrom&query_dateTo=$dateTo";
+      }
+      print("urrl $url");
+      final response = await HttpHelper.get(url);
 
-      var data = response['data'];
-      print("Driver income data: $data");
+      List<dynamic> data = response['data'] as List<dynamic>;
+      print("rating partner $data");
 
-      return IncomeModel.fromJson(data);
+      return data
+          .map<IncomeModel>((json) => IncomeModel.fromJson(json))
+          .toList();
     } on Exception catch (e) {
-      print("Error: $e");
+      print("error $e");
       rethrow;
     }
   }
