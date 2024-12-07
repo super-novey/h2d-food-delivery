@@ -83,13 +83,13 @@ class StatisticController extends GetxController {
 
       final dateFrom =
           restaurantDateRangeController.dateRange.value.start.toIso8601String();
-      final dateTo =
-          restaurantDateRangeController.dateRange.value.end.toIso8601String();
+      final dateTo = DateTime(restaurantDateRangeController.dateRange.value.end.year, restaurantDateRangeController.dateRange.value.end.month, restaurantDateRangeController.dateRange.value.end.day, 23, 59, 59)
+        .toIso8601String();
 
       incomeData.value = await _repository.fetchStatistic(
           LoginController.instance.currentUser.partnerId,
-          dateFrom: dateFrom,
-          dateTo: dateTo);
+          dateFrom: "${dateFrom}Z",
+          dateTo: "${dateTo}Z");
           errorMessage.value = '';
     } catch (e) {
       print("errrroror ${e}");
