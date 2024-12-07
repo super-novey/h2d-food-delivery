@@ -40,6 +40,7 @@ class CustomerOrderController extends GetxController {
       );
 
       orders.assignAll(ordersWithFullAddress);
+      orders.sort((a, b) => b.orderDatetime.compareTo(a.orderDatetime));
     } catch (e) {
       print("Error fetching orders: $e");
     } finally {
