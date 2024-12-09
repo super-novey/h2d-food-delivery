@@ -51,7 +51,9 @@ class ConfirmOrderScreen extends StatelessWidget {
               // Restaurant Information
               GestureDetector(
                 onTap: () {
-                  Get.to(() => AddressSelectionScreen());
+                  Get.to(() => AddressSelectionScreen(
+                        isUpdate: false,
+                      ));
                 },
                 child: buildInfoCard(
                   context: context,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/custom_app_bar.dart';
+import 'package:food_delivery_h2d/features/customers/address_selection/views/address_selection/address_selection_screen.dart';
 import 'package:food_delivery_h2d/features/customers/follow_order/controllers/order_status_controller.dart';
 import 'package:food_delivery_h2d/features/customers/order/controllers/order_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/common/controllers/order_controller.dart';
@@ -375,22 +376,50 @@ class _FollowOrderScreenState extends State<FollowOrderScreen> {
                                       ],
                                     ),
                                     const SizedBox(height: 8),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            widget.order.custAddress.toString(),
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14,
+                                    GestureDetector(
+                                      onTap: widget.order.custStatus ==
+                                              "waiting"
+                                          ? () async {
+                                              var updatedAddress = await Get.to(
+                                                () => AddressSelectionScreen(
+                                                  isUpdate: true,
+                                                  orderId: widget.order.id,
+                                                ),
+                                              );
+                                              if (updatedAddress != null) {
+                                                setState(() {
+                                                  widget.order.custAddress =
+                                                      updatedAddress;
+                                                });
+                                              }
+                                            }
+                                          : null, // Disable tap if status is not "waiting"
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              widget.order.custAddress
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                                // Grey out text if not editable
+                                              ),
+                                              maxLines: 3,
+                                              overflow: TextOverflow.ellipsis,
                                             ),
-                                            maxLines: 3,
-                                            overflow: TextOverflow.ellipsis,
                                           ),
-                                        ),
-                                      ],
+                                          if (widget.order.custStatus ==
+                                              "waiting")
+                                            const Icon(
+                                              Icons.arrow_forward_ios,
+                                              size: 20,
+                                              color: Colors.black,
+                                            ),
+                                        ],
+                                      ),
                                     ),
                                     const SizedBox(height: 8),
                                     Text(
