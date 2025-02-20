@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
@@ -26,13 +27,13 @@ class ImagePlaceHolder extends StatelessWidget {
           items: imagePaths.map((path) {
             return Center(
               child: SizedBox(
-                height: 200,
+                height: kIsWeb ? 350 : 200,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(MySizes.borderRadiusMd),
                   child: Image.asset(
                     path,
                     fit: BoxFit.cover,
-                    width: double.infinity,
+                    width: kIsWeb ? 900 : double.infinity,
                   ),
                 ),
               ),
@@ -49,19 +50,20 @@ class ImagePlaceHolder extends StatelessWidget {
             },
           ),
         ),
-        const SizedBox(height: 20),
-        Obx(
-          () => AnimatedSmoothIndicator(
-            activeIndex: controller.currentIndex.value,
-            count: imagePaths.length,
-            effect: const ScrollingDotsEffect(
-              dotHeight: 6,
-              dotWidth: 6,
-              activeDotColor: Colors.yellow,
-              dotColor: Colors.grey,
+        const SizedBox(height: kIsWeb ? 0 : 20),
+        if (!kIsWeb)
+          Obx(
+            () => AnimatedSmoothIndicator(
+              activeIndex: controller.currentIndex.value,
+              count: imagePaths.length,
+              effect: const ScrollingDotsEffect(
+                dotHeight: 6,
+                dotWidth: 6,
+                activeDotColor: Colors.yellow,
+                dotColor: Colors.grey,
+              ),
             ),
           ),
-        ),
       ],
     );
   }
