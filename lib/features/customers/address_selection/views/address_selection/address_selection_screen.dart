@@ -3,11 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/custom_app_bar.dart';
 import 'package:food_delivery_h2d/features/customers/address_selection/controllers/address_selection_controller.dart';
 import 'package:food_delivery_h2d/features/customers/confirm_order/controllers/order_controller.dart';
+import 'package:food_delivery_h2d/features/customers/follow_order/controllers/follow_order_controller.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:get/get.dart';
 
 class AddressSelectionScreen extends StatelessWidget {
-  AddressSelectionScreen({super.key});
+  AddressSelectionScreen({super.key, required this.isUpdate, this.orderId});
+  final bool isUpdate;
+  String? orderId;
 
   final AddressSelectionController _addressController =
       Get.put(AddressSelectionController());
@@ -110,9 +113,18 @@ class AddressSelectionScreen extends StatelessWidget {
                 onPressed: () {
                   // Replace _tabController with your actual navigation logic
                   // _tabController.next();
-                  OrderController.instance.order.custAddress =
-                      AddressSelectionController.instance.fullAddress.value;
-                  Get.back();
+                  print(isUpdate);
+                  if (isUpdate) {
+                    var controller = Get.put(FollowOrderController());
+                    var newAddress =
+                        AddressSelectionController.instance.fullAddress.value;
+                    controller.updateCustAddress(orderId!, newAddress);
+                    Get.back(result: newAddress);
+                  } else {
+                    OrderController.instance.order.custAddress =
+                        AddressSelectionController.instance.fullAddress.value;
+                    Get.back();
+                  }
                 },
                 child: const Text("Xác nhận"),
               ),

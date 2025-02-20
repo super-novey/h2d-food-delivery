@@ -98,6 +98,34 @@ class OrderRepository extends GetxController {
     }
   }
 
+  Future<ApiResponse<Order>> updateCustAddress(
+    String? orderId,
+    String? newAddress,
+  ) async {
+    try {
+      final addressUpdate = {
+        "newAddress": newAddress,
+      };
+
+      print("order/$orderId/address");
+
+      final res = await HttpHelper.put(
+        "order/$orderId/address",
+        addressUpdate,
+      );
+
+      if (res["hasError"] == true) {
+        return ApiResponse.error(res["message"]);
+      }
+
+      final result = Order.fromJson(res["data"]);
+      return ApiResponse.completed(result, res["message"]);
+    } catch (e) {
+      print(e);
+      return ApiResponse.error("An unknown error occurred.");
+    }
+  }
+
   /// Deletes an order by its ID.
   Future<ApiResponse<String>> deleteOrder(String orderId) async {
     try {
