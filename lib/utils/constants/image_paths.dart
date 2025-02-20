@@ -52,4 +52,12 @@ class MyImagePaths {
   static const String background = "assets/icons/background.png";
   static const String square = "assets/icons/square.png";
   static const String itemBg = "assets/icons/bg.png";
+
+  static const String imgWeb1 = "assets/icons/img1_web.png";
+  static const String imgWeb2 = "assets/icons/img2_web.png";
+  static const String imgWeb3 = "assets/icons/img3_web.png";
+
+  static const String iconRocket = "assets/icons/rocket.png";
+  static const String iconSearch = "assets/icons/search.png";
+
 }

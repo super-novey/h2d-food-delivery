@@ -12,6 +12,7 @@ import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
 import 'package:get/get.dart';
+import 'package:like_button/like_button.dart';
 
 class MenuRestaurantDetail extends StatelessWidget {
   final Item item;
@@ -51,14 +52,33 @@ class MenuRestaurantDetail extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        item.itemName,
-                        style: const TextStyle(
-                          color: MyColors.primaryTextColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                        textAlign: TextAlign.left,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            item.itemName,
+                            style: const TextStyle(
+                              color: MyColors.primaryTextColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                          LikeButton(
+                              size: MySizes.iconMd,
+                              animationDuration:
+                                  const Duration(milliseconds: 1000),
+                              likeBuilder: (bool isLiked) {
+                                return Icon(
+                                  isLiked
+                                      ? Icons.favorite
+                                      : Icons.favorite_outline_outlined,
+                                  color: isLiked ? Colors.red : Colors.grey,
+                                  size: MySizes.iconMd,
+                                );
+                              },
+                            )
+                        ],
                       ),
                       const SizedBox(height: MySizes.sm),
                       Text(
