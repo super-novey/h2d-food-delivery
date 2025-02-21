@@ -113,8 +113,6 @@ class MenuRestaurantScreen extends StatelessWidget {
                             return RatingStars(
                               axis: Axis.horizontal,
                               value: restaurantController.value.value,
-                              onValueChanged: (v) {
-                              },
                               starCount: 5,
                               starSize: 12,
                               maxValue: 5,
