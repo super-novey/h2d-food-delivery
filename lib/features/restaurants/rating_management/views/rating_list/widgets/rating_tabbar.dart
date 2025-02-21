@@ -14,7 +14,7 @@ class RatingTabbar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.white,
+      color: MyColors.primaryBackgroundColor,
       child: TabBar(
         labelPadding: const EdgeInsets.only(left: MySizes.spaceBtwItems/2),
         onTap: onTap,
@@ -24,8 +24,7 @@ class RatingTabbar extends StatelessWidget implements PreferredSizeWidget {
         labelColor: Colors.white,
         unselectedLabelColor: Colors.white,
         tabAlignment: TabAlignment.start,
-        dividerColor: MyColors.dividerColor,
-        //dividerColor: Colors.white,
+        dividerColor: MyColors.primaryBackgroundColor,
         padding: const EdgeInsets.only(top: MySizes.xs, bottom: MySizes.md),
         overlayColor: const WidgetStatePropertyAll(Colors.white),
       ),
