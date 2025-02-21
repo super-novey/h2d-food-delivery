@@ -16,7 +16,6 @@ class RatingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ratingController = Get.put(CustomerRatingController());
-
     return Scaffold(
       appBar: const CustomAppBar(
         title: Text("Đánh giá"),
@@ -87,7 +86,7 @@ class RatingView extends StatelessWidget {
                 height: MySizes.sm,
               ),
               SizedBox(
-                height: 250,
+                height: 350,
                 width: MediaQuery.of(context).size.width,
                 child: Card(
                   elevation: 4,
@@ -126,6 +125,43 @@ class RatingView extends StatelessWidget {
                         const SizedBox(
                           height: MySizes.md,
                         ),
+                        Obx(() => Wrap(
+                              spacing: 8.0,
+                              children: ratingController
+                                  .reviewSuggestionsRatingRes
+                                  .map((suggestion) {
+                                final isSelected = ratingController
+                                    .selectedSuggestions
+                                    .contains(suggestion);
+                                return GestureDetector(
+                                  onTap: () {
+                                    ratingController.toggleSuggestion(
+                                        suggestion,
+                                        ratingController.commentRestaurant);
+                                  },
+                                  child: Chip(
+                                    label: Text(suggestion),
+                                    backgroundColor: isSelected
+                                        ? MyColors.darkPrimaryColor
+                                        : MyColors.white,
+                                    labelStyle: TextStyle(
+                                        color: isSelected
+                                            ? Colors.white
+                                            : Colors.black),
+                                    shape: RoundedRectangleBorder(
+                                      side: const BorderSide(
+                                          color: MyColors.darkPrimaryColor,
+                                          width: 0.5), 
+                                      borderRadius:
+                                          BorderRadius.circular(20), 
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            )),
+                        const SizedBox(
+                          height: MySizes.md,
+                        ),
                         TextFormField(
                           controller: ratingController.commentRestaurant,
                           obscureText: false,
@@ -143,7 +179,7 @@ class RatingView extends StatelessWidget {
                 height: MySizes.sm,
               ),
               SizedBox(
-                height: 250,
+                height: 300,
                 width: MediaQuery.of(context).size.width,
                 child: Card(
                   elevation: 4,
@@ -181,6 +217,43 @@ class RatingView extends StatelessWidget {
                         const SizedBox(
                           height: MySizes.md,
                         ),
+                        Obx(() => Wrap(
+                              spacing: 8.0,
+                              children: ratingController
+                                  .reviewSuggestionsRatingDriver
+                                  .map((suggestion) {
+                                final isSelected = ratingController
+                                    .selectedDriverSuggestions
+                                    .contains(suggestion);
+                                return GestureDetector(
+                                  onTap: () {
+                                    ratingController.toggleDriverSuggestion(
+                                        suggestion,
+                                        ratingController.commentDriver);
+                                  },
+                                  child: Chip(
+                                    label: Text(suggestion),
+                                    backgroundColor: isSelected
+                                        ? MyColors.primaryColor
+                                        : MyColors.white,
+                                    labelStyle: TextStyle(
+                                        color: isSelected
+                                            ? Colors.white
+                                            : Colors.black),
+                                            shape: RoundedRectangleBorder(
+                                      side: const BorderSide(
+                                          color: MyColors.darkPrimaryColor,
+                                          width: 0.5), 
+                                      borderRadius:
+                                          BorderRadius.circular(20), 
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            )),
+                        const SizedBox(
+                          height: MySizes.md,
+                        ),
                         TextFormField(
                           controller: ratingController.commentDriver,
                           obscureText: false,
@@ -203,7 +276,9 @@ class RatingView extends StatelessWidget {
                 child: SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {ratingController.rating(order.id);},
+                    onPressed: () {
+                      ratingController.rating(order.id);
+                    },
                     child: const Text("Gửi đánh giá"),
                   ),
                 ),

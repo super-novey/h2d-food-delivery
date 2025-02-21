@@ -18,6 +18,50 @@ class CustomerRatingController extends GetxController {
   final OrderRepository orderRepository = Get.put(OrderRepository());
   final orderController = Get.put(CustomerOrderController());
 
+  final List<String> reviewSuggestionsRatingRes = [
+    "Món ăn ngon, đẹp mắt",
+    "Giao đủ món",
+    "Đóng gói kỹ càng",
+    "Giá cả hợp lý",
+  ];
+
+  final List<String> reviewSuggestionsRatingDriver = [
+    "Giao hàng nhanh",
+    "Thái độ phục vụ tốt",
+  ];
+
+  final RxList<String> selectedSuggestions = <String>[].obs;
+
+  void toggleSuggestion(String suggestion, TextEditingController controller) {
+    if (selectedSuggestions.contains(suggestion)) {
+      selectedSuggestions.remove(suggestion);
+      controller.text = controller.text
+          .replaceAll("$suggestion, ", "")
+          .replaceAll(suggestion, "");
+    } else {
+      selectedSuggestions.add(suggestion);
+      controller.text = controller.text.isEmpty
+          ? suggestion
+          : "${controller.text}, $suggestion";
+    }
+  }
+
+  final RxList<String> selectedDriverSuggestions = <String>[].obs;
+
+  void toggleDriverSuggestion(String suggestion, TextEditingController controller) {
+    if (selectedDriverSuggestions.contains(suggestion)) {
+      selectedDriverSuggestions.remove(suggestion);
+      controller.text = controller.text
+          .replaceAll("$suggestion, ", "")
+          .replaceAll(suggestion, "");
+    } else {
+      selectedDriverSuggestions.add(suggestion);
+      controller.text = controller.text.isEmpty
+          ? suggestion
+          : "${controller.text}, $suggestion";
+    }
+  }
+
   @override
   void onClose() {
     commentRestaurant.dispose();
