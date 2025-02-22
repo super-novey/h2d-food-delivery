@@ -15,7 +15,7 @@ class DriverRatingTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
-        top: MySizes.md,
+        bottom: MySizes.md,
         right: MySizes.sm,
         left: MySizes.sm,
       ),

@@ -166,6 +166,26 @@ class CustomerHomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: MySizes.md, right: MySizes.md, top: MySizes.lg),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "Món yêu thích",
+                          style: Theme.of(context).textTheme.bodyLarge!.apply(
+                                color: MyColors.darkPrimaryTextColor,
+                              ),
+                        ),
+                        
+                      ],
+                    ),
+                    //const ListTopItem(),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

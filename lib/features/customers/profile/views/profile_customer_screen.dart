@@ -110,6 +110,9 @@ class ProfileCustomerScreen extends StatelessWidget {
                       )
                     ],
                   ),
+                  const SizedBox(
+                    height: MySizes.spaceBtwItems,
+                  ),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
