@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/custom_app_bar.dart';
 import 'package:food_delivery_h2d/features/customers/confirm_order/views/confirm_order_screen.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/cart_controller.dart';
+import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/favorite_list_controller.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/rating_item_controller.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/restaurant_controller.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/views/menu_restaurant_list/widgets/detail_cart.dart';
@@ -17,7 +18,8 @@ import 'package:like_button/like_button.dart';
 class MenuRestaurantDetail extends StatelessWidget {
   final Item item;
 
-  const MenuRestaurantDetail({super.key, required this.item});
+   MenuRestaurantDetail({super.key, required this.item});
+    final controller = Get.put(FavoriteListController());
 
   @override
   Widget build(BuildContext context) {
@@ -64,10 +66,12 @@ class MenuRestaurantDetail extends StatelessWidget {
                             ),
                             textAlign: TextAlign.left,
                           ),
-                          LikeButton(
-                              size: MySizes.iconMd,
+                          Obx(() => LikeButton(
+                              size: MySizes.iconMs,
                               animationDuration:
-                                  const Duration(milliseconds: 1000),
+                                  const Duration(milliseconds: 500),
+                              isLiked: controller.favoriteList
+                                  .any((fav) => fav.id == item.itemId),
                               likeBuilder: (bool isLiked) {
                                 return Icon(
                                   isLiked
@@ -77,7 +81,16 @@ class MenuRestaurantDetail extends StatelessWidget {
                                   size: MySizes.iconMd,
                                 );
                               },
-                            )
+                              onTap: (isLiked) async {
+                                if (isLiked) {
+                                  await controller
+                                      .removeFromFavorites(item.itemId);
+                                } else {
+                                  await controller.addToFavorites(item.itemId);
+                                }
+                                return !isLiked;
+                              },
+                            ))
                         ],
                       ),
                       const SizedBox(height: MySizes.sm),

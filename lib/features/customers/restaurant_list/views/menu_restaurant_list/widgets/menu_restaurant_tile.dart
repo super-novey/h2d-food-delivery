@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/cart_controller.dart';
+import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/favorite_list_controller.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/restaurant_controller.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/views/menu_restaurant_detail/menu_restaurant_detail.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/item_model.dart';
@@ -19,6 +20,7 @@ class MenuRestaurantTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final cartController = Get.put(CartController());
     final restaurantController = Get.put(RestaurantController());
+    final controller = Get.put(FavoriteListController());
 
     return InkWell(
       onTap: () {
@@ -71,20 +73,31 @@ class MenuRestaurantTile extends StatelessWidget {
                                   .bodyLarge!
                                   .apply(color: MyColors.primaryTextColor),
                             ),
-                            LikeButton(
+                            Obx(() => LikeButton(
                               size: MySizes.iconMs,
                               animationDuration:
-                                  const Duration(milliseconds: 1000),
+                                  const Duration(milliseconds: 500),
+                              isLiked: controller.favoriteList
+                                  .any((fav) => fav.id == item.itemId),
                               likeBuilder: (bool isLiked) {
                                 return Icon(
                                   isLiked
                                       ? Icons.favorite
                                       : Icons.favorite_outline_outlined,
                                   color: isLiked ? Colors.red : Colors.grey,
-                                  size: MySizes.iconMs,
+                                  size: MySizes.iconMd,
                                 );
                               },
-                            )
+                              onTap: (isLiked) async {
+                                if (isLiked) {
+                                  await controller
+                                      .removeFromFavorites(item.itemId);
+                                } else {
+                                  await controller.addToFavorites(item.itemId);
+                                }
+                                return !isLiked;
+                              },
+                            ))
                           ],
                         ),
                         const SizedBox(

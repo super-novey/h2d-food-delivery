@@ -32,7 +32,7 @@ class MyImagePaths {
   static const String imgBunBo = "assets/icons/bunbo.png";
 
   static const String iconLogo = "assets/icons/logo.png";
-
+static const String heartIcon = "assets/icons/heart.png";
   //Placeholder
 
   //Icons

@@ -6,6 +6,7 @@ import 'package:food_delivery_h2d/features/customers/home/widgets/home_search_ba
 import 'package:food_delivery_h2d/features/customers/home/widgets/image_place_holder.dart';
 import 'package:food_delivery_h2d/features/customers/home/widgets/item_home.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/views/famous_restaurant_list/list_famous_restaurant.dart';
+import 'package:food_delivery_h2d/features/customers/restaurant_list/views/favorite_list/favorite_list.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/views/top_item_list/list_top_item.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/image_paths.dart';
@@ -39,11 +40,7 @@ class CustomerHomeScreen extends StatelessWidget {
                       ),
                     ),
                     Positioned(
-                      top: 90,
-                      left: 0,
-                      right: 0,
-                      child: HomeSearchBar()
-                    ),
+                        top: 90, left: 0, right: 0, child: HomeSearchBar()),
                   ],
                 ),
               ),
@@ -63,67 +60,128 @@ class CustomerHomeScreen extends StatelessWidget {
                       image: MyImagePaths.iconRice,
                       title: "Cơm",
                       onTap: () {
-                        Get.to(const ItemHomeSearchScreen(),
-                        arguments: "Cơm",);
+                        Get.to(
+                          const ItemHomeSearchScreen(),
+                          arguments: "Cơm",
+                        );
                       },
                     ),
                     ItemHome(
                       title: "Bún",
                       image: MyImagePaths.iconVermicelli,
                       onTap: () {
-                        Get.to(const ItemHomeSearchScreen(),
-                        arguments: "Bún",);
+                        Get.to(
+                          const ItemHomeSearchScreen(),
+                          arguments: "Bún",
+                        );
                       },
                     ),
                     ItemHome(
                       image: MyImagePaths.iconPho,
                       title: "Phở",
                       onTap: () {
-                        Get.to(const ItemHomeSearchScreen(),
-                        arguments: "Phở",);
+                        Get.to(
+                          const ItemHomeSearchScreen(),
+                          arguments: "Phở",
+                        );
                       },
                     ),
                     ItemHome(
                       image: MyImagePaths.iconNoodle,
                       title: "Mì",
                       onTap: () {
-                        Get.to(const ItemHomeSearchScreen(),
-                        arguments: "Mì",);
+                        Get.to(
+                          const ItemHomeSearchScreen(),
+                          arguments: "Mì",
+                        );
                       },
                     ),
                     ItemHome(
                       image: MyImagePaths.iconSnack,
                       title: "Ăn vặt",
                       onTap: () {
-                        Get.to(const ItemHomeSearchScreen(),
-                        arguments: "Ăn vặt",);
+                        Get.to(
+                          const ItemHomeSearchScreen(),
+                          arguments: "Ăn vặt",
+                        );
                       },
                     ),
                     ItemHome(
                       image: MyImagePaths.iconCake,
                       title: "Bánh ngọt",
                       onTap: () {
-                        Get.to(const ItemHomeSearchScreen(),
-                        arguments: "Bánh ngọt",);
+                        Get.to(
+                          const ItemHomeSearchScreen(),
+                          arguments: "Bánh ngọt",
+                        );
                       },
                     ),
                     ItemHome(
                       image: MyImagePaths.iconDrink,
                       title: "Trà sữa",
                       onTap: () {
-                        Get.to(const ItemHomeSearchScreen(),
-                        arguments: "Trà sữa",);
+                        Get.to(
+                          const ItemHomeSearchScreen(),
+                          arguments: "Trà sữa",
+                        );
                       },
                     ),
                     ItemHome(
                       image: MyImagePaths.iconJuice,
                       title: "Nước ép",
                       onTap: () {
-                        Get.to(const ItemHomeSearchScreen(),
-                        arguments: "Nước ép",);
+                        Get.to(
+                          const ItemHomeSearchScreen(),
+                          arguments: "Nước ép",
+                        );
                       },
                     ),
                   ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: MySizes.md, right: MySizes.md, top: MySizes.lg),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: InkWell(
+                    onTap: () {
+                      Get.to(const FavoriteList());
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: MyColors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            spreadRadius: 1,
+                            blurRadius: 8,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(MySizes.md),
+                        child: Row(
+                          children: [
+                            Image.asset(MyImagePaths.heartIcon, height: 20, width: 20),
+                            const SizedBox(width: MySizes.xs),
+                            Text(
+                              "Danh sách yêu thích",
+                              style: Theme.of(context).textTheme.bodyLarge!.apply(
+                                    color: MyColors.darkPrimaryTextColor,
+                                  ),
+                            ),
+                            const Spacer(),
+                            const Icon(Icons.arrow_forward_ios_rounded,
+                                color: MyColors.dividerColor,
+                                size: MySizes.iconSm)
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
               Padding(
@@ -139,7 +197,6 @@ class CustomerHomeScreen extends StatelessWidget {
                                 color: MyColors.darkPrimaryTextColor,
                               ),
                         ),
-                        
                       ],
                     ),
                     const ListTopItem(),
@@ -159,33 +216,13 @@ class CustomerHomeScreen extends StatelessWidget {
                                 color: MyColors.darkPrimaryTextColor,
                               ),
                         ),
-                        
                       ],
                     ),
                     const ListFamousRestaurant(),
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: MySizes.md, right: MySizes.md, top: MySizes.lg),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          "Món yêu thích",
-                          style: Theme.of(context).textTheme.bodyLarge!.apply(
-                                color: MyColors.darkPrimaryTextColor,
-                              ),
-                        ),
-                        
-                      ],
-                    ),
-                    //const ListTopItem(),
-                  ],
-                ),
-              ),
+              
             ],
           ),
         ),
