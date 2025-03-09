@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/custom_app_bar.dart';
 import 'package:food_delivery_h2d/features/customers/follow_order/controllers/map_controller.dart';
+import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:get/get.dart';
 
@@ -70,30 +71,30 @@ class MapWidget extends StatelessWidget {
                     urlTemplate:
                         'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                   ),
+                  PolylineLayer(
+                    polylines: [
+                      Polyline(
+                        points: mapController.routePoints.toList(),
+                        strokeWidth: 5.0,
+                        color: MyColors.primaryColor,
+                      ),
+                    ],
+                  ),
                   MarkerLayer(
                     markers: [
                       Marker(
                         point: mapController.shipperLocation.value,
-                        width: 40.0,
-                        height: 40.0,
-                        child: const Icon(Icons.location_on,
-                            color: Colors.red, size: 40),
+                        width: 100.0,
+                        height: 100.0,
+                        child: Image.asset('assets/icons/ic-shipper-marker.png',
+                            width: 100, height: 100),
                       ),
                       Marker(
                         point: mapController.customerLocation.value,
                         width: 40.0,
                         height: 40.0,
-                        child: const Icon(Icons.location_on,
-                            color: Colors.blue, size: 40),
-                      ),
-                    ],
-                  ),
-                  PolylineLayer(
-                    polylines: [
-                      Polyline(
-                        points: mapController.routePoints.toList(),
-                        strokeWidth: 4.0,
-                        color: Colors.blue,
+                        child: Image.asset('assets/icons/ic-home-marker.png',
+                            width: 40, height: 40),
                       ),
                     ],
                   ),
