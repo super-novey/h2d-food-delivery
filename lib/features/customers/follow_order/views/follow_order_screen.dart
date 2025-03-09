@@ -791,9 +791,9 @@ class _FollowOrderScreenState extends State<FollowOrderScreen> {
               ),
       ),
       floatingActionButton: Obx(() {
-        if (currentOrder.value.custStatus != 'waiting') {
-          return const SizedBox();
-        }
+        // if (currentOrder.value.custStatus != 'waiting') {
+        //   return const SizedBox();
+        // }
 
         return Column(
           mainAxisSize: MainAxisSize.min,
@@ -812,33 +812,33 @@ class _FollowOrderScreenState extends State<FollowOrderScreen> {
                 backgroundColor: Colors.teal,
               ),
               const SizedBox(height: 10),
-              FloatingActionButton.extended(
-                onPressed: () {
-                  // Xử lý thanh toán (có thể gọi hàm thanh toán từ controller)
-                  // customerOrderController.processPayment(currentOrder.value.id);
-                  CustomerOrderController.instance
-                      .paymentOrder(currentOrder.value.totalPrice ?? 0);
-                },
-                icon: const Icon(Icons.payment, color: MyColors.white),
-                label: const Text(
-                  'Thanh toán',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              if (currentOrder.value.paymentStatus == 'pending')
+                FloatingActionButton.extended(
+                  onPressed: () {
+                    CustomerOrderController.instance
+                        .paymentOrder(currentOrder.value.totalPrice ?? 0);
+                  },
+                  icon: const Icon(Icons.payment, color: MyColors.white),
+                  label: const Text(
+                    'Thanh toán',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  backgroundColor: Colors.green,
                 ),
-                backgroundColor: Colors.green,
-              ),
               const SizedBox(height: 10),
-              FloatingActionButton.extended(
-                onPressed: () {
-                  customerOrderController.showCancelDialog(
-                      context, currentOrder.value.id);
-                },
-                icon: const Icon(Icons.cancel, color: MyColors.white),
-                label: const Text(
-                  'Hủy đơn',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              if (currentOrder.value.custStatus == 'waiting')
+                FloatingActionButton.extended(
+                  onPressed: () {
+                    customerOrderController.showCancelDialog(
+                        context, currentOrder.value.id);
+                  },
+                  icon: const Icon(Icons.cancel, color: MyColors.white),
+                  label: const Text(
+                    'Hủy đơn',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  backgroundColor: Colors.red,
                 ),
-                backgroundColor: Colors.red,
-              ),
               const SizedBox(height: 10),
             ],
             FloatingActionButton(
