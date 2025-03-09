@@ -80,6 +80,8 @@ class OrderController extends GetxController {
       orderItems: order.orderItems,
       totalPrice: order.totalPrice,
       note: noteController.text,
+      paymentMethod: paymentMethod.value,
+      paymentStatus: 'pending',
     );
 
     ApiResponse<Order> createdOrder =

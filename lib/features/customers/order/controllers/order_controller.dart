@@ -3,6 +3,7 @@ import 'package:food_delivery_h2d/data/response/status.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/address_controller.dart';
 import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
+import 'package:food_delivery_h2d/services/zalopay_service.dart';
 import 'package:food_delivery_h2d/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -87,6 +88,24 @@ class CustomerOrderController extends GetxController {
         );
       },
     );
+  }
+
+  void paymentOrder(int totalPrice) async {
+    try {
+      // print(totalPrice);
+      final response = await ZaloPayService.createOrder(50000);
+      String token = response['zp_trans_token'] ?? "aaa";
+      // print('RESPONSE: $response');
+      print('TOKERN: $token');
+
+      if (token.isNotEmpty) {
+        await ZaloPayService.payWithZaloPay(token);
+      } else {
+        Loaders.errorSnackBar(title: "Lỗi", message: "Không nhận được token!");
+      }
+    } catch (e) {
+      Loaders.errorSnackBar(title: "Lỗi Thanh Toán", message: e.toString());
+    }
   }
 
   void cancelOrder(String orderId, String reason) async {

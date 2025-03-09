@@ -5,15 +5,19 @@ import 'package:food_delivery_h2d/features/authentication/controllers/address_co
 import 'package:food_delivery_h2d/features/authentication/controllers/login_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/delivery/views/delivery_screen.dart';
 import 'package:food_delivery_h2d/sockets/handlers/order_socket_handler.dart';
+import 'package:food_delivery_h2d/utils/helpers/convert_address.dart';
 import 'package:food_delivery_h2d/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
+import 'package:latlong2/latlong.dart';
 
 class OrderController extends GetxController {
   static OrderController get instance => Get.find();
 
   var newOrders = <Order>[].obs; // Observable list of orders
   var orders = <Order>[].obs; // Observable list of orders
+  var filteredOrders = <Order>[].obs;
+
   var isLoading = true.obs;
   OrderRepository orderRepository = Get.put(OrderRepository());
   final addressController = Get.put(AddressController());
@@ -24,6 +28,19 @@ class OrderController extends GetxController {
     super.onInit();
     fetchNewOrders();
     fetchAllOrders();
+  }
+
+  final Distance distance = const Distance();
+
+  void filterOrdersByRadius(LatLng shipperLocation, double radiusInKm) {
+    filteredOrders.assignAll(orders.where((order) {
+      if (order.restLat != null) {
+        double distanceToRestaurant =
+            distance.as(LengthUnit.Kilometer, shipperLocation, order.restLat!);
+        return distanceToRestaurant <= radiusInKm;
+      }
+      return false;
+    }).toList());
   }
 
   Future<void> fetchNewOrders() async {
@@ -42,6 +59,14 @@ class OrderController extends GetxController {
               order.restCommuneId,
               order.restDetailAddress,
             );
+            if (order.restAddress != null) {
+              order.restLat = await ConvertAddress.getCoordinatesFromAddress(
+                  order.restAddress);
+            }
+            order.custLat = await ConvertAddress.getCoordinatesFromAddress(
+                order.custAddress);
+            print(order.restLat);
+            print(order.custLat);
             return order;
           }),
         );

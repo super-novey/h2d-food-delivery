@@ -45,10 +45,10 @@ class DriverRepository extends GetxController {
       final response = await HttpHelper.get("driver/rating/$driverId");
 
       List<dynamic> data = response['data'] as List<dynamic>;
-      print("rating partner $data");
+      // print("rating partner $data");
       return data.map((item) => RatingModel.fromJson(item)).toList();
     } on Exception catch (e) {
-      print("error $e");
+      // print("error $e");
       rethrow;
     }
   }

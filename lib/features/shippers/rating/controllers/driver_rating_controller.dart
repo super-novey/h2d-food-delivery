@@ -23,8 +23,8 @@ class DriverRatingController extends GetxController {
       }
 
       final data = await _repository.fetchDriverRating(id);
-      
-      print("id user$id");
+
+      // print("id user$id");
       ratingList.value = data;
       await calculateAverageRating();
       await countComments();
@@ -60,8 +60,8 @@ class DriverRatingController extends GetxController {
 
   void updateFilter(int newFilter) {
     selectedFilter.value = newFilter;
-    print("Updated selectedFilter: ${selectedFilter.value}"); // Log giá trị mới
-    print(
-        "Filtered ratings count: ${filteredRatings.length}"); // Log số lượng đánh giá đã lọc
+    // print("Updated selectedFilter: ${selectedFilter.value}"); // Log giá trị mới
+    // print(
+    //     "Filtered ratings count: ${filteredRatings.length}"); // Log số lượng đánh giá đã lọc
   }
 }
