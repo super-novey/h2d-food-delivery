@@ -163,4 +163,43 @@ class ItemRepository extends GetxController {
       rethrow;
     }
   }
+
+  Future<List<TopItemModel>> fetchFavoriteList(String userId) async {
+    try {
+      final response = await HttpHelper.get("item/favorite/$userId");
+
+      List<dynamic> data = response['data'] as List<dynamic>;
+      return data.map((item) => TopItemModel.fromJson(item)).toList();
+    } on Exception catch (e) {
+      print("error $e");
+      rethrow;
+    }
+  }
+  
+  Future<void> deleteFavoriteItem(String userId, String itemId) async {
+    try {
+      await HttpHelper.delete("item/favorite/$userId/$itemId");
+    } on Exception catch (_) {
+      rethrow;
+    }
+  }
+  
+Future<void> addFavoriteItem(String userId, String itemId) async {
+  try {
+    print("Sending request to add favorite item...");
+    print("Payload: { userId: $userId, itemId: $itemId }"); // In dữ liệu gửi lên API
+
+    final response = await HttpHelper.post("item/add/favorite", {
+      "userId": userId,
+      "itemId": itemId,
+    });
+
+
+  } catch (e) {
+    print("Error adding favorite item: $e");
+  }
+}
+
+
+  
 }

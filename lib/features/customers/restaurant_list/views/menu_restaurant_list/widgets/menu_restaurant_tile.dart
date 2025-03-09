@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/cart_controller.dart';
+import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/favorite_list_controller.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/restaurant_controller.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/views/menu_restaurant_detail/menu_restaurant_detail.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/item_model.dart';
@@ -8,6 +9,7 @@ import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
 import 'package:get/get.dart';
+import 'package:like_button/like_button.dart';
 
 class MenuRestaurantTile extends StatelessWidget {
   final Item item;
@@ -18,6 +20,7 @@ class MenuRestaurantTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final cartController = Get.put(CartController());
     final restaurantController = Get.put(RestaurantController());
+    final controller = Get.put(FavoriteListController());
 
     return InkWell(
       onTap: () {
@@ -60,12 +63,42 @@ class MenuRestaurantTile extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          item.itemName,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyLarge!
-                              .apply(color: MyColors.primaryTextColor),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              item.itemName,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .apply(color: MyColors.primaryTextColor),
+                            ),
+                            Obx(() => LikeButton(
+                              size: MySizes.iconMs,
+                              animationDuration:
+                                  const Duration(milliseconds: 500),
+                              isLiked: controller.favoriteList
+                                  .any((fav) => fav.id == item.itemId),
+                              likeBuilder: (bool isLiked) {
+                                return Icon(
+                                  isLiked
+                                      ? Icons.favorite
+                                      : Icons.favorite_outline_outlined,
+                                  color: isLiked ? Colors.red : Colors.grey,
+                                  size: MySizes.iconMd,
+                                );
+                              },
+                              onTap: (isLiked) async {
+                                if (isLiked) {
+                                  await controller
+                                      .removeFromFavorites(item.itemId);
+                                } else {
+                                  await controller.addToFavorites(item.itemId);
+                                }
+                                return !isLiked;
+                              },
+                            ))
+                          ],
                         ),
                         const SizedBox(
                           height: MySizes.xs,
@@ -124,6 +157,7 @@ class MenuRestaurantTile extends StatelessWidget {
                               var quantity = cartController
                                       .itemQuantities[item.itemName] ??
                                   0;
+
                               if (item.quantity == 0) {
                                 return Text(
                                   "Đã hết món",
@@ -133,51 +167,78 @@ class MenuRestaurantTile extends StatelessWidget {
                                       .apply(color: MyColors.primaryColor),
                                 );
                               }
-                              if (quantity > 0) {
-                                return Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    IconButton(
-                                      onPressed: () {
-                                        cartController.removeFromCart(item);
-                                      },
-                                      icon: const Icon(
-                                          Icons.remove_circle_outline_rounded,
-                                          color: MyColors.darkPrimaryTextColor),
+
+                              return AnimatedSwitcher(
+                                //animation binh thuong
+                                //duration: const Duration(milliseconds: 500),
+                                //   transitionBuilder: (Widget child,
+                                //       Animation<double> animation) {
+                                //     return ScaleTransition(
+                                //         scale: animation, child: child);
+                                //   },
+
+                                //animation quay 180 do
+                                duration: const Duration(milliseconds: 300),
+                                transitionBuilder: (Widget child,
+                                    Animation<double> animation) {
+                                  return RotationTransition(
+                                    turns: Tween<double>(begin: 0.5, end: 1.0)
+                                        .animate(animation),
+                                    child: ScaleTransition(
+                                      scale: animation,
+                                      child: child,
                                     ),
-                                    Text(quantity.toString()),
-                                    IconButton(
-                                      onPressed: () {
-                                        if (quantity < item.quantity) {
-                                          cartController.addToCart(item);
-                                        }
-                                      },
-                                      icon: const Icon(Icons.add_circle,
-                                          color: MyColors.darkPrimaryTextColor),
-                                    ),
-                                  ],
-                                );
-                              }
-                              if (restaurantController
-                                      .detailPartner.value?.status ==
-                                  false) {
-                                return const Icon(
-                                  Icons.add_box,
-                                  color: MyColors.secondaryTextColor,
-                                );
-                              } else {
-                                return InkWell(
-                                  onTap: () {
-                                    if (quantity < item.quantity) {
-                                      cartController.addToCart(item);
-                                    }
-                                  },
-                                  child: const Icon(
-                                    Icons.add_box,
-                                    color: MyColors.darkPrimaryTextColor,
-                                  ),
-                                );
-                              }
+                                  );
+                                },
+                                child: quantity > 0
+                                    ? Row(
+                                        key: const ValueKey("row"),
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          IconButton(
+                                            onPressed: () {
+                                              cartController
+                                                  .removeFromCart(item);
+                                            },
+                                            icon: const Icon(
+                                                Icons
+                                                    .remove_circle_outline_rounded,
+                                                color: MyColors
+                                                    .darkPrimaryTextColor),
+                                          ),
+                                          Text(quantity.toString()),
+                                          IconButton(
+                                            onPressed: () {
+                                              if (quantity < item.quantity) {
+                                                cartController.addToCart(item);
+                                              }
+                                            },
+                                            icon: const Icon(Icons.add_circle,
+                                                color: MyColors
+                                                    .darkPrimaryTextColor),
+                                          ),
+                                        ],
+                                      )
+                                    : InkWell(
+                                        key: const ValueKey("icon"),
+                                        onTap: () {
+                                          if (quantity < item.quantity) {
+                                            cartController.addToCart(item);
+                                          }
+                                        },
+                                        child: Icon(
+                                          Icons.add_box,
+                                          color: restaurantController
+                                                      .detailPartner
+                                                      .value
+                                                      ?.status ==
+                                                  false
+                                              ? MyColors.secondaryTextColor
+                                              : MyColors.darkPrimaryTextColor,
+                                        ),
+                                      ),
+                              );
                             }),
                           ],
                         ),

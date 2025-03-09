@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/custom_app_bar.dart';
 import 'package:food_delivery_h2d/features/customers/confirm_order/views/confirm_order_screen.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/cart_controller.dart';
+import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/favorite_list_controller.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/rating_item_controller.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/restaurant_controller.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/views/menu_restaurant_list/widgets/detail_cart.dart';
@@ -12,11 +13,13 @@ import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
 import 'package:get/get.dart';
+import 'package:like_button/like_button.dart';
 
 class MenuRestaurantDetail extends StatelessWidget {
   final Item item;
 
-  const MenuRestaurantDetail({super.key, required this.item});
+   MenuRestaurantDetail({super.key, required this.item});
+    final controller = Get.put(FavoriteListController());
 
   @override
   Widget build(BuildContext context) {
@@ -51,14 +54,44 @@ class MenuRestaurantDetail extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        item.itemName,
-                        style: const TextStyle(
-                          color: MyColors.primaryTextColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                        textAlign: TextAlign.left,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            item.itemName,
+                            style: const TextStyle(
+                              color: MyColors.primaryTextColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                          Obx(() => LikeButton(
+                              size: MySizes.iconMs,
+                              animationDuration:
+                                  const Duration(milliseconds: 500),
+                              isLiked: controller.favoriteList
+                                  .any((fav) => fav.id == item.itemId),
+                              likeBuilder: (bool isLiked) {
+                                return Icon(
+                                  isLiked
+                                      ? Icons.favorite
+                                      : Icons.favorite_outline_outlined,
+                                  color: isLiked ? Colors.red : Colors.grey,
+                                  size: MySizes.iconMd,
+                                );
+                              },
+                              onTap: (isLiked) async {
+                                if (isLiked) {
+                                  await controller
+                                      .removeFromFavorites(item.itemId);
+                                } else {
+                                  await controller.addToFavorites(item.itemId);
+                                }
+                                return !isLiked;
+                              },
+                            ))
+                        ],
                       ),
                       const SizedBox(height: MySizes.sm),
                       Text(

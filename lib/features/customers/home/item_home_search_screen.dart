@@ -15,8 +15,9 @@ class ItemHomeSearchScreen extends StatelessWidget {
     homeController.fetchItemSearch(title);
 
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar: CustomAppBar(
         showBackArrow: true,
+        title: Text(title),
       ),
       body: Obx(() {
         if (homeController.isLoading.value) {

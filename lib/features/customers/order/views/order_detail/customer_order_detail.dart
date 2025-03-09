@@ -26,7 +26,7 @@ class CustomerOrderDetail extends StatelessWidget {
           padding: const EdgeInsets.only(
               left: MySizes.md,
               right: MySizes.md,
-              top: MySizes.lg,
+              top: MySizes.md,
               bottom: MySizes.lg),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
