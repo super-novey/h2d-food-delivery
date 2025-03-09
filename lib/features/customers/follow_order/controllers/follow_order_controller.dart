@@ -15,6 +15,7 @@ class FollowOrderController extends GetxController {
 
   var isLoading = true.obs;
   var isButtonClicked = false.obs; // Observable for loading state
+  var isExpanded = false.obs; // Observable for loading state
 
   @override
   void onInit() {

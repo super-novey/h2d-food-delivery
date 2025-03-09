@@ -1,4 +1,5 @@
 import 'package:food_delivery_h2d/features/shippers/home/models/order_item_model.dart';
+import 'package:latlong2/latlong.dart';
 
 class Order {
   String id;
@@ -18,7 +19,9 @@ class Order {
   String? restStatus;
   List<OrderItem> orderItems;
   String? restAddress;
+  LatLng? restLat;
   String? custAddress;
+  LatLng? custLat;
   String custPhone;
   int? totalPrice;
   String? driverName;
@@ -30,38 +33,44 @@ class Order {
   String? restCommuneId;
   String? custResRatingComment;
   String? custShipperRatingComment;
+  String? paymentMethod;
+  String? paymentStatus;
 
-  Order(
-      {this.id = '',
-      required this.customerName,
-      required this.restaurantName,
-      this.restaurantId,
-      this.restDetailAddress,
-      required this.custPhone,
-      this.assignedShipperId,
-      this.custShipperRating,
-      required this.deliveryFee,
-      this.totalPrice,
-      DateTime? orderDatetime,
-      this.note = '',
-      this.custResRating,
-      this.reason = '',
-      required this.custStatus,
-      this.driverStatus,
-      this.restStatus,
-      this.orderItems = const [],
-      this.restAddress,
-      this.custAddress, // Initialize custAddress
-      this.restProvinceId, // Initialize restProvinceId
-      this.restDistrictId, // Initialize restDistrictId
-      this.restCommuneId, // Initialize restCommuneId
-      this.driverName,
-      this.driverPhone,
-      this.driverLicensePlate,
-      this.driverProfileUrl,
-      this.custResRatingComment,
-      this.custShipperRatingComment,})
-      : orderDatetime = orderDatetime ?? DateTime.now();
+  Order({
+    this.id = '',
+    required this.customerName,
+    required this.restaurantName,
+    this.restaurantId,
+    this.restDetailAddress,
+    required this.custPhone,
+    this.assignedShipperId,
+    this.custShipperRating,
+    required this.deliveryFee,
+    this.totalPrice,
+    DateTime? orderDatetime,
+    this.note = '',
+    this.custResRating,
+    this.reason = '',
+    required this.custStatus,
+    this.driverStatus,
+    this.restStatus,
+    this.orderItems = const [],
+    this.restAddress,
+    this.restLat,
+    this.custAddress,
+    this.custLat,
+    this.restProvinceId,
+    this.restDistrictId,
+    this.restCommuneId,
+    this.driverName,
+    this.driverPhone,
+    this.driverLicensePlate,
+    this.driverProfileUrl,
+    this.custResRatingComment,
+    this.custShipperRatingComment,
+    this.paymentMethod,
+    this.paymentStatus,
+  }) : orderDatetime = orderDatetime ?? DateTime.now();
 
   // Convert an Order object to a JSON map
   Map<String, dynamic> toJson() {
@@ -92,6 +101,8 @@ class Order {
       'driverProfileUrl': driverProfileUrl,
       'custShipperRatingComment': custShipperRatingComment,
       'custResRatingComment': custResRatingComment,
+      'paymentMethod': paymentMethod,
+      'paymentStatus': paymentStatus,
     };
   }
 
@@ -132,7 +143,9 @@ class Order {
       driverLicensePlate: json['driverLicensePlate'],
       driverProfileUrl: json['driverProfileUrl'],
       custResRatingComment: json['custResRatingComment'],
-      custShipperRatingComment: json['custShipperRatingComment']
+      custShipperRatingComment: json['custShipperRatingComment'],
+      paymentMethod: json['paymentMethod'] ?? 'Cash',
+      paymentStatus: json['paymentStatus'] ?? 'pending',
     );
   }
 
@@ -165,6 +178,8 @@ class Order {
         'driverProfileUrl: $driverProfileUrl, '
         'custShipperRatingComment: $custShipperRatingComment, '
         'custResRatingComment: $custResRatingComment, '
+        'paymentMethod: $paymentMethod, '
+        'paymentStatus: $paymentStatus, '
         ')';
   }
 

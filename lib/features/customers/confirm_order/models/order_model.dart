@@ -10,6 +10,8 @@ class OrderModel {
   String note;
   List<OrderItem> orderItems;
   int totalPrice;
+  String paymentMethod;
+  String paymentStatus;
 
   OrderModel({
     this.id = '',
@@ -21,6 +23,8 @@ class OrderModel {
     this.note = '',
     required this.orderItems,
     this.totalPrice = 0,
+    this.paymentMethod = 'Cash',
+    this.paymentStatus = 'pending',
   }) : orderDatetime = orderDatetime ?? DateTime.now();
 
   // Convert an Order object to a JSON map
@@ -34,7 +38,9 @@ class OrderModel {
       'orderDatetime': orderDatetime.toIso8601String(),
       'note': note,
       'orderItems': orderItems.map((item) => item.toJson()).toList(),
-      'totalPrice': totalPrice
+      'totalPrice': totalPrice,
+      'paymentMethod': paymentMethod,
+      'paymentStatus': paymentStatus,
     };
   }
 
@@ -52,6 +58,8 @@ class OrderModel {
           .toList(),
       custAddress: '',
       totalPrice: json['totalPrice'],
+      paymentMethod: json['paymentMethod'] ?? 'Cash',
+      paymentStatus: json['paymentStatus'] ?? 'pending',
     );
   }
 
@@ -66,6 +74,8 @@ class OrderModel {
         'note: $note, '
         'orderItems: $orderItems'
         'totalPrice: $totalPrice'
+        ', paymentMethod: $paymentMethod, '
+        'paymentStatus: $paymentStatus'
         ')';
   }
 }

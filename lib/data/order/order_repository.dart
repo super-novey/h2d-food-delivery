@@ -98,6 +98,24 @@ class OrderRepository extends GetxController {
     }
   }
 
+  Future<ApiResponse<Order>> updatePaymentStatus(String orderId) async {
+    try {
+      final updateData = {"paymentStatus": "Paid"};
+      final res = await HttpHelper.patch("order/$orderId/payment", updateData);
+
+      if (res["hasError"] == true) {
+        return ApiResponse.error(res["message"]);
+      }
+
+      final updatedOrder = Order.fromJson(res["data"]);
+      return ApiResponse.completed(
+          updatedOrder, "Payment status updated successfully.");
+    } catch (e) {
+      print("Error updating payment status: $e");
+      return ApiResponse.error("An unknown error occurred.");
+    }
+  }
+
   Future<ApiResponse<Order>> updateCustAddress(
     String? orderId,
     String? newAddress,

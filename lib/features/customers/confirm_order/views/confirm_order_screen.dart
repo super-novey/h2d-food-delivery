@@ -307,28 +307,55 @@ class ConfirmOrderScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Obx(() {
-                    return Row(
+                    return Column(
                       children: [
-                        Expanded(
-                          child: RadioListTile<String>(
-                            title: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text('Thanh toán khi nhận hàng'),
-                                Image.asset('assets/icons/ic_cash.png',
-                                    width: 32, height: 32),
-                              ],
+                        Row(
+                          children: [
+                            Expanded(
+                              child: RadioListTile<String>(
+                                title: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text('Thanh toán khi nhận hàng'),
+                                    Image.asset('assets/icons/ic_cash.png',
+                                        width: 32, height: 32),
+                                  ],
+                                ),
+                                value: 'Cash',
+                                groupValue: orderController.paymentMethod.value,
+                                onChanged: (value) {
+                                  orderController.paymentMethod.value = value!;
+                                },
+                              ),
                             ),
-                            value: 'Cash',
-                            groupValue: orderController.paymentMethod.value,
-                            onChanged: (value) {
-                              orderController.paymentMethod.value = value!;
-                            },
-                          ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: RadioListTile<String>(
+                                title: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text('Thanh toán qua ZaloPay'),
+                                    Image.asset('assets/icons/ic_zalopay.png',
+                                        width: 60, height: 70),
+                                  ],
+                                ),
+                                value: 'ZaloPay',
+                                groupValue: orderController.paymentMethod.value,
+                                onChanged: (value) {
+                                  orderController.paymentMethod.value = value!;
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     );
-                  }),
+                  })
                 ],
               ),
             ],

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/custom_app_bar.dart';
 import 'package:food_delivery_h2d/features/customers/address_selection/views/address_selection/address_selection_screen.dart';
+import 'package:food_delivery_h2d/features/customers/follow_order/controllers/follow_order_controller.dart';
 import 'package:food_delivery_h2d/features/customers/follow_order/controllers/order_status_controller.dart';
+import 'package:food_delivery_h2d/features/customers/follow_order/views/widgets/map.dart';
 import 'package:food_delivery_h2d/features/customers/order/controllers/order_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/common/controllers/order_controller.dart';
 import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';
@@ -34,6 +36,7 @@ class _FollowOrderScreenState extends State<FollowOrderScreen> {
     final orderStatusController = Get.put(OrderStatusController());
     final customerOrderController = Get.put(CustomerOrderController());
     final ratingControler = Get.put(DriverRatingController());
+    final followOrderController = Get.put(FollowOrderController());
 
     var currentOrder = widget.order.obs;
 
@@ -275,6 +278,10 @@ class _FollowOrderScreenState extends State<FollowOrderScreen> {
                                                   size: 18,
                                                 ),
                                                 Obx(() {
+                                                  // print(
+                                                  //     'DRIVER ID: ${currentOrder.value.assignedShipperId.toString()}');
+                                                  // print(
+                                                  //     'CURRENT ORDER: ${currentOrder.value}');
                                                   ratingControler.fetchRating(
                                                       currentOrder.value
                                                           .assignedShipperId
@@ -634,6 +641,21 @@ class _FollowOrderScreenState extends State<FollowOrderScreen> {
                                           ),
                                         ],
                                       ),
+                                      Obx(() => currentOrder
+                                                  .value.paymentStatus ==
+                                              "paid"
+                                          ? Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                Image.asset(
+                                                  'assets/icons/ic_paid.png',
+                                                  width: 80,
+                                                  height: 80,
+                                                ),
+                                              ],
+                                            )
+                                          : const SizedBox()), // Không hiển thị gì nếu chưa thanh toán
                                     ],
                                   ),
                                   Container(
@@ -768,28 +790,75 @@ class _FollowOrderScreenState extends State<FollowOrderScreen> {
                 ],
               ),
       ),
-      floatingActionButton: Obx(
-        () {
-          if (currentOrder.value.custStatus == 'waiting') {
-            return FloatingActionButton.extended(
-              onPressed: () {
-                customerOrderController.showCancelDialog(
-                    context, currentOrder.value.id);
-              },
-              label: const Text(
-                'Hủy đơn',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: MyColors.white,
-                  fontWeight: FontWeight.bold,
+      floatingActionButton: Obx(() {
+        // if (currentOrder.value.custStatus != 'waiting') {
+        //   return const SizedBox();
+        // }
+
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            if (followOrderController.isExpanded.value) ...[
+              FloatingActionButton.extended(
+                onPressed: () {
+                  Get.to(MapWidget());
+                },
+                icon: const Icon(Icons.map, color: MyColors.white),
+                label: const Text(
+                  'Theo dõi đơn',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
+                backgroundColor: Colors.teal,
               ),
+              const SizedBox(height: 10),
+              if (currentOrder.value.paymentStatus == 'pending')
+                FloatingActionButton.extended(
+                  onPressed: () {
+                    CustomerOrderController.instance
+                        .paymentOrder(currentOrder.value.totalPrice ?? 0);
+                  },
+                  icon: const Icon(Icons.payment, color: MyColors.white),
+                  label: const Text(
+                    'Thanh toán',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  backgroundColor: Colors.green,
+                ),
+              const SizedBox(height: 10),
+              if (currentOrder.value.custStatus == 'waiting')
+                FloatingActionButton.extended(
+                  onPressed: () {
+                    customerOrderController.showCancelDialog(
+                        context, currentOrder.value.id);
+                  },
+                  icon: const Icon(Icons.cancel, color: MyColors.white),
+                  label: const Text(
+                    'Hủy đơn',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  backgroundColor: Colors.red,
+                ),
+              const SizedBox(height: 10),
+            ],
+            FloatingActionButton(
+              onPressed: () {
+                setState(() {
+                  followOrderController.isExpanded.value =
+                      !followOrderController.isExpanded.value;
+                });
+              },
+              child: Icon(followOrderController.isExpanded.value
+                  ? Icons.close
+                  : Icons.menu),
               backgroundColor: MyColors.primaryColor,
-            );
-          }
-          return const SizedBox();
-        },
-      ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+            ),
+          ],
+        );
+      }),
     );
   }
 

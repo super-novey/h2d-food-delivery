@@ -24,11 +24,23 @@ class MapWidget extends StatelessWidget {
                     .value, // Use center instead of initialCenter
                 initialZoom: 13.0,
                 minZoom: 5.0,
-                maxZoom: 18.0,
+                maxZoom: 20.0,
               ),
               children: [
                 TileLayer(
                   urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                ),
+                CircleLayer(
+                  circles: [
+                    CircleMarker(
+                      point: mapController.currentPosition.value,
+                      radius: 2000, // 3km
+                      useRadiusInMeter: true,
+                      color: Colors.blue.withOpacity(0.3), // Vùng màu xanh nhạt
+                      borderColor: Colors.blue, // Viền màu xanh đậm
+                      borderStrokeWidth: 2,
+                    ),
+                  ],
                 ),
                 MarkerLayer(
                   markers: [
