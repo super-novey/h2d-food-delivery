@@ -1,4 +1,4 @@
 class BaseUrlSocket {
-  static const String baseUrl = "https://f0d9-14-186-79-232.ngrok-free.app";
+  static const String baseUrl = "https://83ba-115-75-223-184.ngrok-free.app";
   // "http://localhost:8081";
 }

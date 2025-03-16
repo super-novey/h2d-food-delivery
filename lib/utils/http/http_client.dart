@@ -7,7 +7,7 @@ class HttpHelper {
       //
 
       //    "http://localhost:8081/api/v1"; // change URL
-      "https://f0d9-14-186-79-232.ngrok-free.app/api/v1";
+      "https://83ba-115-75-223-184.ngrok-free.app/api/v1";
 
   HttpHelper();
 
