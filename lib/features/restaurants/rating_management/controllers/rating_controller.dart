@@ -23,8 +23,9 @@ class RatingController extends GetxController {
       }
 
       final data = await _repository.fetchPartnerRating(id);
-      
+
       print("id user$id");
+      data.sort((a, b) => b.orderDatetime.compareTo(a.orderDatetime));
       ratingList.value = data;
       await calculateAverageRating();
       await countComments();
@@ -63,5 +64,40 @@ class RatingController extends GetxController {
     print("Updated selectedFilter: ${selectedFilter.value}"); // Log giá trị mới
     print(
         "Filtered ratings count: ${filteredRatings.length}"); // Log số lượng đánh giá đã lọc
+  }
+
+  double get oneStarPercent {
+    if (ratingList.isEmpty) return 0.0;
+    int oneStarCount =
+        ratingList.where((rating) => rating.custResRating == 1).length;
+    return oneStarCount / ratingList.length;
+  }
+
+  double get twoStarPercent {
+    if (ratingList.isEmpty) return 0.0;
+    int twoStarCount =
+        ratingList.where((rating) => rating.custResRating == 2).length;
+    return twoStarCount / ratingList.length;
+  }
+
+  double get threeStarPercent {
+    if (ratingList.isEmpty) return 0.0;
+    int threeStarCount =
+        ratingList.where((rating) => rating.custResRating == 3).length;
+    return threeStarCount / ratingList.length;
+  }
+
+  double get fourStarPercent {
+    if (ratingList.isEmpty) return 0.0;
+    int fourStarCount =
+        ratingList.where((rating) => rating.custResRating == 4).length;
+    return fourStarCount / ratingList.length;
+  }
+
+  double get fiveStarPercent {
+    if (ratingList.isEmpty) return 0.0;
+    int fiveStarCount =
+        ratingList.where((rating) => rating.custResRating == 5).length;
+    return fiveStarCount / ratingList.length;
   }
 }

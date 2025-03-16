@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_h2d/features/restaurants/rating_management/controllers/rating_controller.dart';
+import 'package:food_delivery_h2d/features/shippers/rating/controllers/driver_rating_controller.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:food_delivery_h2d/utils/devices/devices_utils.dart';
 import 'package:get/get.dart';
 
-class RatingTabbar extends StatelessWidget implements PreferredSizeWidget {
-  const RatingTabbar({super.key, this.onTap, required this.tabs});
+class DriverRatingTabbar extends StatelessWidget implements PreferredSizeWidget {
+  const DriverRatingTabbar({super.key, this.onTap, required this.tabs});
 
   final ValueChanged<int>? onTap;
   final List<Widget> tabs;
@@ -35,8 +35,8 @@ class RatingTabbar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => Size.fromHeight(MyDeviceUtils.getAppBarHeight() * 3);
 }
 
-class MyTab extends StatelessWidget {
-  const MyTab({super.key, required this.value, required this.label, this.icon});
+class DriverTabbar extends StatelessWidget {
+  const DriverTabbar({super.key, required this.value, required this.label, this.icon});
 
   final int value;
   final String label;
@@ -46,7 +46,7 @@ class MyTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Tab(
       child: Obx(() {
-        final isSelected = RatingController.instance.selectedFilter.value == value;
+        final isSelected = DriverRatingController.instance.selectedFilter.value == value;
         return Container(
           width: 80,
           decoration: BoxDecoration(

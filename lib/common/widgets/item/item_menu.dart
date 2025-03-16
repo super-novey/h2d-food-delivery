@@ -23,8 +23,17 @@ class ItemMenu extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: MyColors.darkPrimaryTextColor, width: 1.5),
-          borderRadius: BorderRadius.circular(MySizes.borderRadiusLg),
+          color: MyColors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1), 
+              spreadRadius: 1,
+              blurRadius: 8, 
+              offset:
+                  const Offset(0, 2), 
+            ),
+          ],
+          borderRadius: BorderRadius.circular(12),
         ),
         child: Center(
           child: MyVerticalImageText(

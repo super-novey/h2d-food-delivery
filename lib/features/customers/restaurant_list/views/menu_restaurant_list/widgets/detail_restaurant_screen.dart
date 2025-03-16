@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/custom_app_bar.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/detail_restaurant_controller.dart';
+import 'package:food_delivery_h2d/features/customers/restaurant_list/controllers/restaurant_controller.dart';
 import 'package:food_delivery_h2d/features/customers/restaurant_list/models/detail_partner_model.dart';
+import 'package:food_delivery_h2d/features/customers/restaurant_list/views/menu_restaurant_list/widgets/menu_restaurant_rating.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:get/get.dart';
@@ -15,6 +17,7 @@ class DetailRestaurantScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(DetailRestaurantController());
+    final restaurantController = Get.put(RestaurantController());
     controller.fetchDetailPartner(userId);
     final partner = Get.arguments as DetailPartnerModel?;
     return Scaffold(
@@ -40,61 +43,67 @@ class DetailRestaurantScreen extends StatelessWidget {
                   textAlign: TextAlign.left,
                 ),
                 const SizedBox(height: MySizes.sm),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    RatingStars(
-                      axis: Axis.horizontal,
-                      value: 5,
-                      onValueChanged: (v) {},
-                      starCount: 5,
-                      starSize: 12,
-                      maxValue: 5,
-                      starSpacing: 2,
-                      maxValueVisibility: true,
-                      valueLabelVisibility: false,
-                      valueLabelPadding: const EdgeInsets.symmetric(
-                          vertical: 1, horizontal: 8),
-                      valueLabelMargin: const EdgeInsets.only(right: 8),
-                      starOffColor: MyColors.starOffColor,
-                      starColor: MyColors.starColor,
-                      angle: 12,
-                    ),
-                    const SizedBox(width: MySizes.xs),
-                    Padding(
-                      padding: const EdgeInsets.only(top: MySizes.xs / 2),
-                      child: Text(
-                        "5",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .apply(color: MyColors.primaryTextColor),
+                InkWell(
+                  onTap: () {
+                    Get.to(MenuRestaurantRating(
+                          userId: userId,
+                        ));
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      RatingStars(
+                        axis: Axis.horizontal,
+                        value: restaurantController.value.value,
+                        starCount: 5,
+                        starSize: 12,
+                        maxValue: 5,
+                        starSpacing: 2,
+                        maxValueVisibility: true,
+                        valueLabelVisibility: false,
+                        valueLabelPadding: const EdgeInsets.symmetric(
+                            vertical: 1, horizontal: 8),
+                        valueLabelMargin: const EdgeInsets.only(right: 8),
+                        starOffColor: MyColors.starOffColor,
+                        starColor: MyColors.starColor,
+                        angle: 12,
                       ),
-                    ),
-                    const SizedBox(width: MySizes.sm),
-                    Container(
-                      color: MyColors.dividerColor,
-                      width: 0.8,
-                      height: 15,
-                    ),
-                    const SizedBox(width: MySizes.sm),
-                    Padding(
-                      padding: const EdgeInsets.only(top: MySizes.xs / 2),
-                      child: Text(
-                        "(999+ bình luận)",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .apply(color: MyColors.primaryTextColor),
+                      const SizedBox(width: MySizes.xs),
+                      Padding(
+                        padding: const EdgeInsets.only(top: MySizes.xs / 2),
+                        child: Text(
+                          restaurantController.value.value.toString(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .apply(color: MyColors.primaryTextColor),
+                        ),
                       ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: MySizes.xs),
-                      child:
-                          Icon(Icons.arrow_forward_ios, size: MySizes.iconXs),
-                    ),
-                  ],
+                      const SizedBox(width: MySizes.sm),
+                      Container(
+                        color: MyColors.dividerColor,
+                        width: 0.8,
+                        height: 15,
+                      ),
+                      const SizedBox(width: MySizes.sm),
+                      Padding(
+                        padding: const EdgeInsets.only(top: MySizes.xs / 2),
+                        child: Text(
+                          "${restaurantController.ratingList.length} đánh giá",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .apply(color: MyColors.primaryTextColor),
+                        ),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.only(top: MySizes.xs),
+                        child:
+                            Icon(Icons.arrow_forward_ios, size: MySizes.iconXs),
+                      ),
+                    ],
+                  ),
                 ),
                 const Padding(
                   padding: EdgeInsets.only(

@@ -24,7 +24,11 @@ class DriverRatingController extends GetxController {
 
       final data = await _repository.fetchDriverRating(id);
 
-      // print("id user$id");
+
+      print("id user$id");
+      data.sort((a, b) => b.orderDatetime.compareTo(a.orderDatetime));
+
+
       ratingList.value = data;
       await calculateAverageRating();
       await countComments();
@@ -63,5 +67,32 @@ class DriverRatingController extends GetxController {
     // print("Updated selectedFilter: ${selectedFilter.value}"); // Log giá trị mới
     // print(
     //     "Filtered ratings count: ${filteredRatings.length}"); // Log số lượng đánh giá đã lọc
+  }
+
+  double get oneStarPercent {
+    if (ratingList.isEmpty) return 0.0;
+    int oneStarCount = ratingList.where((rating) => rating.custShipperRating == 1).length;
+    return oneStarCount / ratingList.length;
+  }
+
+  double get twoStarPercent {
+    if (ratingList.isEmpty) return 0.0;
+    int twoStarCount = ratingList.where((rating) => rating.custShipperRating == 2).length;
+    return twoStarCount / ratingList.length;
+  }
+  double get threeStarPercent {
+    if (ratingList.isEmpty) return 0.0;
+    int threeStarCount = ratingList.where((rating) => rating.custShipperRating == 3).length;
+    return threeStarCount / ratingList.length;
+  }
+  double get fourStarPercent {
+    if (ratingList.isEmpty) return 0.0;
+    int fourStarCount = ratingList.where((rating) => rating.custShipperRating == 4).length;
+    return fourStarCount / ratingList.length;
+  }
+  double get fiveStarPercent {
+    if (ratingList.isEmpty) return 0.0;
+    int fiveStarCount = ratingList.where((rating) => rating.custShipperRating == 5).length;
+    return fiveStarCount / ratingList.length;
   }
 }
