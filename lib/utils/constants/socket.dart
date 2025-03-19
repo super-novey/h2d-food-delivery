@@ -1,7 +1,5 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 class BaseUrlSocket {
-
-
-  static const String baseUrl =
-      // "https://06af-42-113-23-79.ngrok-free.app";
-      "http://localhost:8081";
+  static String baseUrl = dotenv.env['SOCKET_URL'] ?? "http://localhost:8081";
 }

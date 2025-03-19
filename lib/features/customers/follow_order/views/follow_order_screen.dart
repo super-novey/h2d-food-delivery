@@ -278,10 +278,10 @@ class _FollowOrderScreenState extends State<FollowOrderScreen> {
                                                   size: 18,
                                                 ),
                                                 Obx(() {
-                                                  // print(
-                                                  //     'DRIVER ID: ${currentOrder.value.assignedShipperId.toString()}');
-                                                  // print(
-                                                  //     'CURRENT ORDER: ${currentOrder.value}');
+                                                  print(
+                                                      'DRIVER ID: ${currentOrder.value.assignedShipperId.toString()}');
+                                                  print(
+                                                      'CURRENT ORDER: ${currentOrder.value}');
                                                   ratingControler.fetchRating(
                                                       currentOrder.value
                                                           .assignedShipperId

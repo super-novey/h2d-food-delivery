@@ -1,14 +1,10 @@
 import 'dart:convert';
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class HttpHelper {
-  static const String _baseUrl =
-
-      "http://localhost:8081/api/v1"; // change URL
-
-  //  "https://0048-2402-800-634f-456e-284c-499f-40e2-efac.ngrok-free.app/api/v1";
-
+  static final String _baseUrl =
+      dotenv.env['BASE_URL'] ?? "http://localhost:8081/api/v1"; // change URL
 
   static Future<Map<String, dynamic>> get(String endpoint) async {
     final response = await http.get(Uri.parse('$_baseUrl/$endpoint'));
