@@ -5,6 +5,7 @@ import 'package:food_delivery_h2d/features/customers/restaurant_list/models/top_
 import 'package:food_delivery_h2d/features/customers/restaurant_list/views/menu_restaurant_list/menu_restaurant_screen.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
+import 'package:food_delivery_h2d/utils/formatter/formatter.dart';
 import 'package:get/get.dart';
 import 'package:like_button/like_button.dart';
 
@@ -21,22 +22,27 @@ class FavoriteTile extends StatelessWidget {
       },
       child: Padding(
         padding: const EdgeInsets.only(top: MySizes.sm),
-        child: Card(
-          elevation: 2,
-          shadowColor: MyColors.darkPrimaryColor,
-          child: Padding(
-            padding: const EdgeInsets.only(top: MySizes.md),
-            child: Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+        child: SizedBox(
+          height: 110,
+          child: Card(
+            elevation: 2,
+            shadowColor: MyColors.darkPrimaryColor,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  top: MySizes.md,
+                  right: MySizes.md,
+                  left: MySizes.md,
+                  bottom: MySizes.md),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ClipRRect(
                       borderRadius:
                           BorderRadius.circular(MySizes.borderRadiusMd),
                       child: CachedNetworkImage(
                         imageUrl: item.itemImage,
-                        width: 80,
-                        height: 80,
+                        width: 70,
+                        height: 70,
                         fit: BoxFit.cover,
                         placeholder: (context, url) =>
                             const Center(child: CircularProgressIndicator()),
@@ -44,70 +50,73 @@ class FavoriteTile extends StatelessWidget {
                             const Icon(Icons.error),
                       )),
                   const SizedBox(
-                    height: MySizes.sm,
+                    width: MySizes.md,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: MySizes.sm, bottom: MySizes.sm, left: MySizes.md, right: MySizes.md),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-crossAxisAlignment: CrossAxisAlignment.start,                          children: [
-                            SizedBox(
-                              width: 100,
-                              child: Text(
-                                item.itemName,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge!
-                                    .apply(color: MyColors.darkPrimaryTextColor),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: MySizes.xs,
-                            ),
-                            SizedBox(
-                              width: 80,
-                              child: Text(
-                                item.description,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelSmall!
-                                    .apply(color: MyColors.darkPrimaryTextColor),
-                              ),
-                            ),
-                          ],
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: 190,
+                        child: Text(
+                          item.itemName,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge!
+                              .apply(color: MyColors.darkPrimaryTextColor),
                         ),
-                        LikeButton(
-                          size: MySizes.iconMs,
-                          animationDuration: const Duration(milliseconds: 500),
-                          isLiked: FavoriteListController.instance.favoriteList
-                              .any((fav) =>
-                                  fav.id == item.id),
-                          likeBuilder: (bool isLiked) {
-                            return Icon(
-                              isLiked
-                                  ? Icons.favorite
-                                  : Icons.favorite_outline_outlined,
-                              color: isLiked ? Colors.red : Colors.grey,
-                              size: MySizes.iconMd,
-                            );
-                          },
-                          onTap: (isLiked) async {
-                            final controller = FavoriteListController.instance;
-                            if (isLiked) {
-                              await controller.removeFromFavorites(item.id);
-                            } else {
-                              await controller.addToFavorites(item.id);
-                            }
-                            return !isLiked;
-                          },
-                        )
-                      ],
-                    ),
+                      ),
+                      const SizedBox(
+                        height: MySizes.xs,
+                      ),
+                      SizedBox(
+                        width: 190,
+                        child: Text(
+                          item.description,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelSmall!
+                              .apply(color: MyColors.darkPrimaryTextColor),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: MySizes.xs,
+                      ),
+                      Text(
+                        MyFormatter.formatCurrency(item.price.toInt()),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyLarge!
+                            .apply(color: MyColors.darkPrimaryTextColor),
+                      )
+                    ],
                   ),
+                  const Spacer(),
+                  LikeButton(
+                    size: MySizes.iconMs,
+                    animationDuration: const Duration(milliseconds: 500),
+                    isLiked: FavoriteListController.instance.favoriteList
+                        .any((fav) => fav.id == item.id),
+                    likeBuilder: (bool isLiked) {
+                      return Icon(
+                        isLiked
+                            ? Icons.favorite
+                            : Icons.favorite_outline_outlined,
+                        color: isLiked ? Colors.red : Colors.grey,
+                        size: MySizes.iconMd,
+                      );
+                    },
+                    onTap: (isLiked) async {
+                      final controller = FavoriteListController.instance;
+                      if (isLiked) {
+                        await controller.removeFromFavorites(item.id);
+                      } else {
+                        await controller.addToFavorites(item.id);
+                      }
+                      return !isLiked;
+                    },
+                  )
                 ],
               ),
             ),

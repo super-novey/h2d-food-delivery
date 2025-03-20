@@ -74,30 +74,31 @@ class MenuRestaurantTile extends StatelessWidget {
                                   .apply(color: MyColors.primaryTextColor),
                             ),
                             Obx(() => LikeButton(
-                              size: MySizes.iconMs,
-                              animationDuration:
-                                  const Duration(milliseconds: 500),
-                              isLiked: controller.favoriteList
-                                  .any((fav) => fav.id == item.itemId),
-                              likeBuilder: (bool isLiked) {
-                                return Icon(
-                                  isLiked
-                                      ? Icons.favorite
-                                      : Icons.favorite_outline_outlined,
-                                  color: isLiked ? Colors.red : Colors.grey,
-                                  size: MySizes.iconMd,
-                                );
-                              },
-                              onTap: (isLiked) async {
-                                if (isLiked) {
-                                  await controller
-                                      .removeFromFavorites(item.itemId);
-                                } else {
-                                  await controller.addToFavorites(item.itemId);
-                                }
-                                return !isLiked;
-                              },
-                            ))
+                                  size: MySizes.iconMs,
+                                  animationDuration:
+                                      const Duration(milliseconds: 500),
+                                  isLiked: controller.favoriteList
+                                      .any((fav) => fav.id == item.itemId),
+                                  likeBuilder: (bool isLiked) {
+                                    return Icon(
+                                      isLiked
+                                          ? Icons.favorite
+                                          : Icons.favorite_outline_outlined,
+                                      color: isLiked ? Colors.red : Colors.grey,
+                                      size: MySizes.iconMd,
+                                    );
+                                  },
+                                  onTap: (isLiked) async {
+                                    if (isLiked) {
+                                      await controller
+                                          .removeFromFavorites(item.itemId);
+                                    } else {
+                                      await controller
+                                          .addToFavorites(item.itemId);
+                                    }
+                                    return !isLiked;
+                                  },
+                                ))
                           ],
                         ),
                         const SizedBox(
@@ -142,6 +143,9 @@ class MenuRestaurantTile extends StatelessWidget {
                                   .apply(color: MyColors.primaryTextColor),
                             ),
                           ],
+                        ),
+                        const SizedBox(
+                          height: MySizes.xs,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -196,25 +200,31 @@ class MenuRestaurantTile extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          IconButton(
-                                            onPressed: () {
+                                          InkWell(
+                                            onTap: () {
                                               cartController
                                                   .removeFromCart(item);
                                             },
-                                            icon: const Icon(
+                                            child: const Icon(
                                                 Icons
                                                     .remove_circle_outline_rounded,
                                                 color: MyColors
                                                     .darkPrimaryTextColor),
                                           ),
+                                          const SizedBox(
+                                            width: MySizes.sm,
+                                          ),
                                           Text(quantity.toString()),
-                                          IconButton(
-                                            onPressed: () {
+                                          const SizedBox(
+                                            width: MySizes.sm,
+                                          ),
+                                          InkWell(
+                                            onTap: () {
                                               if (quantity < item.quantity) {
                                                 cartController.addToCart(item);
                                               }
                                             },
-                                            icon: const Icon(Icons.add_circle,
+                                            child: const Icon(Icons.add_circle,
                                                 color: MyColors
                                                     .darkPrimaryTextColor),
                                           ),
