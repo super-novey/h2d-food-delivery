@@ -21,20 +21,26 @@ class FavoriteList extends StatelessWidget {
           if (controller.isLoading.value) {
             return const Center(child: CircularProgressIndicator());
           }
-          return GridView.builder(
-            physics: const AlwaysScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, 
-              childAspectRatio: 0.9, 
-              mainAxisSpacing: MySizes.md,
-              crossAxisSpacing: MySizes.md,
-            ),
+          // return GridView.builder(
+          //   physics: const AlwaysScrollableScrollPhysics(),
+          //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          //     crossAxisCount: 2, 
+          //     childAspectRatio: 0.9, 
+          //     mainAxisSpacing: MySizes.md,
+          //     crossAxisSpacing: MySizes.md,
+          //   ),
+          //   itemCount: controller.favoriteList.length,
+          //   itemBuilder: (context, index) {
+          //     final item = controller.favoriteList[index];
+          //     return FavoriteTile(item: item);
+          //   },
+          // );
+          return ListView.builder(
             itemCount: controller.favoriteList.length,
             itemBuilder: (context, index) {
-              final item = controller.favoriteList[index];
-              return FavoriteTile(item: item);
-            },
-          );
+            final item = controller.favoriteList[index];
+            return FavoriteTile(item: item);
+          });
         }),
       ),
     );

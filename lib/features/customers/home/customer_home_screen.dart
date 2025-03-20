@@ -139,6 +139,45 @@ class CustomerHomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
+              
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: MySizes.md, right: MySizes.md, top: MySizes.lg),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "Món ngon bán chạy",
+                          style: Theme.of(context).textTheme.bodyLarge!.apply(
+                                color: MyColors.darkPrimaryTextColor,
+                              ),
+                        ),
+                      ],
+                    ),
+                    const ListTopItem(),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: MySizes.md, right: MySizes.md, top: MySizes.lg),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "Nhà hàng có lượt đánh giá cao",
+                          style: Theme.of(context).textTheme.bodyLarge!.apply(
+                                color: MyColors.darkPrimaryTextColor,
+                              ),
+                        ),
+                      ],
+                    ),
+                    const ListFamousRestaurant(),
+                  ],
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.only(
                     left: MySizes.md, right: MySizes.md, top: MySizes.lg),
@@ -182,44 +221,6 @@ class CustomerHomeScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: MySizes.md, right: MySizes.md, top: MySizes.lg),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          "Món ngon bán chạy",
-                          style: Theme.of(context).textTheme.bodyLarge!.apply(
-                                color: MyColors.darkPrimaryTextColor,
-                              ),
-                        ),
-                      ],
-                    ),
-                    const ListTopItem(),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: MySizes.md, right: MySizes.md, top: MySizes.lg),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          "Nhà hàng có lượt đánh giá cao",
-                          style: Theme.of(context).textTheme.bodyLarge!.apply(
-                                color: MyColors.darkPrimaryTextColor,
-                              ),
-                        ),
-                      ],
-                    ),
-                    const ListFamousRestaurant(),
-                  ],
                 ),
               ),
               
