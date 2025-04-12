@@ -19,6 +19,7 @@ class HttpHelper {
       headers: {'Content-Type': 'application/json'},
       body: json.encode(data),
     );
+    print('URL: ${_baseUrl}');
     return _handleResponse(response);
   }
 
