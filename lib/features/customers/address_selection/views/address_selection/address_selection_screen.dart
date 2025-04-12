@@ -5,12 +5,13 @@ import 'package:food_delivery_h2d/features/customers/address_selection/controlle
 import 'package:food_delivery_h2d/features/customers/confirm_order/controllers/order_controller.dart';
 import 'package:food_delivery_h2d/features/customers/follow_order/controllers/follow_order_controller.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
+import 'package:geolocator/geolocator.dart'; // Import Geolocator
 import 'package:get/get.dart';
 
 class AddressSelectionScreen extends StatelessWidget {
   AddressSelectionScreen({super.key, required this.isUpdate, this.orderId});
   final bool isUpdate;
-  String? orderId;
+  final String? orderId;
 
   final AddressSelectionController _addressController =
       Get.put(AddressSelectionController());
@@ -21,14 +22,12 @@ class AddressSelectionScreen extends StatelessWidget {
       appBar: const CustomAppBar(
         title: Text("Địa chỉ giao hàng"),
       ),
-      body: // Thông tin cư trú
-          SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(MySizes.defaultSpace),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              // Province Dropdown
               Obx(
                 () => DropdownButtonFormField(
                   decoration:
@@ -46,10 +45,9 @@ class AddressSelectionScreen extends StatelessWidget {
                   },
                 ),
               ),
-              const SizedBox(
-                height: MySizes.spaceBtwInputFields,
-              ),
-              // District Dropdown
+              const SizedBox(height: MySizes.spaceBtwInputFields),
+
+              // Dropdown Quận/Huyện
               Obx(
                 () => DropdownButtonFormField(
                   decoration: const InputDecoration(labelText: "Quận/Huyện"),
@@ -66,10 +64,9 @@ class AddressSelectionScreen extends StatelessWidget {
                   },
                 ),
               ),
-              const SizedBox(
-                height: MySizes.spaceBtwInputFields,
-              ),
-              // Commune Dropdown
+              const SizedBox(height: MySizes.spaceBtwInputFields),
+
+              // Dropdown Phường/Xã
               Obx(
                 () => DropdownButtonFormField(
                   decoration: const InputDecoration(labelText: "Phường/Xã"),
@@ -86,17 +83,21 @@ class AddressSelectionScreen extends StatelessWidget {
                   },
                 ),
               ),
-              const SizedBox(
-                height: MySizes.spaceBtwInputFields,
-              ),
-              // Detailed Address Field
+              const SizedBox(height: MySizes.spaceBtwInputFields),
+
+              // Ô nhập địa chỉ chi tiết
               Obx(
                 () => TextFormField(
                   controller: _addressController.detailAddressController,
                   decoration: InputDecoration(
-                      labelText: "Địa chỉ",
-                      suffixText:
-                          "${_addressController.lenghtDetailAddress}/255"),
+                    labelText: "Địa chỉ",
+                    suffix: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 8.0), // Thêm khoảng cách bên trái
+                      child:
+                          Text("${_addressController.lenghtDetailAddress}/255"),
+                    ),
+                  ),
                   inputFormatters: [
                     LengthLimitingTextInputFormatter(255),
                   ],
@@ -105,24 +106,30 @@ class AddressSelectionScreen extends StatelessWidget {
                   },
                 ),
               ),
-              const SizedBox(
-                height: MySizes.spaceBtwInputFields,
+
+              const SizedBox(height: MySizes.spaceBtwInputFields),
+
+              // Nút chọn vị trí hiện tại
+              Align(
+                alignment: Alignment.centerLeft,
+                child: TextButton.icon(
+                  onPressed: _addressController.fetchCurrentLocation,
+                  icon: const Icon(Icons.my_location),
+                  label: const Text("Sử dụng vị trí hiện tại"),
+                ),
               ),
-              // Continue Button
+
+              // Nút Xác nhận
               ElevatedButton(
                 onPressed: () {
-                  // Replace _tabController with your actual navigation logic
-                  // _tabController.next();
-                  print(isUpdate);
+                  String newAddress =
+                      AddressSelectionController.instance.fullAddress.value;
                   if (isUpdate) {
                     var controller = Get.put(FollowOrderController());
-                    var newAddress =
-                        AddressSelectionController.instance.fullAddress.value;
                     controller.updateCustAddress(orderId!, newAddress);
                     Get.back(result: newAddress);
                   } else {
-                    OrderController.instance.order.custAddress =
-                        AddressSelectionController.instance.fullAddress.value;
+                    OrderController.instance.order.custAddress = newAddress;
                     Get.back();
                   }
                 },
