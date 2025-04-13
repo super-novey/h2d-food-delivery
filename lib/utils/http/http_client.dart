@@ -1,111 +1,140 @@
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 
 class HttpHelper {
   static final String _baseUrl =
-      dotenv.env['BASE_URL'] ?? "http://localhost:8081/api/v1"; // change URL
+      dotenv.env['BASE_URL'] ?? "http://localhost:8081/api/v1";
+
+  static final Logger _logger = Logger();
+
+  static void _logRequest(String method, String url,
+      {Map<String, String>? headers, dynamic body}) {
+    _logger.i('[$method] Request → $url');
+    if (headers != null) _logger.d('Headers: $headers');
+    if (body != null) _logger.d('Body: $body');
+  }
+
+  static void _logResponse(http.Response response) {
+    _logger.i('Response [${response.statusCode}]');
+    _logger.d('Body: ${response.body}');
+  }
 
   static Future<Map<String, dynamic>> get(String endpoint) async {
-    final response = await http.get(Uri.parse('$_baseUrl/$endpoint'));
+    final url = '$_baseUrl/$endpoint';
+    _logRequest('GET', url);
+
+    final response = await http.get(Uri.parse(url));
+    _logResponse(response);
     return _handleResponse(response);
   }
 
-  // Hepler method to make a POST method
-  static Future<Map<String, dynamic>> post(
-      String endpoint, dynamic data) async {
+  static Future<Map<String, dynamic>> post(String endpoint, dynamic data) async {
+    final url = '$_baseUrl/$endpoint';
+    final encoded = json.encode(data);
+    _logRequest('POST', url, headers: {'Content-Type': 'application/json'}, body: encoded);
+
     final response = await http.post(
-      Uri.parse('$_baseUrl/$endpoint'),
+      Uri.parse(url),
       headers: {'Content-Type': 'application/json'},
-      body: json.encode(data),
+      body: encoded,
     );
+    _logResponse(response);
     return _handleResponse(response);
   }
 
-  // PUT method
-  static Future<Map<String, dynamic>> put(String endpoint,
-      [dynamic data]) async {
+  static Future<Map<String, dynamic>> put(String endpoint, [dynamic data]) async {
+    final url = '$_baseUrl/$endpoint';
+    final encoded = data != null ? json.encode(data) : null;
+    _logRequest('PUT', url, headers: {'Content-Type': 'application/json'}, body: encoded);
+
     final response = await http.put(
-      Uri.parse('$_baseUrl/$endpoint'),
+      Uri.parse(url),
       headers: {'Content-Type': 'application/json'},
-      body:
-          data != null ? json.encode(data) : null, // Chỉ mã hóa nếu có dữ liệu
+      body: encoded,
     );
+    _logResponse(response);
     return _handleResponse(response);
   }
 
-  // PATCH method
-  static Future<Map<String, dynamic>> patch(String endpoint,
-      [dynamic data]) async {
+  static Future<Map<String, dynamic>> patch(String endpoint, [dynamic data]) async {
+    final url = '$_baseUrl/$endpoint';
+    final encoded = data != null ? json.encode(data) : null;
+    _logRequest('PATCH', url, headers: {'Content-Type': 'application/json'}, body: encoded);
+
     final response = await http.patch(
-      Uri.parse('$_baseUrl/$endpoint'),
+      Uri.parse(url),
       headers: {'Content-Type': 'application/json'},
-      body: data != null ? json.encode(data) : null, // Encode data if provided
+      body: encoded,
     );
+    _logResponse(response);
     return _handleResponse(response);
   }
 
-  // DELETE method
   static Future<Map<String, dynamic>> delete(String endpoint) async {
-    final response = await http.delete(Uri.parse('$_baseUrl/$endpoint'));
+    final url = '$_baseUrl/$endpoint';
+    _logRequest('DELETE', url);
+
+    final response = await http.delete(Uri.parse(url));
+    _logResponse(response);
     return _handleResponse(response);
   }
 
-  // Post with File
   static Future<Map<String, dynamic>> postWithFiles(
       String endpoint, dynamic fields, List<http.MultipartFile> files) async {
-    var request =
-        http.MultipartRequest('POST', Uri.parse('$_baseUrl/$endpoint'));
-    fields.forEach((key, value) {
-      request.fields[key] = value;
-    });
+    final url = '$_baseUrl/$endpoint';
+    _logger.i('[POST - Multipart] → $url');
+    _logger.d('Fields: $fields');
+    _logger.d('Files: ${files.map((f) => f.filename).toList()}');
 
-    request.files.addAll(files);
-
-    var response = await request.send();
-
-    return await _handleMultipartResponse(response);
-  }
-
-  // PUT with files
-  static Future<Map<String, dynamic>> putWithFiles(
-      String endpoint, dynamic fields, List<http.MultipartFile> files) async {
-    var request =
-        http.MultipartRequest('PUT', Uri.parse('$_baseUrl/$endpoint'));
-
+    var request = http.MultipartRequest('POST', Uri.parse(url));
     fields.forEach((key, value) {
       request.fields[key] = value.toString();
     });
-
     request.files.addAll(files);
 
     var response = await request.send();
+    return await _handleMultipartResponse(response);
+  }
 
+  static Future<Map<String, dynamic>> putWithFiles(
+      String endpoint, dynamic fields, List<http.MultipartFile> files) async {
+    final url = '$_baseUrl/$endpoint';
+    _logger.i('[PUT - Multipart] → $url');
+    _logger.d('Fields: $fields');
+    _logger.d('Files: ${files.map((f) => f.filename).toList()}');
+
+    var request = http.MultipartRequest('PUT', Uri.parse(url));
+    fields.forEach((key, value) {
+      request.fields[key] = value.toString();
+    });
+    request.files.addAll(files);
+
+    var response = await request.send();
     return await _handleMultipartResponse(response);
   }
 
   static Map<String, dynamic> _handleResponse(http.Response response) {
-    if (response.statusCode == 200 ||
-        response.statusCode == 201 ||
-        response.statusCode == 401 ||
-        response.statusCode == 409 ||
-        response.statusCode == 404) {
+    if ([200, 201, 401, 404, 409].contains(response.statusCode)) {
       return json.decode(response.body);
     } else {
+      _logger.e('Unexpected Error: ${response.statusCode} - ${response.body}');
       throw Exception(response.body);
     }
   }
 
-  // Handle response for multipart request
   static Future<Map<String, dynamic>> _handleMultipartResponse(
       http.StreamedResponse response) async {
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      final responseBody = await response.stream.bytesToString();
+    final responseBody = await response.stream.bytesToString();
+    _logger.i('Multipart Response [${response.statusCode}]');
+    _logger.d('Body: $responseBody');
+
+    if ([200, 201].contains(response.statusCode)) {
       return json.decode(responseBody);
     } else {
-      final errorBody = await response.stream.bytesToString();
-      print('Error Response: $errorBody'); // Print the error response body
-      throw Exception('Error: ${response.statusCode}, $errorBody');
+      _logger.e('Error: ${response.statusCode}, $responseBody');
+      throw Exception('Error: ${response.statusCode}, $responseBody');
     }
   }
 }
