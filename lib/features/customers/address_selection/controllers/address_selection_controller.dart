@@ -1,22 +1,30 @@
+import 'dart:convert';
+import 'dart:developer';
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/data/address/address_repository.dart';
+import 'package:food_delivery_h2d/services/location_service.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 class AddressSelectionController extends GetxController {
   static AddressSelectionController get instance => Get.find();
 
-  // Observable lists to hold provinces, districts, and communes
+  // OpenRouteService API Key
+  final String _orsApiKey =
+      "5b3ce3597851110001cf6248624e1bd0362941f69f8006f0e3fec245";
+  final String _baseUrl = "https://api.openrouteservice.org";
+
   var provinces = [].obs;
   var districts = [].obs;
   var communes = [].obs;
 
-  var selectedProvinceId = ''.obs;
+  var selectedProvinceId = '79'.obs;
   var selectedDistrictId = ''.obs;
   var selectedCommuneId = ''.obs;
   var fullAddress = ''.obs;
 
   TextEditingController detailAddressController = TextEditingController();
-
   var lenghtDetailAddress = 0.obs;
 
   final AddressRepository _addressRepository = AddressRepository();
@@ -24,7 +32,7 @@ class AddressSelectionController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchProvinces(); // Fetch provinces on controller initialization
+    fetchDistricts('79');
   }
 
   // Fetch provinces from AddressRepository
@@ -61,25 +69,21 @@ class AddressSelectionController extends GetxController {
     updateFullAddress(); // Update the full address after province selection
   }
 
-  // Update selected district ID and clear commune selection
   void updateSelectedDistrictId(String districtId) {
     selectedDistrictId.value = districtId;
     selectedCommuneId.value = '';
-    fetchCommunes(districtId); // Fetch communes based on selected district
-    updateFullAddress(); // Update the full address after district selection
+    fetchCommunes(districtId);
+    updateFullAddress();
   }
 
-  // Update selected commune ID
   void updateSelectedCommuneId(String communeId) {
     selectedCommuneId.value = communeId;
-    updateFullAddress(); // Update the full address after commune selection
+    updateFullAddress();
   }
 
-  // Handle detail address input change and update its length
   void handleDetailAddressChange(String value) {
     lenghtDetailAddress.value = value.length;
-    print(lenghtDetailAddress.value);
-    updateFullAddress(); // Update full address on detail address change
+    updateFullAddress();
   }
 
   @override
@@ -88,43 +92,164 @@ class AddressSelectionController extends GetxController {
     super.onClose();
   }
 
-  // Update the full address whenever components change
+  String? getProvinceIdByName(String provinceName) {
+    return provinces
+        .firstWhereOrNull((province) => province.fullName
+            .toLowerCase()
+            .contains(provinceName.toLowerCase()))
+        ?.id;
+  }
+
   void updateFullAddress() {
-    // Ensure all components are selected
-    if (selectedProvinceId.value.isEmpty ||
-        selectedDistrictId.value.isEmpty ||
-        selectedCommuneId.value.isEmpty) {
-      fullAddress.value = ''; // Set to empty if any part is missing
+    if (selectedDistrictId.value.isEmpty || selectedCommuneId.value.isEmpty) {
+      fullAddress.value = '';
       return;
     }
 
     String provinceName = provinces
-            .firstWhere(
-              (province) => province.id == selectedProvinceId.value,
-              orElse: () => null,
-            )
+            .firstWhereOrNull(
+                (province) => province.id == selectedProvinceId.value)
             ?.fullName ??
         '';
 
     String districtName = districts
-            .firstWhere(
-              (district) => district.id == selectedDistrictId.value,
-              orElse: () => null,
-            )
+            .firstWhereOrNull(
+                (district) => district.id == selectedDistrictId.value)
             ?.fullName ??
         '';
 
     String communeName = communes
-            .firstWhere(
-              (commune) => commune.id == selectedCommuneId.value,
-              orElse: () => null,
-            )
+            .firstWhereOrNull(
+                (commune) => commune.id == selectedCommuneId.value)
             ?.fullName ??
         '';
 
-    // Combine all components to form the full address
     fullAddress.value =
         '${detailAddressController.text}, $communeName, $districtName, $provinceName';
-    print(fullAddress.value);
+  }
+
+  Map<String, dynamic>? getBestFeature(List<dynamic> features) {
+    if (features.isEmpty) return null;
+
+    features.sort((a, b) => (b['properties']['confidence'] as num)
+        .compareTo(a['properties']['confidence'] as num));
+
+    return features.first;
+  }
+
+  Future<void> updateLocation(double latitude, double longitude) async {
+    const String locationIqApiKey = "pk.830e389b41abcec44116a981f89c54d4";
+    final String url =
+        "https://us1.locationiq.com/v1/reverse.php?key=$locationIqApiKey"
+        "&lat=$latitude&lon=$longitude&format=json&accept-language=vi";
+
+    try {
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        log("📍 Dữ liệu từ LocationIQ: ${jsonEncode(data)}");
+
+        String? provinceName = data["address"]["state"]; // Tỉnh/Thành phố
+        if (provinceName == null ||
+            removeDiacritics(provinceName.toLowerCase()) !=
+                removeDiacritics("Thành phố Hồ Chí Minh".toLowerCase())) {
+          Get.snackbar(
+              "Cảnh báo", "Vị trí hiện tại không thuộc TP Hồ Chí Minh.",
+              backgroundColor: Colors.red, colorText: Colors.white);
+          return;
+        }
+        String? districtName =
+            data["address"]["county"] ?? data["address"]["city"]; // Quận/Huyện
+        String? communeName = data["address"]["town"] ??
+            data["address"]["village"] ??
+            data["address"]["hamlet"] ??
+            data["address"]["suburb"]; // Phường/Xã
+
+        String fullAddressString = data["display_name"] ?? "";
+
+        // 🔹 Xây dựng chuỗi cần loại bỏ
+        String removeString = "";
+        List<String> removeParts = [
+          data["address"]["quarter"], // Phường
+          data["address"]["suburb"], // Quận
+          data["address"]["city"], // Thành phố
+          data["address"]["postcode"], // Mã bưu điện
+          data["address"]["country"], // Quốc gia
+        ];
+
+        // ✅ Tạo chuỗi cần xóa từ các phần tử không null
+        removeString =
+            removeParts.where((element) => element != null).join(", ");
+
+        if (removeString.isNotEmpty) {
+          fullAddressString =
+              fullAddressString.replaceAll(removeString, "").trim();
+        }
+
+        fullAddressString = fullAddressString.replaceAll(RegExp(r",\s*$"), "");
+
+        detailAddressController.text = fullAddressString;
+        lenghtDetailAddress.value = fullAddressString.length;
+
+        print("🟢 Địa chỉ đầy đủ: $fullAddressString");
+        print("📍 Tỉnh/Thành phố: $provinceName");
+        print("📍 Quận/Huyện: $districtName");
+        print("📍 Phường/Xã: $communeName");
+
+        if (provinces.isEmpty) {
+          await fetchProvinces();
+        }
+
+        String? districtId = districts
+            .firstWhereOrNull(
+              (district) => removeDiacritics(district.fullName)
+                  .toLowerCase()
+                  .contains(removeDiacritics(districtName ?? "").toLowerCase()),
+            )
+            ?.id;
+
+        if (districtId != null) {
+          await fetchCommunes(districtId);
+          updateSelectedDistrictId(districtId);
+        } else {
+          print("❌ Không tìm thấy ID quận/huyện: $districtName");
+        }
+
+        String? communeId = communes
+            .firstWhereOrNull(
+              (commune) => removeDiacritics(commune.fullName)
+                  .toLowerCase()
+                  .contains(removeDiacritics(communeName ?? "").toLowerCase()),
+            )
+            ?.id;
+
+        if (communeId != null) {
+          updateSelectedCommuneId(communeId);
+        } else {
+          print("❌ Không tìm thấy ID phường/xã: $communeName");
+        }
+
+        updateFullAddress();
+      } else {
+        Get.snackbar("Lỗi", "Không thể lấy địa chỉ. Vui lòng thử lại.");
+      }
+    } catch (e) {
+      Get.snackbar("Lỗi", "Lỗi khi lấy địa chỉ: $e");
+    }
+  }
+
+  Future<void> fetchCurrentLocation() async {
+    try {
+      var position = await LocationService.getLocation();
+      if (position == null) {
+        Get.snackbar("Đã xảy ra lỗi", "Không thể lấy vị trí hiện tại.");
+        return;
+      }
+      await updateLocation(position.latitude, position.longitude);
+      // await updateLocation(10.7674, 106.7071);
+    } catch (e) {
+      Get.snackbar("Lỗi", "Không thể lấy vị trí hiện tại.");
+    }
   }
 }

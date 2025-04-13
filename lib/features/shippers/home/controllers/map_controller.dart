@@ -18,9 +18,12 @@ class MapWidgetController extends GetxController {
 
   Future<void> getCurrentLocation() async {
     try {
-      final current = await LocationService.getLocation();
-      if (current == null) return;
-      currentPosition.value = LatLng(current.latitude, current.longitude);
+      var position = await LocationService.getLocation();
+      if (position == null) {
+        Get.snackbar("Đã xảy ra lỗi", "Không thể lấy vị trí hiện tại.");
+        return;
+      }
+      currentPosition.value = LatLng(position.latitude, position.longitude);
     } catch (e) {
       log('Error occurred while getting location: $e');
     }

@@ -278,14 +278,14 @@ class _FollowOrderScreenState extends State<FollowOrderScreen> {
                                                   size: 18,
                                                 ),
                                                 Obx(() {
-                                                  print(
-                                                      'DRIVER ID: ${currentOrder.value.assignedShipperId.toString()}');
-                                                  print(
-                                                      'CURRENT ORDER: ${currentOrder.value}');
-                                                  ratingControler.fetchRating(
-                                                      currentOrder.value
-                                                          .assignedShipperId
-                                                          .toString());
+                                                  // print(
+                                                  //     'DRIVER ID: ${currentOrder.value.assignedShipperId.toString()}');
+                                                  // print(
+                                                  //     'CURRENT ORDER: ${currentOrder.value}');
+                                                  // ratingControler.fetchRating(
+                                                  //     currentOrder.value
+                                                  //         .assignedShipperId
+                                                  //         .toString());
                                                   return Text(
                                                       MyFormatter.formatDouble(
                                                           ratingControler
@@ -791,18 +791,15 @@ class _FollowOrderScreenState extends State<FollowOrderScreen> {
               ),
       ),
       floatingActionButton: Obx(() {
-        // if (currentOrder.value.custStatus != 'waiting') {
-        //   return const SizedBox();
-        // }
-
         return Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             if (followOrderController.isExpanded.value) ...[
               FloatingActionButton.extended(
+                heroTag: 'track_order_fab',
                 onPressed: () {
-                  Get.to(MapWidget());
+                  Get.to(() => MapWidget());
                 },
                 icon: const Icon(Icons.map, color: MyColors.white),
                 label: const Text(
@@ -814,6 +811,7 @@ class _FollowOrderScreenState extends State<FollowOrderScreen> {
               const SizedBox(height: 10),
               if (currentOrder.value.paymentStatus == 'pending')
                 FloatingActionButton.extended(
+                  heroTag: 'toggle_fab',
                   onPressed: () {
                     CustomerOrderController.instance
                         .paymentOrder(currentOrder.value.totalPrice ?? 0);
@@ -828,6 +826,7 @@ class _FollowOrderScreenState extends State<FollowOrderScreen> {
               const SizedBox(height: 10),
               if (currentOrder.value.custStatus == 'waiting')
                 FloatingActionButton.extended(
+                  heroTag: null,
                   onPressed: () {
                     customerOrderController.showCancelDialog(
                         context, currentOrder.value.id);

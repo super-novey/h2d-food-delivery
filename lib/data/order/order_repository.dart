@@ -126,20 +126,29 @@ class OrderRepository extends GetxController {
       };
 
       print("order/$orderId/address");
+      print(addressUpdate);
 
-      final res = await HttpHelper.put(
+      final res = await HttpHelper.patch(
         "order/$orderId/address",
         addressUpdate,
       );
 
-      if (res["hasError"] == true) {
-        return ApiResponse.error(res["message"]);
+      print("API Response: $res");
+
+      if (res == null || res["hasError"] == true) {
+        return ApiResponse.error(res?["message"] ?? "Unknown error");
       }
 
-      final result = Order.fromJson(res["data"]);
+      // Kiểm tra res["updatedOrder"] trước khi sử dụng
+      if (res["updatedOrder"] == null) {
+        return ApiResponse.error("Order update failed: Data is null");
+      }
+
+      final result =
+          Order.fromJson(res["updatedOrder"] as Map<String, dynamic>);
       return ApiResponse.completed(result, res["message"]);
     } catch (e) {
-      print(e);
+      print("Error: $e");
       return ApiResponse.error("An unknown error occurred.");
     }
   }

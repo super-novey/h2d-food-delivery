@@ -1,7 +1,6 @@
 import 'package:food_delivery_h2d/data/order/order_repository.dart';
 import 'package:food_delivery_h2d/data/response/api_response.dart';
 import 'package:food_delivery_h2d/data/response/status.dart';
-import 'package:food_delivery_h2d/features/customers/confirm_order/controllers/order_controller.dart';
 import 'package:food_delivery_h2d/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 import 'package:food_delivery_h2d/features/shippers/home/models/order_model.dart';

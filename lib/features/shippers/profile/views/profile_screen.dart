@@ -15,6 +15,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final LoginController authController = Get.find();
     final ProfileController profileController = Get.put(ProfileController());
 
     return Scaffold(
@@ -57,6 +58,65 @@ class ProfileScreen extends StatelessWidget {
                                 ),
                               )),
                         ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16),
+                      child: InkWell(
+                        onTap: () async {
+                          await authController.getCurrentLocation();
+                          profileController.addressKey.value++;
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Vị trí hiện tại',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            ),
+                            const Spacer(),
+                            Obx(() => SizedBox(
+                                  width: 200,
+                                  child: FutureBuilder<String?>(
+                                    key: ValueKey(
+                                        profileController.addressKey.value),
+                                    future: authController.currentLocation !=
+                                            null
+                                        ? profileController
+                                            .getAddressFromCoordinates(
+                                            authController
+                                                .currentLocation!['latitude'],
+                                            authController
+                                                .currentLocation!['longitude'],
+                                          )
+                                        : Future.value(null),
+                                    builder: (context, snapshot) {
+                                      return Text(
+                                        snapshot.connectionState ==
+                                                ConnectionState.waiting
+                                            ? "Đang lấy địa chỉ..."
+                                            : snapshot.hasData &&
+                                                    snapshot.data != null
+                                                ? snapshot.data!
+                                                : "Chưa có vị trí",
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                          color: MyColors.secondaryTextColor,
+                                        ),
+                                        maxLines: 3,
+                                        softWrap: true,
+                                        textAlign: TextAlign.end,
+                                      );
+                                    },
+                                  ),
+                                )),
+                          ],
+                        ),
                       ),
                     ),
                     Padding(

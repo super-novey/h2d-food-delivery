@@ -12,8 +12,10 @@ import 'package:food_delivery_h2d/features/customers/customer_navigation_menu.da
 import 'package:food_delivery_h2d/features/restaurants/restaurant_navigation_menu.dart';
 import 'package:food_delivery_h2d/features/shippers/shipper_navigation_menu.dart';
 import 'package:food_delivery_h2d/routes/routes.dart';
+import 'package:food_delivery_h2d/services/location_service.dart';
 import 'package:food_delivery_h2d/utils/constants/enums.dart';
 import 'package:food_delivery_h2d/utils/popups/loaders.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -41,8 +43,29 @@ class LoginController extends GetxController {
     _localStorage.write("currentUser", user);
   }
 
+  void saveLocation(Position position) {
+    final locationData = {
+      'latitude': position.latitude,
+      'longitude': position.longitude,
+      'timestamp': position.timestamp.toIso8601String(),
+    };
+    _localStorage.write('currentLocation', locationData);
+  }
+
   dynamic get currentUser {
     return _localStorage.read<UserModel>("currentUser");
+  }
+
+  dynamic get currentLocation {
+    return _localStorage.read<Map<String, dynamic>>("currentLocation");
+  }
+
+  Future<Position?> getCurrentLocation() async {
+    try {
+      return LocationService.getLocation();
+    } catch (e) {
+      return null;
+    }
   }
 
   void togglePasswordVisibility() {
@@ -84,6 +107,10 @@ class LoginController extends GetxController {
       if (userRole == "driver") {
         final currentDriver = await _driverRepository.getCurrentDriver(userId);
         saveUser(currentDriver);
+        var currentLocation = await getCurrentLocation();
+        if (currentLocation != null) {
+          saveLocation(currentLocation);
+        }
         Loaders.successSnackBar(title: "Thành công!", message: res.message);
         Get.offAll(() => const ShipperNavigationMenu());
       } else if (userRole == "partner") {
@@ -93,15 +120,16 @@ class LoginController extends GetxController {
         Loaders.successSnackBar(title: "Thành công!", message: res.message);
         Get.offAll(() => const RestaurantNavigationMenu());
       } else if (userRole == "customer") {
-        print("userid $userId");
-
         final currentCustomer = await _userRepository.getCurrentUser(userId);
         saveUser(currentCustomer);
+        var currentLocation = await getCurrentLocation();
+        if (currentLocation != null) {
+          saveLocation(currentLocation);
+        }
         Loaders.successSnackBar(title: "Thành công!", message: res.message);
         Get.offAll(() => const CustomerNavigationMenu());
       } else {
         Loaders.successSnackBar(title: "Thành công!", message: res.message);
-
         if (kIsWeb) {
           Get.toNamed(Routes.dashboard);
         } else {

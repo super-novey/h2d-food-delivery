@@ -29,8 +29,7 @@ class ShipperHomeScreen extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 20,
-                      backgroundColor:
-                          Colors.grey.shade200, // Fallback background color
+                      backgroundColor: Colors.grey.shade200,
                       child: ClipOval(
                         child:
                             LoginController.instance.currentUser.profileUrl !=
