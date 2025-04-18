@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_h2d/common/widgets/appbar/custom_app_bar.dart';
+import 'package:food_delivery_h2d/features/customers/order/views/order_list/widgets/tab_item.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/controllers/update_menu_food_controller.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/category_model.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/models/item_model.dart';
@@ -8,6 +9,7 @@ import 'package:food_delivery_h2d/features/restaurants/menu_management/views/cat
 import 'package:food_delivery_h2d/features/restaurants/menu_management/views/menu_food_detail/menu_food_detail.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/views/menu_list/widgets/menu_food_tile.dart';
 import 'package:food_delivery_h2d/features/restaurants/menu_management/views/menu_list/widgets/menu_search_bar.dart';
+import 'package:food_delivery_h2d/features/restaurants/topping_management/view/topping_group_list.dart';
 import 'package:food_delivery_h2d/utils/constants/colors.dart';
 import 'package:food_delivery_h2d/utils/constants/sizes.dart';
 import 'package:get/get.dart';
@@ -25,20 +27,9 @@ class MenuFoodListScreen extends StatelessWidget {
       menuFoodController.reload();
     }
 
-    return Scaffold(
-      appBar: const CustomAppBar(
-        title: Text('Thực đơn'),
-      ),
-      body: Column(
+    Widget _buildItemManagement() {
+      return Column(
         children: [
-          const MenuSearchBar(),
-          const Padding(
-            padding: EdgeInsets.only(
-                top: MySizes.sm, left: MySizes.sm, right: MySizes.sm),
-            child: Divider(
-              color: MyColors.dividerColor,
-            ),
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -137,6 +128,33 @@ class MenuFoodListScreen extends StatelessWidget {
             ),
           ),
         ],
+      );
+    }
+
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: const CustomAppBar(
+          title: Text('Thực đơn'),
+        ),
+        body: Column(
+          children: [
+            const MenuSearchBar(),
+            const TabBar(
+              indicatorSize: TabBarIndicatorSize.tab,
+              dividerColor: Colors.transparent,
+              indicatorPadding:
+                  EdgeInsets.only(left: MySizes.sm, right: MySizes.sm),
+              tabs: [
+                TabItem(title: "Món"),
+                TabItem(title: "Nhóm Topping"),
+              ],
+            ),
+            Expanded(
+                child: TabBarView(
+                    children: [_buildItemManagement(), ToppingGroupList()])),
+          ],
+        ),
       ),
     );
   }

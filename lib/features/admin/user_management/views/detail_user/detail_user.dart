@@ -56,7 +56,7 @@ class DetailUser extends StatelessWidget {
                       child: MyTextFiled(
                           textController:
                               updateUserManagementController.nameController,
-                          label: "Nhập tên"),
+                          hintText: "Nhập tên"),
                     ),
                   ],
                 ),
@@ -76,7 +76,7 @@ class DetailUser extends StatelessWidget {
                       child: MyTextFiled(
                           textController:
                               updateUserManagementController.emailController,
-                          label: "Nhập email"),
+                          hintText: "Nhập email"),
                     ),
                   ],
                 ),
@@ -96,7 +96,7 @@ class DetailUser extends StatelessWidget {
                       child: MyTextFiled(
                           textController: updateUserManagementController
                               .phoneNumberController,
-                          label: "Nhập số điện thoại"),
+                          hintText: "Nhập số điện thoại"),
                     ),
                   ],
                 ),

@@ -29,7 +29,9 @@ class ProfileRestaurantDetailScreen extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              const ProfileHeader(showEdit: true,),
+              const ProfileHeader(
+                showEdit: true,
+              ),
               const SizedBox(
                 height: MySizes.spaceBtwSections,
               ),
@@ -53,7 +55,7 @@ class ProfileRestaurantDetailScreen extends StatelessWidget {
                           child: MyTextFiled(
                             textController: updateProfileRestaurantController
                                 .joinDateController,
-                            label: "Ngày tham gia",
+                            hintText: "Ngày tham gia",
                             readOnly: true,
                           ),
                         )
@@ -74,7 +76,7 @@ class ProfileRestaurantDetailScreen extends StatelessWidget {
                           child: MyTextFiled(
                             textController: updateProfileRestaurantController
                                 .nameController,
-                            label: "Tên quán ăn",
+                            hintText: "Tên quán ăn",
                           ),
                         )
                       ],
@@ -94,7 +96,7 @@ class ProfileRestaurantDetailScreen extends StatelessWidget {
                           child: MyTextFiled(
                             textController: updateProfileRestaurantController
                                 .joinDateController,
-                            label: "Số điện thoại",
+                            hintText: "Số điện thoại",
                           ),
                         )
                       ],
@@ -114,7 +116,7 @@ class ProfileRestaurantDetailScreen extends StatelessWidget {
                           child: MyTextFiled(
                             textController: updateProfileRestaurantController
                                 .joinDateController,
-                            label: "Email",
+                            hintText: "Email",
                           ),
                         )
                       ],
@@ -132,7 +134,7 @@ class ProfileRestaurantDetailScreen extends StatelessWidget {
                       textController:
                           updateProfileRestaurantController.joinDateController,
                       textAlign: TextAlign.left,
-                      label: "Địa chỉ",
+                      hintText: "Địa chỉ",
                       maxLines: 2,
                     ),
                     Text(
@@ -147,7 +149,7 @@ class ProfileRestaurantDetailScreen extends StatelessWidget {
                       textController:
                           updateProfileRestaurantController.joinDateController,
                       textAlign: TextAlign.left,
-                      label: "Mô tả",
+                      hintText: "Mô tả",
                       maxLines: 4,
                     ),
                   ],

@@ -164,7 +164,7 @@ class MenuFoodDetailScreen extends StatelessWidget {
                                     Validators.validateEmptyText("Tên", value),
                                 textController:
                                     updateMenuFoodController.nameController,
-                                label: "Nhập tên món ăn"),
+                                hintText: "Nhập tên món ăn"),
                           ),
                         ],
                       ),
@@ -189,7 +189,7 @@ class MenuFoodDetailScreen extends StatelessWidget {
                                     Validators.validateEmptyText("Giá", value),
                                 textController:
                                     updateMenuFoodController.priceController,
-                                label: "Nhập giá món ăn (VNĐ)"),
+                                hintText: "Nhập giá món ăn (VNĐ)"),
                           ),
                         ],
                       ),
@@ -308,7 +308,7 @@ class MenuFoodDetailScreen extends StatelessWidget {
                                         "Số lượng", value),
                                 textController:
                                     updateMenuFoodController.quantityController,
-                                label: "Nhập số lượng món"),
+                                hintText: "Nhập số lượng món"),
                           ),
                         ],
                       ),
@@ -416,7 +416,7 @@ class MenuFoodDetailScreen extends StatelessWidget {
                       textAlign: TextAlign.left,
                       textController:
                           updateMenuFoodController.descriptionController,
-                      label: "Nhập mô tả món ăn",
+                      hintText: "Nhập mô tả món ăn",
                       maxLines: 5,
                     ),
                   ],

@@ -21,102 +21,108 @@ class MenuFoodTile extends StatelessWidget {
     final menuFoodController = Get.put(MenuFoodController());
     final updateMenuFoodController = Get.put(UpdateMenuFoodController());
 
-    return Padding(
-      padding: const EdgeInsets.only(
-          top: MySizes.sm, right: MySizes.sm, left: MySizes.sm),
-      child: Slidable(
-        endActionPane: ActionPane(motion: const DrawerMotion(), children: [
-          SlidableAction(
-            onPressed: ((context) {
-              updateMenuFoodController.isEditting.value = true;
-              Get.to(() => MenuFoodDetailScreen(selectedItem: item));
-            }),
-            backgroundColor: MyColors.primaryTextColor,
-            icon: Icons.edit,
-            borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(MySizes.cardRadiusMd),
-                bottomLeft: Radius.circular(MySizes.cardRadiusMd)),
-          ),
-          SlidableAction(
-            onPressed: ((context) {
-              updateMenuFoodController.removeItem(item.itemId);
-            }),
-            backgroundColor: MyColors.errorColor,
-            icon: Icons.delete,
-            padding: const EdgeInsets.all(MySizes.md),
-            borderRadius: const BorderRadius.only(
-                topRight: Radius.circular(MySizes.cardRadiusMd),
-                bottomRight: Radius.circular(MySizes.cardRadiusMd)),
-          ),
-        ]),
-        child: SizedBox(
-          height: 90,
-          // decoration: BoxDecoration(
-          //   border: Border.all(color: MyColors.secondaryTextColor, width: 0.5),
-          //   borderRadius: BorderRadius.circular(12),
-          // ),
-          child: Card(
-            elevation: 4,
-            shadowColor: MyColors.darkPrimaryColor,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  top: MySizes.sm,
-                  left: MySizes.md,
-                  bottom: MySizes.sm,
-                  right: MySizes.sm),
-              child: Row(
-                children: [
-                  ClipRRect(
-                      borderRadius:
-                          BorderRadius.circular(MySizes.borderRadiusMd),
-                      child: CachedNetworkImage(
-                        imageUrl: item.itemImage,
-                        width: 55,
-                        height: 55,
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) =>
-                            const Center(child: CircularProgressIndicator()),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
-                      )),
-                  const SizedBox(
-                    width: MySizes.spaceBtwItems,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        item.itemName,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge!
-                            .apply(color: MyColors.darkPrimaryTextColor),
-                      ),
-                      const SizedBox(
-                        height: MySizes.sm,
-                      ),
-                      Text(
-                        MyFormatter.formatCurrency(item.price),
-                        style: Theme.of(context)
-                            .textTheme
-                            .labelMedium!
-                            .apply(color: MyColors.primaryTextColor),
-                      ),
-                    ],
-                  ),
-                  const Spacer(),
-                  Obx(() => Transform.scale(
-                        scale: 0.7,
-                        child: CupertinoSwitch(
-                          value: item.isAvailable.value,
-                          activeColor: MyColors.darkPrimaryColor,
-                          onChanged: (bool value) {
-                            menuFoodController.toggleItemAvailability(item);
-                          },
+    return InkWell(
+      onTap: () {
+        updateMenuFoodController.isEditting.value = true;
+        Get.to(() => MenuFoodDetailScreen(selectedItem: item));
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(
+            top: MySizes.sm, right: MySizes.sm, left: MySizes.sm),
+        child: Slidable(
+          endActionPane: ActionPane(motion: const DrawerMotion(), children: [
+            SlidableAction(
+              onPressed: ((context) {
+                updateMenuFoodController.isEditting.value = true;
+                Get.to(() => MenuFoodDetailScreen(selectedItem: item));
+              }),
+              backgroundColor: MyColors.primaryTextColor,
+              icon: Icons.edit,
+              borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(MySizes.cardRadiusMd),
+                  bottomLeft: Radius.circular(MySizes.cardRadiusMd)),
+            ),
+            SlidableAction(
+              onPressed: ((context) {
+                updateMenuFoodController.removeItem(item.itemId);
+              }),
+              backgroundColor: MyColors.errorColor,
+              icon: Icons.delete,
+              padding: const EdgeInsets.all(MySizes.md),
+              borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(MySizes.cardRadiusMd),
+                  bottomRight: Radius.circular(MySizes.cardRadiusMd)),
+            ),
+          ]),
+          child: SizedBox(
+            height: 90,
+            // decoration: BoxDecoration(
+            //   border: Border.all(color: MyColors.secondaryTextColor, width: 0.5),
+            //   borderRadius: BorderRadius.circular(12),
+            // ),
+            child: Card(
+              elevation: 4,
+              shadowColor: MyColors.darkPrimaryColor,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    top: MySizes.sm,
+                    left: MySizes.md,
+                    bottom: MySizes.sm,
+                    right: MySizes.sm),
+                child: Row(
+                  children: [
+                    ClipRRect(
+                        borderRadius:
+                            BorderRadius.circular(MySizes.borderRadiusMd),
+                        child: CachedNetworkImage(
+                          imageUrl: item.itemImage,
+                          width: 55,
+                          height: 55,
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) =>
+                              const Center(child: CircularProgressIndicator()),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                        )),
+                    const SizedBox(
+                      width: MySizes.spaceBtwItems,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          item.itemName,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge!
+                              .apply(color: MyColors.darkPrimaryTextColor),
                         ),
-                      )),
-                ],
+                        const SizedBox(
+                          height: MySizes.sm,
+                        ),
+                        Text(
+                          MyFormatter.formatCurrency(item.price),
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelMedium!
+                              .apply(color: MyColors.primaryTextColor),
+                        ),
+                      ],
+                    ),
+                    const Spacer(),
+                    Obx(() => Transform.scale(
+                          scale: 0.7,
+                          child: CupertinoSwitch(
+                            value: item.isAvailable.value,
+                            activeColor: MyColors.darkPrimaryColor,
+                            onChanged: (bool value) {
+                              menuFoodController.toggleItemAvailability(item);
+                            },
+                          ),
+                        )),
+                  ],
+                ),
               ),
             ),
           ),

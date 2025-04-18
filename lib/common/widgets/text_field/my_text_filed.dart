@@ -6,14 +6,14 @@ class MyTextFiled extends StatelessWidget {
   const MyTextFiled(
       {super.key,
       required this.textController,
-      required this.label,
+      required this.hintText,
       this.maxLines = 1,
       this.textAlign,
       this.readOnly = false,
       this.validator,
       this.isNumberType = false});
 
-  final String label;
+  final String hintText;
   final TextEditingController textController;
   final int maxLines;
   final TextAlign? textAlign;
@@ -43,7 +43,7 @@ class MyTextFiled extends StatelessWidget {
             decoration: InputDecoration(
               enabledBorder: InputBorder.none,
               focusedBorder: InputBorder.none,
-              hintText: label,
+              hintText: hintText,
               hintStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     color: MyColors.secondaryTextColor,
                   ),

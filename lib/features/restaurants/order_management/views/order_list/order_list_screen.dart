@@ -61,7 +61,6 @@ class OrderListScreen extends StatelessWidget {
                       child: TabBarView(
                         children: [
                           // New orders list
-
                           Obx(
                             () => orderController.newOrders.isEmpty
                                 ? const Center(child: Text("Không có đơn"))
